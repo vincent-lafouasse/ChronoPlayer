@@ -37,4 +37,6 @@ struct Instruction {
     uint8_t cycles;
 };
 
+// could probably make that a SoA but for now this is more ergonomic and less
+// error prone to transcribe
 extern const struct Instruction opcode_lookup_table[256];
