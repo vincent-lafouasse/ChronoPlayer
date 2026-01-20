@@ -24,17 +24,17 @@ enum Addressing_Mode {
     ADDR_SPECIAL,  // Complex addressing (TCALL, etc.)
 };
 
-typedef int (*Opcode_Handler)(struct SPC700_State* cpu,
+typedef int (*Instruction_Handler)(struct SPC700_State* cpu,
                               struct APU_State* apu,
                               uint16_t operand1,
                               uint16_t operand2);
 
-struct Opcode {
+struct Instruction {
     const char* mnemonic;
     enum Addressing_Mode addr_mode;
-    Opcode_Handler handler;
+    Instruction_Handler handler;
     uint8_t length;
     uint8_t cycles;
 };
 
-extern const struct Opcode opcode_lookup_table[256];
+extern const struct Instruction opcode_lookup_table[256];
