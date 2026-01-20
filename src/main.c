@@ -17,6 +17,8 @@ bool try_read(int fd, void* buffer, size_t sz, size_t* offset)
     }
 }
 
+#define HEADER_SIZE (0x24)
+
 int main(void)
 {
     int status = 0;
@@ -30,19 +32,20 @@ int main(void)
         goto out;
     }
 
+    size_t offset = 0;
+
+    char header[HEADER_SIZE];
+    if (!try_read(fd, header, HEADER_SIZE, &offset)) {
+        fprintf(stderr, "Failed to read %u bytes from offset %zu\n",
+                HEADER_SIZE, offset);
+        status = 1;
+        goto out;
+    }
+
     const char* magic_string =
         "SNES-SPC700 Sound File Data v0.30"
         "\x1a"
         "\x1a";
-
-    size_t offset = 0;
-    char header[0x24];
-    if (!try_read(fd, header, 0x24, &offset)) {
-        fprintf(stderr, "Failed to read %u bytes from offset %zu\n", 0x24,
-                offset);
-        status = 1;
-        goto out;
-    }
     if (memcmp(header, magic_string, strlen(magic_string)) != 0) {
         fprintf(stderr, "Not a spc file\n");
         status = 1;
