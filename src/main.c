@@ -72,6 +72,7 @@ int main(void)
     }
 
     const bool has_id666 = (header[0x23] == 26);
+    (void)has_id666;
 
     // registers
     // NOTE: little endian ? need to check
