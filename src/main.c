@@ -6,6 +6,8 @@
 #include <sysexits.h>
 #include <unistd.h>
 
+#include "cpu.h"
+
 // failures to read (exact amount of) bytes are always fatal
 bool try_read(int fd, void* buffer, size_t sz, size_t* offset)
 {
@@ -57,13 +59,15 @@ int main(void)
 
     // registers
     // NOTE: little endian ? need to check
-    const uint16_t reg_pc =
-        (uint16_t)header[0x25] | ((uint16_t)header[0x26] << 8);
-    const uint8_t reg_a = header[0x27];
-    const uint8_t reg_x = header[0x28];
-    const uint8_t reg_y = header[0x29];
-    const uint8_t reg_psw = header[0x2a];
-    const uint8_t reg_sp = header[0x2b];
+    const struct SPC700_State cpu = {
+        .pc = (uint16_t)header[0x25] | ((uint16_t)header[0x26] << 8),
+        .a = header[0x27],
+        .x = header[0x28],
+        .y = header[0x29],
+        .status = header[0x2a],
+        .sp = header[0x2b],
+        .cycles = 0,
+    };
 
 out:
     close(fd);
