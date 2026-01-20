@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/fcntl.h>
@@ -18,13 +19,7 @@ bool try_read(int fd, void* buffer, size_t sz, size_t* offset)
     }
 }
 
-#define HEADER_SIZE (0x24 + 1)
-#define REGISTERS_OFFSET (0x2c)
-#define REGISTERS_SIZE (REGISTERS_OFFSET + 2 - 0x25)
-#define ID666_OFFSET (0xd3)
-#define ID666_SIZE (ID666_OFFSET + 45 - 0x2e)
-_Static_assert(HEADER_SIZE + REGISTERS_SIZE + ID666_SIZE == 0x100,
-               "SPC data should start at offset 0x100");
+#define HEADER_SIZE 256
 
 int main(void)
 {
@@ -43,8 +38,7 @@ int main(void)
 
     char header[HEADER_SIZE];
     if (!try_read(fd, header, HEADER_SIZE, &offset)) {
-        fprintf(stderr, "Failed to read %u bytes from offset %zu\n",
-                HEADER_SIZE, offset);
+        fprintf(stderr, "Failed to read 256B SPC header\n");
         status = EX_IOERR;
         goto out;
     }
@@ -58,6 +52,18 @@ int main(void)
         status = EX_DATAERR;
         goto out;
     }
+
+    const bool has_id666 = (header[0x23] == 26);
+
+    // registers
+    // NOTE: little endian ? need to check
+    const uint16_t reg_pc =
+        (uint16_t)header[0x25] | ((uint16_t)header[0x26] << 8);
+    const uint8_t reg_a = header[0x27];
+    const uint8_t reg_x = header[0x28];
+    const uint8_t reg_y = header[0x29];
+    const uint8_t reg_psw = header[0x2a];
+    const uint8_t reg_sp = header[0x2b];
 
 out:
     close(fd);
