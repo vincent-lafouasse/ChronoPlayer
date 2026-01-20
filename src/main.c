@@ -18,7 +18,7 @@ bool try_read(int fd, void* buffer, size_t sz, size_t* offset)
     }
 }
 
-#define HEADER_SIZE (0x24)
+#define HEADER_SIZE (0x25)
 
 int main(void)
 {
