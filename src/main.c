@@ -22,7 +22,7 @@ bool try_read(int fd, void* buffer, size_t sz, size_t* offset)
 
 int main(void)
 {
-    int status = 0;
+    int status = EX_OK;
 
     const char* spc_path = "./spc/304 Corridors of Time.spc";
 
