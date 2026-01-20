@@ -36,6 +36,9 @@ static int dump_spc_state(char buf[static 41],
 
 #define HEADER_SIZE 256
 
+// 64KB
+#define RAM_SIZE 0x10000
+
 int main(void)
 {
     int status = EX_OK;
@@ -84,6 +87,13 @@ int main(void)
     char cpu_dump[41] = {0};
     (void)dump_spc_state(cpu_dump, 41, &cpu);
     printf("%s\n", cpu_dump);
+
+    uint8_t ram[RAM_SIZE];
+    if (!try_read(fd, ram, RAM_SIZE, &offset)) {
+        fprintf(stderr, "Failed to read 64KB SPC RAM\n");
+        status = EX_IOERR;
+        goto out;
+    }
 
 out:
     close(fd);
