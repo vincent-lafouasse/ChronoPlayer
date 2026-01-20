@@ -25,9 +25,9 @@ enum Addressing_Mode {
 };
 
 typedef int (*Instruction_Handler)(struct SPC700_State* cpu,
-                              struct APU_State* apu,
-                              uint16_t operand1,
-                              uint16_t operand2);
+                                   struct APU_State* apu,
+                                   uint16_t operand1,
+                                   uint16_t operand2);
 
 struct Instruction {
     const char* mnemonic;
