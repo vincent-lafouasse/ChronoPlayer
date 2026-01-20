@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/fcntl.h>
+#include <sysexits.h>
 #include <unistd.h>
 
 // failures to read (exact amount of) bytes are always fatal
@@ -28,7 +29,7 @@ int main(void)
     int fd = open(spc_path, O_RDONLY);
     if (fd < 0) {
         fprintf(stderr, "Failed to open file %s\n", spc_path);
-        status = 1;
+        status = EX_NOINPUT;
         goto out;
     }
 
@@ -38,7 +39,7 @@ int main(void)
     if (!try_read(fd, header, HEADER_SIZE, &offset)) {
         fprintf(stderr, "Failed to read %u bytes from offset %zu\n",
                 HEADER_SIZE, offset);
-        status = 1;
+        status = EX_IOERR;
         goto out;
     }
 
@@ -48,7 +49,7 @@ int main(void)
         "\x1a";
     if (memcmp(header, magic_string, strlen(magic_string)) != 0) {
         fprintf(stderr, "Not a spc file\n");
-        status = 1;
+        status = EX_DATAERR;
         goto out;
     }
 
