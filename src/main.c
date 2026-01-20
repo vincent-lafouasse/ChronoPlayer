@@ -18,7 +18,13 @@ bool try_read(int fd, void* buffer, size_t sz, size_t* offset)
     }
 }
 
-#define HEADER_SIZE (0x25)
+#define HEADER_SIZE (0x24 + 1)
+#define REGISTERS_OFFSET (0x2c)
+#define REGISTERS_SIZE (REGISTERS_OFFSET + 2 - 0x25)
+#define ID666_OFFSET (0xd3)
+#define ID666_SIZE (ID666_OFFSET + 45 - 0x2e)
+_Static_assert(HEADER_SIZE + REGISTERS_SIZE + ID666_SIZE == 0x100,
+               "SPC data should start at offset 0x100");
 
 int main(void)
 {
