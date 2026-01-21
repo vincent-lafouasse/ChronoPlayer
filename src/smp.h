@@ -19,4 +19,4 @@ struct SMP_State {
 
 extern const uint8_t ipl_rom[IPL_SIZE];
 
-void load_spc_or_exit(const char* spc_path, struct SMP_State* out);
+void load_spc_or_exit(const char* spc_path, struct SMP_State out[static 1]);
