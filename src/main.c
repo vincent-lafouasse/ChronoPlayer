@@ -42,7 +42,7 @@ int main(void)
 
     size_t offset = 0;
 
-    char header[HEADER_SIZE];
+    uint8_t header[HEADER_SIZE];
     if (!try_read(fd, header, HEADER_SIZE, &offset)) {
         fprintf(stderr, "Failed to read 256B SPC header\n");
         status = EX_IOERR;
@@ -73,7 +73,7 @@ int main(void)
         .sp = header[0x2b],
         .cycles = 0,
     };
-    char cpu_dump[41] = {0};
+    uint8_t cpu_dump[41] = {0};
     (void)dump_spc_state(cpu_dump, 41, &cpu);
     printf("%s\n", cpu_dump);
 
