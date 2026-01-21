@@ -63,7 +63,6 @@ int main(void)
     (void)has_id666;
 
     // registers
-    // NOTE: little endian ? need to check
     const struct SPC700_State cpu = {
         .pc = (uint16_t)header[0x25] | ((uint16_t)header[0x26] << 8),
         .a = header[0x27],
