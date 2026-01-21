@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include "cpu.h"
+#include "dsp.h"
 
 // failures to read (exact amount of) bytes are always fatal
 bool try_read(int fd, void* buffer, size_t sz, size_t* offset)
@@ -82,6 +83,22 @@ int main(void)
         status = EX_IOERR;
         goto out;
     }
+
+    struct DSP_State dsp = {0};
+    if (!try_read(fd, dsp.registers, 128, &offset)) {
+        fprintf(stderr, "Failed to read 128B DSP registers\n");
+        status = EX_IOERR;
+        goto out;
+    }
+
+    // 64B of garbage then 64B of extra RAM
+    uint8_t extra[128];
+    if (!try_read(fd, extra, 128, &offset)) {
+        fprintf(stderr, "Failed to read 64B of RAM shadowed by IPL\n");
+        status = EX_IOERR;
+        goto out;
+    }
+    memcpy(ram + 0x10000 - 64, extra + 64, 64);
 
 out:
     close(fd);
