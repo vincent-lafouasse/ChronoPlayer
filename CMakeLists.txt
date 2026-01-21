@@ -10,7 +10,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 add_executable(${PROJECT_NAME})
-target_sources(${PROJECT_NAME} PRIVATE src/main.c)
+target_sources(${PROJECT_NAME} PRIVATE
+	src/main.c
+	src/cpu.c
+)
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)
 target_link_libraries(${PROJECT_NAME} PRIVATE m)

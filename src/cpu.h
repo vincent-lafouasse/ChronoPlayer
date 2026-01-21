@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stddef.h>
 #include <stdint.h>
 
 /*
@@ -43,3 +44,7 @@ void spc700_init(struct SPC700_State* cpu);
 int spc700_step(struct SPC700_State* cpu, uint8_t* ram, void* dsp);
 uint8_t spc700_read(uint16_t addr, uint8_t* ram, void* dsp);
 void spc700_write(uint16_t addr, uint8_t value, uint8_t* ram, void* dsp);
+
+int dump_spc_state(char buf[static 41],
+                   size_t len,
+                   const struct SPC700_State* s);
