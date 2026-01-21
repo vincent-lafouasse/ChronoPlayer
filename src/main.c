@@ -100,6 +100,9 @@ int main(void)
     }
     memcpy(ram + 0x10000 - 64, extra + 64, 64);
 
+    // ignored
+    // uint8_t iff_extension[];
+
 out:
     close(fd);
     if (status == 0) {
