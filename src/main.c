@@ -72,7 +72,7 @@ int main(void)
         .sp = header[0x2b],
         .cycles = 0,
     };
-    uint8_t cpu_dump[41] = {0};
+    char cpu_dump[41] = {0};
     (void)dump_spc_state(cpu_dump, 41, &cpu);
     printf("%s\n", cpu_dump);
 
