@@ -17,6 +17,6 @@ struct SMP_State {
     alignas(PAGE_SIZE) uint8_t ram[ARAM_SIZE];
 };
 
-extern alignas(CACHE_LINE) const uint8_t ipl_rom[IPL_SIZE];
+extern const uint8_t ipl_rom[IPL_SIZE];
 
 void load_spc_or_exit(const char* spc_path, struct SMP_State* out);
