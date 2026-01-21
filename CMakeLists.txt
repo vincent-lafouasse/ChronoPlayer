@@ -13,5 +13,5 @@ target_sources(${PROJECT_NAME} PRIVATE src/main.c)
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)
 
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic
                                                -fdiagnostics-color=always)
