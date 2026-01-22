@@ -2,6 +2,10 @@
 
 I love Chrono Trigger
 
+## huge thanks
+
+huge thanks to Anomie the absolute goat for providing a lot of documentation on an otherwise undocumented platform
+
 ## references
 
 - [SNES Development Manual (Nintendo)](http://nuclear.mutantstargoat.com/articles/snes_notes/refs/snes_dev_manual1.pdf)
