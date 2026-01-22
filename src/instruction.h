@@ -14,9 +14,9 @@ enum Addressing_Mode {
     ADDR_REG_DIRECT_INDEXED,    // 4  A,d+X; X,d+Y; Y,d+X
     ADDR_REG_INDIRECT,          // 5a A,(X)
     ADDR_REG_INDIRECT_INC,      // 5b A,(X)+
-    ADDR_REG_INDEXED_INDIRECT,  // 5c A,[d+X]
-    ADDR_REG_INDIRECT_INDEXED,  // 6  A,[d]+Y
-    ADDR_REG_ABSOLUTE,          // 7  A,!a; X,!a; Y,!a
+    ADDR_REG_INDEXED_INDIRECT,  // 6  A,[d+X]
+    ADDR_REG_INDIRECT_INDEXED,  // 7  A,[d]+Y
+    ADDR_REG_ABSOLUTE,          // 8  A,!a; X,!a; Y,!a
 };
 
 enum Operation {
