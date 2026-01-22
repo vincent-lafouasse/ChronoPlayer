@@ -8,15 +8,15 @@ struct APU_State;
 // from Anomie's `spc700cyc.txt`
 // memory access patterns down to the cycle
 enum Addressing_Mode {
-    ADDR_REG_IMM,               // A,#i; X,#i; Y,#i
-    ADDR_REG_REG,               // A,X; A,Y; X,A; X,Y; etc
-    ADDR_REG_DIRECT,            // A,d; X,d; Y,d
-    ADDR_REG_DIRECT_INDEXED,    // A,d+X; X,d+Y; Y,d+X
-    ADDR_REG_INDIRECT,          // A,(X)
-    ADDR_REG_INDIRECT_INC,      // A,(X)+
-    ADDR_REG_INDEXED_INDIRECT,  // A,[d+X]
-    ADDR_REG_INDIRECT_INDEXED,  // A,[d]+Y
-    ADDR_REG_ABSOLUTE,          // A,!a; X,!a; Y,!a
+    ADDR_REG_IMM,               // 1  A,#i; X,#i; Y,#i
+    ADDR_REG_REG,               // 2  A,X; A,Y; X,A; X,Y; etc
+    ADDR_REG_DIRECT,            // 3  A,d; X,d; Y,d
+    ADDR_REG_DIRECT_INDEXED,    // 4  A,d+X; X,d+Y; Y,d+X
+    ADDR_REG_INDIRECT,          // 5a A,(X)
+    ADDR_REG_INDIRECT_INC,      // 5b A,(X)+
+    ADDR_REG_INDEXED_INDIRECT,  // 5c A,[d+X]
+    ADDR_REG_INDIRECT_INDEXED,  // 6  A,[d]+Y
+    ADDR_REG_ABSOLUTE,          // 7  A,!a; X,!a; Y,!a
 };
 
 enum Operation {
