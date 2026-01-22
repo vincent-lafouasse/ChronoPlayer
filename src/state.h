@@ -8,7 +8,7 @@ struct CPU_State {
     uint16_t pc;
     uint8_t status;
 
-    uint64_t instruction_cycle;  // need sub-instruction sync
+    uint64_t instruction_cycle;
     uint8_t opcode;
     uint8_t operands[2];
     uint16_t addr;
