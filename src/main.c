@@ -56,6 +56,19 @@ void bus_write(struct SPC_State* state, uint16_t addr, uint8_t val)
     }
 }
 
+// a single sub-istruction clock tick
+void cpu_tick(struct SPC_State* state)
+{
+    struct CPU_State* cpu = &state->cpu;
+
+    if (cpu->instruction_cycle == 0) {
+        cpu->opcode = bus_read(state, cpu->pc++);
+        return;
+    }
+
+    // do the rest of the instruction
+}
+
 int main(void)
 {
     const char* spc_path = "./spc/304 Corridors of Time.spc";
