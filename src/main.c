@@ -36,7 +36,7 @@ void bus_write_port(struct SPC_State* state, uint16_t addr, uint8_t val)
 
 uint8_t bus_read(const struct SPC_State* state, uint16_t addr)
 {
-    if (addr >= 0xf0 && addr < 0x100) {
+    if ((addr & 0xfff0) == 0xf0) {
         return bus_read_port(state, addr);
     }
 
@@ -51,7 +51,7 @@ void bus_write(struct SPC_State* state, uint16_t addr, uint8_t val)
 {
     state->aram[addr] = val;
 
-    if (addr >= 0xf0 && addr < 0x100) {
+    if ((addr & 0xfff0) == 0xf0) {
         bus_write_port(state, addr, val);
     }
 }
