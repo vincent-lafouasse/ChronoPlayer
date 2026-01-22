@@ -49,12 +49,11 @@ uint8_t bus_read(const struct SPC_State* state, uint16_t addr)
 
 void bus_write(struct SPC_State* state, uint16_t addr, uint8_t val)
 {
+    state->aram[addr] = val;
+
     if (addr >= 0xf0 && addr < 0x100) {
         bus_write_port(state, addr, val);
-        return;
     }
-
-    state->aram[addr] = val;
 }
 
 int main(void)
