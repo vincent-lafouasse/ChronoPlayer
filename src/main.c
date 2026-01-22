@@ -10,19 +10,22 @@
 
 #include "cpu.h"
 #include "dsp.h"
+#include "state.h"
 
 // failures to read (exact amount of) bytes are always fatal
-bool try_read(int fd, void* buffer, size_t sz, size_t* offset)
+bool try_read(int fd, void* buffer, size_t sz)
 {
-    const ssize_t bytes_read = read(fd, buffer, sz);
-
-    if (bytes_read == (ssize_t)sz) {
-        *offset += sz;
-        return true;
-    } else {
-        return false;
-    }
+    return read(fd, buffer, sz) == (ssize_t)sz;
 }
+
+const uint8_t ipl_rom[64] = {
+    0xCD, 0xEF, 0xBD, 0xE8, 0x00, 0xC6, 0x1D, 0xD0, 0xFC, 0x8F, 0xAA,
+    0xF4, 0x8F, 0xBB, 0xF5, 0x78, 0xCC, 0xF4, 0xD0, 0xFB, 0x2F, 0x19,
+    0xEB, 0xF4, 0xD0, 0xFC, 0x7E, 0xF4, 0xD0, 0x0B, 0xE4, 0xF5, 0xCB,
+    0xF4, 0xD7, 0x00, 0xFC, 0xD0, 0xF3, 0xAB, 0x01, 0x10, 0xEF, 0x7E,
+    0xF4, 0x10, 0xEB, 0xBA, 0xF6, 0xDA, 0x00, 0xBA, 0xF4, 0xC4, 0xF4,
+    0xDD, 0x5D, 0xD0, 0xDB, 0x1F, 0x00, 0x00, 0xC0, 0xFF,
+};
 
 void parse_id666(const uint8_t* header)
 {
@@ -76,28 +79,26 @@ void parse_id666(const uint8_t* header)
     printf("\n");
 }
 
+#define PARSE_U16(lsb, msb) ((uint16_t)(lsb) | ((uint16_t)(msb) << 8))
+
 #define HEADER_SIZE 256
 
 // 64KB
 #define RAM_SIZE 0x10000
 
-int main(void)
+void load_spc_or_exit(const char* path, struct SPC_State* out)
 {
     int status = EX_OK;
 
-    const char* spc_path = "./spc/304 Corridors of Time.spc";
-
-    int fd = open(spc_path, O_RDONLY);
+    int fd = open(path, O_RDONLY);
     if (fd < 0) {
-        fprintf(stderr, "Failed to open file %s\n", spc_path);
+        fprintf(stderr, "Failed to open file %s\n", path);
         status = EX_NOINPUT;
         goto out;
     }
 
-    size_t offset = 0;
-
-    uint8_t header[HEADER_SIZE];
-    if (!try_read(fd, header, HEADER_SIZE, &offset)) {
+    uint8_t header[256];
+    if (!try_read(fd, header, 256)) {
         fprintf(stderr, "Failed to read 256B SPC header\n");
         status = EX_IOERR;
         goto out;
@@ -118,29 +119,36 @@ int main(void)
         parse_id666(header);
     }
 
-    // registers
-    const struct SPC700_State cpu = {
-        .pc = (uint16_t)header[0x25] | ((uint16_t)header[0x26] << 8),
+    const struct CPU_State cpu = {
+        .pc = PARSE_U16(header[0x25], header[0x26]),
         .a = header[0x27],
         .x = header[0x28],
         .y = header[0x29],
         .status = header[0x2a],
         .sp = header[0x2b],
-        .cycles = 0,
+        .instruction_cycle = 0,
+        .total_cycles = 0,
     };
     char cpu_dump[41] = {0};
-    (void)dump_spc_state(cpu_dump, 41, &cpu);
+    (void)dump_cpu_state(cpu_dump, 41, &cpu);
     printf("%s\n", cpu_dump);
 
-    uint8_t ram[RAM_SIZE];
-    if (!try_read(fd, ram, RAM_SIZE, &offset)) {
+    uint8_t ram[0x10000];
+    if (!try_read(fd, ram, 0x10000)) {
         fprintf(stderr, "Failed to read 64KB SPC RAM\n");
         status = EX_IOERR;
         goto out;
     }
+    // still need to read the 64B shadowed by IPL ROM
 
-    struct DSP_State dsp = {0};
-    if (!try_read(fd, dsp.registers, 128, &offset)) {
+    struct DSP_State dsp = {
+        .registers = {0},
+        .voice_out = {0},
+        .echo_buf = {0},
+        .dsp_addr = 0,
+        .total_cycles = 0,
+    };
+    if (!try_read(fd, dsp.registers, 128)) {
         fprintf(stderr, "Failed to read 128B DSP registers\n");
         status = EX_IOERR;
         goto out;
@@ -148,7 +156,7 @@ int main(void)
 
     // 64B of garbage then 64B of extra RAM
     uint8_t extra[128];
-    if (!try_read(fd, extra, 128, &offset)) {
+    if (!try_read(fd, extra, 128)) {
         fprintf(stderr, "Failed to read 64B of RAM shadowed by IPL\n");
         status = EX_IOERR;
         goto out;
@@ -158,12 +166,23 @@ int main(void)
     // ignored
     // uint8_t iff_extension[];
 
+    out->cpu = cpu;
+    out->dsp = dsp;
+    memcpy(out->aram, ram, 0x10000);
+    memcpy((uint8_t*)out->ipl_rom, ipl_rom, 64);
+    memset(out->io_ports, 0, 4);
+
 out:
     close(fd);
-    if (status == 0) {
-        fprintf(stderr, "ok\n");
-    } else {
-        fprintf(stderr, "error\n");
+    if (status != EX_OK) {
+        exit(status);
     }
-    return status;
+}
+
+int main(void)
+{
+    const char* spc_path = "./spc/304 Corridors of Time.spc";
+
+    struct SPC_State spc_state;
+    load_spc_or_exit(spc_path, &spc_state);
 }

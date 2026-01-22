@@ -13,7 +13,6 @@ add_executable(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE
 	src/main.c
 	src/cpu.c
-	src/ipl_rom.c
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)

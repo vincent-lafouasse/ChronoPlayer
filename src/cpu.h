@@ -1,7 +1,8 @@
 #pragma once
 
 #include <stddef.h>
-#include <stdint.h>
+
+#include "state.h"
 
 /*
   Bit7  N  Sign Flag          (0=Positive, 1=Negative)
@@ -33,18 +34,9 @@
 #define PSW_Z PSW_ZERO
 #define PSW_C PSW_CARRY
 
-struct SPC700_State {
-    uint8_t a, x, y, sp;
-    uint16_t pc;
-    uint8_t status;
-    uint64_t cycles;
-};
+void cpu_init(struct CPU_State* cpu);
+int cpu_step(struct CPU_State* cpu, uint8_t* ram, void* dsp);
 
-void spc700_init(struct SPC700_State* cpu);
-int spc700_step(struct SPC700_State* cpu, uint8_t* ram, void* dsp);
-uint8_t spc700_read(uint16_t addr, uint8_t* ram, void* dsp);
-void spc700_write(uint16_t addr, uint8_t value, uint8_t* ram, void* dsp);
-
-int dump_spc_state(char buf[static 41],
+int dump_cpu_state(char buf[static 41],
                    size_t len,
-                   const struct SPC700_State* s);
+                   const struct CPU_State* cpu);
