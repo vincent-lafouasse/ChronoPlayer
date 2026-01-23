@@ -20,10 +20,46 @@ static bool use_ipl_rom(const struct SPC_State* state)
 
 static uint8_t bus_read_port(const struct SPC_State* state, uint16_t addr)
 {
-    // dummy
-    (void)state;
-    (void)addr;
-    return 0;
+    switch (addr) {
+        // write only ports
+        case 0xf0:  // TEST
+        case 0xf1:  // CONTROL
+            return 0;
+
+        // DSP-SPC700 communication bus
+        case 0xf2:     // TODO: DSP bus addr
+        case 0xf3:     // TODO: DSP bus data
+            return 0;  // dummy
+
+        // TODO: latch the last value
+        // somewhere in the init RAM probably
+        case 0xf4:     // TODO: CPUI0
+        case 0xf5:     // TODO: CPUI1
+        case 0xf6:     // TODO: CPUI2
+        case 0xf7:     // TODO: CPUI3
+            return 0;  // dummy
+
+        // actually normal RAM
+        case 0xf8:
+        case 0xf9:
+            return state->aram[addr];
+
+        // timer targets are write only
+        case 0xfa:  // T0TARGET
+        case 0xfb:  // T1TARGET
+        case 0xfc:  // T2TARGET
+            return 0;
+
+        // TODO: timer access
+        case 0xfd:     // T0OUT
+        case 0xfe:     // T1OUT
+        case 0xff:     // T2OUT
+            return 0;  // dummy
+
+        default:
+            // unreachable
+            return 0;
+    }
 }
 
 void bus_write_port(struct SPC_State* state, uint16_t addr, uint8_t val)
