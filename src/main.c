@@ -67,10 +67,59 @@ static uint8_t bus_read_port(const struct SPC_State* state, uint16_t addr)
 
 void bus_write_port(struct SPC_State* state, uint16_t addr, uint8_t val)
 {
-    // dummy
-    (void)state;
-    (void)addr;
-    (void)val;
+    switch (addr) {
+        // TODO: cache these as bools in state probably
+        case 0xf0:  // TEST
+        case 0xf1:  // CONTROL
+            state->aram[addr] = val;
+            return;
+
+        // DSP-SPC700 communication bus
+        case 0xf2:  // DSPADDR
+            state->dsp.addr_latch = val;
+            state->aram[addr] = val;
+            return;
+        case 0xf3: {  // DSPDATA
+            state->aram[addr] = val;
+            if (state->dsp.addr_latch >= 0x80) {
+                // there are only 128 DSP registers
+                return;
+            }
+            state->dsp.registers[state->dsp.addr_latch] = val;
+            return;
+        }
+
+        // CPU-SPC700 communication
+        // there is no CPU so no-one will ever read those but let's write them
+        // anw
+        case 0xf4:  // CPUO0
+        case 0xf5:  // CPUO1
+        case 0xf6:  // CPUO2
+        case 0xf7:  // CPUO3
+            state->aram[addr] = val;
+            return;
+
+        // actually normal RAM
+        case 0xf8:
+        case 0xf9:
+            state->aram[addr] = val;
+
+        // TODO: timer management
+        case 0xfa:  // T0TARGET
+        case 0xfb:  // T1TARGET
+        case 0xfc:  // T2TARGET
+            return;
+
+        // timers are read-only
+        case 0xfd:  // T0OUT
+        case 0xfe:  // T1OUT
+        case 0xff:  // T2OUT
+            return;
+
+        default:
+            // unreachable
+            return;
+    }
 }
 
 uint8_t bus_read(const struct SPC_State* state, uint16_t addr)
