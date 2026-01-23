@@ -103,6 +103,7 @@ void bus_write_port(struct SPC_State* state, uint16_t addr, uint8_t val)
         case 0xf8:
         case 0xf9:
             state->aram[addr] = val;
+            return;
 
         // TODO: timer management
         case 0xfa:  // T0TARGET
