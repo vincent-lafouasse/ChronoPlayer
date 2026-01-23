@@ -88,6 +88,20 @@ enum Operation {
     OP_XCN,
 };
 
+// fits in a nibble
+enum Register {
+    REG_A = 0,
+    REG_X = 1,
+    REG_Y = 2,
+    REG_YA = 3,
+    REG_SP = 4,
+};
+
+typedef uint8_t RegisterPair;
+#define REG_PAIR(src, dst) (((uint8_t)(src)) | ((uint8_t)(dst) << 4))
+#define REG_SRC(pair) ((pair) & 0xf)
+#define REG_DST(pair) (((pair) >> 4) & 0xf)
+
 typedef int (*Instruction_Handler)(struct SPC700_State* cpu,
                                    struct APU_State* apu,
                                    uint16_t operand1,
