@@ -2,6 +2,12 @@
 
 I love Chrono Trigger
 
+## dedication
+
+this project is dedicated to Near/Byuu (1983 – 2021). their work on the `higan` emulator set a standard for accuracy and i greatly appreciate their efforts to preserve the SNES.
+
+this is for them.
+
 ## huge thanks
 
 huge thanks to Anomie the absolute goat for providing a lot of documentation on an otherwise undocumented platform
