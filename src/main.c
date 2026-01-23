@@ -34,14 +34,13 @@ static uint8_t bus_read_port(const struct SPC_State* state, uint16_t addr)
         case 0xf3:  // DSPDATA
             return state->dsp.registers[state->dsp.addr_latch & 0x7f];
 
-        // TODO: latch the last value
-        // somewhere in the init RAM probably but in ram[0xf4] is the data last
-        // _written_ by the SPC, which is different from the one it will read
-        case 0xf4:     // TODO: CPUI0
-        case 0xf5:     // TODO: CPUI1
-        case 0xf6:     // TODO: CPUI2
-        case 0xf7:     // TODO: CPUI3
-            return 0;  // dummy
+        // CPU-SPC700 communication
+        // there is no CPU so these will never change
+        case 0xf4:  // CPUI0
+        case 0xf5:  // CPUI1
+        case 0xf6:  // CPUI2
+        case 0xf7:  // CPUI3
+            return state->io_ports[addr - 0xf4];
 
         // actually normal RAM
         case 0xf8:
