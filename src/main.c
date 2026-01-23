@@ -85,6 +85,7 @@ void bus_write_port(struct SPC_State* state, uint16_t addr, uint8_t val)
                 // there are only 128 DSP registers
                 return;
             }
+            // TODO: check for read only DSP registers
             state->dsp.registers[state->dsp.addr_latch] = val;
             return;
         }
