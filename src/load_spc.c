@@ -140,7 +140,7 @@ void load_spc_or_exit(const char* path, struct SPC_State* out)
         .registers = {0},
         .voice_out = {0},
         .echo_buf = {0},
-        .dsp_addr = 0,
+        .addr_latch = ram[0xf2],
         .total_cycles = 0,
     };
     if (!try_read(fd, dsp.registers, 128)) {

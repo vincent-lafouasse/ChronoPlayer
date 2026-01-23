@@ -27,9 +27,12 @@ static uint8_t bus_read_port(const struct SPC_State* state, uint16_t addr)
             return 0;
 
         // DSP-SPC700 communication bus
-        case 0xf2:     // TODO: DSP bus addr
-        case 0xf3:     // TODO: DSP bus data
-            return 0;  // dummy
+        case 0xf2:  // DSPADDR
+            // could read ram[0xf2] but better to use the cached version that's
+            // probably in cache (no pun intended)
+            return state->dsp.addr_latch;
+        case 0xf3:  // DSPDATA
+            return state->dsp.registers[state->dsp.addr_latch & 0x7f];
 
         // TODO: latch the last value
         // somewhere in the init RAM probably
