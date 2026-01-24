@@ -292,6 +292,7 @@ bool mov_direct_immediate(struct SPC_State* state, uint32_t cycle)
             // yes RMW even though we don't need the value we're about to
             // overwrite
             uint8_t _ = bus_read(state, addr);
+            (void)_;
             return false;
         }
 
