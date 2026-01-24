@@ -156,7 +156,7 @@ bool dispatch_execution_tick(struct SPC_State* state)
     return dummy;
 }
 
-// a single sub-istruction clock tick
+// a single sub-instruction clock tick
 void cpu_tick(struct SPC_State* state)
 {
     struct CPU_State* cpu = &state->cpu;
