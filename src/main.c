@@ -184,14 +184,10 @@ bool and_accumulator_absolute(struct SPC_State* state, uint32_t cycle)
     // cycle 1 already burned
     switch (cycle) {
         case 2:
-            addr = bus_read(state, cpu->pc);
-            cpu->pc += 1;
-            cpu->pc &= 0xffff;
+            addr = bus_read(state, cpu->pc++);
             return false;
         case 3:
-            addr |= (uint16_t)bus_read(state, cpu->pc) << 8;
-            cpu->pc += 1;
-            cpu->pc &= 0xffff;
+            addr |= (uint16_t)bus_read(state, cpu->pc++) << 8;
             return false;
         case 4:
             data = bus_read(state, addr);
