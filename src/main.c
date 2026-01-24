@@ -159,6 +159,52 @@ void cpu_tick(struct SPC_State* state)
     // do the rest of the instruction
 }
 
+/*
+ 8 Register, Absolute -- A,!a; X,!a; Y,!a
+  (ADC,AND,CMP,CMP,CMP,EOR,MOV,MOV,MOV,OR,SBC)
+  (3 bytes)
+  (4 cycles)
+        1       PC      Op Code         1
+        2       PC+1    AAL             1
+        3       PC+2    AAH             1
+        4       AA      Data            1
+    * Verified by blargg.
+    * 2 and 3 could be swapped, but that would be odd.
+*/
+
+// returns true when done
+// AND A, !a
+bool and_accumulator_absolute(struct SPC_State* state, uint32_t cycle)
+{
+    static uint16_t addr;
+
+    struct CPU_State* cpu = &state->cpu;
+    uint8_t data;
+
+    // cycle 1 already burned
+    switch (cycle) {
+        case 2:
+            addr = bus_read(state, cpu->pc);
+            cpu->pc += 1;
+            cpu->pc &= 0xffff;
+            return false;
+        case 3:
+            addr |= (uint16_t)bus_read(state, cpu->pc) << 8;
+            cpu->pc += 1;
+            cpu->pc &= 0xffff;
+            return false;
+        case 4:
+            data = bus_read(state, addr);
+            cpu->a &= data;
+            // TODO: update psw
+            return true;
+        default:
+            // unreachable
+            // could put an assert here
+            return true;
+    }
+}
+
 int main(void)
 {
     const char* spc_path = "./spc/304 Corridors of Time.spc";
