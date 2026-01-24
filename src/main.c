@@ -148,17 +148,30 @@ void bus_write(struct SPC_State* state, uint16_t addr, uint8_t val)
     }
 }
 
+bool dispatch_execution_tick(struct SPC_State* state)
+{
+    (void)state;
+
+    const bool dummy = true;
+    return dummy;
+}
+
 // a single sub-istruction clock tick
 void cpu_tick(struct SPC_State* state)
 {
     struct CPU_State* cpu = &state->cpu;
 
-    if (cpu->instruction_cycle == 0) {
+    if (cpu->instruction_cycle == 1) {
         cpu->opcode = bus_read(state, cpu->pc++);
         return;
     }
 
-    // do the rest of the instruction
+    const bool done = dispatch_execution_tick(state);
+    if (done) {
+        cpu->instruction_cycle = 1;
+    } else {
+        cpu->instruction_cycle++;
+    }
 }
 
 /*

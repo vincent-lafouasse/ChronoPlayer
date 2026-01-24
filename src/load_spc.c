@@ -120,7 +120,7 @@ void load_spc_or_exit(const char* path, struct SPC_State* out)
         .y = header[0x29],
         .status = header[0x2a],
         .sp = header[0x2b],
-        .instruction_cycle = 0,
+        .instruction_cycle = 1,
         .total_cycles = 0,
     };
     char cpu_dump[41] = {0};
