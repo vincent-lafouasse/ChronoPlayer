@@ -234,14 +234,11 @@ bool inc_absolute(struct SPC_State* state, uint32_t cycle)
         case 3:
             addr |= (uint16_t)bus_read(state, cpu->pc++) << 8;
             return false;
-        case 4:
-            // idle
-            return false;
 
-        case 5:
+        case 4:
             data = bus_read(state, addr);
             return false;
-        case 6:
+        case 5:
             data++;
             // TODO: flags
             bus_write(state, addr, data);
