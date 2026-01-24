@@ -1,6 +1,8 @@
 #include <stdbool.h>
 
+#include "cpu.h"
 #include "state.h"
+#include "utils.h"
 
 /*
 SPC700 Memory Map
@@ -247,6 +249,119 @@ bool inc_absolute(struct SPC_State* state, uint32_t cycle)
 
         default:
             // unreachable
+            return true;
+    }
+}
+/*
+
+ 10 Direct, Immediate -- d,#i
+  (ADC,AND,CMP,EOR,MOV,OR,SBC)
+  (3 bytes)
+  (5 cycles)
+        1       PC      Op Code         1
+        2       PC+1    Data 1          1
+        3       PC+2    DO              1
+        4       DO      Data 2 (read)   1
+        5       DO      Data 2 (write)  0
+    * Verified by blargg. 2 and 3 could be swapped, but that's unlikely.
+    * Yes, RMW even for MOV.
+    * CMP does not write for cycle 5; does it IO or read again?
+*/
+
+// MOV d, #i
+bool mov_direct_immediate(struct SPC_State* state, uint32_t cycle)
+{
+    static uint16_t addr;
+    static uint8_t value;
+
+    struct CPU_State* cpu = &state->cpu;
+
+    switch (cycle) {
+        case 2:
+            value = bus_read(state, cpu->pc++);
+            return false;
+
+        case 3: {
+            uint8_t offset = bus_read(state, cpu->pc++);
+            uint8_t page = !!(cpu->status & PSW_P);
+            addr = PARSE_U16(offset, page);  // lsb msb
+            return false;
+        }
+
+        case 4: {
+            // yes RMW even though we don't need the value we're about to
+            // overwrite
+            uint8_t _ = bus_read(state, addr);
+            return false;
+        }
+
+        case 5:
+            bus_write(state, addr, value);
+            return true;
+
+        default:
+            return true;
+    }
+}
+
+/*
+ 24 MemBit, Carry -- m.b,C
+  MOV1  m.b, C       CA    3     6   (m.b) = C                        ........
+  (MOV1)
+  (3 bytes)
+  (6 cycles)
+        1       PC      Op Code         1
+        2       PC+1    AAL             1
+        3       PC+2    AAH & BIT       1
+        4       AA      Data (read)     1
+        5       ??      IO              ?
+        6       AA      Data (write)    0
+    * Verified by blargg. 2 and 3 could be swapped, but that's unlikely.
+*/
+
+// MOV1 m.b, C
+bool mov1_membit_carry(struct SPC_State* state, uint32_t cycle)
+{
+    static uint16_t addr;
+    static uint8_t bit_index;
+    static uint8_t data;
+
+    struct CPU_State* cpu = &state->cpu;
+
+    switch (cycle) {
+        case 2:
+            addr = bus_read(state, cpu->pc++);
+            return false;
+
+        case 3: {
+            // BBBA'AAAA
+            // BBB indexes the bit 0-7
+            // 000A'AAAA is the msb of the address
+            uint8_t raw_hi = bus_read(state, cpu->pc++);
+            bit_index = raw_hi >> 5;
+            addr = PARSE_U16(addr, raw_hi & 0x1f);
+            return false;
+        }
+
+        case 4:
+            // RMW Read
+            data = bus_read(state, addr);
+            return false;
+
+        case 5:
+            // Internal Operation
+            // RMW Modify
+            // could be done right before the write, doesn't really matter but
+            // neater like this
+            BIT_WRITE(data, bit_index, (cpu->status & PSW_C));
+            return false;
+
+        case 6:
+            // RMW Write
+            bus_write(state, addr, data);
+            return true;
+
+        default:
             return true;
     }
 }
