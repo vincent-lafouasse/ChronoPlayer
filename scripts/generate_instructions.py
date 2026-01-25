@@ -216,6 +216,31 @@ add_instruction(
         logic_op_payload("a", "^", "cpu->data8"),
     ),
 )
+add_instruction(
+    0xE8,
+    TemplateInstruction(
+        "MOV",
+        RegisterImmediate(Register.A),
+        write_register("a", "cpu->data8", is_16bit=False, updates_flags=True),
+    ),
+)
+
+add_instruction(
+    0x8D,
+    TemplateInstruction(
+        "MOV",
+        RegisterImmediate(Register.Y),
+        write_register("y", "cpu->data8", is_16bit=False, updates_flags=True),
+    ),
+)
+add_instruction(
+    0xCD,
+    TemplateInstruction(
+        "MOV",
+        RegisterImmediate(Register.X),
+        write_register("x", "cpu->data8", is_16bit=False, updates_flags=True),
+    ),
+)
 
 
 def check_missing_opcodes():
