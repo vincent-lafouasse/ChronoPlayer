@@ -49,27 +49,28 @@ class RegisterImmediate(AddressingMode):
             )
         self.register = register
 
-    def prefix(self):
-        return "_register_immediate_" + self.register.name
-
     def render(self, mnemonic, payload):
-        print(
-            f"bool {mnemonic}{self.prefix()}(struct SPC_State* state, uint32_t cycle)"
+        lines = []
+        lines.append(
+            f"bool {mnemonic}_register_immediate_{self.register.name.lower()}(struct SPC_State* state, uint32_t cycle)"
         )
-        print("{")
-        print("    struct CPU_State* cpu = &state->cpu;")
-        print("    assert(cycle == 2);")
-        print("    cpu->operands[0] = bus_read(state, cpu->pc++);")
-        print("\n    // payload")
+        lines.append("{")
+        lines.append("    struct CPU_State* cpu = &state->cpu;")
+        lines.append("")
+        lines.append("    assert(cycle == 2);")
+        lines.append("    cpu->operands[0] = bus_read(state, cpu->pc++);")
+        lines.append("\n    // payload")
         for instruction in payload:
-            print(f"    {instruction};")
-        print()
-        print("    return true;")
-        print("}")
+            lines.append(f"    {instruction};")
+        lines.append("")
+        lines.append("    return true;")
+        lines.append("}")
+
+        return lines
 
 
 mode = RegisterImmediate(Register.X)
-mode.render(
+lines = mode.render(
     "and",
     (
         "cpu->x = cpu->operands[0]",
@@ -77,3 +78,4 @@ mode.render(
         "psw_write_neg(cpu, (cpu->x & 0x80))",
     ),
 )
+print("\n".join(lines))
