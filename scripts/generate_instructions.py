@@ -61,7 +61,8 @@ class RegisterImmediate(AddressingMode):
         lines.append("")
         lines.append("    assert(cycle == 2);")
         lines.append("    cpu->operands[0] = bus_read(state, cpu->pc++);")
-        lines.append("\n    // payload")
+        lines.append("")
+        lines.append("    // payload")
         for instruction in payload:
             lines.append(f"    {instruction};")
         lines.append("")
