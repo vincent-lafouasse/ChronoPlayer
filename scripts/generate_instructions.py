@@ -76,10 +76,11 @@ class Instruction:
         self.payload = payload
 
     def render(self):
-        return self.mode.render(self.mnemonic, self.payload)
+        lines = self.mode.render(self.mnemonic, self.payload)
+        return "\n".join(lines)
 
     def print(self):
-        print("\n".join(self.render()))
+        print(self.render())
 
 
 def check_zero_neg(value_expr, is_16bit=False):
