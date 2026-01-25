@@ -108,6 +108,13 @@ def logic_op_payload(reg, op, data):
     return [f"{dest} {op}= {data};"] + check_zero_neg(dest)
 
 
+def write_register(reg, data, is_16bit=False, updates_flags=True):
+    lines = [f"cpu->{reg} = {data};"]
+    if updates_flags:
+        lines += check_zero_neg(f"cpu->{reg}", is_16bit)
+    return lines
+
+
 instructions = dict()
 
 
