@@ -315,8 +315,33 @@ def make_header():
         f.write("// clang-format on\n")
 
 
+def make_implementation():
+    with open(DIR + C_IMPLEM, "w") as f:
+        f.write(
+            inspect.cleandoc(
+                f"""
+            {trace_source()}
+            // clang-format off
+
+            #include "{HEADER}"
+
+            #include <assert.h>
+            """
+            )
+        )
+        f.write("\n\n")
+
+        # TODO: maybe go by columns
+        for op in instructions:
+            instr = instructions[op]
+            f.write(f"{instr.render()}\n\n")
+
+        f.write("// clang-format on\n")
+
+
 def main():
     make_header()
+    make_implementation()
     print(f"missing: {256 - len(instructions)}")
 
 
