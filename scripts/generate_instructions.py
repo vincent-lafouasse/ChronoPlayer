@@ -73,7 +73,7 @@ mode = RegisterImmediate(Register.X)
 lines = mode.render(
     "and",
     (
-        "cpu->x = cpu->operands[0]",
+        "cpu->x &= cpu->operands[0]",
         "psw_write_zero(cpu, (cpu->x == 0))",
         "psw_write_neg(cpu, (cpu->x & 0x80))",
     ),
