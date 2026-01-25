@@ -20,6 +20,7 @@ class AddressingMode:
         raise ValueError("cannot render base class")
 
 
+# puts the data in data8
 class RegisterImmediate(AddressingMode):
     """
     1 Register, Immediate -- A,#i; X,#i; Y,#i
@@ -52,6 +53,7 @@ class RegisterImmediate(AddressingMode):
         lines.append("")
         lines.append("    assert(cycle == 2);")
         lines.append("    cpu->operands[0] = bus_read(state, cpu->pc++);")
+        lines.append("    cpu->data8 = cpu->operands[0]")
         lines.append("")
         lines.append("    // payload")
         for instruction in payload:
@@ -89,7 +91,7 @@ instructions = dict()
 instructions[0x28] = Instruction(
     "and",
     RegisterImmediate(Register.A),
-    logic_op_payload("a", "&", "operands[0]"),
+    logic_op_payload("a", "&", "cpu->data8"),
 )
 instructions[0x28].print()
 
