@@ -50,7 +50,7 @@ class RegisterImmediate(AddressingMode):
 
         header = inspect.cleandoc(
             f"""
-            bool {name}(struct SPC_State* state, uint32_t cycle)
+            bool {name}(struct SPC_State state[static 1], uint32_t cycle)
             {{
                 struct CPU_State* const cpu = &state->cpu;
 
