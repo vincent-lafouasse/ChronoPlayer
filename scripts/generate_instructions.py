@@ -72,13 +72,28 @@ class RegisterImmediate(AddressingMode):
         return lines
 
 
-mode = RegisterImmediate(Register.A)
-lines = mode.render(
+class Instruction:
+    def __init__(self, mnemonic, mode, payload):
+        self.mnemonic = mnemonic
+        self.mode = mode
+        self.payload = payload
+
+    def render(self):
+        return self.mode.render(self.mnemonic, self.payload)
+
+    def print(self):
+        print("\n".join(self.render()))
+
+
+instructions = dict()
+
+instructions[0x28] = Instruction(
     "and",
+    RegisterImmediate(Register.A),
     (
         "cpu->{reg} &= cpu->operands[0]",
         "psw_write_zero(cpu, (cpu->{reg} == 0))",
         "psw_write_neg(cpu, (cpu->{reg} & 0x80))",
     ),
 )
-print("\n".join(lines))
+instructions[0x28].print()
