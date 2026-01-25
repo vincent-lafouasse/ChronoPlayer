@@ -4,6 +4,13 @@ from enum import Enum
 import inspect
 
 
+def trace_source():
+    caller_frame = inspect.stack()[1]
+    filename = os.path.basename(caller_frame.filename)
+    line = caller_frame.lineno
+    return f"/* generated from {filename}: {line} */"
+
+
 class Register(Enum):
     A = 1
     X = 2
