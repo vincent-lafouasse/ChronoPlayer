@@ -1,6 +1,7 @@
 from typing import List, Dict, Optional, Callable
 from dataclasses import dataclass
 from enum import Enum
+import inspect
 
 
 class Register(Enum):
@@ -42,25 +43,30 @@ class RegisterImmediate(AddressingMode):
         self.register = register
 
     def render(self, mnemonic, payload):
-        lines = []
-        lines.append(
-            f"bool {mnemonic.lower()}_register_immediate_{self.register.name.lower()}(struct SPC_State* state, uint32_t cycle)"
-        )
-        lines.append("{")
-        lines.append("    struct CPU_State* cpu = &state->cpu;")
-        lines.append("")
-        lines.append("    assert(cycle == 2);")
-        lines.append("    cpu->operands[0] = bus_read(state, cpu->pc++);")
-        lines.append("    cpu->data8 = cpu->operands[0];")
-        lines.append("")
-        lines.append("    // payload")
-        for instruction in payload:
-            lines.append(f"    {instruction}")
-        lines.append("")
-        lines.append("    return true;")
-        lines.append("}")
+        name = f"{mnemonic.lower()}_register_immediate_{self.register.name.lower()}"
 
-        return lines
+        payload = ["    " + line for line in payload]
+        payload = "\n".join(payload)
+
+        header = inspect.cleandoc(
+            f"""
+            bool {name}(struct SPC_State* state, uint32_t cycle)
+            {{
+                struct CPU_State* cpu = &state->cpu;
+
+                assert(cycle == 2);
+                cpu->operands[0] = bus_read(state, cpu->pc++);
+                cpu->data8 = cpu->operands[0];
+            """
+        )
+        footer = inspect.cleandoc(
+            f"""
+                return true;
+            }}
+            """
+        )
+
+        return f"{header}\n{payload}\n{footer}".splitlines()
 
 
 class Instruction:
@@ -165,6 +171,7 @@ def check_missing_opcodes():
 
 
 def main():
+    # instructions[0x28].print()
     for op in instructions:
         instructions[op].print()
         print()
