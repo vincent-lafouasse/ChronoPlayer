@@ -110,15 +110,25 @@ def logic_op_payload(reg, op, data):
 
 instructions = dict()
 
+instructions[0x08] = Instruction(
+    "OR",
+    RegisterImmediate(Register.A),
+    logic_op_payload("a", "|", "cpu->data8"),
+)
 instructions[0x28] = Instruction(
     "AND",
     RegisterImmediate(Register.A),
     logic_op_payload("a", "&", "cpu->data8"),
 )
+instructions[0x48] = Instruction(
+    "EOR",
+    RegisterImmediate(Register.A),
+    logic_op_payload("a", "^", "cpu->data8"),
+)
 
 for op in instructions:
     instructions[op].print()
-
+    print()
 
 
 def check_missing_opcodes():
