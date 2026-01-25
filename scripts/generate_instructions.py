@@ -57,8 +57,14 @@ class RegisterImmediate(AddressingMode):
             f"bool {mnemonic}{self.prefix()}(struct SPC_State* state, uint32_t cycle)"
         )
         print("{")
+        print("    struct CPU_State* cpu = &state->cpu;")
+        print("    assert(cycle == 2);")
+        print("    cpu->operands[0] = bus_read(state, cpu->pc++);")
+        for instruction in payload:
+            print(f"    {instruction};")
+        print("    return true;")
         print("}")
 
 
 mode = RegisterImmediate(Register.X)
-mode.render("and", "foo_bar();")
+mode.render("and", {"foo_bar()"})
