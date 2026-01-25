@@ -76,7 +76,7 @@ class Instruction:
         print("\n".join(self.render()))
 
 
-def logic_operation(reg, op, data):
+def logic_op_payload(reg, op, data):
     return (
         f"cpu->{reg} {op}= {data}",
         f"psw_write_zero(cpu, (cpu->{reg} == 0))",
@@ -89,7 +89,7 @@ instructions = dict()
 instructions[0x28] = Instruction(
     "and",
     RegisterImmediate(Register.A),
-    logic_operation("a", "&", "operands[0]"),
+    logic_op_payload("a", "&", "operands[0]"),
 )
 instructions[0x28].print()
 
