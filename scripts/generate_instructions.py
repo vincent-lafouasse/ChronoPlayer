@@ -29,7 +29,7 @@ class AddressingMode:
         raise ValueError("cannot render base class")
 
 
-# puts the data in data8
+# puts the data in data8[0]
 class RegisterImmediate(AddressingMode):
     """
     1 Register, Immediate -- A,#i; X,#i; Y,#i
@@ -67,7 +67,7 @@ class RegisterImmediate(AddressingMode):
 
                 assert(cycle == 2);
                 cpu->operands[0] = bus_read(state, cpu->pc++);
-                cpu->data8 = cpu->operands[0];
+                cpu->data8[0] = cpu->operands[0];
             """
         )
         footer = inspect.cleandoc(
@@ -214,7 +214,7 @@ add_instruction(
     TemplateInstruction(
         "OR",
         RegisterImmediate(Register.A),
-        logic_op_payload("a", "|", "cpu->data8"),
+        logic_op_payload("a", "|", "cpu->data8[0]"),
     ),
 )
 add_instruction(
@@ -222,7 +222,7 @@ add_instruction(
     TemplateInstruction(
         "AND",
         RegisterImmediate(Register.A),
-        logic_op_payload("a", "&", "cpu->data8"),
+        logic_op_payload("a", "&", "cpu->data8[0]"),
     ),
 )
 add_instruction(
@@ -230,7 +230,7 @@ add_instruction(
     TemplateInstruction(
         "EOR",
         RegisterImmediate(Register.A),
-        logic_op_payload("a", "^", "cpu->data8"),
+        logic_op_payload("a", "^", "cpu->data8[0]"),
     ),
 )
 add_instruction(
@@ -238,7 +238,7 @@ add_instruction(
     TemplateInstruction(
         "MOV",
         RegisterImmediate(Register.A),
-        write_register("a", "cpu->data8", is_16bit=False, updates_flags=True),
+        write_register("a", "cpu->data8[0]", is_16bit=False, updates_flags=True),
     ),
 )
 
@@ -247,7 +247,7 @@ add_instruction(
     TemplateInstruction(
         "MOV",
         RegisterImmediate(Register.Y),
-        write_register("y", "cpu->data8", is_16bit=False, updates_flags=True),
+        write_register("y", "cpu->data8[0]", is_16bit=False, updates_flags=True),
     ),
 )
 add_instruction(
@@ -255,7 +255,7 @@ add_instruction(
     TemplateInstruction(
         "MOV",
         RegisterImmediate(Register.X),
-        write_register("x", "cpu->data8", is_16bit=False, updates_flags=True),
+        write_register("x", "cpu->data8[0]", is_16bit=False, updates_flags=True),
     ),
 )
 
