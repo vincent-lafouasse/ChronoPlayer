@@ -87,6 +87,21 @@ def check_zero_neg(value_expr, is_16bit=False):
     ]
 
 
+def check_half_carry_addition(a, b, is_16bit=False):
+    mask = "0x0fff" if is_16bit else "0x0f"
+    return (
+        "{",
+        f"    uint32_t val_a = ({a}) & {mask};",
+        f"    uint32_t val_b = ({b}) & {mask};",
+        "    uint32_t carry  = psw_carry(cpu);",
+        "",
+        "    uint32_t nibble_sum = val_a + val_b + carry;",
+        "",
+        f"    psw_write_half_carry(cpu, nibble_sum > {mask});",
+        "}",
+    )
+
+
 def logic_op_payload(reg, op, data):
     dest = f"cpu->{reg}"
 
