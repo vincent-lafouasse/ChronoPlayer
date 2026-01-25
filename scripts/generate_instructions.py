@@ -42,8 +42,6 @@ class RegisterImmediate(AddressingMode):
         self.register = register
 
     def render(self, mnemonic, payload):
-        payload = [line.format(reg=self.register.name.lower()) for line in payload]
-
         lines = []
         lines.append(
             f"bool {mnemonic}_register_immediate_{self.register.name.lower()}(struct SPC_State* state, uint32_t cycle)"
@@ -57,7 +55,7 @@ class RegisterImmediate(AddressingMode):
         lines.append("")
         lines.append("    // payload")
         for instruction in payload:
-            lines.append(f"    {instruction};")
+            lines.append(f"    {instruction}")
         lines.append("")
         lines.append("    return true;")
         lines.append("}")
@@ -78,12 +76,21 @@ class Instruction:
         print("\n".join(self.render()))
 
 
+def check_zero_neg(value_expr, is_16bit=False):
+    mask = "0x8000" if is_16bit else "0x80"
+    return [
+        "{",
+        f"    uint16_t v = {value_expr};",
+        f"    psw_write_zero(cpu, v == 0);",
+        f"    psw_write_neg(cpu, v & {mask});",
+        "}",
+    ]
+
+
 def logic_op_payload(reg, op, data):
-    return (
-        f"cpu->{reg} {op}= {data}",
-        f"psw_write_zero(cpu, (cpu->{reg} == 0))",
-        f"psw_write_neg(cpu, (cpu->{reg} & 0x80))",
-    )
+    dest = f"cpu->{reg}"
+
+    return [f"{dest} {op}= {data}"] + check_zero_neg(dest)
 
 
 instructions = dict()
