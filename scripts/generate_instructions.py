@@ -77,6 +77,9 @@ class Instruction:
         self.mode = mode
         self.payload = payload
 
+    def declaration(self):
+        return self.mode.declaration(self.mnemonic)
+
     def render(self):
         lines = self.mode.render(self.mnemonic, self.payload)
         return "\n".join(lines)
