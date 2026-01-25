@@ -42,8 +42,9 @@ class RegisterImmediate(AddressingMode):
             )
         self.register = register
 
-    def name(self, mnemonic):
-        return "{mnemonic.lower()}_register_immediate_{self.register.name.lower()}"
+    def declaration(self, mnemonic):
+        name = f"{mnemonic.lower()}_register_immediate_{self.register.name.lower()}"
+        return f"bool {name}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def render(self, mnemonic, payload):
         payload = ["    " + line for line in payload]
@@ -51,7 +52,7 @@ class RegisterImmediate(AddressingMode):
 
         header = inspect.cleandoc(
             f"""
-            bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)
+            {self.declaration(mnemonic)}
             {{
                 struct CPU_State* const cpu = &state->cpu;
 
