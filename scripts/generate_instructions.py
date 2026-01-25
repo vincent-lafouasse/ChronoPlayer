@@ -134,38 +134,40 @@ def check_zero_neg(value_expr, is_16bit=False):
     ).splitlines()
 
 
-def check_addition_psw(a, b, res, is_16bit=False):
-    mask_sign = "0x8000" if is_16bit else "0x80"
-    mask_h = "0x0fff" if is_16bit else "0x0f"
-    limit = "0xffff" if is_16bit else "0xff"
+# put the result in data8[0]
+def do_add8_and_check_psw(a, b):
+    mask_sign = "0x80"
+    mask_h = "0x0f"
+    limit = "0xff"
 
-    return (
-        inspect.cleandoc(
-            f"""
+    return inspect.cleandoc(
+        f"""
         {{
-            const uint32_t val_a = (uint32_t)({a});
-            const uint32_t val_b = (uint32_t)({b});
-            const uint32_t val_r = (uint32_t)({res});
+            {trace_source()}
+            const uint32_t operand_a = (uint32_t)({a});
+            const uint32_t operand_b = (uint32_t)({b});
             const uint32_t c_in  = psw_carry(cpu);
         
             // half-carry check: sum of nibbles exceeds mask
-            const uint32_t h_sum = (val_a & {mask_h}) + (val_b & {mask_h}) + c_in;
+            const uint32_t h_sum = (operand_a & {mask_h}) + (operand_b & {mask_h}) + c_in;
             psw_write_half_carry(cpu, h_sum > {mask_h});
         
-            psw_write_carry(cpu, val_r > {limit});
+            const uint32_t full_res = operand_a + operand_b + c_in;
+            psw_write_carry(cpu, full_res > {limit});
         
             // overflow if (pos + pos = neg) or (neg + neg = pos)
-            const bool v = ~((val_a) ^ (val_b)) & ((val_a) ^ (val_r)) & {mask_sign};
+            const bool v = ~((operand_a) ^ (operand_b)) & ((operand_a) ^ (full_res)) & {mask_sign};
             psw_write_overflow(cpu, v);
         
             // Zero & Negative
-            psw_write_zero(cpu, (val_r & {limit}) == 0);
-            psw_write_neg(cpu, val_r & {mask_sign});
+            psw_write_zero(cpu, (full_res & {limit}) == 0);
+            psw_write_neg(cpu, full_res & {mask_sign});
+
+            // cache back the 8bit result for assignment
+            cpu->data8[0] = full_res & {limit};
         }}
         """
-        ).splitlines()
-        + check_zero_neg(res, is_16bit)
-    )
+    ).splitlines()
 
 
 def logic_op_payload(reg, op, data):
@@ -231,6 +233,15 @@ add_instruction(
         "EOR",
         RegisterImmediate(Register.A),
         logic_op_payload("a", "^", "cpu->data8[0]"),
+    ),
+)
+add_instruction(
+    0x88,
+    TemplateInstruction(
+        "ADC",
+        RegisterImmediate(Register.A),
+        do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
+        + [trace_source(), "cpu->a = cpu->data8[0];"],
     ),
 )
 add_instruction(
