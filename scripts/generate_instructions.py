@@ -44,7 +44,7 @@ class RegisterImmediate(AddressingMode):
     def render(self, mnemonic, payload):
         lines = []
         lines.append(
-            f"bool {mnemonic}_register_immediate_{self.register.name.lower()}(struct SPC_State* state, uint32_t cycle)"
+            f"bool {mnemonic.lower()}_register_immediate_{self.register.name.lower()}(struct SPC_State* state, uint32_t cycle)"
         )
         lines.append("{")
         lines.append("    struct CPU_State* cpu = &state->cpu;")
@@ -111,11 +111,14 @@ def logic_op_payload(reg, op, data):
 instructions = dict()
 
 instructions[0x28] = Instruction(
-    "and",
+    "AND",
     RegisterImmediate(Register.A),
     logic_op_payload("a", "&", "cpu->data8"),
 )
-instructions[0x28].print()
+
+for op in instructions:
+    instructions[op].print()
+
 
 
 def check_missing_opcodes():
