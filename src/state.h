@@ -8,9 +8,14 @@ struct CPU_State {
     uint16_t pc;
     uint8_t status;
 
+    // raw data
     uint64_t instruction_cycle;
     uint8_t opcode;
     uint8_t operands[2];
+
+    // cache for instruction execution
+    uint8_t data8[2];
+    uint16_t data16;
     uint16_t addr;
 
     uint64_t total_cycles;
