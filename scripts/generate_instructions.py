@@ -72,8 +72,22 @@ class RegisterImmediate(AddressingMode):
 
 
 class Instruction:
-    def __init__(self, mnemonic, mode, payload):
+    def __init__(self, mnemonic):
         self.mnemonic = mnemonic
+
+    def declaration(self):
+        raise NotImplementedError("can't call base Instruction.declaration()")
+
+    def render(self):
+        raise NotImplementedError("can't call base Instruction.render()")
+
+    def print(self):
+        print(self.render())
+
+
+class TemplateInstruction(Instruction):
+    def __init__(self, mnemonic, mode, payload):
+        super().__init__(mnemonic)
         self.mode = mode
         self.payload = payload
 
@@ -83,9 +97,6 @@ class Instruction:
     def render(self):
         lines = self.mode.render(self.mnemonic, self.payload)
         return "\n".join(lines)
-
-    def print(self):
-        print(self.render())
 
 
 def check_zero_neg(value_expr, is_16bit=False):
@@ -141,7 +152,7 @@ def add_instruction(op, instruction):
 
 add_instruction(
     0x08,
-    Instruction(
+    TemplateInstruction(
         "OR",
         RegisterImmediate(Register.A),
         logic_op_payload("a", "|", "cpu->data8"),
@@ -149,7 +160,7 @@ add_instruction(
 )
 add_instruction(
     0x28,
-    Instruction(
+    TemplateInstruction(
         "AND",
         RegisterImmediate(Register.A),
         logic_op_payload("a", "&", "cpu->data8"),
@@ -157,7 +168,7 @@ add_instruction(
 )
 add_instruction(
     0x48,
-    Instruction(
+    TemplateInstruction(
         "EOR",
         RegisterImmediate(Register.A),
         logic_op_payload("a", "^", "cpu->data8"),
