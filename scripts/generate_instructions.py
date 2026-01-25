@@ -60,11 +60,20 @@ class RegisterImmediate(AddressingMode):
         print("    struct CPU_State* cpu = &state->cpu;")
         print("    assert(cycle == 2);")
         print("    cpu->operands[0] = bus_read(state, cpu->pc++);")
+        print("\n    // payload")
         for instruction in payload:
             print(f"    {instruction};")
+        print()
         print("    return true;")
         print("}")
 
 
 mode = RegisterImmediate(Register.X)
-mode.render("and", {"foo_bar()"})
+mode.render(
+    "and",
+    (
+        "cpu->x = cpu->operands[0]",
+        "psw_write_zero(cpu, (cpu->x == 0))",
+        "psw_write_neg(cpu, (cpu->x & 0x80))",
+    ),
+)
