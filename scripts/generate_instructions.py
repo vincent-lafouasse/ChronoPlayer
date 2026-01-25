@@ -50,6 +50,8 @@ class RegisterImmediate(AddressingMode):
         self.register = register
 
     def render(self, mnemonic, payload):
+        payload = [line.format(reg=self.register.name.lower()) for line in payload]
+
         lines = []
         lines.append(
             f"bool {mnemonic}_register_immediate_{self.register.name.lower()}(struct SPC_State* state, uint32_t cycle)"
@@ -69,13 +71,13 @@ class RegisterImmediate(AddressingMode):
         return lines
 
 
-mode = RegisterImmediate(Register.X)
+mode = RegisterImmediate(Register.A)
 lines = mode.render(
     "and",
     (
-        "cpu->x &= cpu->operands[0]",
-        "psw_write_zero(cpu, (cpu->x == 0))",
-        "psw_write_neg(cpu, (cpu->x & 0x80))",
+        "cpu->{reg} &= cpu->operands[0]",
+        "psw_write_zero(cpu, (cpu->{reg} == 0))",
+        "psw_write_neg(cpu, (cpu->{reg} & 0x80))",
     ),
 )
 print("\n".join(lines))
