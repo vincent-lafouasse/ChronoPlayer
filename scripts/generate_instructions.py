@@ -2,13 +2,14 @@ from typing import List, Dict, Optional, Callable
 from dataclasses import dataclass
 from enum import Enum
 import inspect
+import os
 
 
 def trace_source():
     caller_frame = inspect.stack()[1]
     filename = os.path.basename(caller_frame.filename)
     line = caller_frame.lineno
-    return f"/* generated from {filename}: {line} */"
+    return f"/* generated from {filename}: l.{line} */"
 
 
 class Register(Enum):
@@ -61,6 +62,7 @@ class RegisterImmediate(AddressingMode):
             f"""
             {self.declaration(mnemonic)}
             {{
+                {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
                 assert(cycle == 2);
