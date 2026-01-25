@@ -125,6 +125,7 @@ def check_zero_neg(value_expr, is_16bit=False):
     return inspect.cleandoc(
         f"""
         {{
+            {trace_source()}
             const uint16_t v = {value_expr};
             psw_write_zero(cpu, v == 0);
             psw_write_neg(cpu, v & {mask});
@@ -138,6 +139,7 @@ def check_half_carry_addition(a, b, is_16bit=False):
     return inspect.cleandoc(
         f"""
         {{
+            {trace_source()}
             const uint32_t val_a = ({a}) & {mask};
             const uint32_t val_b = ({b}) & {mask};
             const uint32_t carry  = psw_carry(cpu);
@@ -152,11 +154,11 @@ def check_half_carry_addition(a, b, is_16bit=False):
 def logic_op_payload(reg, op, data):
     dest = f"cpu->{reg}"
 
-    return [f"{dest} {op}= {data};"] + check_zero_neg(dest)
+    return [trace_source(), f"{dest} {op}= {data};"] + check_zero_neg(dest)
 
 
 def write_register(reg, data, is_16bit=False, updates_flags=True):
-    lines = [f"cpu->{reg} = {data};"]
+    lines = [trace_source(), f"cpu->{reg} = {data};"]
     if updates_flags:
         lines += check_zero_neg(f"cpu->{reg}", is_16bit)
     return lines
@@ -176,14 +178,15 @@ add_instruction(
     HardcodedInstruction(
         "NOP",
         inspect.cleandoc(
-            """
+            f"""
             bool nop(struct SPC_State state[static 1], uint32_t cycle)
-            {
+            {{
+                {trace_source()}
                 /* could do a dummy read but shouldn't matter */
                 assert(cycle == 2);
                 (void)state;
                 return true;
-            }
+            }}
             """
         ),
     ),
