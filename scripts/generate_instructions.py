@@ -134,21 +134,38 @@ def check_zero_neg(value_expr, is_16bit=False):
     ).splitlines()
 
 
-def check_half_carry_addition(a, b, is_16bit=False):
-    mask = "0x0fff" if is_16bit else "0x0f"
-    return inspect.cleandoc(
-        f"""
+def check_addition_psw(a, b, res, is_16bit=False):
+    mask_sign = "0x8000" if is_16bit else "0x80"
+    mask_h = "0x0fff" if is_16bit else "0x0f"
+    limit = "0xffff" if is_16bit else "0xff"
+
+    return (
+        inspect.cleandoc(
+            f"""
         {{
-            {trace_source()}
-            const uint32_t val_a = ({a}) & {mask};
-            const uint32_t val_b = ({b}) & {mask};
-            const uint32_t carry  = psw_carry(cpu);
+            const uint32_t val_a = (uint32_t)({a});
+            const uint32_t val_b = (uint32_t)({b});
+            const uint32_t val_r = (uint32_t)({res});
+            const uint32_t c_in  = psw_carry(cpu);
         
-            const uint32_t nibble_sum = val_a + val_b + carry;
-            psw_write_half_carry(cpu, nibble_sum > {mask});
+            // half-carry check: sum of nibbles exceeds mask
+            const uint32_t h_sum = (val_a & {mask_h}) + (val_b & {mask_h}) + c_in;
+            psw_write_half_carry(cpu, h_sum > {mask_h});
+        
+            psw_write_carry(cpu, val_r > {limit});
+        
+            // overflow if (pos + pos = neg) or (neg + neg = pos)
+            const bool v = ~((val_a) ^ (val_b)) & ((val_a) ^ (val_r)) & {mask_sign};
+            psw_write_overflow(cpu, v);
+        
+            // Zero & Negative
+            psw_write_zero(cpu, (val_r & {limit}) == 0);
+            psw_write_neg(cpu, val_r & {mask_sign});
         }}
         """
-    ).splitlines
+        ).splitlines()
+        + check_zero_neg(res, is_16bit)
+    )
 
 
 def logic_op_payload(reg, op, data):
