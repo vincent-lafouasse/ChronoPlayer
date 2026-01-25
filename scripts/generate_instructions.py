@@ -52,7 +52,7 @@ class RegisterImmediate(AddressingMode):
             f"""
             bool {name}(struct SPC_State* state, uint32_t cycle)
             {{
-                struct CPU_State* cpu = &state->cpu;
+                struct CPU_State* const cpu = &state->cpu;
 
                 assert(cycle == 2);
                 cpu->operands[0] = bus_read(state, cpu->pc++);
@@ -87,7 +87,7 @@ def check_zero_neg(value_expr, is_16bit=False):
     return inspect.cleandoc(
         f"""
         {{
-            uint16_t v = {value_expr};
+            const uint16_t v = {value_expr};
             psw_write_zero(cpu, v == 0);
             psw_write_neg(cpu, v & {mask});
         }}
@@ -100,11 +100,11 @@ def check_half_carry_addition(a, b, is_16bit=False):
     return inspect.cleandoc(
         f"""
         {{
-            uint32_t val_a = ({a}) & {mask};
-            uint32_t val_b = ({b}) & {mask};
-            uint32_t carry  = psw_carry(cpu);
+            const uint32_t val_a = ({a}) & {mask};
+            const uint32_t val_b = ({b}) & {mask};
+            const uint32_t carry  = psw_carry(cpu);
         
-            uint32_t nibble_sum = val_a + val_b + carry;
+            const uint32_t nibble_sum = val_a + val_b + carry;
             psw_write_half_carry(cpu, nibble_sum > {mask});
         }}
         """
