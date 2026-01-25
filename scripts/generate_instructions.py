@@ -99,6 +99,18 @@ class TemplateInstruction(Instruction):
         return "\n".join(lines)
 
 
+class HardcodedInstruction(Instruction):
+    def __init__(self, mnemonic, body):
+        super().__init__(mnemonic)
+        self.lines = body.splitlines()
+
+    def declaration(self):
+        return self.lines[0]
+
+    def render(self):
+        return "\n".join(self.lines)
+
+
 def check_zero_neg(value_expr, is_16bit=False):
     mask = "0x8000" if is_16bit else "0x80"
     return inspect.cleandoc(
@@ -149,6 +161,24 @@ def add_instruction(op, instruction):
         raise ValueError(f"trying to overwrite opcode {hex(op)}")
     instructions[op] = instruction
 
+
+add_instruction(
+    0x00,
+    HardcodedInstruction(
+        "NOP",
+        inspect.cleandoc(
+            """
+            bool nop(struct SPC_State state[static 1], uint32_t cycle)
+            {
+                /* could do a dummy read but shouldn't matter */
+                assert(cycle == 2);
+                (void)state;
+                return true;
+            }
+            """
+        ),
+    ),
+)
 
 add_instruction(
     0x08,
