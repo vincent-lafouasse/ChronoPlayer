@@ -142,10 +142,6 @@ add_instruction(
     ),
 )
 
-for op in instructions:
-    instructions[op].print()
-    print()
-
 
 def check_missing_opcodes():
     missing = []
@@ -159,3 +155,14 @@ def check_missing_opcodes():
             print(hex(op), ", ", end="")
         print()
         print(f"{len(missing)} missing")
+
+
+def main():
+    for op in instructions:
+        instructions[op].print()
+        print()
+    print(f"missing: {256 - len(instructions)}")
+
+
+if __name__ == "__main__":
+    main()
