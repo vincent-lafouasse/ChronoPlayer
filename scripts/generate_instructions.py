@@ -85,15 +85,19 @@ class Instruction:
         print("\n".join(self.render()))
 
 
+def logic_operation(reg, op, data):
+    return (
+        f"cpu->{reg} {op}= {data}",
+        f"psw_write_zero(cpu, (cpu->{reg} == 0))",
+        f"psw_write_neg(cpu, (cpu->{reg} & 0x80))",
+    )
+
+
 instructions = dict()
 
 instructions[0x28] = Instruction(
     "and",
     RegisterImmediate(Register.A),
-    (
-        "cpu->{reg} &= cpu->operands[0]",
-        "psw_write_zero(cpu, (cpu->{reg} == 0))",
-        "psw_write_neg(cpu, (cpu->{reg} & 0x80))",
-    ),
+    logic_operation("a", "&", "operands[0]"),
 )
 instructions[0x28].print()
