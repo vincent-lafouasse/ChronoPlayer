@@ -16,8 +16,8 @@ class AddressingMode:
     def __init__(self):
         pass
 
-    def render(self):
-        pass
+    def render(self, mnemonic, payload):
+        raise ValueError("cannot render base class")
 
 
 class RegisterImmediate(AddressingMode):
