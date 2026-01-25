@@ -77,7 +77,7 @@ class RegisterImmediate(AddressingMode):
             """
         )
 
-        return f"{header}\n{payload}\n{footer}".splitlines()
+        return f"{header}\n\n{payload}\n{footer}".splitlines()
 
 
 class Instruction:
