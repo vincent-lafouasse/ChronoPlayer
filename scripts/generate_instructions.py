@@ -104,12 +104,17 @@ instructions[0x28].print()
 
 
 def check_missing_opcodes():
-    count = 0
+    missing = []
     for op in range(255):
         if op not in instructions:
-            print(f"missing opcode: 0x{hex(op)}")
-            count += 1
-    print(f"\ntotal missing: {count}")
+            missing.append(op)
+    if len(missing) == 0:
+        print("all opcodes accounted for")
+    else:
+        for op in missing:
+            print(hex(op), ", ", end="")
+        print()
+        print(f"{len(missing)} missing")
 
 
 # check_missing_opcodes()
