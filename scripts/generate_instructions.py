@@ -285,11 +285,38 @@ def check_missing_opcodes():
         print(f"{len(missing)} missing")
 
 
+C_IMPLEM = "instructions.gen.c"
+HEADER = "instructions.gen.h"
+DIR = "./src/"
+
+
+def make_header():
+    with open(DIR + HEADER, "w") as f:
+        f.write(
+            inspect.cleandoc(
+                f"""
+            {trace_source()}
+            // clang-format off
+            #pragma once
+
+            #include <stdbool.h>
+
+            #include "state.h"
+            """
+            )
+        )
+        f.write("\n\n")
+
+        # TODO: maybe go by columns
+        for op in instructions:
+            instr = instructions[op]
+            f.write(f"extern {instr.declaration()};\n")
+
+        f.write("// clang-format on\n")
+
+
 def main():
-    # instructions[0x28].print()
-    for op in instructions:
-        instructions[op].print()
-        print()
+    make_header()
     print(f"missing: {256 - len(instructions)}")
 
 
