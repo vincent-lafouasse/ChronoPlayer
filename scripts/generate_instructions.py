@@ -92,3 +92,15 @@ instructions[0x28] = Instruction(
     logic_operation("a", "&", "operands[0]"),
 )
 instructions[0x28].print()
+
+
+def check_missing_opcodes():
+    count = 0
+    for op in range(255):
+        if op not in instructions:
+            print(f"missing opcode: 0x{hex(op)}")
+            count += 1
+    print(f"\ntotal missing: {count}")
+
+
+# check_missing_opcodes()
