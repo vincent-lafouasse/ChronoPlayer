@@ -326,6 +326,8 @@ def make_implementation():
             #include "{HEADER}"
 
             #include <assert.h>
+
+            #include "cpu.h"
             """
             )
         )

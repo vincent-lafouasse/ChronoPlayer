@@ -5,6 +5,8 @@
 
 #include <assert.h>
 
+#include "cpu.h"
+
 bool nop(struct SPC_State state[static 1], uint32_t cycle)
 {
     /* generated from generate_instructions.py: l.203 */
