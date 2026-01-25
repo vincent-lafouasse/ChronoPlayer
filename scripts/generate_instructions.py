@@ -90,7 +90,7 @@ def check_zero_neg(value_expr, is_16bit=False):
 def logic_op_payload(reg, op, data):
     dest = f"cpu->{reg}"
 
-    return [f"{dest} {op}= {data}"] + check_zero_neg(dest)
+    return [f"{dest} {op}= {data};"] + check_zero_neg(dest)
 
 
 instructions = dict()
