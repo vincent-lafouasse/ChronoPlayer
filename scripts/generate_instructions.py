@@ -7,4 +7,5 @@ class OpcodeMetadata:
     mnemonic: str  # LDA STY etc
     cycles: int
     length: int  # number of bytes
-    operation: str  # C code as a string
+    addressing_mode: str  # bus access pattern
+    operation: str  # payload after bus access, e.g. bus write or register write
