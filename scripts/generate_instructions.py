@@ -110,20 +110,36 @@ def logic_op_payload(reg, op, data):
 
 instructions = dict()
 
-instructions[0x08] = Instruction(
-    "OR",
-    RegisterImmediate(Register.A),
-    logic_op_payload("a", "|", "cpu->data8"),
+
+def add_instruction(op, instruction):
+    if op in instructions and instructions[op] != instruction:
+        raise ValueError(f"trying to overwrite opcode {hex(op)}")
+    instructions[op] = instruction
+
+
+add_instruction(
+    0x08,
+    Instruction(
+        "OR",
+        RegisterImmediate(Register.A),
+        logic_op_payload("a", "|", "cpu->data8"),
+    ),
 )
-instructions[0x28] = Instruction(
-    "AND",
-    RegisterImmediate(Register.A),
-    logic_op_payload("a", "&", "cpu->data8"),
+add_instruction(
+    0x28,
+    Instruction(
+        "AND",
+        RegisterImmediate(Register.A),
+        logic_op_payload("a", "&", "cpu->data8"),
+    ),
 )
-instructions[0x48] = Instruction(
-    "EOR",
-    RegisterImmediate(Register.A),
-    logic_op_payload("a", "^", "cpu->data8"),
+add_instruction(
+    0x48,
+    Instruction(
+        "EOR",
+        RegisterImmediate(Register.A),
+        logic_op_payload("a", "^", "cpu->data8"),
+    ),
 )
 
 for op in instructions:
@@ -143,6 +159,3 @@ def check_missing_opcodes():
             print(hex(op), ", ", end="")
         print()
         print(f"{len(missing)} missing")
-
-
-# check_missing_opcodes()
