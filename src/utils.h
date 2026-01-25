@@ -6,6 +6,15 @@
 #define MSB_U16(x) ((uint8_t)((x) >> 8))
 #define LSB_U16(x) ((uint8_t)((x) & 0xff))
 
+#define FLAG_AT(x, m) (!!((x) & (m)))
+
+#define FLAG_SET(x, m) ((x) |= (uint8_t)(m))
+#define FLAG_CLEAR(x, m) ((x) &= (uint8_t) ~(m))
+#define FLAG_TOGGLE(x, m) ((x) ^= (uint8_t)(m))
+
+#define FLAG_WRITE(x, m, b) \
+    ((x) = ((x) & (uint8_t) ~(m)) | ((b) ? (uint8_t)(m) : 0))
+
 #define BIT(i) (1u << (i))
 
 #define BIT_AT(x, i) (((x) >> (i)) & 1u)
