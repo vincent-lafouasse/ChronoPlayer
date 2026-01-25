@@ -84,28 +84,31 @@ class Instruction:
 
 def check_zero_neg(value_expr, is_16bit=False):
     mask = "0x8000" if is_16bit else "0x80"
-    return [
-        "{",
-        f"    uint16_t v = {value_expr};",
-        f"    psw_write_zero(cpu, v == 0);",
-        f"    psw_write_neg(cpu, v & {mask});",
-        "}",
-    ]
+    return inspect.cleandoc(
+        f"""
+        {{
+            uint16_t v = {value_expr};
+            psw_write_zero(cpu, v == 0);
+            psw_write_neg(cpu, v & {mask});
+        }}
+        """
+    ).splitlines()
 
 
 def check_half_carry_addition(a, b, is_16bit=False):
     mask = "0x0fff" if is_16bit else "0x0f"
-    return (
-        "{",
-        f"    uint32_t val_a = ({a}) & {mask};",
-        f"    uint32_t val_b = ({b}) & {mask};",
-        "    uint32_t carry  = psw_carry(cpu);",
-        "",
-        "    uint32_t nibble_sum = val_a + val_b + carry;",
-        "",
-        f"    psw_write_half_carry(cpu, nibble_sum > {mask});",
-        "}",
-    )
+    return inspect.cleandoc(
+        f"""
+        {{
+            uint32_t val_a = ({a}) & {mask};
+            uint32_t val_b = ({b}) & {mask};
+            uint32_t carry  = psw_carry(cpu);
+        
+            uint32_t nibble_sum = val_a + val_b + carry;
+            psw_write_half_carry(cpu, nibble_sum > {mask});
+        }}
+        """
+    ).splitlines
 
 
 def logic_op_payload(reg, op, data):
