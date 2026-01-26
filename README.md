@@ -4,7 +4,7 @@ I love Chrono Trigger
 
 ## dedication
 
-this project is dedicated to Near/Byuu (1983 – 2021). their work on the `bsnes` emulator and `higan` collection set a standard for accuracy and i greatly appreciate their efforts to preserve the SNES.
+this project is dedicated to Near/byuu (1983 – 2021). their work on the `bsnes` emulator and `higan` collection set a standard for accuracy and i greatly appreciate their efforts to preserve the SNES.
 
 this is for them.
 
