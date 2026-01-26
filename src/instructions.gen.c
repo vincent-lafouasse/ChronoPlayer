@@ -6,6 +6,7 @@
 #include <assert.h>
 
 #include "cpu.h"
+#include "bus_io.h"
 
 bool nop(struct SPC_State state[static 1], uint32_t cycle)
 {
