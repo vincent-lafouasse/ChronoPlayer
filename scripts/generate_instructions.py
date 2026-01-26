@@ -56,6 +56,7 @@ class RegisterImmediate(AddressingMode):
 
     def render(self, mnemonic, payload):
         payload = ["    " + line for line in payload]
+        payload = [line.rstrip() for line in payload]
         payload = "\n".join(payload)
 
         header = inspect.cleandoc(
