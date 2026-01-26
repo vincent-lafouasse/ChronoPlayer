@@ -1,5 +1,7 @@
 #include "bus_io.h"
 
+#include <stdbool.h>
+
 /*
 SPC700 Memory Map
   0000h..00EFh  RAM (typically used for CPU pointers/variables)
