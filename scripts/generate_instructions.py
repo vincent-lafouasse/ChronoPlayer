@@ -296,7 +296,6 @@ def make_header():
             inspect.cleandoc(
                 f"""
             {trace_source()}
-            // clang-format off
             #pragma once
 
             #include <stdbool.h>
@@ -317,8 +316,6 @@ def make_header():
                 f.write(f"extern {instr.declaration()};\n")
             f.write("\n")  # sep. the columns
 
-        f.write("// clang-format on\n")
-
 
 def make_implementation():
     with open(DIR + C_IMPLEM, "w") as f:
@@ -326,7 +323,6 @@ def make_implementation():
             inspect.cleandoc(
                 f"""
             {trace_source()}
-            // clang-format off
 
             #include "{HEADER}"
 
@@ -348,8 +344,6 @@ def make_implementation():
                 f.write(f"/* {op:#04x} */\n")
                 f.write(f"{instr.render()}\n\n")
             f.write("\n")  # sep. the columns
-
-        f.write("// clang-format on\n")
 
 
 def main():

@@ -1,5 +1,4 @@
-/* generated from generate_instructions.py: l.328 */
-// clang-format off
+/* generated from generate_instructions.py: l.326 */
 
 #include "instructions.gen.h"
 
@@ -199,4 +198,3 @@ bool mov_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle)
 
 
 
-// clang-format on

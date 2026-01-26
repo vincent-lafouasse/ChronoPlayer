@@ -1,5 +1,4 @@
 /* generated from generate_instructions.py: l.298 */
-// clang-format off
 #pragma once
 
 #include <stdbool.h>
@@ -38,4 +37,3 @@ extern bool mov_register_immediate_x(struct SPC_State state[static 1], uint32_t 
 
 
 
-// clang-format on
