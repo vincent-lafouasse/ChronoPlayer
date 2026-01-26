@@ -1,8 +1,10 @@
 #pragma once
 
+#include <stdbool.h>
 #include <stddef.h>
 
 #include "state.h"
+#include "utils.h"
 
 /*
   Bit7  N  Sign Flag          (0=Positive, 1=Negative)
@@ -33,6 +35,19 @@
 #define PSW_I PSW_INTERRUPT_ENABLE
 #define PSW_Z PSW_ZERO
 #define PSW_C PSW_CARRY
+
+#define IMPLEM_PSW_WRITE(flag, name)                                      \
+    static inline void psw_write_##name##(struct CPU_State cpu[static 1], \
+                                          bool val)                       \
+    {                                                                     \
+        FLAG_WRITE(cpu->status, (flag), val);                             \
+    }
+
+IMPLEM_PSW_WRITE(PSW_ZERO, zero)
+IMPLEM_PSW_WRITE(PSW_SIGN, neg)
+IMPLEM_PSW_WRITE(PSW_CARRY, carry)
+IMPLEM_PSW_WRITE(PSW_OVERFLOW, overflow)
+IMPLEM_PSW_WRITE(PSW_HALF_CARRY, half_carry)
 
 void cpu_init(struct CPU_State* cpu);
 int cpu_step(struct CPU_State* cpu, uint8_t* ram, void* dsp);
