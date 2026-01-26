@@ -49,6 +49,18 @@ IMPLEM_PSW_WRITE(PSW_CARRY, carry)
 IMPLEM_PSW_WRITE(PSW_OVERFLOW, overflow)
 IMPLEM_PSW_WRITE(PSW_HALF_CARRY, half_carry)
 
+#define IMPLEM_PSW_READ(flag, name)                                  \
+    static inline uint8_t psw_##name(struct CPU_State cpu[static 1]) \
+    {                                                                \
+        return FLAG_AT(cpu->status, (flag));                         \
+    }
+
+IMPLEM_PSW_READ(PSW_ZERO, zero)
+IMPLEM_PSW_READ(PSW_SIGN, neg)
+IMPLEM_PSW_READ(PSW_CARRY, carry)
+IMPLEM_PSW_READ(PSW_OVERFLOW, overflow)
+IMPLEM_PSW_READ(PSW_HALF_CARRY, half_carry)
+
 void cpu_init(struct CPU_State* cpu);
 int cpu_step(struct CPU_State* cpu, uint8_t* ram, void* dsp);
 
