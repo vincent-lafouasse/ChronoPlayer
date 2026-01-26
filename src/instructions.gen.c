@@ -8,6 +8,7 @@
 #include "cpu.h"
 #include "bus_io.h"
 
+/* 0x00 */
 bool nop(struct SPC_State state[static 1], uint32_t cycle)
 {
     /* generated from generate_instructions.py: l.204 */
@@ -17,6 +18,15 @@ bool nop(struct SPC_State state[static 1], uint32_t cycle)
     return true;
 }
 
+
+
+
+
+
+
+
+
+/* 0x08 */
 bool or_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
     /* generated from generate_instructions.py: l.66 */
@@ -37,6 +47,7 @@ bool or_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     return true;
 }
 
+/* 0x28 */
 bool and_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
     /* generated from generate_instructions.py: l.66 */
@@ -57,6 +68,7 @@ bool and_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     return true;
 }
 
+/* 0x48 */
 bool eor_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
     /* generated from generate_instructions.py: l.66 */
@@ -77,6 +89,7 @@ bool eor_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     return true;
 }
 
+/* 0x88 */
 bool adc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
     /* generated from generate_instructions.py: l.66 */
@@ -115,6 +128,7 @@ bool adc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     return true;
 }
 
+/* 0xe8 */
 bool mov_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
     /* generated from generate_instructions.py: l.66 */
@@ -135,6 +149,12 @@ bool mov_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     return true;
 }
 
+
+
+
+
+
+/* 0x8d */
 bool mov_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle)
 {
     /* generated from generate_instructions.py: l.66 */
@@ -155,6 +175,7 @@ bool mov_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle)
     return true;
 }
 
+/* 0xcd */
 bool mov_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle)
 {
     /* generated from generate_instructions.py: l.66 */
@@ -174,5 +195,8 @@ bool mov_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle)
     }
     return true;
 }
+
+
+
 
 // clang-format on
