@@ -60,6 +60,13 @@ IMPLEM_PSW_READ(PSW_SIGN, neg)
 IMPLEM_PSW_READ(PSW_CARRY, carry)
 IMPLEM_PSW_READ(PSW_OVERFLOW, overflow)
 IMPLEM_PSW_READ(PSW_HALF_CARRY, half_carry)
+IMPLEM_PSW_READ(PSW_ZP_LOC, direct_page)
+
+static inline uint16_t direct_page(struct CPU_State cpu[static 1],
+                                   uint8_t offset)
+{
+    return PARSE_U16(offset, psw_direct_page(cpu));
+}
 
 void cpu_init(struct CPU_State* cpu);
 int cpu_step(struct CPU_State* cpu, uint8_t* ram, void* dsp);
