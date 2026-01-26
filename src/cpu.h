@@ -36,11 +36,11 @@
 #define PSW_Z PSW_ZERO
 #define PSW_C PSW_CARRY
 
-#define IMPLEM_PSW_WRITE(flag, name)                                      \
-    static inline void psw_write_##name##(struct CPU_State cpu[static 1], \
-                                          bool val)                       \
-    {                                                                     \
-        FLAG_WRITE(cpu->status, (flag), val);                             \
+#define IMPLEM_PSW_WRITE(flag, name)                                    \
+    static inline void psw_write_##name(struct CPU_State cpu[static 1], \
+                                        bool val)                       \
+    {                                                                   \
+        FLAG_WRITE(cpu->status, (flag), val);                           \
     }
 
 IMPLEM_PSW_WRITE(PSW_ZERO, zero)
