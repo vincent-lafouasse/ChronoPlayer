@@ -308,10 +308,15 @@ def make_header():
         )
         f.write("\n\n")
 
-        # TODO: maybe go by columns
-        for op in instructions:
-            instr = instructions[op]
-            f.write(f"extern {instr.declaration()};\n")
+        for lsb in range(16):
+            for msb in range(16):
+                op = lsb + msb * 16
+                if op not in instructions:
+                    continue
+                instr = instructions[op]
+                f.write(f"/* {op:#04x} */\n")
+                f.write(f"extern {instr.declaration()};\n")
+            f.write("\n")  # sep. the columns
 
         f.write("// clang-format on\n")
 
