@@ -1,5 +1,3 @@
-from typing import List, Dict, Optional, Callable
-from dataclasses import dataclass
 from enum import Enum
 import inspect
 import os
@@ -43,6 +41,7 @@ class RegisterImmediate(AddressingMode):
     """
 
     def __init__(self, register):
+        super().__init__()
         allowed_registers = [Register.A, Register.X, Register.Y]
         if register not in allowed_registers:
             raise ValueError(
