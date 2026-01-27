@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 import inspect
 import os
 
@@ -10,13 +10,13 @@ def trace_source():
     return f"/* generated from {filename}: l.{line} */"
 
 
-class Register(Enum):
-    A = 1
-    X = 2
-    Y = 3
-    SP = 4
-    PSW = 5
-    YA = 6
+class Register(StrEnum):
+    A = "a"
+    X = "x"
+    Y = "y"
+    SP = "sp"
+    PSW = "status"
+    YA = "ya"
 
 
 class AddressingMode:
@@ -44,13 +44,11 @@ class RegisterImmediate(AddressingMode):
         super().__init__()
         allowed_registers = [Register.A, Register.X, Register.Y]
         if register not in allowed_registers:
-            raise ValueError(
-                f"Disallowed register for Register, Immediate: {register.name}"
-            )
+            raise ValueError(f"Disallowed register for Register, Immediate: {register}")
         self.register = register
 
     def declaration(self, mnemonic):
-        name = f"{mnemonic.lower()}_register_immediate_{self.register.name.lower()}"
+        name = f"{mnemonic.lower()}_register_immediate_{self.register}"
         return f"bool {name}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def render(self, mnemonic, payload):
