@@ -326,8 +326,8 @@ def make_implementation():
 
             #include <assert.h>
 
-            #include "cpu.h"
             #include "bus_io.h"
+            #include "cpu.h"
             """
             )
         )
