@@ -1,4 +1,4 @@
-from enum import StrEnum
+from enum import StrEnum, Enum
 import inspect
 import os
 
@@ -17,6 +17,19 @@ class Register(StrEnum):
     SP = "sp"
     PSW = "status"
     YA = "ya"
+
+
+class PSW(StrEnum):
+    Zero = "zero"
+    Sign = "neg"
+    Carry = "carry"
+    Overflow = "overflow"
+    HalfCarry = "half_carry"
+
+
+class BitOp(Enum):
+    Set = 1
+    Clear = 0
 
 
 class AddressingMode:
@@ -116,6 +129,19 @@ class HardcodedInstruction(Instruction):
 
     def render(self):
         return "\n".join(self.lines)
+
+
+class PswInstruction(Instruction):
+    def __init__(self, flag, op):
+        super().__init__(mnemonic)
+        self.flag = flag
+        self.op = op
+
+    def declaration(self):
+        pass
+
+    def render(self):
+        pass
 
 
 def check_zero_neg(value_expr, is_16bit=False):
