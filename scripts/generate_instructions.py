@@ -58,6 +58,195 @@ class AddressingMode:
         raise ValueError("cannot render base class")
 
 
+class Instruction:
+    def __init__(self, mnemonic):
+        self.mnemonic = mnemonic
+
+    def name(self):
+        raise NotImplementedError("can't call base Instruction.name()")
+
+    def full_mnemonic(self):
+        raise NotImplementedError("can't call base Instruction.full_mnemonic()")
+
+    def declaration(self):
+        return f"bool {self.name()}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def render(self):
+        raise NotImplementedError("can't call base Instruction.render()")
+
+    def print(self):
+        print(self.render())
+
+
+class TemplateInstruction(Instruction):
+    def __init__(self, mnemonic, _full_mnemonic, mode, payload):
+        super().__init__(mnemonic)
+        self.mode = mode
+        self.payload = payload
+        self._full_mnemonic = _full_mnemonic
+
+    def full_mnemonic(self):
+        return self._full_mnemonic
+
+    def name(self):
+        return self.mode.name(self.mnemonic)
+
+    def render(self):
+        lines = self.mode.render(self.mnemonic, self.payload)
+        return "\n".join(lines)
+
+
+class HardcodedInstruction(Instruction):
+    def __init__(self, mnemonic, _full_mnemonic, function_name, body):
+        super().__init__(mnemonic)
+        self.function_name = function_name
+        self.lines = body.splitlines()
+        self._full_mnemonic = _full_mnemonic
+
+    def full_mnemonic(self):
+        return self._full_mnemonic
+
+    def name(self):
+        return self.function_name
+
+    def render(self):
+        return "\n".join([self.declaration()] + self.lines)
+
+
+class PswInstruction(Instruction):
+    def __init__(self, flag, op):
+        super().__init__(mnemonic)
+        self.flag = flag
+        self.op = op
+
+    def name(self):
+        pass
+
+    def render(self):
+        pass
+
+
+def check_zero_neg(value_expr, is_16bit=False):
+    mask = "0x8000" if is_16bit else "0x80"
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            const uint16_t v = {value_expr};
+            psw_write_zero(cpu, v == 0);
+            psw_write_neg(cpu, v & {mask});
+        }}
+        """
+    ).splitlines()
+
+
+# put the result in data8[0]
+def do_add8_and_check_psw(a, b):
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            const uint32_t operand_a = (uint32_t)({a});
+            const uint32_t operand_b = (uint32_t)({b});
+            const uint32_t carry     = psw_carry(cpu);
+        
+            // half-carry check: sum of nibbles overflows nibble
+            const uint32_t nibble_sum = (operand_a & 0xf) + (operand_b & 0xf) + carry;
+            psw_write_half_carry(cpu, nibble_sum > 0xf);
+        
+            const uint32_t full_res = operand_a + operand_b + carry;
+            psw_write_carry(cpu, full_res > 0xff);
+        
+            // overflow if a mathematically impossible result has happened
+            // i.e. (pos + pos = neg) or (neg + neg = pos)
+            const bool sign_a = operand_a & 0x80;
+            const bool sign_b = operand_b & 0x80;
+            const bool sign_r = full_res & 0x80;
+            const bool overflow = (sign_a == sign_b) && (sign_a != sign_r);
+            psw_write_overflow(cpu, overflow);
+        
+            psw_write_zero(cpu, (full_res & 0xff) == 0);
+            psw_write_neg(cpu, full_res & 0x80);
+
+            // cache back the 8bit result for assignment
+            cpu->data8[0] = full_res & 0xff;
+        }}
+        """
+    ).splitlines()
+
+
+# put the result in data8[0]
+def do_sub8_and_check_psw(a, b):
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            const uint32_t operand_a = (uint32_t)({a});
+            const uint32_t operand_b = (uint32_t)({b});
+            const uint32_t borrow    = !psw_carry(cpu);
+        
+            // half-borrow check: if (u4)a - (u4)b - borrow underflowed
+            // i.e. (u4)a < (u4)b + borrow
+            const bool half_borrow = (operand_a & 0xf) < (operand_b & 0xf) + borrow;
+            psw_write_half_carry(cpu, !half_borrow);
+        
+            const int32_t full_res = operand_a - operand_b - borrow;
+            // set borrow if underflowed, ie set carry if not underflowed
+            psw_write_carry(cpu, full_res >= 0x00);
+        
+            // overflow if a mathematically impossible result has happened
+            // i.e. (pos - neg = neg) or (neg - pos = pos)
+            const bool sign_a = operand_a & 0x80;
+            const bool sign_b = operand_b & 0x80;
+            const bool sign_r = full_res & 0x80;
+            const bool overflow = (sign_a != sign_b) && (sign_a != sign_r);
+            psw_write_overflow(cpu, overflow);
+        
+            psw_write_zero(cpu, (full_res & 0xff) == 0);
+            psw_write_neg(cpu, full_res & 0x80);
+
+            // cache back the 8bit result for assignment
+            cpu->data8[0] = full_res & 0xff;
+        }}
+        """
+    ).splitlines()
+
+
+def do_cmp_and_check_psw(a, b):
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            // compute (a - b), no borrow, update NZC then discard result
+            const uint8_t operand_a = (uint8_t)({a});
+            const uint8_t operand_b = (uint8_t)({b});
+            
+            // no borrow so underflow/borrow if a < b
+            // so carry = a >= b
+            psw_write_carry(cpu, operand_a >= operand_b);
+            
+            // let it underflow, it's expected and fine
+            const uint8_t res = operand_a - operand_b;
+            psw_write_zero(cpu, res == 0);
+            psw_write_neg(cpu, res & 0x80);
+        }}
+        """
+    ).splitlines()
+
+
+def logic_op_payload(reg, op, data):
+    dest = f"cpu->{reg}"
+
+    return [trace_source(), f"{dest} {op}= {data};"] + check_zero_neg(dest)
+
+
+def write_register(reg, data, is_16bit=False, updates_flags=True):
+    lines = [trace_source(), f"cpu->{reg} = {data};"]
+    if updates_flags:
+        lines += check_zero_neg(f"cpu->{reg}", is_16bit)
+    return lines
+
+
 # puts the data in data8[0]
 class RegisterImmediateMode(AddressingMode):
     """
@@ -215,6 +404,84 @@ class RegisterImmediateMode(AddressingMode):
                     "x", "cpu->data8[0]", is_16bit=False, updates_flags=True
                 ),
             ),
+        )
+
+
+class MovRegisterRegister(Instruction):
+    """
+    2 Register, Register -- A,X; A,Y; X,A; X,Y; Y,A; Y,X; SP,X; X,SP
+    (MOV,MOV,MOV,MOV,MOV,MOV)
+    (1 byte)
+    (2 cycles)
+          1       PC      Op Code         1
+          2       ??      IO              ?
+      * This should be accurate.
+    """
+
+    def __init__(self, dst, src):
+        super().__init__("MOV")
+        self.src = src
+        self.dst = dst
+        self.update_psw = dst != Register.SP
+
+    def full_mnemonic(self):
+        return f"MOV   {self.dst.name}, {self.src.name}"
+
+    def name(self):
+        return f"mov_reg_reg_{self.dst}_{self.src}"
+
+    def render(self):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration()}
+            {{
+            {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                /* could do a dummy read but shouldn't matter */
+                assert(cycle == 2);
+            """
+        )
+        payload = write_register(
+            self.dst,
+            f"cpu->{self.src}",
+            is_16bit=False,
+            updates_flags=self.update_psw,
+        )
+        footer = inspect.cleandoc(
+            f"""
+                return true;
+            }}
+            """
+        )
+
+        return "\n".join(assemble_instruction(header, payload, footer))
+
+    @staticmethod
+    def register_instructions():
+        add_instruction(
+            0x7D,
+            MovRegisterRegister(Register.A, Register.X),
+        )
+        add_instruction(
+            0xDD,
+            MovRegisterRegister(Register.A, Register.Y),
+        )
+        add_instruction(
+            0xBD,
+            MovRegisterRegister(Register.SP, Register.X),
+        )
+        add_instruction(
+            0x5D,
+            MovRegisterRegister(Register.X, Register.A),
+        )
+        add_instruction(
+            0x9D,
+            MovRegisterRegister(Register.X, Register.SP),
+        )
+        add_instruction(
+            0xFD,
+            MovRegisterRegister(Register.Y, Register.A),
         )
 
 
@@ -533,273 +800,6 @@ class RegisterDirectIndexedMode(AddressingMode):
                 do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
                 + [trace_source(), "cpu->a = cpu->data8[0];"],
             ),
-        )
-
-
-class Instruction:
-    def __init__(self, mnemonic):
-        self.mnemonic = mnemonic
-
-    def name(self):
-        raise NotImplementedError("can't call base Instruction.name()")
-
-    def full_mnemonic(self):
-        raise NotImplementedError("can't call base Instruction.full_mnemonic()")
-
-    def declaration(self):
-        return f"bool {self.name()}(struct SPC_State state[static 1], uint32_t cycle)"
-
-    def render(self):
-        raise NotImplementedError("can't call base Instruction.render()")
-
-    def print(self):
-        print(self.render())
-
-
-class TemplateInstruction(Instruction):
-    def __init__(self, mnemonic, _full_mnemonic, mode, payload):
-        super().__init__(mnemonic)
-        self.mode = mode
-        self.payload = payload
-        self._full_mnemonic = _full_mnemonic
-
-    def full_mnemonic(self):
-        return self._full_mnemonic
-
-    def name(self):
-        return self.mode.name(self.mnemonic)
-
-    def render(self):
-        lines = self.mode.render(self.mnemonic, self.payload)
-        return "\n".join(lines)
-
-
-class HardcodedInstruction(Instruction):
-    def __init__(self, mnemonic, _full_mnemonic, function_name, body):
-        super().__init__(mnemonic)
-        self.function_name = function_name
-        self.lines = body.splitlines()
-        self._full_mnemonic = _full_mnemonic
-
-    def full_mnemonic(self):
-        return self._full_mnemonic
-
-    def name(self):
-        return self.function_name
-
-    def render(self):
-        return "\n".join([self.declaration()] + self.lines)
-
-
-class PswInstruction(Instruction):
-    def __init__(self, flag, op):
-        super().__init__(mnemonic)
-        self.flag = flag
-        self.op = op
-
-    def name(self):
-        pass
-
-    def render(self):
-        pass
-
-
-def check_zero_neg(value_expr, is_16bit=False):
-    mask = "0x8000" if is_16bit else "0x80"
-    return inspect.cleandoc(
-        f"""
-        {{
-            {trace_source()}
-            const uint16_t v = {value_expr};
-            psw_write_zero(cpu, v == 0);
-            psw_write_neg(cpu, v & {mask});
-        }}
-        """
-    ).splitlines()
-
-
-# put the result in data8[0]
-def do_add8_and_check_psw(a, b):
-    return inspect.cleandoc(
-        f"""
-        {{
-            {trace_source()}
-            const uint32_t operand_a = (uint32_t)({a});
-            const uint32_t operand_b = (uint32_t)({b});
-            const uint32_t carry     = psw_carry(cpu);
-        
-            // half-carry check: sum of nibbles overflows nibble
-            const uint32_t nibble_sum = (operand_a & 0xf) + (operand_b & 0xf) + carry;
-            psw_write_half_carry(cpu, nibble_sum > 0xf);
-        
-            const uint32_t full_res = operand_a + operand_b + carry;
-            psw_write_carry(cpu, full_res > 0xff);
-        
-            // overflow if a mathematically impossible result has happened
-            // i.e. (pos + pos = neg) or (neg + neg = pos)
-            const bool sign_a = operand_a & 0x80;
-            const bool sign_b = operand_b & 0x80;
-            const bool sign_r = full_res & 0x80;
-            const bool overflow = (sign_a == sign_b) && (sign_a != sign_r);
-            psw_write_overflow(cpu, overflow);
-        
-            psw_write_zero(cpu, (full_res & 0xff) == 0);
-            psw_write_neg(cpu, full_res & 0x80);
-
-            // cache back the 8bit result for assignment
-            cpu->data8[0] = full_res & 0xff;
-        }}
-        """
-    ).splitlines()
-
-
-# put the result in data8[0]
-def do_sub8_and_check_psw(a, b):
-    return inspect.cleandoc(
-        f"""
-        {{
-            {trace_source()}
-            const uint32_t operand_a = (uint32_t)({a});
-            const uint32_t operand_b = (uint32_t)({b});
-            const uint32_t borrow    = !psw_carry(cpu);
-        
-            // half-borrow check: if (u4)a - (u4)b - borrow underflowed
-            // i.e. (u4)a < (u4)b + borrow
-            const bool half_borrow = (operand_a & 0xf) < (operand_b & 0xf) + borrow;
-            psw_write_half_carry(cpu, !half_borrow);
-        
-            const int32_t full_res = operand_a - operand_b - borrow;
-            // set borrow if underflowed, ie set carry if not underflowed
-            psw_write_carry(cpu, full_res >= 0x00);
-        
-            // overflow if a mathematically impossible result has happened
-            // i.e. (pos - neg = neg) or (neg - pos = pos)
-            const bool sign_a = operand_a & 0x80;
-            const bool sign_b = operand_b & 0x80;
-            const bool sign_r = full_res & 0x80;
-            const bool overflow = (sign_a != sign_b) && (sign_a != sign_r);
-            psw_write_overflow(cpu, overflow);
-        
-            psw_write_zero(cpu, (full_res & 0xff) == 0);
-            psw_write_neg(cpu, full_res & 0x80);
-
-            // cache back the 8bit result for assignment
-            cpu->data8[0] = full_res & 0xff;
-        }}
-        """
-    ).splitlines()
-
-
-def do_cmp_and_check_psw(a, b):
-    return inspect.cleandoc(
-        f"""
-        {{
-            {trace_source()}
-            // compute (a - b), no borrow, update NZC then discard result
-            const uint8_t operand_a = (uint8_t)({a});
-            const uint8_t operand_b = (uint8_t)({b});
-            
-            // no borrow so underflow/borrow if a < b
-            // so carry = a >= b
-            psw_write_carry(cpu, operand_a >= operand_b);
-            
-            // let it underflow, it's expected and fine
-            const uint8_t res = operand_a - operand_b;
-            psw_write_zero(cpu, res == 0);
-            psw_write_neg(cpu, res & 0x80);
-        }}
-        """
-    ).splitlines()
-
-
-def logic_op_payload(reg, op, data):
-    dest = f"cpu->{reg}"
-
-    return [trace_source(), f"{dest} {op}= {data};"] + check_zero_neg(dest)
-
-
-def write_register(reg, data, is_16bit=False, updates_flags=True):
-    lines = [trace_source(), f"cpu->{reg} = {data};"]
-    if updates_flags:
-        lines += check_zero_neg(f"cpu->{reg}", is_16bit)
-    return lines
-
-
-class MovRegisterRegister(Instruction):
-    """
-    2 Register, Register -- A,X; A,Y; X,A; X,Y; Y,A; Y,X; SP,X; X,SP
-    (MOV,MOV,MOV,MOV,MOV,MOV)
-    (1 byte)
-    (2 cycles)
-          1       PC      Op Code         1
-          2       ??      IO              ?
-      * This should be accurate.
-    """
-
-    def __init__(self, dst, src):
-        super().__init__("MOV")
-        self.src = src
-        self.dst = dst
-        self.update_psw = dst != Register.SP
-
-    def full_mnemonic(self):
-        return f"MOV   {self.dst.name}, {self.src.name}"
-
-    def name(self):
-        return f"mov_reg_reg_{self.dst}_{self.src}"
-
-    def render(self):
-        header = inspect.cleandoc(
-            f"""
-            {self.declaration()}
-            {{
-            {trace_source()}
-                struct CPU_State* const cpu = &state->cpu;
-
-                /* could do a dummy read but shouldn't matter */
-                assert(cycle == 2);
-            """
-        )
-        payload = write_register(
-            self.dst,
-            f"cpu->{self.src}",
-            is_16bit=False,
-            updates_flags=self.update_psw,
-        )
-        footer = inspect.cleandoc(
-            f"""
-                return true;
-            }}
-            """
-        )
-
-        return "\n".join(assemble_instruction(header, payload, footer))
-
-    @staticmethod
-    def register_instructions():
-        add_instruction(
-            0x7D,
-            MovRegisterRegister(Register.A, Register.X),
-        )
-        add_instruction(
-            0xDD,
-            MovRegisterRegister(Register.A, Register.Y),
-        )
-        add_instruction(
-            0xBD,
-            MovRegisterRegister(Register.SP, Register.X),
-        )
-        add_instruction(
-            0x5D,
-            MovRegisterRegister(Register.X, Register.A),
-        )
-        add_instruction(
-            0x9D,
-            MovRegisterRegister(Register.X, Register.SP),
-        )
-        add_instruction(
-            0xFD,
-            MovRegisterRegister(Register.Y, Register.A),
         )
 
 
