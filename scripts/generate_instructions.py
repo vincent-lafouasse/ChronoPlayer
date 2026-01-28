@@ -265,6 +265,43 @@ def write_register(reg, data, is_16bit=False, updates_flags=True):
     return lines
 
 
+class MovRegisterRegister(Instruction):
+    def __init__(self, dst, src):
+        super().__init__("MOV")
+        self.src = src
+        self.dst = dst
+        self.update_psw = dst != Register.SP
+
+    def declaration(self):
+        name = f"mov_reg_reg_{self.dst}_{self.src}"
+        return f"bool {name}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def render(self):
+        return (
+            inspect.cleandoc(
+                f"""
+            {trace_source()}
+            {self.declaration()}
+            {{
+                /* could do a dummy read but shouldn't matter */
+                assert(cycle == 2);
+            """
+            ).splitlines()
+            + write_register(
+                self.dst,
+                f"cpu->{self.src}",
+                is_16bit=False,
+                updates_flags=self.update_psw,
+            )
+            + inspect.cleandoc(
+                f"""
+                return true;
+            }}
+            """
+            ).splitlines()
+        )
+
+
 instructions = dict()
 
 
@@ -293,97 +330,107 @@ add_instruction(
     ),
 )
 
-add_instruction(
-    0x08,
-    TemplateInstruction(
-        "OR",
-        RegisterImmediate(Register.A),
-        logic_op_payload("a", "|", "cpu->data8[0]"),
-    ),
-)
-add_instruction(
-    0x28,
-    TemplateInstruction(
-        "AND",
-        RegisterImmediate(Register.A),
-        logic_op_payload("a", "&", "cpu->data8[0]"),
-    ),
-)
-add_instruction(
-    0x48,
-    TemplateInstruction(
-        "EOR",
-        RegisterImmediate(Register.A),
-        logic_op_payload("a", "^", "cpu->data8[0]"),
-    ),
-)
-add_instruction(
-    0x68,
-    TemplateInstruction(
-        "CMP",
-        RegisterImmediate(Register.A),
-        do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
-    ),
-)
-add_instruction(
-    0x88,
-    TemplateInstruction(
-        "ADC",
-        RegisterImmediate(Register.A),
-        do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-        + [trace_source(), "cpu->a = cpu->data8[0];"],
-    ),
-)
-add_instruction(
-    0xA8,
-    TemplateInstruction(
-        "SBC",
-        RegisterImmediate(Register.A),
-        do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-        + [trace_source(), "cpu->a = cpu->data8[0];"],
-    ),
-)
-add_instruction(
-    0xC8,
-    TemplateInstruction(
-        "CMP",
-        RegisterImmediate(Register.X),
-        do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
-    ),
-)
-add_instruction(
-    0xE8,
-    TemplateInstruction(
-        "MOV",
-        RegisterImmediate(Register.A),
-        write_register("a", "cpu->data8[0]", is_16bit=False, updates_flags=True),
-    ),
-)
+# Register, Immediate instructions
+# add_instruction(
+#     0x08,
+#     TemplateInstruction(
+#         "OR",
+#         RegisterImmediate(Register.A),
+#         logic_op_payload("a", "|", "cpu->data8[0]"),
+#     ),
+# )
+# add_instruction(
+#     0x28,
+#     TemplateInstruction(
+#         "AND",
+#         RegisterImmediate(Register.A),
+#         logic_op_payload("a", "&", "cpu->data8[0]"),
+#     ),
+# )
+# add_instruction(
+#     0x48,
+#     TemplateInstruction(
+#         "EOR",
+#         RegisterImmediate(Register.A),
+#         logic_op_payload("a", "^", "cpu->data8[0]"),
+#     ),
+# )
+# add_instruction(
+#     0x68,
+#     TemplateInstruction(
+#         "CMP",
+#         RegisterImmediate(Register.A),
+#         do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+#     ),
+# )
+# add_instruction(
+#     0x88,
+#     TemplateInstruction(
+#         "ADC",
+#         RegisterImmediate(Register.A),
+#         do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
+#         + [trace_source(), "cpu->a = cpu->data8[0];"],
+#     ),
+# )
+# add_instruction(
+#     0xA8,
+#     TemplateInstruction(
+#         "SBC",
+#         RegisterImmediate(Register.A),
+#         do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
+#         + [trace_source(), "cpu->a = cpu->data8[0];"],
+#     ),
+# )
+# add_instruction(
+#     0xC8,
+#     TemplateInstruction(
+#         "CMP",
+#         RegisterImmediate(Register.X),
+#         do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
+#     ),
+# )
+# add_instruction(
+#     0xE8,
+#     TemplateInstruction(
+#         "MOV",
+#         RegisterImmediate(Register.A),
+#         write_register("a", "cpu->data8[0]", is_16bit=False, updates_flags=True),
+#     ),
+# )
+#
+# add_instruction(
+#     0x8D,
+#     TemplateInstruction(
+#         "MOV",
+#         RegisterImmediate(Register.Y),
+#         write_register("y", "cpu->data8[0]", is_16bit=False, updates_flags=True),
+#     ),
+# )
+# add_instruction(
+#     0xAD,
+#     TemplateInstruction(
+#         "CMP",
+#         RegisterImmediate(Register.Y),
+#         do_cmp_and_check_psw("cpu->y", "cpu->data8[0]"),
+#     ),
+# )
+# add_instruction(
+#     0xCD,
+#     TemplateInstruction(
+#         "MOV",
+#         RegisterImmediate(Register.X),
+#         write_register("x", "cpu->data8[0]", is_16bit=False, updates_flags=True),
+#     ),
+# )
 
 add_instruction(
-    0x8D,
-    TemplateInstruction(
-        "MOV",
-        RegisterImmediate(Register.Y),
-        write_register("y", "cpu->data8[0]", is_16bit=False, updates_flags=True),
-    ),
+    0x7D,
+    MovRegisterRegister(Register.A, Register.X),
 )
-add_instruction(
-    0xAD,
-    TemplateInstruction(
-        "CMP",
-        RegisterImmediate(Register.Y),
-        do_cmp_and_check_psw("cpu->y", "cpu->data8[0]"),
-    ),
-)
-add_instruction(
-    0xCD,
-    TemplateInstruction(
-        "MOV",
-        RegisterImmediate(Register.X),
-        write_register("x", "cpu->data8[0]", is_16bit=False, updates_flags=True),
-    ),
-)
+# add_instruction(
+# 0xdd,
+# MovRegisterRegister(Register.A, Register.Y),
+# )
 
 
 def check_missing_opcodes():
