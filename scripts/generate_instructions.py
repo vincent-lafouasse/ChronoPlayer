@@ -50,7 +50,7 @@ class AddressingMode:
 
 
 # puts the data in data8[0]
-class RegisterImmediate(AddressingMode):
+class RegisterImmediateMode(AddressingMode):
     """
     1 Register, Immediate -- A,#i; X,#i; Y,#i
 
@@ -460,7 +460,7 @@ def add_register_immediate_instructions():
         TemplateInstruction(
             "OR",
             "OR    A, #i",
-            RegisterImmediate(Register.A),
+            RegisterImmediateMode(Register.A),
             logic_op_payload("a", "|", "cpu->data8[0]"),
         ),
     )
@@ -469,7 +469,7 @@ def add_register_immediate_instructions():
         TemplateInstruction(
             "AND",
             "AND   A, #i",
-            RegisterImmediate(Register.A),
+            RegisterImmediateMode(Register.A),
             logic_op_payload("a", "&", "cpu->data8[0]"),
         ),
     )
@@ -478,7 +478,7 @@ def add_register_immediate_instructions():
         TemplateInstruction(
             "EOR",
             "EOR   A, #i",
-            RegisterImmediate(Register.A),
+            RegisterImmediateMode(Register.A),
             logic_op_payload("a", "^", "cpu->data8[0]"),
         ),
     )
@@ -487,7 +487,7 @@ def add_register_immediate_instructions():
         TemplateInstruction(
             "CMP",
             "CMP   A, #i",
-            RegisterImmediate(Register.A),
+            RegisterImmediateMode(Register.A),
             do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
         ),
     )
@@ -496,7 +496,7 @@ def add_register_immediate_instructions():
         TemplateInstruction(
             "ADC",
             "ADC   A, #i",
-            RegisterImmediate(Register.A),
+            RegisterImmediateMode(Register.A),
             do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
             + [trace_source(), "cpu->a = cpu->data8[0];"],
         ),
@@ -506,7 +506,7 @@ def add_register_immediate_instructions():
         TemplateInstruction(
             "SBC",
             "SBC   A, #i",
-            RegisterImmediate(Register.A),
+            RegisterImmediateMode(Register.A),
             do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
             + [trace_source(), "cpu->a = cpu->data8[0];"],
         ),
@@ -516,7 +516,7 @@ def add_register_immediate_instructions():
         TemplateInstruction(
             "CMP",
             "CMP   X, #i",
-            RegisterImmediate(Register.X),
+            RegisterImmediateMode(Register.X),
             do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
         ),
     )
@@ -525,7 +525,7 @@ def add_register_immediate_instructions():
         TemplateInstruction(
             "MOV",
             "MOV   A, #i",
-            RegisterImmediate(Register.A),
+            RegisterImmediateMode(Register.A),
             write_register("a", "cpu->data8[0]", is_16bit=False, updates_flags=True),
         ),
     )
@@ -535,7 +535,7 @@ def add_register_immediate_instructions():
         TemplateInstruction(
             "MOV",
             "MOV   Y, #i",
-            RegisterImmediate(Register.Y),
+            RegisterImmediateMode(Register.Y),
             write_register("y", "cpu->data8[0]", is_16bit=False, updates_flags=True),
         ),
     )
@@ -544,7 +544,7 @@ def add_register_immediate_instructions():
         TemplateInstruction(
             "CMP",
             "CMP   Y, #i",
-            RegisterImmediate(Register.Y),
+            RegisterImmediateMode(Register.Y),
             do_cmp_and_check_psw("cpu->y", "cpu->data8[0]"),
         ),
     )
@@ -553,7 +553,7 @@ def add_register_immediate_instructions():
         TemplateInstruction(
             "MOV",
             "MOV   X, #i",
-            RegisterImmediate(Register.X),
+            RegisterImmediateMode(Register.X),
             write_register("x", "cpu->data8[0]", is_16bit=False, updates_flags=True),
         ),
     )
