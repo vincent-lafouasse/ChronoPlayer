@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.348 */
+/* generated from generate_instructions.py: l.385 */
 
 #include "instructions.gen.h"
 
@@ -10,7 +10,7 @@
 /* 0x00 */
 bool nop(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.226 */
+    /* generated from generate_instructions.py: l.263 */
     /* could do a dummy read but shouldn't matter */
     assert(cycle == 2);
     (void)state;
@@ -35,7 +35,7 @@ bool or_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     cpu->operands[0] = bus_read(state, cpu->pc++);
     cpu->data8[0] = cpu->operands[0];
 
-    /* generated from generate_instructions.py: l.199 */
+    /* generated from generate_instructions.py: l.236 */
     cpu->a |= cpu->data8[0];
     {
         /* generated from generate_instructions.py: l.152 */
@@ -56,7 +56,7 @@ bool and_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     cpu->operands[0] = bus_read(state, cpu->pc++);
     cpu->data8[0] = cpu->operands[0];
 
-    /* generated from generate_instructions.py: l.199 */
+    /* generated from generate_instructions.py: l.236 */
     cpu->a &= cpu->data8[0];
     {
         /* generated from generate_instructions.py: l.152 */
@@ -77,7 +77,7 @@ bool eor_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     cpu->operands[0] = bus_read(state, cpu->pc++);
     cpu->data8[0] = cpu->operands[0];
 
-    /* generated from generate_instructions.py: l.199 */
+    /* generated from generate_instructions.py: l.236 */
     cpu->a ^= cpu->data8[0];
     {
         /* generated from generate_instructions.py: l.152 */
@@ -125,7 +125,7 @@ bool adc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
         // cache back the 8bit result for assignment
         cpu->data8[0] = full_res & 0xff;
     }
-    /* generated from generate_instructions.py: l.267 */
+    /* generated from generate_instructions.py: l.304 */
     cpu->a = cpu->data8[0];
     return true;
 }
@@ -140,7 +140,7 @@ bool mov_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     cpu->operands[0] = bus_read(state, cpu->pc++);
     cpu->data8[0] = cpu->operands[0];
 
-    /* generated from generate_instructions.py: l.203 */
+    /* generated from generate_instructions.py: l.240 */
     cpu->a = cpu->data8[0];
     {
         /* generated from generate_instructions.py: l.152 */
@@ -166,7 +166,7 @@ bool mov_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle)
     cpu->operands[0] = bus_read(state, cpu->pc++);
     cpu->data8[0] = cpu->operands[0];
 
-    /* generated from generate_instructions.py: l.203 */
+    /* generated from generate_instructions.py: l.240 */
     cpu->y = cpu->data8[0];
     {
         /* generated from generate_instructions.py: l.152 */
@@ -187,7 +187,7 @@ bool mov_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle)
     cpu->operands[0] = bus_read(state, cpu->pc++);
     cpu->data8[0] = cpu->operands[0];
 
-    /* generated from generate_instructions.py: l.203 */
+    /* generated from generate_instructions.py: l.240 */
     cpu->x = cpu->data8[0];
     {
         /* generated from generate_instructions.py: l.152 */

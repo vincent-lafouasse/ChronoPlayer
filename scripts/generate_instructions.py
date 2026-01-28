@@ -193,6 +193,43 @@ def do_add8_and_check_psw(a, b):
     ).splitlines()
 
 
+# put the result in data8[0]
+def do_sub8_and_check_psw(a, b):
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            const uint32_t operand_a = (uint32_t)({a});
+            const uint32_t operand_b = (uint32_t)({b});
+            const uint32_t borrow    = !psw_carry(cpu);
+        
+            // half-borrow check: if (u4)a - (u4)b - borrow underflowed
+            // i.e. (u4)a < (u4)b + borrow
+            const bool half_borrow = (a & 0xf) < (b & 0xf) + borrow;
+            psw_write_half_carry(cpu, !half_borrow);
+        
+            const int32_t full_res = operand_a - operand_b - borrow;
+            // set borrow if underflowed, ie set carry if not underflowed
+            psw_write_carry(cpu, full_res >= 0x00);
+        
+            // overflow if a mathematically impossible result has happened
+            // i.e. (pos - neg = neg) or (neg - pos = pos)
+            const bool sign_a = operand_a & 0x80;
+            const bool sign_b = operand_b & 0x80;
+            const bool sign_r = full_res & 0x80;
+            const bool overflow = (sign_a != sign_b) && (sign_a != sign_r);
+            psw_write_overflow(cpu, overflow);
+        
+            psw_write_zero(cpu, (full_res & 0xff) == 0);
+            psw_write_neg(cpu, full_res & 0x80);
+
+            // cache back the 8bit result for assignment
+            cpu->data8[0] = full_res & 0xff;
+        }}
+        """
+    ).splitlines()
+
+
 def logic_op_payload(reg, op, data):
     dest = f"cpu->{reg}"
 
