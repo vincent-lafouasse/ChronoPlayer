@@ -230,6 +230,28 @@ def do_sub8_and_check_psw(a, b):
     ).splitlines()
 
 
+def do_cmp_and_check_psw(a, b):
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            // compute (a - b), no borrow, update NZC then discard result
+            const uint8_t operand_a = (uint8_t)({a});
+            const uint8_t operand_b = (uint8_t)({b});
+            
+            // no borrow so underflow/borrow if a < b
+            // so carry = a >= b
+            psw_write_carry(cpu, operand_a >= operand_b);
+            
+            // let it underflow, it's expected and fine
+            const uint8_t res = operand_a - operand_b;
+            psw_write_zero(cpu, res == 0);
+            psw_write_neg(cpu, res & 0x80);
+        }}
+        """
+    ).splitlines()
+
+
 def logic_op_payload(reg, op, data):
     dest = f"cpu->{reg}"
 
