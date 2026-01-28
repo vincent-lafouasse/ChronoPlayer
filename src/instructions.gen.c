@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.497 */
+/* generated from generate_instructions.py: l.500 */
 
 #include "instructions.gen.h"
 
@@ -158,7 +158,7 @@ bool adc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
         // cache back the 8bit result for assignment
         cpu->data8[0] = full_res & 0xff;
     }
-    /* generated from generate_instructions.py: l.382 */
+    /* generated from generate_instructions.py: l.383 */
     cpu->a = cpu->data8[0];
     return true;
 }
@@ -203,7 +203,7 @@ bool sbc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
         // cache back the 8bit result for assignment
         cpu->data8[0] = full_res & 0xff;
     }
-    /* generated from generate_instructions.py: l.391 */
+    /* generated from generate_instructions.py: l.392 */
     cpu->a = cpu->data8[0];
     return true;
 }
