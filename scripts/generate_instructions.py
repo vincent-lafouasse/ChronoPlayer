@@ -341,7 +341,6 @@ add_instruction(
 )
 
 
-# Register, Immediate instructions
 def add_register_immediate_instructions():
     add_instruction(
         0x08,
