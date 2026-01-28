@@ -160,35 +160,34 @@ def check_zero_neg(value_expr, is_16bit=False):
 
 # put the result in data8[0]
 def do_add8_and_check_psw(a, b):
-    mask_sign = "0x80"
-    mask_h = "0x0f"
-    limit = "0xff"
-
     return inspect.cleandoc(
         f"""
         {{
             {trace_source()}
             const uint32_t operand_a = (uint32_t)({a});
             const uint32_t operand_b = (uint32_t)({b});
-            const uint32_t c_in  = psw_carry(cpu);
+            const uint32_t carry     = psw_carry(cpu);
         
-            // half-carry check: sum of nibbles exceeds mask
-            const uint32_t h_sum = (operand_a & {mask_h}) + (operand_b & {mask_h}) + c_in;
-            psw_write_half_carry(cpu, h_sum > {mask_h});
+            // half-carry check: sum of nibbles overflows nibble
+            const uint32_t nibble_sum = (operand_a & 0xf) + (operand_b & 0xf) + carry;
+            psw_write_half_carry(cpu, nibble_sum > 0xf);
         
-            const uint32_t full_res = operand_a + operand_b + c_in;
-            psw_write_carry(cpu, full_res > {limit});
+            const uint32_t full_res = operand_a + operand_b + carry;
+            psw_write_carry(cpu, full_res > 0xff);
         
-            // overflow if (pos + pos = neg) or (neg + neg = pos)
-            const bool v = ~((operand_a) ^ (operand_b)) & ((operand_a) ^ (full_res)) & {mask_sign};
-            psw_write_overflow(cpu, v);
+            // overflow if a mathematically impossible result has happened
+            // i.e. (pos + pos = neg) or (neg + neg = pos)
+            const bool sign_a = operand_a & 0x80;
+            const bool sign_b = operand_b & 0x80;
+            const bool sign_r = full_res & 0x80;
+            const bool overflow = (sign_a == sign_b) && (sign_a != sign_r);
+            psw_write_overflow(cpu, overflow);
         
-            // Zero & Negative
-            psw_write_zero(cpu, (full_res & {limit}) == 0);
-            psw_write_neg(cpu, full_res & {mask_sign});
+            psw_write_zero(cpu, (full_res & 0xff) == 0);
+            psw_write_neg(cpu, full_res & 0x80);
 
             // cache back the 8bit result for assignment
-            cpu->data8[0] = full_res & {limit};
+            cpu->data8[0] = full_res & 0xff;
         }}
         """
     ).splitlines()
