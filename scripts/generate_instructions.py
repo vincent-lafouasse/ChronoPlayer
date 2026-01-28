@@ -316,7 +316,7 @@ instructions = dict()
 
 
 def add_instruction(op, instruction):
-    if op in instructions and instructions[op] != instruction:
+    if op in instructions:
         raise ValueError(f"trying to overwrite opcode {hex(op)}")
     instructions[op] = instruction
 
