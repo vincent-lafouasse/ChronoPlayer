@@ -40,6 +40,7 @@ class BitOp(Enum):
     Clear = 0
 
 
+# performs bus IO and sets up cpu->data8[2] for the coming ALU execution (and maybe write back)
 class AddressingMode:
     def __init__(self):
         pass
