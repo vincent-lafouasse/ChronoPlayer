@@ -806,10 +806,10 @@ class MovRegisterRegister(Instruction):
 add_instruction(
     0x00,
     HardcodedInstruction(
-        "NOP",
-        "NOP",
-        "nop",
-        inspect.cleandoc(
+        mnemonic="NOP",
+        _full_mnemonic="NOP",
+        function_name="nop",
+        body=inspect.cleandoc(
             f"""
             {{
                 {trace_source()}
