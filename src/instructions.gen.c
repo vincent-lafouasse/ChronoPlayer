@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.900 */
+/* generated from generate_instructions.py: l.901 */
 
 #include "instructions.gen.h"
 
@@ -10,7 +10,7 @@
 /* 0x00     NOP */
 bool nop(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.485 */
+    /* generated from generate_instructions.py: l.803 */
     /* could do a dummy read but shouldn't matter */
     assert(cycle == 2);
     (void)state;
@@ -24,7 +24,7 @@ bool nop(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x04     OR    A, d */
 bool or_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.129 */
+    /* generated from generate_instructions.py: l.242 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3);
@@ -38,10 +38,10 @@ bool or_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
-            /* generated from generate_instructions.py: l.406 */
+            /* generated from generate_instructions.py: l.706 */
             cpu->a |= cpu->data8[0];
             {
-                /* generated from generate_instructions.py: l.300 */
+                /* generated from generate_instructions.py: l.600 */
                 const uint16_t v = cpu->a;
                 psw_write_zero(cpu, v == 0);
                 psw_write_neg(cpu, v & 0x80);
@@ -58,7 +58,7 @@ bool or_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x14     OR    A, d+X */
 bool or_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.190 */
+    /* generated from generate_instructions.py: l.398 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3 || cycle == 4);
@@ -78,10 +78,10 @@ bool or_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t c
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
-            /* generated from generate_instructions.py: l.406 */
+            /* generated from generate_instructions.py: l.706 */
             cpu->a |= cpu->data8[0];
             {
-                /* generated from generate_instructions.py: l.300 */
+                /* generated from generate_instructions.py: l.600 */
                 const uint16_t v = cpu->a;
                 psw_write_zero(cpu, v == 0);
                 psw_write_neg(cpu, v & 0x80);
@@ -98,7 +98,7 @@ bool or_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t c
 /* 0x24     AND   A, d */
 bool and_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.129 */
+    /* generated from generate_instructions.py: l.242 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3);
@@ -112,10 +112,10 @@ bool and_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
-            /* generated from generate_instructions.py: l.406 */
+            /* generated from generate_instructions.py: l.706 */
             cpu->a &= cpu->data8[0];
             {
-                /* generated from generate_instructions.py: l.300 */
+                /* generated from generate_instructions.py: l.600 */
                 const uint16_t v = cpu->a;
                 psw_write_zero(cpu, v == 0);
                 psw_write_neg(cpu, v & 0x80);
@@ -132,7 +132,7 @@ bool and_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x34     AND   A, d+X */
 bool and_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.190 */
+    /* generated from generate_instructions.py: l.398 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3 || cycle == 4);
@@ -152,10 +152,10 @@ bool and_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
-            /* generated from generate_instructions.py: l.406 */
+            /* generated from generate_instructions.py: l.706 */
             cpu->a &= cpu->data8[0];
             {
-                /* generated from generate_instructions.py: l.300 */
+                /* generated from generate_instructions.py: l.600 */
                 const uint16_t v = cpu->a;
                 psw_write_zero(cpu, v == 0);
                 psw_write_neg(cpu, v & 0x80);
@@ -172,7 +172,7 @@ bool and_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
 /* 0x44     EOR   A, d */
 bool eor_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.129 */
+    /* generated from generate_instructions.py: l.242 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3);
@@ -186,10 +186,10 @@ bool eor_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
-            /* generated from generate_instructions.py: l.406 */
+            /* generated from generate_instructions.py: l.706 */
             cpu->a ^= cpu->data8[0];
             {
-                /* generated from generate_instructions.py: l.300 */
+                /* generated from generate_instructions.py: l.600 */
                 const uint16_t v = cpu->a;
                 psw_write_zero(cpu, v == 0);
                 psw_write_neg(cpu, v & 0x80);
@@ -206,7 +206,7 @@ bool eor_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x54     EOR   A, d+X */
 bool eor_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.190 */
+    /* generated from generate_instructions.py: l.398 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3 || cycle == 4);
@@ -226,10 +226,10 @@ bool eor_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
-            /* generated from generate_instructions.py: l.406 */
+            /* generated from generate_instructions.py: l.706 */
             cpu->a ^= cpu->data8[0];
             {
-                /* generated from generate_instructions.py: l.300 */
+                /* generated from generate_instructions.py: l.600 */
                 const uint16_t v = cpu->a;
                 psw_write_zero(cpu, v == 0);
                 psw_write_neg(cpu, v & 0x80);
@@ -246,7 +246,7 @@ bool eor_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
 /* 0x64     CMP   A, d */
 bool cmp_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.129 */
+    /* generated from generate_instructions.py: l.242 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3);
@@ -261,7 +261,7 @@ bool cmp_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 
             /* payload */
             {
-                /* generated from generate_instructions.py: l.385 */
+                /* generated from generate_instructions.py: l.685 */
                 // compute (a - b), no borrow, update NZC then discard result
                 const uint8_t operand_a = (uint8_t)(cpu->a);
                 const uint8_t operand_b = (uint8_t)(cpu->data8[0]);
@@ -287,7 +287,7 @@ bool cmp_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x74     CMP   A, d+X */
 bool cmp_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.190 */
+    /* generated from generate_instructions.py: l.398 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3 || cycle == 4);
@@ -308,7 +308,7 @@ bool cmp_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
 
             /* payload */
             {
-                /* generated from generate_instructions.py: l.385 */
+                /* generated from generate_instructions.py: l.685 */
                 // compute (a - b), no borrow, update NZC then discard result
                 const uint8_t operand_a = (uint8_t)(cpu->a);
                 const uint8_t operand_b = (uint8_t)(cpu->data8[0]);
@@ -334,7 +334,7 @@ bool cmp_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
 /* 0x84     ADC   A, d */
 bool adc_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.129 */
+    /* generated from generate_instructions.py: l.242 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3);
@@ -349,7 +349,7 @@ bool adc_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 
             /* payload */
             {
-                /* generated from generate_instructions.py: l.314 */
+                /* generated from generate_instructions.py: l.614 */
                 const uint32_t operand_a = (uint32_t)(cpu->a);
                 const uint32_t operand_b = (uint32_t)(cpu->data8[0]);
                 const uint32_t carry     = psw_carry(cpu);
@@ -375,7 +375,7 @@ bool adc_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
                 // cache back the 8bit result for assignment
                 cpu->data8[0] = full_res & 0xff;
             }
-            /* generated from generate_instructions.py: l.673 */
+            /* generated from generate_instructions.py: l.317 */
             cpu->a = cpu->data8[0];
             return true;
         }
@@ -389,7 +389,7 @@ bool adc_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x94     ADC   A, d+X */
 bool adc_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.190 */
+    /* generated from generate_instructions.py: l.398 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3 || cycle == 4);
@@ -410,7 +410,7 @@ bool adc_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
 
             /* payload */
             {
-                /* generated from generate_instructions.py: l.314 */
+                /* generated from generate_instructions.py: l.614 */
                 const uint32_t operand_a = (uint32_t)(cpu->a);
                 const uint32_t operand_b = (uint32_t)(cpu->data8[0]);
                 const uint32_t carry     = psw_carry(cpu);
@@ -436,7 +436,7 @@ bool adc_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
                 // cache back the 8bit result for assignment
                 cpu->data8[0] = full_res & 0xff;
             }
-            /* generated from generate_instructions.py: l.734 */
+            /* generated from generate_instructions.py: l.443 */
             cpu->a = cpu->data8[0];
             return true;
         }
@@ -450,7 +450,7 @@ bool adc_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
 /* 0xa4     SBC   A, d */
 bool sbc_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.129 */
+    /* generated from generate_instructions.py: l.242 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3);
@@ -465,7 +465,7 @@ bool sbc_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 
             /* payload */
             {
-                /* generated from generate_instructions.py: l.349 */
+                /* generated from generate_instructions.py: l.649 */
                 const uint32_t operand_a = (uint32_t)(cpu->a);
                 const uint32_t operand_b = (uint32_t)(cpu->data8[0]);
                 const uint32_t borrow    = !psw_carry(cpu);
@@ -493,7 +493,7 @@ bool sbc_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
                 // cache back the 8bit result for assignment
                 cpu->data8[0] = full_res & 0xff;
             }
-            /* generated from generate_instructions.py: l.683 */
+            /* generated from generate_instructions.py: l.327 */
             cpu->a = cpu->data8[0];
             return true;
         }
@@ -507,7 +507,7 @@ bool sbc_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xb4     SBC   A, d+X */
 bool sbc_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.190 */
+    /* generated from generate_instructions.py: l.398 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3 || cycle == 4);
@@ -528,7 +528,7 @@ bool sbc_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
 
             /* payload */
             {
-                /* generated from generate_instructions.py: l.349 */
+                /* generated from generate_instructions.py: l.649 */
                 const uint32_t operand_a = (uint32_t)(cpu->a);
                 const uint32_t operand_b = (uint32_t)(cpu->data8[0]);
                 const uint32_t borrow    = !psw_carry(cpu);
@@ -556,7 +556,7 @@ bool sbc_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
                 // cache back the 8bit result for assignment
                 cpu->data8[0] = full_res & 0xff;
             }
-            /* generated from generate_instructions.py: l.807 */
+            /* generated from generate_instructions.py: l.522 */
             cpu->a = cpu->data8[0];
             return true;
         }
@@ -570,7 +570,7 @@ bool sbc_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
 /* 0xe4     MOV   A, d */
 bool mov_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.129 */
+    /* generated from generate_instructions.py: l.242 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3);
@@ -584,10 +584,10 @@ bool mov_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
-            /* generated from generate_instructions.py: l.410 */
+            /* generated from generate_instructions.py: l.710 */
             cpu->a = cpu->data8[0];
             {
-                /* generated from generate_instructions.py: l.300 */
+                /* generated from generate_instructions.py: l.600 */
                 const uint16_t v = cpu->a;
                 psw_write_zero(cpu, v == 0);
                 psw_write_neg(cpu, v & 0x80);
@@ -604,7 +604,7 @@ bool mov_register_direct_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xf4     MOV   A, d+X */
 bool mov_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.190 */
+    /* generated from generate_instructions.py: l.398 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3 || cycle == 4);
@@ -624,10 +624,10 @@ bool mov_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
-            /* generated from generate_instructions.py: l.410 */
+            /* generated from generate_instructions.py: l.710 */
             cpu->a = cpu->data8[0];
             {
-                /* generated from generate_instructions.py: l.300 */
+                /* generated from generate_instructions.py: l.600 */
                 const uint16_t v = cpu->a;
                 psw_write_zero(cpu, v == 0);
                 psw_write_neg(cpu, v & 0x80);
@@ -648,7 +648,7 @@ bool mov_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
 /* 0x08     OR    A, #i */
 bool or_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.83 */
+    /* generated from generate_instructions.py: l.92 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -656,10 +656,10 @@ bool or_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     cpu->data8[0] = cpu->operands[0];
 
     /* payload */
-    /* generated from generate_instructions.py: l.406 */
+    /* generated from generate_instructions.py: l.706 */
     cpu->a |= cpu->data8[0];
     {
-        /* generated from generate_instructions.py: l.300 */
+        /* generated from generate_instructions.py: l.600 */
         const uint16_t v = cpu->a;
         psw_write_zero(cpu, v == 0);
         psw_write_neg(cpu, v & 0x80);
@@ -670,7 +670,7 @@ bool or_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x28     AND   A, #i */
 bool and_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.83 */
+    /* generated from generate_instructions.py: l.92 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -678,10 +678,10 @@ bool and_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     cpu->data8[0] = cpu->operands[0];
 
     /* payload */
-    /* generated from generate_instructions.py: l.406 */
+    /* generated from generate_instructions.py: l.706 */
     cpu->a &= cpu->data8[0];
     {
-        /* generated from generate_instructions.py: l.300 */
+        /* generated from generate_instructions.py: l.600 */
         const uint16_t v = cpu->a;
         psw_write_zero(cpu, v == 0);
         psw_write_neg(cpu, v & 0x80);
@@ -692,7 +692,7 @@ bool and_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x48     EOR   A, #i */
 bool eor_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.83 */
+    /* generated from generate_instructions.py: l.92 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -700,10 +700,10 @@ bool eor_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     cpu->data8[0] = cpu->operands[0];
 
     /* payload */
-    /* generated from generate_instructions.py: l.406 */
+    /* generated from generate_instructions.py: l.706 */
     cpu->a ^= cpu->data8[0];
     {
-        /* generated from generate_instructions.py: l.300 */
+        /* generated from generate_instructions.py: l.600 */
         const uint16_t v = cpu->a;
         psw_write_zero(cpu, v == 0);
         psw_write_neg(cpu, v & 0x80);
@@ -714,7 +714,7 @@ bool eor_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x68     CMP   A, #i */
 bool cmp_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.83 */
+    /* generated from generate_instructions.py: l.92 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -723,7 +723,7 @@ bool cmp_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 
     /* payload */
     {
-        /* generated from generate_instructions.py: l.385 */
+        /* generated from generate_instructions.py: l.685 */
         // compute (a - b), no borrow, update NZC then discard result
         const uint8_t operand_a = (uint8_t)(cpu->a);
         const uint8_t operand_b = (uint8_t)(cpu->data8[0]);
@@ -743,7 +743,7 @@ bool cmp_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x88     ADC   A, #i */
 bool adc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.83 */
+    /* generated from generate_instructions.py: l.92 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -752,7 +752,7 @@ bool adc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 
     /* payload */
     {
-        /* generated from generate_instructions.py: l.314 */
+        /* generated from generate_instructions.py: l.614 */
         const uint32_t operand_a = (uint32_t)(cpu->a);
         const uint32_t operand_b = (uint32_t)(cpu->data8[0]);
         const uint32_t carry     = psw_carry(cpu);
@@ -778,7 +778,7 @@ bool adc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
         // cache back the 8bit result for assignment
         cpu->data8[0] = full_res & 0xff;
     }
-    /* generated from generate_instructions.py: l.568 */
+    /* generated from generate_instructions.py: l.156 */
     cpu->a = cpu->data8[0];
     return true;
 }
@@ -786,7 +786,7 @@ bool adc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xa8     SBC   A, #i */
 bool sbc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.83 */
+    /* generated from generate_instructions.py: l.92 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -795,7 +795,7 @@ bool sbc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 
     /* payload */
     {
-        /* generated from generate_instructions.py: l.349 */
+        /* generated from generate_instructions.py: l.649 */
         const uint32_t operand_a = (uint32_t)(cpu->a);
         const uint32_t operand_b = (uint32_t)(cpu->data8[0]);
         const uint32_t borrow    = !psw_carry(cpu);
@@ -823,7 +823,7 @@ bool sbc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
         // cache back the 8bit result for assignment
         cpu->data8[0] = full_res & 0xff;
     }
-    /* generated from generate_instructions.py: l.578 */
+    /* generated from generate_instructions.py: l.166 */
     cpu->a = cpu->data8[0];
     return true;
 }
@@ -831,7 +831,7 @@ bool sbc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xc8     CMP   X, #i */
 bool cmp_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.83 */
+    /* generated from generate_instructions.py: l.92 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -840,7 +840,7 @@ bool cmp_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle)
 
     /* payload */
     {
-        /* generated from generate_instructions.py: l.385 */
+        /* generated from generate_instructions.py: l.685 */
         // compute (a - b), no borrow, update NZC then discard result
         const uint8_t operand_a = (uint8_t)(cpu->x);
         const uint8_t operand_b = (uint8_t)(cpu->data8[0]);
@@ -860,7 +860,7 @@ bool cmp_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xe8     MOV   A, #i */
 bool mov_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.83 */
+    /* generated from generate_instructions.py: l.92 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -868,10 +868,10 @@ bool mov_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
     cpu->data8[0] = cpu->operands[0];
 
     /* payload */
-    /* generated from generate_instructions.py: l.410 */
+    /* generated from generate_instructions.py: l.710 */
     cpu->a = cpu->data8[0];
     {
-        /* generated from generate_instructions.py: l.300 */
+        /* generated from generate_instructions.py: l.600 */
         const uint16_t v = cpu->a;
         psw_write_zero(cpu, v == 0);
         psw_write_neg(cpu, v & 0x80);
@@ -882,7 +882,7 @@ bool mov_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xf8     MOV   X, d */
 bool mov_register_direct_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.129 */
+    /* generated from generate_instructions.py: l.242 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3);
@@ -896,10 +896,10 @@ bool mov_register_direct_x(struct SPC_State state[static 1], uint32_t cycle)
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
-            /* generated from generate_instructions.py: l.410 */
+            /* generated from generate_instructions.py: l.710 */
             cpu->x = cpu->data8[0];
             {
-                /* generated from generate_instructions.py: l.300 */
+                /* generated from generate_instructions.py: l.600 */
                 const uint16_t v = cpu->x;
                 psw_write_zero(cpu, v == 0);
                 psw_write_neg(cpu, v & 0x80);
@@ -917,7 +917,7 @@ bool mov_register_direct_x(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xf9     MOV   X, d+Y */
 bool mov_register_direct_indexed_x_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.190 */
+    /* generated from generate_instructions.py: l.398 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3 || cycle == 4);
@@ -937,10 +937,10 @@ bool mov_register_direct_indexed_x_y(struct SPC_State state[static 1], uint32_t 
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
-            /* generated from generate_instructions.py: l.410 */
+            /* generated from generate_instructions.py: l.710 */
             cpu->x = cpu->data8[0];
             {
-                /* generated from generate_instructions.py: l.300 */
+                /* generated from generate_instructions.py: l.600 */
                 const uint16_t v = cpu->x;
                 psw_write_zero(cpu, v == 0);
                 psw_write_neg(cpu, v & 0x80);
@@ -959,7 +959,7 @@ bool mov_register_direct_indexed_x_y(struct SPC_State state[static 1], uint32_t 
 /* 0xeb     MOV   Y, d */
 bool mov_register_direct_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.129 */
+    /* generated from generate_instructions.py: l.242 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3);
@@ -973,10 +973,10 @@ bool mov_register_direct_y(struct SPC_State state[static 1], uint32_t cycle)
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
-            /* generated from generate_instructions.py: l.410 */
+            /* generated from generate_instructions.py: l.710 */
             cpu->y = cpu->data8[0];
             {
-                /* generated from generate_instructions.py: l.300 */
+                /* generated from generate_instructions.py: l.600 */
                 const uint16_t v = cpu->y;
                 psw_write_zero(cpu, v == 0);
                 psw_write_neg(cpu, v & 0x80);
@@ -993,7 +993,7 @@ bool mov_register_direct_y(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xfb     MOV   Y, d+X */
 bool mov_register_direct_indexed_y_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.190 */
+    /* generated from generate_instructions.py: l.398 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3 || cycle == 4);
@@ -1013,10 +1013,10 @@ bool mov_register_direct_indexed_y_x(struct SPC_State state[static 1], uint32_t 
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
-            /* generated from generate_instructions.py: l.410 */
+            /* generated from generate_instructions.py: l.710 */
             cpu->y = cpu->data8[0];
             {
-                /* generated from generate_instructions.py: l.300 */
+                /* generated from generate_instructions.py: l.600 */
                 const uint16_t v = cpu->y;
                 psw_write_zero(cpu, v == 0);
                 psw_write_neg(cpu, v & 0x80);
@@ -1035,17 +1035,17 @@ bool mov_register_direct_indexed_y_x(struct SPC_State state[static 1], uint32_t 
 /* 0x5d     MOV   X, A */
 bool mov_reg_reg_x_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-/* generated from generate_instructions.py: l.444 */
+/* generated from generate_instructions.py: l.744 */
     struct CPU_State* const cpu = &state->cpu;
 
     /* could do a dummy read but shouldn't matter */
     assert(cycle == 2);
 
     /* payload */
-    /* generated from generate_instructions.py: l.410 */
+    /* generated from generate_instructions.py: l.710 */
     cpu->x = cpu->a;
     {
-        /* generated from generate_instructions.py: l.300 */
+        /* generated from generate_instructions.py: l.600 */
         const uint16_t v = cpu->x;
         psw_write_zero(cpu, v == 0);
         psw_write_neg(cpu, v & 0x80);
@@ -1056,17 +1056,17 @@ bool mov_reg_reg_x_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x7d     MOV   A, X */
 bool mov_reg_reg_a_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-/* generated from generate_instructions.py: l.444 */
+/* generated from generate_instructions.py: l.744 */
     struct CPU_State* const cpu = &state->cpu;
 
     /* could do a dummy read but shouldn't matter */
     assert(cycle == 2);
 
     /* payload */
-    /* generated from generate_instructions.py: l.410 */
+    /* generated from generate_instructions.py: l.710 */
     cpu->a = cpu->x;
     {
-        /* generated from generate_instructions.py: l.300 */
+        /* generated from generate_instructions.py: l.600 */
         const uint16_t v = cpu->a;
         psw_write_zero(cpu, v == 0);
         psw_write_neg(cpu, v & 0x80);
@@ -1077,7 +1077,7 @@ bool mov_reg_reg_a_x(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x8d     MOV   Y, #i */
 bool mov_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.83 */
+    /* generated from generate_instructions.py: l.92 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -1085,10 +1085,10 @@ bool mov_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle)
     cpu->data8[0] = cpu->operands[0];
 
     /* payload */
-    /* generated from generate_instructions.py: l.410 */
+    /* generated from generate_instructions.py: l.710 */
     cpu->y = cpu->data8[0];
     {
-        /* generated from generate_instructions.py: l.300 */
+        /* generated from generate_instructions.py: l.600 */
         const uint16_t v = cpu->y;
         psw_write_zero(cpu, v == 0);
         psw_write_neg(cpu, v & 0x80);
@@ -1099,17 +1099,17 @@ bool mov_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x9d     MOV   X, SP */
 bool mov_reg_reg_x_sp(struct SPC_State state[static 1], uint32_t cycle)
 {
-/* generated from generate_instructions.py: l.444 */
+/* generated from generate_instructions.py: l.744 */
     struct CPU_State* const cpu = &state->cpu;
 
     /* could do a dummy read but shouldn't matter */
     assert(cycle == 2);
 
     /* payload */
-    /* generated from generate_instructions.py: l.410 */
+    /* generated from generate_instructions.py: l.710 */
     cpu->x = cpu->sp;
     {
-        /* generated from generate_instructions.py: l.300 */
+        /* generated from generate_instructions.py: l.600 */
         const uint16_t v = cpu->x;
         psw_write_zero(cpu, v == 0);
         psw_write_neg(cpu, v & 0x80);
@@ -1120,7 +1120,7 @@ bool mov_reg_reg_x_sp(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xad     CMP   Y, #i */
 bool cmp_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.83 */
+    /* generated from generate_instructions.py: l.92 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -1129,7 +1129,7 @@ bool cmp_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle)
 
     /* payload */
     {
-        /* generated from generate_instructions.py: l.385 */
+        /* generated from generate_instructions.py: l.685 */
         // compute (a - b), no borrow, update NZC then discard result
         const uint8_t operand_a = (uint8_t)(cpu->y);
         const uint8_t operand_b = (uint8_t)(cpu->data8[0]);
@@ -1149,14 +1149,14 @@ bool cmp_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xbd     MOV   SP, X */
 bool mov_reg_reg_sp_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-/* generated from generate_instructions.py: l.444 */
+/* generated from generate_instructions.py: l.744 */
     struct CPU_State* const cpu = &state->cpu;
 
     /* could do a dummy read but shouldn't matter */
     assert(cycle == 2);
 
     /* payload */
-    /* generated from generate_instructions.py: l.410 */
+    /* generated from generate_instructions.py: l.710 */
     cpu->sp = cpu->x;
     return true;
 }
@@ -1164,7 +1164,7 @@ bool mov_reg_reg_sp_x(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xcd     MOV   X, #i */
 bool mov_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.83 */
+    /* generated from generate_instructions.py: l.92 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -1172,10 +1172,10 @@ bool mov_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle)
     cpu->data8[0] = cpu->operands[0];
 
     /* payload */
-    /* generated from generate_instructions.py: l.410 */
+    /* generated from generate_instructions.py: l.710 */
     cpu->x = cpu->data8[0];
     {
-        /* generated from generate_instructions.py: l.300 */
+        /* generated from generate_instructions.py: l.600 */
         const uint16_t v = cpu->x;
         psw_write_zero(cpu, v == 0);
         psw_write_neg(cpu, v & 0x80);
@@ -1186,17 +1186,17 @@ bool mov_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xdd     MOV   A, Y */
 bool mov_reg_reg_a_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-/* generated from generate_instructions.py: l.444 */
+/* generated from generate_instructions.py: l.744 */
     struct CPU_State* const cpu = &state->cpu;
 
     /* could do a dummy read but shouldn't matter */
     assert(cycle == 2);
 
     /* payload */
-    /* generated from generate_instructions.py: l.410 */
+    /* generated from generate_instructions.py: l.710 */
     cpu->a = cpu->y;
     {
-        /* generated from generate_instructions.py: l.300 */
+        /* generated from generate_instructions.py: l.600 */
         const uint16_t v = cpu->a;
         psw_write_zero(cpu, v == 0);
         psw_write_neg(cpu, v & 0x80);
@@ -1207,17 +1207,17 @@ bool mov_reg_reg_a_y(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xfd     MOV   Y, A */
 bool mov_reg_reg_y_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-/* generated from generate_instructions.py: l.444 */
+/* generated from generate_instructions.py: l.744 */
     struct CPU_State* const cpu = &state->cpu;
 
     /* could do a dummy read but shouldn't matter */
     assert(cycle == 2);
 
     /* payload */
-    /* generated from generate_instructions.py: l.410 */
+    /* generated from generate_instructions.py: l.710 */
     cpu->y = cpu->a;
     {
-        /* generated from generate_instructions.py: l.300 */
+        /* generated from generate_instructions.py: l.600 */
         const uint16_t v = cpu->y;
         psw_write_zero(cpu, v == 0);
         psw_write_neg(cpu, v & 0x80);
@@ -1229,7 +1229,7 @@ bool mov_reg_reg_y_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x3e     CMP   X, d */
 bool cmp_register_direct_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.129 */
+    /* generated from generate_instructions.py: l.242 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2 || cycle == 3);
@@ -1244,7 +1244,7 @@ bool cmp_register_direct_x(struct SPC_State state[static 1], uint32_t cycle)
 
             /* payload */
             {
-                /* generated from generate_instructions.py: l.385 */
+                /* generated from generate_instructions.py: l.685 */
                 // compute (a - b), no borrow, update NZC then discard result
                 const uint8_t operand_a = (uint8_t)(cpu->x);
                 const uint8_t operand_b = (uint8_t)(cpu->data8[0]);

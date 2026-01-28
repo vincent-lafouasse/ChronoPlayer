@@ -3,6 +3,15 @@ import inspect
 import os
 
 
+instructions = dict()
+
+
+def add_instruction(op, instruction):
+    if op in instructions:
+        raise ValueError(f"trying to overwrite opcode {hex(op)}")
+    instructions[op] = instruction
+
+
 def trace_source():
     caller_frame = inspect.stack()[1]
     filename = os.path.basename(caller_frame.filename)
@@ -98,6 +107,116 @@ class RegisterImmediateMode(AddressingMode):
 
         return assemble_instruction(header, payload, footer)
 
+    @staticmethod
+    def register_instructions():
+        add_instruction(
+            0x08,
+            TemplateInstruction(
+                "OR",
+                "OR    A, #i",
+                RegisterImmediateMode(Register.A),
+                logic_op_payload("a", "|", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x28,
+            TemplateInstruction(
+                "AND",
+                "AND   A, #i",
+                RegisterImmediateMode(Register.A),
+                logic_op_payload("a", "&", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x48,
+            TemplateInstruction(
+                "EOR",
+                "EOR   A, #i",
+                RegisterImmediateMode(Register.A),
+                logic_op_payload("a", "^", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x68,
+            TemplateInstruction(
+                "CMP",
+                "CMP   A, #i",
+                RegisterImmediateMode(Register.A),
+                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x88,
+            TemplateInstruction(
+                "ADC",
+                "ADC   A, #i",
+                RegisterImmediateMode(Register.A),
+                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
+                + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
+        add_instruction(
+            0xA8,
+            TemplateInstruction(
+                "SBC",
+                "SBC   A, #i",
+                RegisterImmediateMode(Register.A),
+                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
+                + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
+        add_instruction(
+            0xC8,
+            TemplateInstruction(
+                "CMP",
+                "CMP   X, #i",
+                RegisterImmediateMode(Register.X),
+                do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0xE8,
+            TemplateInstruction(
+                "MOV",
+                "MOV   A, #i",
+                RegisterImmediateMode(Register.A),
+                write_register(
+                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+        add_instruction(
+            0x8D,
+            TemplateInstruction(
+                "MOV",
+                "MOV   Y, #i",
+                RegisterImmediateMode(Register.Y),
+                write_register(
+                    "y", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+        add_instruction(
+            0xAD,
+            TemplateInstruction(
+                "CMP",
+                "CMP   Y, #i",
+                RegisterImmediateMode(Register.Y),
+                do_cmp_and_check_psw("cpu->y", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0xCD,
+            TemplateInstruction(
+                "MOV",
+                "MOV   X, #i",
+                RegisterImmediateMode(Register.X),
+                write_register(
+                    "x", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+
 
 class RegisterDirectMode(AddressingMode):
     """
@@ -155,6 +274,107 @@ class RegisterDirectMode(AddressingMode):
         )
 
         return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @staticmethod
+    def register_instructions():
+        add_instruction(
+            0x04,
+            TemplateInstruction(
+                "OR",
+                "OR    A, d",
+                RegisterDirectMode(Register.A),
+                logic_op_payload("a", "|", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x24,
+            TemplateInstruction(
+                "AND",
+                "AND   A, d",
+                RegisterDirectMode(Register.A),
+                logic_op_payload("a", "&", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x44,
+            TemplateInstruction(
+                "EOR",
+                "EOR   A, d",
+                RegisterDirectMode(Register.A),
+                logic_op_payload("a", "^", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x64,
+            TemplateInstruction(
+                "CMP",
+                "CMP   A, d",
+                RegisterDirectMode(Register.A),
+                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x84,
+            TemplateInstruction(
+                "ADC",
+                "ADC   A, d",
+                RegisterDirectMode(Register.A),
+                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
+                + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
+        add_instruction(
+            0xA4,
+            TemplateInstruction(
+                "SBC",
+                "SBC   A, d",
+                RegisterDirectMode(Register.A),
+                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
+                + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
+        add_instruction(
+            0x3E,
+            TemplateInstruction(
+                "CMP",
+                "CMP   X, d",
+                RegisterDirectMode(Register.X),
+                do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0xE4,
+            TemplateInstruction(
+                "MOV",
+                "MOV   A, d",
+                RegisterDirectMode(Register.A),
+                write_register(
+                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+        add_instruction(
+            0xEB,
+            TemplateInstruction(
+                "MOV",
+                "MOV   Y, d",
+                RegisterDirectMode(Register.Y),
+                write_register(
+                    "y", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+        add_instruction(
+            0xF8,
+            TemplateInstruction(
+                "MOV",
+                "MOV   X, d",
+                RegisterDirectMode(Register.X),
+                write_register(
+                    "x", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
 
 
 class RegisterDirectIndexedMode(AddressingMode):
@@ -222,6 +442,98 @@ class RegisterDirectIndexedMode(AddressingMode):
         )
 
         return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @staticmethod
+    def register_instructions():
+        add_instruction(
+            0x94,
+            TemplateInstruction(
+                "ADC",
+                "ADC   A, d+X",
+                RegisterDirectIndexedMode(Register.A, Register.X),
+                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
+                + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
+        add_instruction(
+            0x34,
+            TemplateInstruction(
+                "AND",
+                "AND   A, d+X",
+                RegisterDirectIndexedMode(Register.A, Register.X),
+                logic_op_payload("a", "&", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x74,
+            TemplateInstruction(
+                "CMP",
+                "CMP   A, d+X",
+                RegisterDirectIndexedMode(Register.A, Register.X),
+                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x54,
+            TemplateInstruction(
+                "EOR",
+                "EOR   A, d+X",
+                RegisterDirectIndexedMode(Register.A, Register.X),
+                logic_op_payload("a", "^", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0xF4,
+            TemplateInstruction(
+                "MOV",
+                "MOV   A, d+X",
+                RegisterDirectIndexedMode(Register.A, Register.X),
+                write_register(
+                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+        add_instruction(
+            0xF9,
+            TemplateInstruction(
+                "MOV",
+                "MOV   X, d+Y",
+                RegisterDirectIndexedMode(Register.X, Register.Y),
+                write_register(
+                    "x", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+        add_instruction(
+            0xFB,
+            TemplateInstruction(
+                "MOV",
+                "MOV   Y, d+X",
+                RegisterDirectIndexedMode(Register.Y, Register.X),
+                write_register(
+                    "y", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+        add_instruction(
+            0x14,
+            TemplateInstruction(
+                "OR",
+                "OR    A, d+X",
+                RegisterDirectIndexedMode(Register.A, Register.X),
+                logic_op_payload("a", "|", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0xB4,
+            TemplateInstruction(
+                "SBC",
+                "SBC   A, d+X",
+                RegisterDirectIndexedMode(Register.A, Register.X),
+                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
+                + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
 
 
 class Instruction:
@@ -463,14 +775,32 @@ class MovRegisterRegister(Instruction):
 
         return "\n".join(assemble_instruction(header, payload, footer))
 
-
-instructions = dict()
-
-
-def add_instruction(op, instruction):
-    if op in instructions:
-        raise ValueError(f"trying to overwrite opcode {hex(op)}")
-    instructions[op] = instruction
+    @staticmethod
+    def register_instructions():
+        add_instruction(
+            0x7D,
+            MovRegisterRegister(Register.A, Register.X),
+        )
+        add_instruction(
+            0xDD,
+            MovRegisterRegister(Register.A, Register.Y),
+        )
+        add_instruction(
+            0xBD,
+            MovRegisterRegister(Register.SP, Register.X),
+        )
+        add_instruction(
+            0x5D,
+            MovRegisterRegister(Register.X, Register.A),
+        )
+        add_instruction(
+            0x9D,
+            MovRegisterRegister(Register.X, Register.SP),
+        )
+        add_instruction(
+            0xFD,
+            MovRegisterRegister(Register.Y, Register.A),
+        )
 
 
 add_instruction(
@@ -493,326 +823,10 @@ add_instruction(
     ),
 )
 
-
-def add_mov_reg_reg():
-    add_instruction(
-        0x7D,
-        MovRegisterRegister(Register.A, Register.X),
-    )
-    add_instruction(
-        0xDD,
-        MovRegisterRegister(Register.A, Register.Y),
-    )
-    add_instruction(
-        0xBD,
-        MovRegisterRegister(Register.SP, Register.X),
-    )
-    add_instruction(
-        0x5D,
-        MovRegisterRegister(Register.X, Register.A),
-    )
-    add_instruction(
-        0x9D,
-        MovRegisterRegister(Register.X, Register.SP),
-    )
-    add_instruction(
-        0xFD,
-        MovRegisterRegister(Register.Y, Register.A),
-    )
-
-
-def add_register_immediate_instructions():
-    add_instruction(
-        0x08,
-        TemplateInstruction(
-            "OR",
-            "OR    A, #i",
-            RegisterImmediateMode(Register.A),
-            logic_op_payload("a", "|", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0x28,
-        TemplateInstruction(
-            "AND",
-            "AND   A, #i",
-            RegisterImmediateMode(Register.A),
-            logic_op_payload("a", "&", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0x48,
-        TemplateInstruction(
-            "EOR",
-            "EOR   A, #i",
-            RegisterImmediateMode(Register.A),
-            logic_op_payload("a", "^", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0x68,
-        TemplateInstruction(
-            "CMP",
-            "CMP   A, #i",
-            RegisterImmediateMode(Register.A),
-            do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0x88,
-        TemplateInstruction(
-            "ADC",
-            "ADC   A, #i",
-            RegisterImmediateMode(Register.A),
-            do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-            + [trace_source(), "cpu->a = cpu->data8[0];"],
-        ),
-    )
-    add_instruction(
-        0xA8,
-        TemplateInstruction(
-            "SBC",
-            "SBC   A, #i",
-            RegisterImmediateMode(Register.A),
-            do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-            + [trace_source(), "cpu->a = cpu->data8[0];"],
-        ),
-    )
-    add_instruction(
-        0xC8,
-        TemplateInstruction(
-            "CMP",
-            "CMP   X, #i",
-            RegisterImmediateMode(Register.X),
-            do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0xE8,
-        TemplateInstruction(
-            "MOV",
-            "MOV   A, #i",
-            RegisterImmediateMode(Register.A),
-            write_register("a", "cpu->data8[0]", is_16bit=False, updates_flags=True),
-        ),
-    )
-
-    add_instruction(
-        0x8D,
-        TemplateInstruction(
-            "MOV",
-            "MOV   Y, #i",
-            RegisterImmediateMode(Register.Y),
-            write_register("y", "cpu->data8[0]", is_16bit=False, updates_flags=True),
-        ),
-    )
-    add_instruction(
-        0xAD,
-        TemplateInstruction(
-            "CMP",
-            "CMP   Y, #i",
-            RegisterImmediateMode(Register.Y),
-            do_cmp_and_check_psw("cpu->y", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0xCD,
-        TemplateInstruction(
-            "MOV",
-            "MOV   X, #i",
-            RegisterImmediateMode(Register.X),
-            write_register("x", "cpu->data8[0]", is_16bit=False, updates_flags=True),
-        ),
-    )
-
-
-def add_register_direct_instructions():
-    add_instruction(
-        0x04,
-        TemplateInstruction(
-            "OR",
-            "OR    A, d",
-            RegisterDirectMode(Register.A),
-            logic_op_payload("a", "|", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0x24,
-        TemplateInstruction(
-            "AND",
-            "AND   A, d",
-            RegisterDirectMode(Register.A),
-            logic_op_payload("a", "&", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0x44,
-        TemplateInstruction(
-            "EOR",
-            "EOR   A, d",
-            RegisterDirectMode(Register.A),
-            logic_op_payload("a", "^", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0x64,
-        TemplateInstruction(
-            "CMP",
-            "CMP   A, d",
-            RegisterDirectMode(Register.A),
-            do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0x84,
-        TemplateInstruction(
-            "ADC",
-            "ADC   A, d",
-            RegisterDirectMode(Register.A),
-            do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-            + [trace_source(), "cpu->a = cpu->data8[0];"],
-        ),
-    )
-    add_instruction(
-        0xA4,
-        TemplateInstruction(
-            "SBC",
-            "SBC   A, d",
-            RegisterDirectMode(Register.A),
-            do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-            + [trace_source(), "cpu->a = cpu->data8[0];"],
-        ),
-    )
-    add_instruction(
-        0x3E,
-        TemplateInstruction(
-            "CMP",
-            "CMP   X, d",
-            RegisterDirectMode(Register.X),
-            do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0xE4,
-        TemplateInstruction(
-            "MOV",
-            "MOV   A, d",
-            RegisterDirectMode(Register.A),
-            write_register("a", "cpu->data8[0]", is_16bit=False, updates_flags=True),
-        ),
-    )
-
-    add_instruction(
-        0xEB,
-        TemplateInstruction(
-            "MOV",
-            "MOV   Y, d",
-            RegisterDirectMode(Register.Y),
-            write_register("y", "cpu->data8[0]", is_16bit=False, updates_flags=True),
-        ),
-    )
-    add_instruction(
-        0xF8,
-        TemplateInstruction(
-            "MOV",
-            "MOV   X, d",
-            RegisterDirectMode(Register.X),
-            write_register("x", "cpu->data8[0]", is_16bit=False, updates_flags=True),
-        ),
-    )
-
-
-# ---------- REGISTER, DIRECT INDEXED ----------
-def add_register_direct_indexed_instructions():
-    add_instruction(
-        0x94,
-        TemplateInstruction(
-            "ADC",
-            "ADC   A, d+X",
-            RegisterDirectIndexedMode(Register.A, Register.X),
-            do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-            + [trace_source(), "cpu->a = cpu->data8[0];"],
-        ),
-    )
-    add_instruction(
-        0x34,
-        TemplateInstruction(
-            "AND",
-            "AND   A, d+X",
-            RegisterDirectIndexedMode(Register.A, Register.X),
-            logic_op_payload("a", "&", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0x74,
-        TemplateInstruction(
-            "CMP",
-            "CMP   A, d+X",
-            RegisterDirectIndexedMode(Register.A, Register.X),
-            do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0x54,
-        TemplateInstruction(
-            "EOR",
-            "EOR   A, d+X",
-            RegisterDirectIndexedMode(Register.A, Register.X),
-            logic_op_payload("a", "^", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0xF4,
-        TemplateInstruction(
-            "MOV",
-            "MOV   A, d+X",
-            RegisterDirectIndexedMode(Register.A, Register.X),
-            write_register("a", "cpu->data8[0]", is_16bit=False, updates_flags=True),
-        ),
-    )
-    add_instruction(
-        0xF9,
-        TemplateInstruction(
-            "MOV",
-            "MOV   X, d+Y",
-            RegisterDirectIndexedMode(Register.X, Register.Y),
-            write_register("x", "cpu->data8[0]", is_16bit=False, updates_flags=True),
-        ),
-    )
-    add_instruction(
-        0xFB,
-        TemplateInstruction(
-            "MOV",
-            "MOV   Y, d+X",
-            RegisterDirectIndexedMode(Register.Y, Register.X),
-            write_register("y", "cpu->data8[0]", is_16bit=False, updates_flags=True),
-        ),
-    )
-    add_instruction(
-        0x14,
-        TemplateInstruction(
-            "OR",
-            "OR    A, d+X",
-            RegisterDirectIndexedMode(Register.A, Register.X),
-            logic_op_payload("a", "|", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
-        0xB4,
-        TemplateInstruction(
-            "SBC",
-            "SBC   A, d+X",
-            RegisterDirectIndexedMode(Register.A, Register.X),
-            do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-            + [trace_source(), "cpu->a = cpu->data8[0];"],
-        ),
-    )
-
-
-add_register_immediate_instructions()
-add_mov_reg_reg()
-add_register_direct_instructions()
-add_register_direct_indexed_instructions()
+RegisterDirectMode.register_instructions()
+RegisterImmediateMode.register_instructions()
+MovRegisterRegister.register_instructions()
+RegisterDirectIndexedMode.register_instructions()
 
 
 def print_opcode_matrix():
