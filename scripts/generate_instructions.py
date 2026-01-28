@@ -105,6 +105,9 @@ class Instruction:
     def name(self):
         raise NotImplementedError("can't call base Instruction.name()")
 
+    def full_mnemonic(self):
+        raise NotImplementedError("can't call base Instruction.full_mnemonic()")
+
     def declaration(self):
         return f"bool {self.name()}(struct SPC_State state[static 1], uint32_t cycle)"
 
@@ -116,10 +119,14 @@ class Instruction:
 
 
 class TemplateInstruction(Instruction):
-    def __init__(self, mnemonic, mode, payload):
+    def __init__(self, mnemonic, _full_mnemonic, mode, payload):
         super().__init__(mnemonic)
         self.mode = mode
         self.payload = payload
+        self._full_mnemonic = _full_mnemonic
+
+    def full_mnemonic(self):
+        return self._full_mnemonic
 
     def name(self):
         return self.mode.name(self.mnemonic)
@@ -130,10 +137,14 @@ class TemplateInstruction(Instruction):
 
 
 class HardcodedInstruction(Instruction):
-    def __init__(self, mnemonic, function_name, body):
+    def __init__(self, mnemonic, _full_mnemonic, function_name, body):
         super().__init__(mnemonic)
         self.function_name = function_name
         self.lines = body.splitlines()
+        self._full_mnemonic = _full_mnemonic
+
+    def full_mnemonic(self):
+        return self._full_mnemonic
 
     def name(self):
         return self.function_name
@@ -283,15 +294,18 @@ class MovRegisterRegister(Instruction):
         self.dst = dst
         self.update_psw = dst != Register.SP
 
+    def full_mnemonic(self):
+        return f"MOV   {self.dst.name}, {self.src.name}"
+
     def name(self):
         return f"mov_reg_reg_{self.dst}_{self.src}"
 
     def render(self):
         header = inspect.cleandoc(
             f"""
-            {trace_source()}
             {self.declaration()}
             {{
+            {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
                 /* could do a dummy read but shouldn't matter */
@@ -327,6 +341,7 @@ add_instruction(
     0x00,
     HardcodedInstruction(
         "NOP",
+        "NOP",
         "nop",
         inspect.cleandoc(
             f"""
@@ -348,6 +363,7 @@ def add_register_immediate_instructions():
         0x08,
         TemplateInstruction(
             "OR",
+            "OR    A, #i",
             RegisterImmediate(Register.A),
             logic_op_payload("a", "|", "cpu->data8[0]"),
         ),
@@ -356,6 +372,7 @@ def add_register_immediate_instructions():
         0x28,
         TemplateInstruction(
             "AND",
+            "AND   A, #i",
             RegisterImmediate(Register.A),
             logic_op_payload("a", "&", "cpu->data8[0]"),
         ),
@@ -364,6 +381,7 @@ def add_register_immediate_instructions():
         0x48,
         TemplateInstruction(
             "EOR",
+            "EOR   A, #i",
             RegisterImmediate(Register.A),
             logic_op_payload("a", "^", "cpu->data8[0]"),
         ),
@@ -372,6 +390,7 @@ def add_register_immediate_instructions():
         0x68,
         TemplateInstruction(
             "CMP",
+            "CMP   A, #i",
             RegisterImmediate(Register.A),
             do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
         ),
@@ -380,6 +399,7 @@ def add_register_immediate_instructions():
         0x88,
         TemplateInstruction(
             "ADC",
+            "ADC   A, #i",
             RegisterImmediate(Register.A),
             do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
             + [trace_source(), "cpu->a = cpu->data8[0];"],
@@ -389,6 +409,7 @@ def add_register_immediate_instructions():
         0xA8,
         TemplateInstruction(
             "SBC",
+            "SBC   A, #i",
             RegisterImmediate(Register.A),
             do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
             + [trace_source(), "cpu->a = cpu->data8[0];"],
@@ -398,6 +419,7 @@ def add_register_immediate_instructions():
         0xC8,
         TemplateInstruction(
             "CMP",
+            "CMP   X, #i",
             RegisterImmediate(Register.X),
             do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
         ),
@@ -406,6 +428,7 @@ def add_register_immediate_instructions():
         0xE8,
         TemplateInstruction(
             "MOV",
+            "MOV   A, #i",
             RegisterImmediate(Register.A),
             write_register("a", "cpu->data8[0]", is_16bit=False, updates_flags=True),
         ),
@@ -415,6 +438,7 @@ def add_register_immediate_instructions():
         0x8D,
         TemplateInstruction(
             "MOV",
+            "MOV   Y, #i",
             RegisterImmediate(Register.Y),
             write_register("y", "cpu->data8[0]", is_16bit=False, updates_flags=True),
         ),
@@ -423,6 +447,7 @@ def add_register_immediate_instructions():
         0xAD,
         TemplateInstruction(
             "CMP",
+            "CMP   Y, #i",
             RegisterImmediate(Register.Y),
             do_cmp_and_check_psw("cpu->y", "cpu->data8[0]"),
         ),
@@ -431,6 +456,7 @@ def add_register_immediate_instructions():
         0xCD,
         TemplateInstruction(
             "MOV",
+            "MOV   X, #i",
             RegisterImmediate(Register.X),
             write_register("x", "cpu->data8[0]", is_16bit=False, updates_flags=True),
         ),
@@ -540,7 +566,7 @@ def make_header():
                 if op not in instructions:
                     continue
                 instr = instructions[op]
-                f.write(f"/* {op:#04x} */\n")
+                f.write(f"/* {op:#04x}     {instr.full_mnemonic()} */\n")
                 f.write(f"extern {instr.declaration()};\n")
             f.write("\n")  # sep. the columns
 
@@ -569,7 +595,7 @@ def make_implementation():
                 if op not in instructions:
                     continue
                 instr = instructions[op]
-                f.write(f"/* {op:#04x} */\n")
+                f.write(f"/* {op:#04x}     {instr.full_mnemonic()} */\n")
                 f.write(f"{instr.render()}\n\n")
             f.write("\n")  # sep. the columns
 
