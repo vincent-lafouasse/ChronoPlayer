@@ -287,29 +287,31 @@ class MovRegisterRegister(Instruction):
         return f"mov_reg_reg_{self.dst}_{self.src}"
 
     def render(self):
-        return (
-            inspect.cleandoc(
-                f"""
+        header = inspect.cleandoc(
+            f"""
             {trace_source()}
             {self.declaration()}
             {{
+                struct CPU_State* const cpu = &state->cpu;
+
                 /* could do a dummy read but shouldn't matter */
                 assert(cycle == 2);
             """
-            ).splitlines()
-            + write_register(
-                self.dst,
-                f"cpu->{self.src}",
-                is_16bit=False,
-                updates_flags=self.update_psw,
-            )
-            + inspect.cleandoc(
-                f"""
+        )
+        payload = write_register(
+            self.dst,
+            f"cpu->{self.src}",
+            is_16bit=False,
+            updates_flags=self.update_psw,
+        )
+        footer = inspect.cleandoc(
+            f"""
                 return true;
             }}
             """
-            ).splitlines()
         )
+
+        return "\n".join(assemble_instruction(header, payload, footer))
 
 
 instructions = dict()
@@ -435,12 +437,12 @@ def add_register_immediate_instructions():
     )
 
 
-add_register_immediate_instructions()
+# add_register_immediate_instructions()
 
-# add_instruction(
-#     0x7D,
-#     MovRegisterRegister(Register.A, Register.X),
-# )
+add_instruction(
+    0x7D,
+    MovRegisterRegister(Register.A, Register.X),
+)
 # add_instruction(
 # 0xdd,
 # MovRegisterRegister(Register.A, Register.Y),
