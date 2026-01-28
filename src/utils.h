@@ -1,27 +1,81 @@
 #pragma once
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #define AS_U8(val) ((uint8_t)(val))
 #define AS_U16(val) ((uint16_t)(val))
 
-#define PARSE_U16(lsb, msb) (AS_U16(lsb) | (AS_U16(msb) << 8))
-#define MSB_U16(x) AS_U8((x) >> 8)
-#define LSB_U16(x) AS_U8(x)
+static inline uint16_t u16_parse(uint8_t lsb, uint8_t msb)
+{
+    return AS_U16(lsb) | (AS_U16(msb) << 8);
+}
 
-#define FLAG_AT(x, m) (!!((x) & (m)))
+static inline uint8_t u16_msb(uint16_t x)
+{
+    return AS_U8(x >> 8);
+}
 
-#define FLAG_SET(x, m) ((x) |= AS_U8(m))
-#define FLAG_CLEAR(x, m) ((x) &= ~AS_U8(m))
-#define FLAG_TOGGLE(x, m) ((x) ^= AS_U8(m))
+static inline uint8_t u16_lsb(uint16_t x)
+{
+    return AS_U8(x);
+}
 
-#define FLAG_WRITE(x, m, b) \
-    ((x) = AS_U8(((x) & ~AS_U8(m)) | ((b) ? AS_U8(m) : 0)))
+static inline bool flag_at(uint8_t field, uint8_t flag)
+{
+    return field & flag;
+}
 
-#define BIT(i) (1u << (i))
+static inline void flag_set(uint8_t field[static 1], uint8_t flag)
+{
+    *field |= flag;
+}
 
-#define BIT_AT(x, i) FLAG_AT(x, BIT(i))
-#define BIT_SET(x, i) FLAG_SET(x, BIT(i))
-#define BIT_CLEAR(x, i) FLAG_CLEAR(x, BIT(i))
-#define BIT_TOGGLE(x, i) FLAG_TOGGLE(x, BIT(i))
-#define BIT_WRITE(x, i, b) FLAG_WRITE(x, BIT(i), b)
+static inline void flag_clear(uint8_t field[static 1], uint8_t flag)
+{
+    *field &= ~flag;
+}
+
+static inline void flag_toggle(uint8_t field[static 1], uint8_t flag)
+{
+    *field ^= flag;
+}
+
+static inline void flag_write(uint8_t field[static 1], uint8_t flag, bool b)
+{
+    if (b) {
+        flag_set(field, flag);
+    } else {
+        flag_clear(field, flag);
+    }
+}
+
+static inline uint8_t bit(uint8_t i)
+{
+    return 1u << (i & 7);
+}
+
+static inline bool bit_at(uint8_t field, uint8_t i)
+{
+    return flag_at(field, bit(i));
+}
+
+static inline void bit_set(uint8_t field[static 1], uint8_t i)
+{
+    flag_set(field, bit(i));
+}
+
+static inline void bit_clear(uint8_t field[static 1], uint8_t i)
+{
+    flag_clear(field, bit(i));
+}
+
+static inline void bit_toggle(uint8_t field[static 1], uint8_t i)
+{
+    flag_toggle(field, bit(i));
+}
+
+static inline void bit_write(uint8_t field[static 1], uint8_t i, bool b)
+{
+    flag_write(field, bit(i), b);
+}

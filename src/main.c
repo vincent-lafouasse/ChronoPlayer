@@ -151,7 +151,7 @@ bool mov_direct_immediate(struct SPC_State* state, uint32_t cycle)
         case 3: {
             uint8_t offset = bus_read(state, cpu->pc++);
             uint8_t page = !!(cpu->status & PSW_P);
-            addr = PARSE_U16(offset, page);  // lsb msb
+            addr = u16_parse(offset, page);  // lsb msb
             return false;
         }
 
@@ -205,7 +205,7 @@ bool mov1_membit_carry(struct SPC_State* state, uint32_t cycle)
             // 000A'AAAA is the msb of the address
             uint8_t raw_hi = bus_read(state, cpu->pc++);
             bit_index = raw_hi >> 5;
-            addr = PARSE_U16(addr, raw_hi & 0x1f);
+            addr = u16_parse(addr, raw_hi & 0x1f);
             return false;
         }
 
@@ -219,7 +219,7 @@ bool mov1_membit_carry(struct SPC_State* state, uint32_t cycle)
             // RMW Modify
             // could be done right before the write, doesn't really matter but
             // neater like this
-            BIT_WRITE(data, bit_index, (cpu->status & PSW_C));
+            bit_write(&data, bit_index, (cpu->status & PSW_C));
             return false;
 
         case 6:

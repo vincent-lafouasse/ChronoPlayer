@@ -40,7 +40,7 @@
     static inline void psw_write_##name(struct CPU_State cpu[static 1], \
                                         bool val)                       \
     {                                                                   \
-        FLAG_WRITE(cpu->status, (flag), val);                           \
+        flag_write(&cpu->status, (flag), val);                          \
     }
 
 IMPLEM_PSW_WRITE(PSW_ZERO, zero)
@@ -52,7 +52,7 @@ IMPLEM_PSW_WRITE(PSW_HALF_CARRY, half_carry)
 #define IMPLEM_PSW_READ(flag, name)                                  \
     static inline uint8_t psw_##name(struct CPU_State cpu[static 1]) \
     {                                                                \
-        return FLAG_AT(cpu->status, (flag));                         \
+        return flag_at(cpu->status, (flag));                         \
     }
 
 IMPLEM_PSW_READ(PSW_ZERO, zero)
@@ -65,7 +65,7 @@ IMPLEM_PSW_READ(PSW_ZP_LOC, direct_page)
 static inline uint16_t direct_page(struct CPU_State cpu[static 1],
                                    uint8_t offset)
 {
-    return PARSE_U16(offset, psw_direct_page(cpu));
+    return u16_parse(offset, psw_direct_page(cpu));
 }
 
 void cpu_init(struct CPU_State* cpu);

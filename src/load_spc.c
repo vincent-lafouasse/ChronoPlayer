@@ -114,7 +114,7 @@ void load_spc_or_exit(const char* path, struct SPC_State* out)
     }
 
     const struct CPU_State cpu = {
-        .pc = PARSE_U16(header[0x25], header[0x26]),
+        .pc = u16_parse(header[0x25], header[0x26]),
         .a = header[0x27],
         .x = header[0x28],
         .y = header[0x29],
