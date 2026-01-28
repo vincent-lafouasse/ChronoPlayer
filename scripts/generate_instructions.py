@@ -10,6 +10,14 @@ def trace_source():
     return f"/* generated from {filename}: l.{line} */"
 
 
+def assemble_instruction(header, payload, footer, indent_depth=1):
+    indent = "    " * indent_depth
+    payload = [indent + line for line in payload]
+    payload = [line.rstrip() for line in payload]
+    payload = "\n".join(payload)
+    return f"{header}\n\n{indent}/* payload */\n{payload}\n{footer}".splitlines()
+
+
 class Register(StrEnum):
     A = "a"
     X = "x"
@@ -67,10 +75,6 @@ class RegisterImmediate(AddressingMode):
         return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def render(self, mnemonic, payload):
-        payload = ["    " + line for line in payload]
-        payload = [line.rstrip() for line in payload]
-        payload = "\n".join(payload)
-
         header = inspect.cleandoc(
             f"""
             {self.declaration(mnemonic)}
@@ -83,6 +87,7 @@ class RegisterImmediate(AddressingMode):
                 cpu->data8[0] = cpu->operands[0];
             """
         )
+        # payload goes here
         footer = inspect.cleandoc(
             f"""
                 return true;
@@ -90,7 +95,7 @@ class RegisterImmediate(AddressingMode):
             """
         )
 
-        return f"{header}\n\n{payload}\n{footer}".splitlines()
+        return assemble_instruction(header, payload, footer)
 
 
 class Instruction:
