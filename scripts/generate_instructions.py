@@ -318,12 +318,37 @@ add_instruction(
     ),
 )
 add_instruction(
+    0x68,
+    TemplateInstruction(
+        "CMP",
+        RegisterImmediate(Register.A),
+        do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+    ),
+)
+add_instruction(
     0x88,
     TemplateInstruction(
         "ADC",
         RegisterImmediate(Register.A),
         do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
         + [trace_source(), "cpu->a = cpu->data8[0];"],
+    ),
+)
+add_instruction(
+    0xA8,
+    TemplateInstruction(
+        "SBC",
+        RegisterImmediate(Register.A),
+        do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
+        + [trace_source(), "cpu->a = cpu->data8[0];"],
+    ),
+)
+add_instruction(
+    0xC8,
+    TemplateInstruction(
+        "CMP",
+        RegisterImmediate(Register.X),
+        do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
     ),
 )
 add_instruction(
@@ -341,6 +366,14 @@ add_instruction(
         "MOV",
         RegisterImmediate(Register.Y),
         write_register("y", "cpu->data8[0]", is_16bit=False, updates_flags=True),
+    ),
+)
+add_instruction(
+    0xAD,
+    TemplateInstruction(
+        "CMP",
+        RegisterImmediate(Register.Y),
+        do_cmp_and_check_psw("cpu->y", "cpu->data8[0]"),
     ),
 )
 add_instruction(
