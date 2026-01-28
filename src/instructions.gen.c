@@ -176,7 +176,7 @@ bool sbc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 
         // half-borrow check: if (u4)a - (u4)b - borrow underflowed
         // i.e. (u4)a < (u4)b + borrow
-        const bool half_borrow = (a & 0xf) < (b & 0xf) + borrow;
+        const bool half_borrow = (operand_a & 0xf) < (operand_b & 0xf) + borrow;
         psw_write_half_carry(cpu, !half_borrow);
 
         const int32_t full_res = operand_a - operand_b - borrow;
