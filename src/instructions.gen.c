@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.580 */
+/* generated from generate_instructions.py: l.590 */
 
 #include "instructions.gen.h"
 
@@ -10,7 +10,7 @@
 /* 0x00     NOP */
 bool nop(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.350 */
+    /* generated from generate_instructions.py: l.360 */
     /* could do a dummy read but shouldn't matter */
     assert(cycle == 2);
     (void)state;
@@ -158,7 +158,7 @@ bool adc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
         // cache back the 8bit result for assignment
         cpu->data8[0] = full_res & 0xff;
     }
-    /* generated from generate_instructions.py: l.406 */
+    /* generated from generate_instructions.py: l.416 */
     cpu->a = cpu->data8[0];
     return true;
 }
@@ -203,7 +203,7 @@ bool sbc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
         // cache back the 8bit result for assignment
         cpu->data8[0] = full_res & 0xff;
     }
-    /* generated from generate_instructions.py: l.416 */
+    /* generated from generate_instructions.py: l.426 */
     cpu->a = cpu->data8[0];
     return true;
 }
@@ -267,7 +267,7 @@ bool mov_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x5d     MOV   X, A */
 bool mov_reg_reg_x_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-/* generated from generate_instructions.py: l.309 */
+/* generated from generate_instructions.py: l.319 */
     struct CPU_State* const cpu = &state->cpu;
 
     /* could do a dummy read but shouldn't matter */
@@ -288,7 +288,7 @@ bool mov_reg_reg_x_a(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x7d     MOV   A, X */
 bool mov_reg_reg_a_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-/* generated from generate_instructions.py: l.309 */
+/* generated from generate_instructions.py: l.319 */
     struct CPU_State* const cpu = &state->cpu;
 
     /* could do a dummy read but shouldn't matter */
@@ -331,7 +331,7 @@ bool mov_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x9d     MOV   X, SP */
 bool mov_reg_reg_x_sp(struct SPC_State state[static 1], uint32_t cycle)
 {
-/* generated from generate_instructions.py: l.309 */
+/* generated from generate_instructions.py: l.319 */
     struct CPU_State* const cpu = &state->cpu;
 
     /* could do a dummy read but shouldn't matter */
@@ -381,7 +381,7 @@ bool cmp_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xbd     MOV   SP, X */
 bool mov_reg_reg_sp_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-/* generated from generate_instructions.py: l.309 */
+/* generated from generate_instructions.py: l.319 */
     struct CPU_State* const cpu = &state->cpu;
 
     /* could do a dummy read but shouldn't matter */
@@ -418,7 +418,7 @@ bool mov_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xdd     MOV   A, Y */
 bool mov_reg_reg_a_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-/* generated from generate_instructions.py: l.309 */
+/* generated from generate_instructions.py: l.319 */
     struct CPU_State* const cpu = &state->cpu;
 
     /* could do a dummy read but shouldn't matter */
@@ -439,7 +439,7 @@ bool mov_reg_reg_a_y(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xfd     MOV   Y, A */
 bool mov_reg_reg_y_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-/* generated from generate_instructions.py: l.309 */
+/* generated from generate_instructions.py: l.319 */
     struct CPU_State* const cpu = &state->cpu;
 
     /* could do a dummy read but shouldn't matter */

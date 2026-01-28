@@ -289,6 +289,16 @@ def write_register(reg, data, is_16bit=False, updates_flags=True):
 
 
 class MovRegisterRegister(Instruction):
+    """
+    2 Register, Register -- A,X; A,Y; X,A; X,Y; Y,A; Y,X; SP,X; X,SP
+    (MOV,MOV,MOV,MOV,MOV,MOV)
+    (1 byte)
+    (2 cycles)
+          1       PC      Op Code         1
+          2       ??      IO              ?
+      * This should be accurate.
+    """
+
     def __init__(self, dst, src):
         super().__init__("MOV")
         self.src = src
