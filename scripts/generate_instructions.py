@@ -803,6 +803,132 @@ class RegisterDirectIndexedMode(AddressingMode):
         )
 
 
+class RegisterIndirectMode(AddressingMode):
+    """
+    5a Register, Indirect -- A,(X)
+     (ADC,AND,CMP,EOR,MOV,OR,SBC)
+     (1 byte)
+     (3 cycles)
+           1       PC      Op Code         1
+           2       ??      IO              ?
+           3       X       Data            1
+    """
+
+    def __init__(self):
+        super().__init__()
+
+    def name(self, mnemonic):
+        return f"{mnemonic.lower()}_register_indirect"
+
+    def declaration(self, mnemonic):
+        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def render(self, mnemonic, payload):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration(mnemonic)}
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle == 2 || cycle == 3);
+
+                switch (cycle) {{
+                    case 2:
+                        // an idle cycle, lets calculate addr here since we can
+                        cpu->addr = direct_page(cpu, cpu->x);
+                        return false;
+                    case 3: {{
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+            """
+        )
+
+        footer = inspect.cleandoc(
+            f"""
+                        return true;
+                    }}
+                    default:
+                        /* unreachable */
+                        /* true terminates the instruction just in case */
+                        return true;
+                }}
+            }}
+            """
+        )
+
+        return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @staticmethod
+    def register_instructions():
+        add_instruction(
+            0x86,
+            TemplateInstruction(
+                "ADC",
+                "ADC   A, (X)",
+                RegisterIndirectMode(),
+                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
+                + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
+        add_instruction(
+            0x26,
+            TemplateInstruction(
+                "AND",
+                "AND   A, (X)",
+                RegisterIndirectMode(),
+                logic_op_payload("a", "&", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x66,
+            TemplateInstruction(
+                "CMP",
+                "CMP   A, (X)",
+                RegisterIndirectMode(),
+                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x46,
+            TemplateInstruction(
+                "EOR",
+                "EOR   A, (X)",
+                RegisterIndirectMode(),
+                logic_op_payload("a", "^", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0xE6,
+            TemplateInstruction(
+                "MOV",
+                "MOV   A, (X)",
+                RegisterIndirectMode(),
+                write_register(
+                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+        add_instruction(
+            0x06,
+            TemplateInstruction(
+                "OR",
+                "OR    A, (X)",
+                RegisterIndirectMode(),
+                logic_op_payload("a", "|", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0xA6,
+            TemplateInstruction(
+                "SBC",
+                "SBC   A, (X)",
+                RegisterIndirectMode(),
+                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
+                + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
+
+
 add_instruction(
     0x00,
     HardcodedInstruction(
@@ -827,6 +953,7 @@ RegisterDirectMode.register_instructions()
 RegisterImmediateMode.register_instructions()
 MovRegisterRegister.register_instructions()
 RegisterDirectIndexedMode.register_instructions()
+RegisterIndirectMode.register_instructions()
 
 
 def print_opcode_matrix():
