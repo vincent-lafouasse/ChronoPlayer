@@ -468,18 +468,49 @@ add_register_immediate_instructions()
 add_mov_reg_reg()
 
 
-def check_missing_opcodes():
-    missing = []
-    for op in range(255):
-        if op not in instructions:
-            missing.append(op)
-    if len(missing) == 0:
-        print("all opcodes accounted for")
-    else:
-        for op in missing:
-            print(hex(op), ", ", end="")
-        print()
-        print(f"{len(missing)} missing")
+def print_opcode_matrix():
+    # ANSI Color Codes
+    GREEN = "\033[92m"
+    RED = "\033[91m"
+    GRAY = "\033[90m"
+    RESET = "\033[0m"
+    BOLD = "\033[1m"
+
+    # Header for columns
+    col_header = "      " + "    ".join(f"{c:X}" for c in range(16))
+    print(f"\n{BOLD}{col_header}{RESET}")
+    print("    " + "—" * 65)
+
+    missing_count = 0
+
+    for row in range(16):
+        # Row label (0x, 1x, etc)
+        line_parts = [f"{BOLD} {row:X}x |{RESET}"]
+
+        for col in range(16):
+            opcode = (row << 4) | col
+            hex_str = f"{opcode:02X}"  # Format as 00, 01, etc.
+
+            if opcode in instructions:
+                # Implemented: Green check + Hex
+                line_parts.append(f"{GREEN}✅{hex_str}{RESET}")
+            else:
+                # Missing: Red cross + Hex
+                line_parts.append(f"{RED}❌{hex_str}{RESET}")
+                missing_count += 1
+
+        print(" ".join(line_parts))
+
+    # Summary Footer
+    total = 256
+    done = total - missing_count
+    percent = (done / total) * 100
+
+    print("    " + "—" * 65)
+    print(
+        f"{BOLD}Progress: {done}/{total} ({percent:.1f}%) | "
+        f"{GREEN}Implemented: {done}{RESET} | {RED}Missing: {missing_count}{RESET}\n"
+    )
 
 
 C_IMPLEM = "instructions.gen.c"
@@ -546,7 +577,7 @@ def make_implementation():
 def main():
     make_header()
     make_implementation()
-    print(f"missing: {256 - len(instructions)}")
+    print_opcode_matrix()
 
 
 if __name__ == "__main__":
