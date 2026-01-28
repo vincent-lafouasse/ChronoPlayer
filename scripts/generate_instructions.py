@@ -437,16 +437,35 @@ def add_register_immediate_instructions():
     )
 
 
-# add_register_immediate_instructions()
+def add_mov_reg_reg():
+    add_instruction(
+        0x7D,
+        MovRegisterRegister(Register.A, Register.X),
+    )
+    add_instruction(
+        0xDD,
+        MovRegisterRegister(Register.A, Register.Y),
+    )
+    add_instruction(
+        0xBD,
+        MovRegisterRegister(Register.SP, Register.X),
+    )
+    add_instruction(
+        0x5D,
+        MovRegisterRegister(Register.X, Register.A),
+    )
+    add_instruction(
+        0x9D,
+        MovRegisterRegister(Register.X, Register.SP),
+    )
+    add_instruction(
+        0xFD,
+        MovRegisterRegister(Register.Y, Register.A),
+    )
 
-add_instruction(
-    0x7D,
-    MovRegisterRegister(Register.A, Register.X),
-)
-# add_instruction(
-# 0xdd,
-# MovRegisterRegister(Register.A, Register.Y),
-# )
+
+add_register_immediate_instructions()
+add_mov_reg_reg()
 
 
 def check_missing_opcodes():
