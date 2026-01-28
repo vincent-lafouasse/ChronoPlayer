@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.727 */
+/* generated from generate_instructions.py: l.873 */
 #pragma once
 
 #include <stdbool.h>
@@ -13,35 +13,85 @@ extern bool nop(struct SPC_State state[static 1], uint32_t cycle);
 
 /* 0x04     OR    A, d */
 extern bool or_register_direct_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x14     OR    A, d+X */
+extern bool or_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x24     AND   A, d */
 extern bool and_register_direct_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x34     AND   A, d+X */
+extern bool and_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x44     EOR   A, d */
 extern bool eor_register_direct_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x54     EOR   A, d+X */
+extern bool eor_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x64     CMP   A, d */
 extern bool cmp_register_direct_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x74     CMP   A, d+X */
+extern bool cmp_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x84     ADC   A, d */
 extern bool adc_register_direct_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x94     ADC   A, d+X */
+extern bool adc_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xa4     SBC   A, d */
 extern bool sbc_register_direct_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xb4     SBC   A, d+X */
+extern bool sbc_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe4     MOV   A, d */
 extern bool mov_register_direct_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xf4     MOV   A, d+X */
+extern bool mov_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle);
 
 
 
 
+/* 0x08     OR    A, #i */
+extern bool or_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x28     AND   A, #i */
+extern bool and_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x48     EOR   A, #i */
+extern bool eor_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x68     CMP   A, #i */
+extern bool cmp_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x88     ADC   A, #i */
+extern bool adc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xa8     SBC   A, #i */
+extern bool sbc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xc8     CMP   X, #i */
+extern bool cmp_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xe8     MOV   A, #i */
+extern bool mov_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xf8     MOV   X, d */
 extern bool mov_register_direct_x(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0xf9     MOV   X, d+Y */
+extern bool mov_register_direct_indexed_x_y(struct SPC_State state[static 1], uint32_t cycle);
 
 
 /* 0xeb     MOV   Y, d */
 extern bool mov_register_direct_y(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xfb     MOV   Y, d+X */
+extern bool mov_register_direct_indexed_y_x(struct SPC_State state[static 1], uint32_t cycle);
 
 
+/* 0x5d     MOV   X, A */
+extern bool mov_reg_reg_x_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x7d     MOV   A, X */
+extern bool mov_reg_reg_a_x(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x8d     MOV   Y, #i */
+extern bool mov_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x9d     MOV   X, SP */
+extern bool mov_reg_reg_x_sp(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xad     CMP   Y, #i */
+extern bool cmp_register_immediate_y(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xbd     MOV   SP, X */
+extern bool mov_reg_reg_sp_x(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xcd     MOV   X, #i */
+extern bool mov_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xdd     MOV   A, Y */
+extern bool mov_reg_reg_a_y(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xfd     MOV   Y, A */
+extern bool mov_reg_reg_y_a(struct SPC_State state[static 1], uint32_t cycle);
 
 /* 0x3e     CMP   X, d */
 extern bool cmp_register_direct_x(struct SPC_State state[static 1], uint32_t cycle);
-/* 0x7e     CMP   Y, d */
-extern bool cmp_register_direct_y(struct SPC_State state[static 1], uint32_t cycle);
 
 

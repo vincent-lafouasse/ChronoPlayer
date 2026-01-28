@@ -157,6 +157,73 @@ class RegisterDirectMode(AddressingMode):
         return assemble_instruction(header, payload, footer, indent_depth=3)
 
 
+class RegisterDirectIndexedMode(AddressingMode):
+    """
+    4 Register, Direct Indexed -- A,d+X; X,d+Y; Y,d+X
+     (ADC,AND,CMP,EOR,MOV,MOV,MOV,OR,SBC)
+     (2 bytes)
+     (4 cycles)
+           1       PC      Op Code         1
+           2       PC+1    DO              1
+           3       ??      IO              ?
+           4       DO      Data            1
+       * blargg verified Data read is cycle 4.
+       * 2 and 3 could be swapped, but that would be odd.
+    """
+
+    def __init__(self, dst, src):
+        super().__init__()
+        self.dst = dst
+        self.src = src
+
+    def name(self, mnemonic):
+        return f"{mnemonic.lower()}_register_direct_indexed_{self.dst}_{self.src}"
+
+    def declaration(self, mnemonic):
+        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def render(self, mnemonic, payload):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration(mnemonic)}
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle == 2 || cycle == 3 || cycle == 4);
+
+                switch (cycle) {{
+                    case 2:
+                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        // direct offset indexed by {self.src.name}
+                        // wrapped within the direct page
+                        cpu->data8[0] = (cpu->operands[0] + cpu->{self.src}) & 0xff;
+                        cpu->addr = direct_page(cpu, cpu->data8[0]);
+                        return false;
+                    case 3:
+                        // idle cycle, could do a dummy read but shouldnt matter
+                        return false;
+                    case 4: {{
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+            """
+        )
+
+        footer = inspect.cleandoc(
+            f"""
+                        return true;
+                    }}
+                    default:
+                        /* unreachable */
+                        /* true terminates the instruction just in case */
+                        return true;
+                }}
+            }}
+            """
+        )
+
+        return assemble_instruction(header, payload, footer, indent_depth=3)
+
+
 class Instruction:
     def __init__(self, mnemonic):
         self.mnemonic = mnemonic
@@ -645,15 +712,6 @@ def add_register_direct_instructions():
         ),
     )
     add_instruction(
-        0x7E,
-        TemplateInstruction(
-            "CMP",
-            "CMP   Y, d",
-            RegisterDirectMode(Register.Y),
-            do_cmp_and_check_psw("cpu->y", "cpu->data8[0]"),
-        ),
-    )
-    add_instruction(
         0xF8,
         TemplateInstruction(
             "MOV",
@@ -664,9 +722,97 @@ def add_register_direct_instructions():
     )
 
 
-# add_register_immediate_instructions()
-# add_mov_reg_reg()
+# ---------- REGISTER, DIRECT INDEXED ----------
+def add_register_direct_indexed_instructions():
+    add_instruction(
+        0x94,
+        TemplateInstruction(
+            "ADC",
+            "ADC   A, d+X",
+            RegisterDirectIndexedMode(Register.A, Register.X),
+            do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
+            + [trace_source(), "cpu->a = cpu->data8[0];"],
+        ),
+    )
+    add_instruction(
+        0x34,
+        TemplateInstruction(
+            "AND",
+            "AND   A, d+X",
+            RegisterDirectIndexedMode(Register.A, Register.X),
+            logic_op_payload("a", "&", "cpu->data8[0]"),
+        ),
+    )
+    add_instruction(
+        0x74,
+        TemplateInstruction(
+            "CMP",
+            "CMP   A, d+X",
+            RegisterDirectIndexedMode(Register.A, Register.X),
+            do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+        ),
+    )
+    add_instruction(
+        0x54,
+        TemplateInstruction(
+            "EOR",
+            "EOR   A, d+X",
+            RegisterDirectIndexedMode(Register.A, Register.X),
+            logic_op_payload("a", "^", "cpu->data8[0]"),
+        ),
+    )
+    add_instruction(
+        0xF4,
+        TemplateInstruction(
+            "MOV",
+            "MOV   A, d+X",
+            RegisterDirectIndexedMode(Register.A, Register.X),
+            write_register("a", "cpu->data8[0]", is_16bit=False, updates_flags=True),
+        ),
+    )
+    add_instruction(
+        0xF9,
+        TemplateInstruction(
+            "MOV",
+            "MOV   X, d+Y",
+            RegisterDirectIndexedMode(Register.X, Register.Y),
+            write_register("x", "cpu->data8[0]", is_16bit=False, updates_flags=True),
+        ),
+    )
+    add_instruction(
+        0xFB,
+        TemplateInstruction(
+            "MOV",
+            "MOV   Y, d+X",
+            RegisterDirectIndexedMode(Register.Y, Register.X),
+            write_register("y", "cpu->data8[0]", is_16bit=False, updates_flags=True),
+        ),
+    )
+    add_instruction(
+        0x14,
+        TemplateInstruction(
+            "OR",
+            "OR    A, d+X",
+            RegisterDirectIndexedMode(Register.A, Register.X),
+            logic_op_payload("a", "|", "cpu->data8[0]"),
+        ),
+    )
+    add_instruction(
+        0xB4,
+        TemplateInstruction(
+            "SBC",
+            "SBC   A, d+X",
+            RegisterDirectIndexedMode(Register.A, Register.X),
+            do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
+            + [trace_source(), "cpu->a = cpu->data8[0];"],
+        ),
+    )
+
+
+add_register_immediate_instructions()
+add_mov_reg_reg()
 add_register_direct_instructions()
+add_register_direct_indexed_instructions()
 
 
 def print_opcode_matrix():
