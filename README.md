@@ -12,7 +12,7 @@ this is for them.
 
 - to Anomie the absolute goat for providing a lot of documentation on an otherwise undocumented platform
 - to blargg for the legendary amount of research and time spent reverse-engineering the SNES APU/DSP to give us an authoritative source on how the system actually behaves
-- to Yasunori Mitsuda for composing the soul of Chrono Trigger. this project exists because his music remains just as haunting and beautiful decades later.
+- to Yasunori Mitsuda for composing the soul of Chrono Trigger. this project exists because his music remains just as haunting and beautiful decades later. may your music live on through the ages like Crono
 - to The Dream Team: Hironobu Sakaguchi, Yuji Horii, Akira Toriyama, Kazuhiko Aoki, and Masato Kato. Thank you for creating a masterpiece that transcends time, perhaps my favorite game
 
 ## references
