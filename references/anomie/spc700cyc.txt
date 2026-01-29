@@ -412,7 +412,7 @@
     * Cycles 3 and 4 only present if branch is taken.
     * BRA always takes the branch.
 
- 21b Test-and-Branch Direct -- d,r; d.b,r
+ 31b Test-and-Branch Direct -- d,r; d.b,r
   (BBC,BBS,CBNE)
   (3 bytes)
   (5 or 7 cycles)
