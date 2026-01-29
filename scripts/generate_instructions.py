@@ -113,19 +113,6 @@ class HardcodedInstruction(Instruction):
         return "\n".join([self.declaration()] + self.lines)
 
 
-class PswInstruction(Instruction):
-    def __init__(self, flag, op):
-        super().__init__(mnemonic)
-        self.flag = flag
-        self.op = op
-
-    def name(self):
-        pass
-
-    def render(self):
-        pass
-
-
 def check_zero_neg(value_expr, is_16bit=False):
     mask = "0x8000" if is_16bit else "0x80"
     return inspect.cleandoc(
@@ -1139,6 +1126,83 @@ class RegisterIndexedIndirectMode(AddressingMode):
         )
 
 
+class PswInstruction(Instruction):
+    """
+    a subset of  25 Implied
+    CLRC, CLRP, CLRV, SETC, SETP, nothing else
+    """
+
+    def __init__(self, mnemonic):
+        super().__init__(mnemonic)
+        if mnemonic == "CLRC":
+            self.flag = "carry"
+            self.value = 0
+        elif mnemonic == "CLRP":
+            self.flag = "direct_page"
+            self.value = 0
+        elif mnemonic == "CLRV":
+            self.flag = "overflow"
+            self.value = 0
+        elif mnemonic == "SETC":
+            self.flag = "carry"
+            self.value = 1
+        elif mnemonic == "SETP":
+            self.flag = "direct_page"
+            self.value = 1
+        else:
+            raise ValueError(f"invalid PSW instruction: {mnemonic}")
+
+    def name(self):
+        return self.mnemonic.lower()
+
+    def full_mnemonic(self):
+        return self.mnemonic
+
+    def declaration(self):
+        return f"bool {self.name()}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def body(self):
+        return inspect.cleandoc(
+            f"""
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle == 2);
+                /* could do a dummy read but shouldn't matter */
+                psw_write_{self.flag}(cpu, {self.value});
+                return true;
+            }}
+            """
+        )
+
+    def render(self):
+        return f"{self.declaration()}\n{self.body()}"
+
+    @classmethod
+    def register_instructions(cls):
+        add_instruction(
+            0x60,
+            cls("CLRC"),
+        )
+        add_instruction(
+            0x20,
+            cls("CLRP"),
+        )
+        add_instruction(
+            0xE0,
+            cls("CLRV"),
+        )
+        add_instruction(
+            0x80,
+            cls("SETC"),
+        )
+        add_instruction(
+            0x40,
+            cls("SETP"),
+        )
+
+
 add_instruction(
     0x00,
     HardcodedInstruction(
@@ -1166,6 +1230,7 @@ RegisterDirectIndexedMode.register_instructions()
 RegisterIndirectMode.register_instructions()
 generate_register_indirect_incremented()
 RegisterIndexedIndirectMode.register_instructions()
+PswInstruction.register_instructions()
 
 
 def print_opcode_matrix():

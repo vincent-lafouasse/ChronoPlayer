@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.1226 */
+/* generated from generate_instructions.py: l.1291 */
 #pragma once
 
 #include <stdbool.h>
@@ -7,6 +7,16 @@
 
 /* 0x00     NOP */
 extern bool nop(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x20     CLRP */
+extern bool clrp(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x40     SETP */
+extern bool setp(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x60     CLRC */
+extern bool clrc(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x80     SETC */
+extern bool setc(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xe0     CLRV */
+extern bool clrv(struct SPC_State state[static 1], uint32_t cycle);
 
 
 
