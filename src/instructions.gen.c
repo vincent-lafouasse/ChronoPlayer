@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.1318 */
+/* generated from generate_instructions.py: l.1330 */
 
 #include "instructions.gen.h"
 
@@ -10,7 +10,7 @@
 /* 0x00     NOP */
 bool nop(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1215 */
+    /* generated from generate_instructions.py: l.1227 */
     /* could do a dummy read but shouldn't matter */
     assert(cycle == 2);
     (void)state;
@@ -20,7 +20,7 @@ bool nop(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x20     CLRP */
 bool clrp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1168 */
+    /* generated from generate_instructions.py: l.1173 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -32,7 +32,7 @@ bool clrp(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x40     SETP */
 bool setp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1168 */
+    /* generated from generate_instructions.py: l.1173 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -44,7 +44,7 @@ bool setp(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x60     CLRC */
 bool clrc(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1168 */
+    /* generated from generate_instructions.py: l.1173 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -56,7 +56,7 @@ bool clrc(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x80     SETC */
 bool setc(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1168 */
+    /* generated from generate_instructions.py: l.1173 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -68,12 +68,13 @@ bool setc(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xe0     CLRV */
 bool clrv(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1168 */
+    /* generated from generate_instructions.py: l.1173 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
     /* could do a dummy read but shouldn't matter */
     psw_write_overflow(cpu, 0);
+    psw_write_half_carry(cpu, 0);
     return true;
 }
 

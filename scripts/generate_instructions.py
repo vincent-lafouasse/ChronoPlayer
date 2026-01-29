@@ -1162,18 +1162,30 @@ class PswInstruction(Instruction):
         return f"bool {self.name()}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def body(self):
-        return inspect.cleandoc(
-            f"""
+        execution = [f"    psw_write_{self.flag}(cpu, {self.value});"]
+        if self.mnemonic == "CLRV":
+            execution += ["    psw_write_half_carry(cpu, 0);"]
+
+        return (
+            inspect.cleandoc(
+                f"""
             {{
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
                 assert(cycle == 2);
                 /* could do a dummy read but shouldn't matter */
-                psw_write_{self.flag}(cpu, {self.value});
+            """
+            )
+            + "\n"
+            + "\n".join(execution)
+            + "\n"
+            + inspect.cleandoc(
+                f"""
                 return true;
             }}
             """
+            )
         )
 
     def render(self):
