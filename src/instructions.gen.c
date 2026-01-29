@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.1098 */
+/* generated from generate_instructions.py: l.1253 */
 
 #include "instructions.gen.h"
 
@@ -10,7 +10,7 @@
 /* 0x00     NOP */
 bool nop(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.997 */
+    /* generated from generate_instructions.py: l.1151 */
     /* could do a dummy read but shouldn't matter */
     assert(cycle == 2);
     (void)state;
@@ -932,6 +932,456 @@ bool mov_register_indirect(struct SPC_State state[static 1], uint32_t cycle)
     }
 }
 
+
+/* 0x07     OR    A, [d+X] */
+bool or_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1018 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            // &AAL on the direct page
+            cpu->data8[0] = cpu->operands[0] + cpu->x;
+            // &AAH on the direct page as well (wrapped to the 256B page)
+            cpu->data8[1] = cpu->data8[0] + 1;
+            return false;
+        case 3:
+            /* internal operation */
+            /* could do a dummy read but shouldn't matter */
+            /* let's set the addr now bc why not */
+            cpu->addr = direct_page(cpu, cpu->data8[0]);
+            return false;
+        case 4:
+            // first indirection
+            // AAL
+            cpu->data8[0] = bus_read(cpu->addr);
+            return false;
+        case 5:
+            // AAH
+            cpu->addr = direct_page(cpu, cpu->data8[1]);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // assemble the absolute address
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 6: {
+            // second indirection
+            // operand is ready for ALU execution
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            /* generated from generate_instructions.py: l.240 */
+            cpu->a |= cpu->data8[0];
+            {
+                /* generated from generate_instructions.py: l.134 */
+                const uint16_t v = cpu->a;
+                psw_write_zero(cpu, v == 0);
+                psw_write_neg(cpu, v & 0x80);
+            }
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0x27     AND   A, [d+X] */
+bool and_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1018 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            // &AAL on the direct page
+            cpu->data8[0] = cpu->operands[0] + cpu->x;
+            // &AAH on the direct page as well (wrapped to the 256B page)
+            cpu->data8[1] = cpu->data8[0] + 1;
+            return false;
+        case 3:
+            /* internal operation */
+            /* could do a dummy read but shouldn't matter */
+            /* let's set the addr now bc why not */
+            cpu->addr = direct_page(cpu, cpu->data8[0]);
+            return false;
+        case 4:
+            // first indirection
+            // AAL
+            cpu->data8[0] = bus_read(cpu->addr);
+            return false;
+        case 5:
+            // AAH
+            cpu->addr = direct_page(cpu, cpu->data8[1]);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // assemble the absolute address
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 6: {
+            // second indirection
+            // operand is ready for ALU execution
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            /* generated from generate_instructions.py: l.240 */
+            cpu->a &= cpu->data8[0];
+            {
+                /* generated from generate_instructions.py: l.134 */
+                const uint16_t v = cpu->a;
+                psw_write_zero(cpu, v == 0);
+                psw_write_neg(cpu, v & 0x80);
+            }
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0x47     EOR   A, [d+X] */
+bool eor_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1018 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            // &AAL on the direct page
+            cpu->data8[0] = cpu->operands[0] + cpu->x;
+            // &AAH on the direct page as well (wrapped to the 256B page)
+            cpu->data8[1] = cpu->data8[0] + 1;
+            return false;
+        case 3:
+            /* internal operation */
+            /* could do a dummy read but shouldn't matter */
+            /* let's set the addr now bc why not */
+            cpu->addr = direct_page(cpu, cpu->data8[0]);
+            return false;
+        case 4:
+            // first indirection
+            // AAL
+            cpu->data8[0] = bus_read(cpu->addr);
+            return false;
+        case 5:
+            // AAH
+            cpu->addr = direct_page(cpu, cpu->data8[1]);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // assemble the absolute address
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 6: {
+            // second indirection
+            // operand is ready for ALU execution
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            /* generated from generate_instructions.py: l.240 */
+            cpu->a ^= cpu->data8[0];
+            {
+                /* generated from generate_instructions.py: l.134 */
+                const uint16_t v = cpu->a;
+                psw_write_zero(cpu, v == 0);
+                psw_write_neg(cpu, v & 0x80);
+            }
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0x67     CMP   A, [d+X] */
+bool cmp_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1018 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            // &AAL on the direct page
+            cpu->data8[0] = cpu->operands[0] + cpu->x;
+            // &AAH on the direct page as well (wrapped to the 256B page)
+            cpu->data8[1] = cpu->data8[0] + 1;
+            return false;
+        case 3:
+            /* internal operation */
+            /* could do a dummy read but shouldn't matter */
+            /* let's set the addr now bc why not */
+            cpu->addr = direct_page(cpu, cpu->data8[0]);
+            return false;
+        case 4:
+            // first indirection
+            // AAL
+            cpu->data8[0] = bus_read(cpu->addr);
+            return false;
+        case 5:
+            // AAH
+            cpu->addr = direct_page(cpu, cpu->data8[1]);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // assemble the absolute address
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 6: {
+            // second indirection
+            // operand is ready for ALU execution
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            {
+                /* generated from generate_instructions.py: l.219 */
+                // compute (a - b), no borrow, update NZC then discard result
+                const uint8_t operand_a = (uint8_t)(cpu->a);
+                const uint8_t operand_b = (uint8_t)(cpu->data8[0]);
+
+                // no borrow so underflow/borrow if a < b
+                // so carry = a >= b
+                psw_write_carry(cpu, operand_a >= operand_b);
+
+                // let it underflow, it's expected and fine
+                const uint8_t res = operand_a - operand_b;
+                psw_write_zero(cpu, res == 0);
+                psw_write_neg(cpu, res & 0x80);
+            }
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0x87     ADC   A, [d+X] */
+bool adc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1018 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            // &AAL on the direct page
+            cpu->data8[0] = cpu->operands[0] + cpu->x;
+            // &AAH on the direct page as well (wrapped to the 256B page)
+            cpu->data8[1] = cpu->data8[0] + 1;
+            return false;
+        case 3:
+            /* internal operation */
+            /* could do a dummy read but shouldn't matter */
+            /* let's set the addr now bc why not */
+            cpu->addr = direct_page(cpu, cpu->data8[0]);
+            return false;
+        case 4:
+            // first indirection
+            // AAL
+            cpu->data8[0] = bus_read(cpu->addr);
+            return false;
+        case 5:
+            // AAH
+            cpu->addr = direct_page(cpu, cpu->data8[1]);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // assemble the absolute address
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 6: {
+            // second indirection
+            // operand is ready for ALU execution
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            {
+                /* generated from generate_instructions.py: l.148 */
+                const uint32_t operand_a = (uint32_t)(cpu->a);
+                const uint32_t operand_b = (uint32_t)(cpu->data8[0]);
+                const uint32_t carry     = psw_carry(cpu);
+
+                // half-carry check: sum of nibbles overflows nibble
+                const uint32_t nibble_sum = (operand_a & 0xf) + (operand_b & 0xf) + carry;
+                psw_write_half_carry(cpu, nibble_sum > 0xf);
+
+                const uint32_t full_res = operand_a + operand_b + carry;
+                psw_write_carry(cpu, full_res > 0xff);
+
+                // overflow if a mathematically impossible result has happened
+                // i.e. (pos + pos = neg) or (neg + neg = pos)
+                const bool sign_a = operand_a & 0x80;
+                const bool sign_b = operand_b & 0x80;
+                const bool sign_r = full_res & 0x80;
+                const bool overflow = (sign_a == sign_b) && (sign_a != sign_r);
+                psw_write_overflow(cpu, overflow);
+
+                psw_write_zero(cpu, (full_res & 0xff) == 0);
+                psw_write_neg(cpu, full_res & 0x80);
+
+                // cache back the 8bit result for assignment
+                cpu->data8[0] = full_res & 0xff;
+            }
+            /* generated from generate_instructions.py: l.1080 */
+            cpu->a = cpu->data8[0];
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0xa7     SBC   A, [d+X] */
+bool sbc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1018 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            // &AAL on the direct page
+            cpu->data8[0] = cpu->operands[0] + cpu->x;
+            // &AAH on the direct page as well (wrapped to the 256B page)
+            cpu->data8[1] = cpu->data8[0] + 1;
+            return false;
+        case 3:
+            /* internal operation */
+            /* could do a dummy read but shouldn't matter */
+            /* let's set the addr now bc why not */
+            cpu->addr = direct_page(cpu, cpu->data8[0]);
+            return false;
+        case 4:
+            // first indirection
+            // AAL
+            cpu->data8[0] = bus_read(cpu->addr);
+            return false;
+        case 5:
+            // AAH
+            cpu->addr = direct_page(cpu, cpu->data8[1]);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // assemble the absolute address
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 6: {
+            // second indirection
+            // operand is ready for ALU execution
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            {
+                /* generated from generate_instructions.py: l.183 */
+                const uint32_t operand_a = (uint32_t)(cpu->a);
+                const uint32_t operand_b = (uint32_t)(cpu->data8[0]);
+                const uint32_t borrow    = !psw_carry(cpu);
+
+                // half-borrow check: if (u4)a - (u4)b - borrow underflowed
+                // i.e. (u4)a < (u4)b + borrow
+                const bool half_borrow = (operand_a & 0xf) < (operand_b & 0xf) + borrow;
+                psw_write_half_carry(cpu, !half_borrow);
+
+                const int32_t full_res = operand_a - operand_b - borrow;
+                // set borrow if underflowed, ie set carry if not underflowed
+                psw_write_carry(cpu, full_res >= 0x00);
+
+                // overflow if a mathematically impossible result has happened
+                // i.e. (pos - neg = neg) or (neg - pos = pos)
+                const bool sign_a = operand_a & 0x80;
+                const bool sign_b = operand_b & 0x80;
+                const bool sign_r = full_res & 0x80;
+                const bool overflow = (sign_a != sign_b) && (sign_a != sign_r);
+                psw_write_overflow(cpu, overflow);
+
+                psw_write_zero(cpu, (full_res & 0xff) == 0);
+                psw_write_neg(cpu, full_res & 0x80);
+
+                // cache back the 8bit result for assignment
+                cpu->data8[0] = full_res & 0xff;
+            }
+            /* generated from generate_instructions.py: l.1137 */
+            cpu->a = cpu->data8[0];
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0xe7     MOV   A, [d+X] */
+bool mov_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1018 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            // &AAL on the direct page
+            cpu->data8[0] = cpu->operands[0] + cpu->x;
+            // &AAH on the direct page as well (wrapped to the 256B page)
+            cpu->data8[1] = cpu->data8[0] + 1;
+            return false;
+        case 3:
+            /* internal operation */
+            /* could do a dummy read but shouldn't matter */
+            /* let's set the addr now bc why not */
+            cpu->addr = direct_page(cpu, cpu->data8[0]);
+            return false;
+        case 4:
+            // first indirection
+            // AAL
+            cpu->data8[0] = bus_read(cpu->addr);
+            return false;
+        case 5:
+            // AAH
+            cpu->addr = direct_page(cpu, cpu->data8[1]);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // assemble the absolute address
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 6: {
+            // second indirection
+            // operand is ready for ALU execution
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            /* generated from generate_instructions.py: l.244 */
+            cpu->a = cpu->data8[0];
+            {
+                /* generated from generate_instructions.py: l.134 */
+                const uint16_t v = cpu->a;
+                psw_write_zero(cpu, v == 0);
+                psw_write_neg(cpu, v & 0x80);
+            }
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
 
 
 /* 0x08     OR    A, #i */

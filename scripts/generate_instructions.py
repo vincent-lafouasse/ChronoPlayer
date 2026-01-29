@@ -1068,9 +1068,75 @@ class RegisterIndexedIndirectMode(AddressingMode):
 
         return assemble_instruction(header, payload, footer, indent_depth=3)
 
-    @staticmethod
-    def register_instructions():
-        pass
+    @classmethod
+    def register_instructions(cls):
+        add_instruction(
+            0x87,
+            TemplateInstruction(
+                "ADC",
+                "ADC   A, [d+X]",
+                cls(),
+                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
+                + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
+        add_instruction(
+            0x27,
+            TemplateInstruction(
+                "AND",
+                "AND   A, [d+X]",
+                cls(),
+                logic_op_payload("a", "&", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x67,
+            TemplateInstruction(
+                "CMP",
+                "CMP   A, [d+X]",
+                cls(),
+                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x47,
+            TemplateInstruction(
+                "EOR",
+                "EOR   A, [d+X]",
+                cls(),
+                logic_op_payload("a", "^", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0xE7,
+            TemplateInstruction(
+                "MOV",
+                "MOV   A, [d+X]",
+                cls(),
+                write_register(
+                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+        add_instruction(
+            0x07,
+            TemplateInstruction(
+                "OR",
+                "OR    A, [d+X]",
+                cls(),
+                logic_op_payload("a", "|", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0xA7,
+            TemplateInstruction(
+                "SBC",
+                "SBC   A, [d+X]",
+                cls(),
+                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
+                + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
 
 
 add_instruction(
@@ -1099,6 +1165,7 @@ MovRegisterRegister.register_instructions()
 RegisterDirectIndexedMode.register_instructions()
 RegisterIndirectMode.register_instructions()
 generate_register_indirect_incremented()
+RegisterIndexedIndirectMode.register_instructions()
 
 
 def print_opcode_matrix():

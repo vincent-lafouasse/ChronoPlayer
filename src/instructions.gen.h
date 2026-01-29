@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.1071 */
+/* generated from generate_instructions.py: l.1226 */
 #pragma once
 
 #include <stdbool.h>
@@ -56,6 +56,20 @@ extern bool sbc_register_indirect(struct SPC_State state[static 1], uint32_t cyc
 /* 0xe6     MOV   A, (X) */
 extern bool mov_register_indirect(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0x07     OR    A, [d+X] */
+extern bool or_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x27     AND   A, [d+X] */
+extern bool and_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x47     EOR   A, [d+X] */
+extern bool eor_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x67     CMP   A, [d+X] */
+extern bool cmp_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x87     ADC   A, [d+X] */
+extern bool adc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xa7     SBC   A, [d+X] */
+extern bool sbc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xe7     MOV   A, [d+X] */
+extern bool mov_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
 
 /* 0x08     OR    A, #i */
 extern bool or_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
