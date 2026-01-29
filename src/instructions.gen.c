@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.1437 */
+/* generated from generate_instructions.py: l.1586 */
 
 #include "instructions.gen.h"
 
@@ -1883,6 +1883,57 @@ bool or_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cyc
     }
 }
 
+/* 0x17     OR    A, [d]+Y */
+bool or_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1374 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            return false;
+        case 3:
+            // AAL
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
+            return false;
+        case 4:
+            // AAH
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // AA
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 5:
+            /* "idle" cycle, could do a dummy read but shouldn't matter */
+            /* let's take this time to index AA */
+            cpu->addr += cpu->y;
+            return false;
+        case 6: {
+            // data is ready to hit the ALU
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            /* generated from generate_instructions.py: l.227 */
+            cpu->a |= cpu->data8[0];
+            {
+                /* generated from generate_instructions.py: l.121 */
+                const uint16_t v = cpu->a;
+                psw_write_zero(cpu, v == 0);
+                psw_write_neg(cpu, v & 0x80);
+            }
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
 /* 0x27     AND   A, [d+X] */
 bool and_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -1920,6 +1971,57 @@ bool and_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
         case 6: {
             // second indirection
             // operand is ready for ALU execution
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            /* generated from generate_instructions.py: l.227 */
+            cpu->a &= cpu->data8[0];
+            {
+                /* generated from generate_instructions.py: l.121 */
+                const uint16_t v = cpu->a;
+                psw_write_zero(cpu, v == 0);
+                psw_write_neg(cpu, v & 0x80);
+            }
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0x37     AND   A, [d]+Y */
+bool and_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1374 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            return false;
+        case 3:
+            // AAL
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
+            return false;
+        case 4:
+            // AAH
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // AA
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 5:
+            /* "idle" cycle, could do a dummy read but shouldn't matter */
+            /* let's take this time to index AA */
+            cpu->addr += cpu->y;
+            return false;
+        case 6: {
+            // data is ready to hit the ALU
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
@@ -1997,6 +2099,57 @@ bool eor_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
     }
 }
 
+/* 0x57     EOR   A, [d]+Y */
+bool eor_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1374 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            return false;
+        case 3:
+            // AAL
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
+            return false;
+        case 4:
+            // AAH
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // AA
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 5:
+            /* "idle" cycle, could do a dummy read but shouldn't matter */
+            /* let's take this time to index AA */
+            cpu->addr += cpu->y;
+            return false;
+        case 6: {
+            // data is ready to hit the ALU
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            /* generated from generate_instructions.py: l.227 */
+            cpu->a ^= cpu->data8[0];
+            {
+                /* generated from generate_instructions.py: l.121 */
+                const uint16_t v = cpu->a;
+                psw_write_zero(cpu, v == 0);
+                psw_write_neg(cpu, v & 0x80);
+            }
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
 /* 0x67     CMP   A, [d+X] */
 bool cmp_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -2034,6 +2187,64 @@ bool cmp_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
         case 6: {
             // second indirection
             // operand is ready for ALU execution
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            {
+                /* generated from generate_instructions.py: l.206 */
+                // compute (a - b), no borrow, update NZC then discard result
+                const uint8_t operand_a = (uint8_t)(cpu->a);
+                const uint8_t operand_b = (uint8_t)(cpu->data8[0]);
+
+                // no borrow so underflow/borrow if a < b
+                // so carry = a >= b
+                psw_write_carry(cpu, operand_a >= operand_b);
+
+                // let it underflow, it's expected and fine
+                const uint8_t res = operand_a - operand_b;
+                psw_write_zero(cpu, res == 0);
+                psw_write_neg(cpu, res & 0x80);
+            }
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0x77     CMP   A, [d]+Y */
+bool cmp_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1374 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            return false;
+        case 3:
+            // AAL
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
+            return false;
+        case 4:
+            // AAH
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // AA
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 5:
+            /* "idle" cycle, could do a dummy read but shouldn't matter */
+            /* let's take this time to index AA */
+            cpu->addr += cpu->y;
+            return false;
+        case 6: {
+            // data is ready to hit the ALU
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */
@@ -2139,6 +2350,78 @@ bool adc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
     }
 }
 
+/* 0x97     ADC   A, [d]+Y */
+bool adc_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1374 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            return false;
+        case 3:
+            // AAL
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
+            return false;
+        case 4:
+            // AAH
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // AA
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 5:
+            /* "idle" cycle, could do a dummy read but shouldn't matter */
+            /* let's take this time to index AA */
+            cpu->addr += cpu->y;
+            return false;
+        case 6: {
+            // data is ready to hit the ALU
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            {
+                /* generated from generate_instructions.py: l.135 */
+                const uint32_t operand_a = (uint32_t)(cpu->a);
+                const uint32_t operand_b = (uint32_t)(cpu->data8[0]);
+                const uint32_t carry     = psw_carry(cpu);
+
+                // half-carry check: sum of nibbles overflows nibble
+                const uint32_t nibble_sum = (operand_a & 0xf) + (operand_b & 0xf) + carry;
+                psw_write_half_carry(cpu, nibble_sum > 0xf);
+
+                const uint32_t full_res = operand_a + operand_b + carry;
+                psw_write_carry(cpu, full_res > 0xff);
+
+                // overflow if a mathematically impossible result has happened
+                // i.e. (pos + pos = neg) or (neg + neg = pos)
+                const bool sign_a = operand_a & 0x80;
+                const bool sign_b = operand_b & 0x80;
+                const bool sign_r = full_res & 0x80;
+                const bool overflow = (sign_a == sign_b) && (sign_a != sign_r);
+                psw_write_overflow(cpu, overflow);
+
+                psw_write_zero(cpu, (full_res & 0xff) == 0);
+                psw_write_neg(cpu, full_res & 0x80);
+
+                // cache back the 8bit result for assignment
+                cpu->data8[0] = full_res & 0xff;
+            }
+            /* generated from generate_instructions.py: l.1430 */
+            cpu->a = cpu->data8[0];
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
 /* 0xa7     SBC   A, [d+X] */
 bool sbc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -2219,6 +2502,80 @@ bool sbc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
     }
 }
 
+/* 0xb7     SBC   A, [d]+Y */
+bool sbc_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1374 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            return false;
+        case 3:
+            // AAL
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
+            return false;
+        case 4:
+            // AAH
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // AA
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 5:
+            /* "idle" cycle, could do a dummy read but shouldn't matter */
+            /* let's take this time to index AA */
+            cpu->addr += cpu->y;
+            return false;
+        case 6: {
+            // data is ready to hit the ALU
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            {
+                /* generated from generate_instructions.py: l.170 */
+                const uint32_t operand_a = (uint32_t)(cpu->a);
+                const uint32_t operand_b = (uint32_t)(cpu->data8[0]);
+                const uint32_t borrow    = !psw_carry(cpu);
+
+                // half-borrow check: if (u4)a - (u4)b - borrow underflowed
+                // i.e. (u4)a < (u4)b + borrow
+                const bool half_borrow = (operand_a & 0xf) < (operand_b & 0xf) + borrow;
+                psw_write_half_carry(cpu, !half_borrow);
+
+                const int32_t full_res = operand_a - operand_b - borrow;
+                // set borrow if underflowed, ie set carry if not underflowed
+                psw_write_carry(cpu, full_res >= 0x00);
+
+                // overflow if a mathematically impossible result has happened
+                // i.e. (pos - neg = neg) or (neg - pos = pos)
+                const bool sign_a = operand_a & 0x80;
+                const bool sign_b = operand_b & 0x80;
+                const bool sign_r = full_res & 0x80;
+                const bool overflow = (sign_a != sign_b) && (sign_a != sign_r);
+                psw_write_overflow(cpu, overflow);
+
+                psw_write_zero(cpu, (full_res & 0xff) == 0);
+                psw_write_neg(cpu, full_res & 0x80);
+
+                // cache back the 8bit result for assignment
+                cpu->data8[0] = full_res & 0xff;
+            }
+            /* generated from generate_instructions.py: l.1487 */
+            cpu->a = cpu->data8[0];
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
 /* 0xe7     MOV   A, [d+X] */
 bool mov_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -2256,6 +2613,57 @@ bool mov_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
         case 6: {
             // second indirection
             // operand is ready for ALU execution
+            cpu->data8[0] = bus_read(state, cpu->addr);
+
+            /* payload */
+            /* generated from generate_instructions.py: l.231 */
+            cpu->a = cpu->data8[0];
+            {
+                /* generated from generate_instructions.py: l.121 */
+                const uint16_t v = cpu->a;
+                psw_write_zero(cpu, v == 0);
+                psw_write_neg(cpu, v & 0x80);
+            }
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0xf7     MOV   A, [d]+Y */
+bool mov_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1374 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 || cycle <= 6);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            return false;
+        case 3:
+            // AAL
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
+            return false;
+        case 4:
+            // AAH
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            // AA
+            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            return false;
+        case 5:
+            /* "idle" cycle, could do a dummy read but shouldn't matter */
+            /* let's take this time to index AA */
+            cpu->addr += cpu->y;
+            return false;
+        case 6: {
+            // data is ready to hit the ALU
             cpu->data8[0] = bus_read(state, cpu->addr);
 
             /* payload */

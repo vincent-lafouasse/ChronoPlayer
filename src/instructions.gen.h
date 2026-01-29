@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.1410 */
+/* generated from generate_instructions.py: l.1559 */
 #pragma once
 
 #include <stdbool.h>
@@ -100,18 +100,32 @@ extern bool mov_register_indirect(struct SPC_State state[static 1], uint32_t cyc
 
 /* 0x07     OR    A, [d+X] */
 extern bool or_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x17     OR    A, [d]+Y */
+extern bool or_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x27     AND   A, [d+X] */
 extern bool and_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x37     AND   A, [d]+Y */
+extern bool and_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x47     EOR   A, [d+X] */
 extern bool eor_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x57     EOR   A, [d]+Y */
+extern bool eor_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x67     CMP   A, [d+X] */
 extern bool cmp_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x77     CMP   A, [d]+Y */
+extern bool cmp_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x87     ADC   A, [d+X] */
 extern bool adc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x97     ADC   A, [d]+Y */
+extern bool adc_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xa7     SBC   A, [d+X] */
 extern bool sbc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xb7     SBC   A, [d]+Y */
+extern bool sbc_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe7     MOV   A, [d+X] */
 extern bool mov_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xf7     MOV   A, [d]+Y */
+extern bool mov_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle);
 
 /* 0x08     OR    A, #i */
 extern bool or_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
