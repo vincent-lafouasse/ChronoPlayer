@@ -10,6 +10,8 @@ this is for them.
 
 ## huge thanks
 
+**none of this would have been possible without them.** while my name is on the repository, the logic, the soul, and the data within this player belong to their decades of hard work and brilliance and i want to extend a huge thank you:
+
 - to Anomie the absolute goat for providing a lot of documentation on an otherwise undocumented platform
 - to blargg for the legendary amount of research and time spent reverse-engineering the SNES APU/DSP to give us an authoritative source on how the system actually behaves
 - to Yasunori Mitsuda for composing the soul of Chrono Trigger. this project exists because your music remains just as haunting and beautiful decades later. may your music live on through the ages like Crono
