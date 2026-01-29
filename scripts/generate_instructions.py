@@ -1341,6 +1341,88 @@ class TCallInstruction(Instruction):
             )
 
 
+class RegisterIndirectIndexedMode(AddressingMode):
+    """
+    7 Register, Indirect Indexed -- A,[d]+Y
+     (ADC,AND,CMP,EOR,MOV,OR,SBC)
+     (2 bytes)
+     (6 cycles)
+           1       PC      Op Code         1
+           2       PC+1    DO              1
+           3       DO      AAL             1
+           4       DO+1    AAH             1
+           5       ??      IO              ?
+           6       AA+Y    Data            1
+       * blargg verifies the Data read is cycle 6.
+       * Cycles 2-5 could be rearranged, but this is most likely.
+    """
+
+    def __init__(self):
+        super().__init__()
+
+    def name(self, mnemonic):
+        return f"{mnemonic.lower()}_register_indirect_indexed"
+
+    def declaration(self, mnemonic):
+        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def render(self, mnemonic, payload):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration(mnemonic)}
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle >= 2 || cycle <= 6);
+
+                switch (cycle) {{
+                    case 2:
+                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        cpu->addr = direct_page(cpu, cpu->operands[0]);
+                        return false;
+                    case 3:
+                        // AAL
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
+                        return false;
+                    case 4:
+                        // AAH
+                        cpu->data8[1] = bus_read(state, cpu->addr);
+                        // AA
+                        cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+                        return false;
+                    case 5:
+                        /* "idle" cycle, could do a dummy read but shouldn't matter */
+                        /* let's take this time to index AA */
+                        cpu->addr += cpu->y;
+                        return false;
+                    case 6: {{
+                        // data is ready to hit the ALU
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+            """
+        )
+
+        footer = inspect.cleandoc(
+            f"""
+                        return true;
+                    }}
+                    default:
+                        /* unreachable */
+                        /* true terminates the instruction just in case */
+                        return true;
+                }}
+            }}
+            """
+        )
+
+        return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @classmethod
+    def register_instructions(cls):
+        pass
+
+
 RegisterDirectMode.register_instructions()
 RegisterImmediateMode.register_instructions()
 MovRegisterRegister.register_instructions()
