@@ -1037,7 +1037,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                     case 4:
                         // first indirection
                         // AAL
-                        cpu->data8[0] = bus_read(cpu->addr);
+                        cpu->data8[0] = bus_read(state, cpu->addr);
                         return false;
                     case 5:
                         // AAH

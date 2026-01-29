@@ -958,7 +958,7 @@ bool or_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cyc
         case 4:
             // first indirection
             // AAL
-            cpu->data8[0] = bus_read(cpu->addr);
+            cpu->data8[0] = bus_read(state, cpu->addr);
             return false;
         case 5:
             // AAH
@@ -1015,7 +1015,7 @@ bool and_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
         case 4:
             // first indirection
             // AAL
-            cpu->data8[0] = bus_read(cpu->addr);
+            cpu->data8[0] = bus_read(state, cpu->addr);
             return false;
         case 5:
             // AAH
@@ -1072,7 +1072,7 @@ bool eor_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
         case 4:
             // first indirection
             // AAL
-            cpu->data8[0] = bus_read(cpu->addr);
+            cpu->data8[0] = bus_read(state, cpu->addr);
             return false;
         case 5:
             // AAH
@@ -1129,7 +1129,7 @@ bool cmp_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
         case 4:
             // first indirection
             // AAL
-            cpu->data8[0] = bus_read(cpu->addr);
+            cpu->data8[0] = bus_read(state, cpu->addr);
             return false;
         case 5:
             // AAH
@@ -1193,7 +1193,7 @@ bool adc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
         case 4:
             // first indirection
             // AAL
-            cpu->data8[0] = bus_read(cpu->addr);
+            cpu->data8[0] = bus_read(state, cpu->addr);
             return false;
         case 5:
             // AAH
@@ -1271,7 +1271,7 @@ bool sbc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
         case 4:
             // first indirection
             // AAL
-            cpu->data8[0] = bus_read(cpu->addr);
+            cpu->data8[0] = bus_read(state, cpu->addr);
             return false;
         case 5:
             // AAH
@@ -1351,7 +1351,7 @@ bool mov_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
         case 4:
             // first indirection
             // AAL
-            cpu->data8[0] = bus_read(cpu->addr);
+            cpu->data8[0] = bus_read(state, cpu->addr);
             return false;
         case 5:
             // AAH
