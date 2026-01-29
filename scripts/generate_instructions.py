@@ -1236,6 +1236,111 @@ class PswInstruction(Instruction):
         )
 
 
+class TCallInstruction(Instruction):
+    """
+    32c TCALL
+     (TCALL)
+     (1 byte)
+     (8 cycles)
+           1       PC      Op Code         1
+           2       SP      PCH             0
+           3       SP-1    PCL             0
+           4       ??      IO              ?
+           5       Vec     AAL             1
+           6       Vec+1   AAH             1
+           7       ??      IO              ?
+           8       ??      IO              ?
+          (1)      new PC  Op Code         1
+       * WTF with all the IO cycles?
+       * Order of reading new addr and pushing old addr may be wrong.
+    """
+
+    def __init__(self, n):
+        super().__init__("TCALL")
+        if n not in range(16):
+            raise ValueError(f"{n} is not a nibble")
+        self.n = n
+
+    def name(self):
+        return f"tcall_{self.n}"
+
+    def full_mnemonic(self):
+        return f"TCALL {self.n}"
+
+    def declaration(self):
+        return f"bool {self.name()}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def body(self):
+        vector_low = 0xFFC0 + (15 - self.n) * 2
+        vector_hi = vector_low + 1
+
+        return inspect.cleandoc(
+            f"""
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle >= 2 && cycle <= 8);
+                switch (cycle) {{
+                    // cycle 2-3: cache the PC on the stack for later return
+                    case 2:
+                        // effective stack address
+                        cpu->addr = 0x100 + cpu->sp;
+                        bus_write(state, cpu->addr, u16_msb(cpu->pc));
+                        cpu->sp -= 1;
+                        return false;
+                    case 3:
+                        cpu->addr = 0x100 + cpu->sp;
+                        bus_write(state, cpu->addr, u16_lsb(cpu->pc));
+                        cpu->sp -= 1;
+                        return false;
+                    case 4:
+                        /* "idle" cycle, could do a dummy read but shouldn't matter */
+                        return false;
+
+                    // cycle 5-6 fetch the address to go to at a predetermined address
+                    case 5:
+                        cpu->data8[0] = bus_read(state, 0x{vector_low:x});
+                        return false;
+                    case 6:
+                        cpu->data8[1] = bus_read(state, 0x{vector_hi:x});
+                        // new pc
+                        cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+                        return false;
+
+                    // cycle 7-8 are idle, we just publish the new pc at the end of cycle 8
+                    case 7:
+                        /* "idle" cycle, could do a dummy read but shouldn't matter */
+                        return false;
+                    case 8:
+                        /* "idle" cycle, could do a dummy read but shouldn't matter */
+                        cpu->pc = cpu->addr;
+                        return true;
+
+                    default:
+                        // unreachable
+                        // terminate instr. just in case
+                        return true;
+                }}
+
+                return true;
+            }}
+            """
+        )
+
+    def render(self):
+        return f"{self.declaration()}\n{self.body()}"
+
+    @classmethod
+    def register_instructions(cls):
+        for i in range(16):
+            opcode = 1 + 16 * i
+            add_instruction(
+                opcode,
+                cls(i),
+            )
+
+
 RegisterDirectMode.register_instructions()
 RegisterImmediateMode.register_instructions()
 MovRegisterRegister.register_instructions()
@@ -1244,6 +1349,7 @@ RegisterIndirectMode.register_instructions()
 generate_register_indirect_incremented()
 RegisterIndexedIndirectMode.register_instructions()
 PswInstruction.register_instructions()
+TCallInstruction.register_instructions()
 
 
 def print_opcode_matrix():

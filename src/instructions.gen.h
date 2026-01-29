@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.1303 */
+/* generated from generate_instructions.py: l.1410 */
 #pragma once
 
 #include <stdbool.h>
@@ -18,6 +18,38 @@ extern bool setc(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe0     CLRV */
 extern bool clrv(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0x01     TCALL 0 */
+extern bool tcall_0(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x11     TCALL 1 */
+extern bool tcall_1(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x21     TCALL 2 */
+extern bool tcall_2(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x31     TCALL 3 */
+extern bool tcall_3(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x41     TCALL 4 */
+extern bool tcall_4(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x51     TCALL 5 */
+extern bool tcall_5(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x61     TCALL 6 */
+extern bool tcall_6(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x71     TCALL 7 */
+extern bool tcall_7(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x81     TCALL 8 */
+extern bool tcall_8(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x91     TCALL 9 */
+extern bool tcall_9(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xa1     TCALL 10 */
+extern bool tcall_10(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xb1     TCALL 11 */
+extern bool tcall_11(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xc1     TCALL 12 */
+extern bool tcall_12(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xd1     TCALL 13 */
+extern bool tcall_13(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xe1     TCALL 14 */
+extern bool tcall_14(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xf1     TCALL 15 */
+extern bool tcall_15(struct SPC_State state[static 1], uint32_t cycle);
 
 
 
