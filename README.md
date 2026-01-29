@@ -15,6 +15,8 @@ this is for them.
 - to Yasunori Mitsuda for composing the soul of Chrono Trigger. this project exists because his music remains just as haunting and beautiful decades later. may your music live on through the ages like Crono
 - to The Dream Team: Hironobu Sakaguchi, Yuji Horii, Akira Toriyama, Kazuhiko Aoki, and Masato Kato. Thank you for creating a masterpiece that transcends time, perhaps my favorite game
 
+may Chrono Trigger and the SNES live on forever
+
 ## references
 
 - [SNES Development Manual (Nintendo)](http://nuclear.mutantstargoat.com/articles/snes_notes/refs/snes_dev_manual1.pdf)
