@@ -985,6 +985,94 @@ def generate_register_indirect_incremented():
     )
 
 
+class RegisterIndexedIndirectMode(AddressingMode):
+    """
+    6 Register, Indexed Indirect -- A,[d+X]
+     (ADC,AND,CMP,EOR,MOV,OR,SBC)
+     (2 bytes)
+     (6 cycles)
+           1       PC      Op Code         1
+           2       PC+1    DO              1
+           3       ??      IO              ?
+           4       DO+X    AAL             1
+           5       DO+X+1  AAH             1
+           6       AA      Data            1
+       * blargg verifies the Data read is cycle 6.
+       * Cycles 2-5 could be rearranged, but this is most likely.
+    """
+
+    def __init__(self):
+        super().__init__()
+
+    def name(self, mnemonic):
+        return f"{mnemonic.lower()}_register_indexed_indirect"
+
+    def declaration(self, mnemonic):
+        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def render(self, mnemonic, payload):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration(mnemonic)}
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle >= 2 || cycle <= 6);
+
+                switch (cycle) {{
+                    case 2:
+                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        // &AAL on the direct page
+                        cpu->data8[0] = cpu->operands[0] + cpu->x;
+                        // &AAH on the direct page as well (wrapped to the 256B page)
+                        cpu->data8[1] = cpu->data8[0] + 1;
+                        return false;
+                    case 3:
+                        /* internal operation */
+                        /* could do a dummy read but shouldn't matter */
+                        /* let's set the addr now bc why not */
+                        cpu->addr = direct_page(cpu, cpu->data8[0]);
+                        return false;
+                    case 4:
+                        // first indirection
+                        // AAL
+                        cpu->data8[0] = bus_read(cpu->addr);
+                        return false;
+                    case 5:
+                        // AAH
+                        cpu->addr = direct_page(cpu, cpu->data8[1]);
+                        cpu->data8[1] = bus_read(state, cpu->addr);
+                        // assemble the absolute address
+                        cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+                        return false;
+                    case 6: {{
+                        // second indirection
+                        // operand is ready for ALU execution
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+            """
+        )
+
+        footer = inspect.cleandoc(
+            f"""
+                        return true;
+                    }}
+                    default:
+                        /* unreachable */
+                        /* true terminates the instruction just in case */
+                        return true;
+                }}
+            }}
+            """
+        )
+
+        return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @staticmethod
+    def register_instructions():
+        pass
+
+
 add_instruction(
     0x00,
     HardcodedInstruction(
