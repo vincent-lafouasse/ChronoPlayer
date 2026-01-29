@@ -1,2 +1,3 @@
 # ignore generated files
-src/*.gen.*
+src/instructions.gen.c
+src/instructions.gen.h
