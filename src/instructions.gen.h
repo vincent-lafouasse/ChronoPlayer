@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.1014 */
+/* generated from generate_instructions.py: l.1071 */
 #pragma once
 
 #include <stdbool.h>
@@ -108,4 +108,6 @@ extern bool mov_reg_reg_y_a(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x3e     CMP   X, d */
 extern bool cmp_register_direct_x(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0xbf     MOV   A, (X)+ */
+extern bool mov_register_indirect_incremented(struct SPC_State state[static 1], uint32_t cycle);
 

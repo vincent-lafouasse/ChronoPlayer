@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.1041 */
+/* generated from generate_instructions.py: l.1098 */
 
 #include "instructions.gen.h"
 
@@ -10,7 +10,7 @@
 /* 0x00     NOP */
 bool nop(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.941 */
+    /* generated from generate_instructions.py: l.997 */
     /* could do a dummy read but shouldn't matter */
     assert(cycle == 2);
     (void)state;
@@ -1556,5 +1556,38 @@ bool cmp_register_direct_x(struct SPC_State state[static 1], uint32_t cycle)
     }
 }
 
+
+/* 0xbf     MOV   A, (X)+ */
+bool mov_register_indirect_incremented(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.953 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle == 2 || cycle == 3 || cycle == 4);
+    switch (cycle) {
+        case 2:
+            /* internal operation */
+            /* could do a dummy read but shouldn't matter */
+            /* let's set the addr now bc why not */
+            cpu->addr = direct_page(cpu, cpu->x);
+            return false;
+        case 3:
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->a = cpu->data8[0];
+            psw_write_zero(cpu, cpu->a == 0);
+            psw_write_neg(cpu, cpu->a & 0x80);
+            /* we could increment X now but let's do it cycle 4 bc why not */
+            return false;
+        case 4:
+            /* internal operation */
+            /* could do a dummy read but shouldn't matter */
+            /* let's increment X now bc why not */
+            cpu->x += 1;
+            return true;
+        default:
+            /* unreachable but true terminates the instruction just in case */
+            return true;
+    }
+}
 
 

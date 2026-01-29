@@ -929,6 +929,62 @@ class RegisterIndirectMode(AddressingMode):
         )
 
 
+def generate_register_indirect_incremented():
+    """
+    5b Register, Indirect++ -- A,(X)+
+     (MOV)
+     (1 byte)
+     (4 cycles)
+           1       PC      Op Code         1
+           2       ??      IO              ?
+           3       X       Data            1
+           4       ??      IO              ?
+       * Verified by blargg.
+    """
+    add_instruction(
+        0xBF,
+        HardcodedInstruction(
+            mnemonic="MOV",
+            _full_mnemonic="MOV   A, (X)+",
+            function_name="mov_register_indirect_incremented",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    assert(cycle == 2 || cycle == 3 || cycle == 4);
+                    switch (cycle) {{
+                        case 2:
+                            /* internal operation */
+                            /* could do a dummy read but shouldn't matter */
+                            /* let's set the addr now bc why not */
+                            cpu->addr = direct_page(cpu, cpu->x);
+                            return false;
+                        case 3:
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            cpu->a = cpu->data8[0];
+                            psw_write_zero(cpu, cpu->a == 0);
+                            psw_write_neg(cpu, cpu->a & 0x80);
+                            /* we could increment X now but let's do it cycle 4 bc why not */
+                            return false;
+                        case 4:
+                            /* internal operation */
+                            /* could do a dummy read but shouldn't matter */
+                            /* let's increment X now bc why not */
+                            cpu->x += 1;
+                            return true;
+                        default:
+                            /* unreachable but true terminates the instruction just in case */
+                            return true;
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
 add_instruction(
     0x00,
     HardcodedInstruction(
@@ -954,6 +1010,7 @@ RegisterImmediateMode.register_instructions()
 MovRegisterRegister.register_instructions()
 RegisterDirectIndexedMode.register_instructions()
 RegisterIndirectMode.register_instructions()
+generate_register_indirect_incremented()
 
 
 def print_opcode_matrix():
