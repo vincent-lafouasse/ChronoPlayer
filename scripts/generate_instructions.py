@@ -234,6 +234,27 @@ def write_register(reg, data, is_16bit=False, updates_flags=True):
     return lines
 
 
+add_instruction(
+    0x00,
+    HardcodedInstruction(
+        mnemonic="NOP",
+        _full_mnemonic="NOP",
+        function_name="nop",
+        body=inspect.cleandoc(
+            f"""
+            {{
+                {trace_source()}
+                /* could do a dummy read but shouldn't matter */
+                assert(cycle == 2);
+                (void)state;
+                return true;
+            }}
+            """
+        ),
+    ),
+)
+
+
 # puts the data in data8[0]
 class RegisterImmediateMode(AddressingMode):
     """
@@ -1214,26 +1235,6 @@ class PswInstruction(Instruction):
             cls("SETP"),
         )
 
-
-add_instruction(
-    0x00,
-    HardcodedInstruction(
-        mnemonic="NOP",
-        _full_mnemonic="NOP",
-        function_name="nop",
-        body=inspect.cleandoc(
-            f"""
-            {{
-                {trace_source()}
-                /* could do a dummy read but shouldn't matter */
-                assert(cycle == 2);
-                (void)state;
-                return true;
-            }}
-            """
-        ),
-    ),
-)
 
 RegisterDirectMode.register_instructions()
 RegisterImmediateMode.register_instructions()
