@@ -1316,6 +1316,183 @@ class RegisterIndirectIndexedMode(AddressingMode):
         )
 
 
+class RegisterAbsolute(AddressingMode):
+    """
+    8 Register, Absolute -- A,!a; X,!a; Y,!a
+     (ADC,AND,CMP,CMP,CMP,EOR,MOV,MOV,MOV,OR,SBC)
+     (3 bytes)
+     (4 cycles)
+           1       PC      Op Code         1
+           2       PC+1    AAL             1
+           3       PC+2    AAH             1
+           4       AA      Data            1
+       * Verified by blargg.
+       * 2 and 3 could be swapped, but that would be odd.
+    """
+
+    def __init__(self, reg):
+        super().__init__()
+        self.reg = reg
+
+    def name(self, mnemonic):
+        return f"{mnemonic.lower()}_register_absolute_{self.reg}"
+
+    def declaration(self, mnemonic):
+        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def render(self, mnemonic, payload):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration(mnemonic)}
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle >= 2 || cycle <= 4);
+
+                switch (cycle) {{
+                    case 2:
+                        // AAL
+                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        return false;
+                    case 3:
+                        // AAH
+                        cpu->operands[1] = bus_read(state, cpu->pc++);
+                        // full absolute address
+                        cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
+                        return false;
+                    case 4: {{
+                        // data is ready to hit the ALU
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+            """
+        )
+
+        footer = inspect.cleandoc(
+            f"""
+                        return true;
+                    }}
+                    default:
+                        /* unreachable */
+                        /* true terminates the instruction just in case */
+                        return true;
+                }}
+            }}
+            """
+        )
+
+        return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @classmethod
+    def register_instructions(cls):
+        add_instruction(
+            0x85,
+            TemplateInstruction(
+                "ADC",
+                "ADC   A, !a",
+                cls(Register.A),
+                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
+                + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
+        add_instruction(
+            0x25,
+            TemplateInstruction(
+                "AND",
+                "AND   A, !a",
+                cls(Register.A),
+                logic_op_payload("a", "&", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x65,
+            TemplateInstruction(
+                "CMP",
+                "CMP   A, !a",
+                cls(Register.A),
+                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x1E,
+            TemplateInstruction(
+                "CMP",
+                "CMP   X, !a",
+                cls(Register.X),
+                do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x5E,
+            TemplateInstruction(
+                "CMP",
+                "CMP   Y, !a",
+                cls(Register.Y),
+                do_cmp_and_check_psw("cpu->y", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0x45,
+            TemplateInstruction(
+                "EOR",
+                "EOR   A, !a",
+                cls(Register.A),
+                logic_op_payload("a", "^", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0xE5,
+            TemplateInstruction(
+                "MOV",
+                "MOV   A, !a",
+                cls(Register.A),
+                write_register(
+                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+        add_instruction(
+            0xE9,
+            TemplateInstruction(
+                "MOV",
+                "MOV   X, !a",
+                cls(Register.X),
+                write_register(
+                    "x", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+        add_instruction(
+            0xEC,
+            TemplateInstruction(
+                "MOV",
+                "MOV   Y, !a",
+                cls(Register.Y),
+                write_register(
+                    "y", "cpu->data8[0]", is_16bit=False, updates_flags=True
+                ),
+            ),
+        )
+        add_instruction(
+            0x05,
+            TemplateInstruction(
+                "OR",
+                "OR    A, !a",
+                cls(Register.A),
+                logic_op_payload("a", "|", "cpu->data8[0]"),
+            ),
+        )
+        add_instruction(
+            0xA5,
+            TemplateInstruction(
+                "SBC",
+                "SBC   A, !a",
+                cls(Register.A),
+                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
+                + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -1531,6 +1708,7 @@ RegisterIndexedIndirectMode.register_instructions()
 PswInstruction.register_instructions()
 TCallInstruction.register_instructions()
 RegisterIndirectIndexedMode.register_instructions()
+RegisterAbsolute.register_instructions()
 
 
 def print_opcode_matrix():
