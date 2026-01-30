@@ -49,6 +49,7 @@ IMPLEM_PSW_WRITE(PSW_CARRY, carry)
 IMPLEM_PSW_WRITE(PSW_OVERFLOW, overflow)
 IMPLEM_PSW_WRITE(PSW_HALF_CARRY, half_carry)
 IMPLEM_PSW_WRITE(PSW_ZP_LOC, direct_page)
+IMPLEM_PSW_WRITE(PSW_INTERRUPT_ENABLE, interrupt_enable)
 
 #define IMPLEM_PSW_READ(flag, name)                                  \
     static inline uint8_t psw_##name(struct CPU_State cpu[static 1]) \
