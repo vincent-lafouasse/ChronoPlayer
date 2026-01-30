@@ -3,12 +3,36 @@ import inspect
 import os
 
 
+def trace_source():
+    caller_frame = inspect.stack()[1]
+    filename = os.path.basename(caller_frame.filename)
+    line = caller_frame.lineno
+    return f"/* generated from {filename}: l.{line} */"
+
+
 # an array of static inline C functions to prepend before the instructions
 helpers = []
 
 
 def register_helper(function_block):
     helpers.append(function_block)
+
+
+register_helper(
+    inspect.cleandoc(
+        f"""
+    static inline void idle(struct SPC_State state[static 1])
+    {{
+        {trace_source()}
+        (void)bus_read(state, state->cpu.pc);
+    }}
+    """
+    )
+)
+
+
+def idle_cycle():
+    return "idle(state); // dummy read of PC, let's hope PC is not on a timer"
 
 
 instructions = dict()
@@ -18,13 +42,6 @@ def add_instruction(op, instruction):
     if op in instructions:
         raise ValueError(f"trying to overwrite opcode {hex(op)}")
     instructions[op] = instruction
-
-
-def trace_source():
-    caller_frame = inspect.stack()[1]
-    filename = os.path.basename(caller_frame.filename)
-    line = caller_frame.lineno
-    return f"/* generated from {filename}: l.{line} */"
 
 
 def assemble_instruction(header, payload, footer, indent_depth=1):
@@ -253,9 +270,8 @@ add_instruction(
             f"""
             {{
                 {trace_source()}
-                /* could do a dummy read but shouldn't matter */
                 assert(cycle == 2);
-                (void)state;
+                {idle_cycle()}
                 return true;
             }}
             """
@@ -455,8 +471,8 @@ class MovRegisterRegister(Instruction):
             {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                /* could do a dummy read but shouldn't matter */
                 assert(cycle == 2);
+                {idle_cycle()}
             """
         )
         payload = write_register(
@@ -705,7 +721,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                         cpu->addr = direct_page(cpu, cpu->data8[0]);
                         return false;
                     case 3:
-                        // idle cycle, could do a dummy read but shouldnt matter
+                        {idle_cycle()}
                         return false;
                     case 4: {{
                         cpu->data8[0] = bus_read(state, cpu->addr);
@@ -974,8 +990,7 @@ def generate_register_indirect_incremented():
                     switch (cycle) {{
                         case 2:
                             /* internal operation */
-                            /* could do a dummy read but shouldn't matter */
-                            /* let's set the addr now bc why not */
+                            {idle_cycle()}
                             cpu->addr = direct_page(cpu, cpu->x);
                             return false;
                         case 3:
@@ -987,8 +1002,7 @@ def generate_register_indirect_incremented():
                             return false;
                         case 4:
                             /* internal operation */
-                            /* could do a dummy read but shouldn't matter */
-                            /* let's increment X now bc why not */
+                            {idle_cycle()}
                             cpu->x += 1;
                             return true;
                         default:
@@ -1047,8 +1061,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                         return false;
                     case 3:
                         /* internal operation */
-                        /* could do a dummy read but shouldn't matter */
-                        /* let's set the addr now bc why not */
+                        {idle_cycle()}
                         cpu->addr = direct_page(cpu, cpu->data8[0]);
                         return false;
                     case 4:
@@ -1208,8 +1221,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                         cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
                         return false;
                     case 5:
-                        /* "idle" cycle, could do a dummy read but shouldn't matter */
-                        /* let's take this time to index AA */
+                        {idle_cycle()}
                         cpu->addr += cpu->y;
                         return false;
                     case 6: {{
@@ -1352,7 +1364,7 @@ class PswInstruction(Instruction):
                 struct CPU_State* const cpu = &state->cpu;
 
                 assert(cycle == 2);
-                /* could do a dummy read but shouldn't matter */
+                {idle_cycle()}
             """
             )
             + "\n"
@@ -1449,7 +1461,7 @@ class TCallInstruction(Instruction):
                     cpu->sp -= 1;
                     return false;
                 case 4:
-                    /* "idle" cycle, could do a dummy read but shouldn't matter */
+                    {idle_cycle()}
                     return false;
 
                 // cycle 5-6 fetch the address to go to at a predetermined address
@@ -1464,10 +1476,10 @@ class TCallInstruction(Instruction):
 
                 // cycle 7-8 are idle, we just publish the new pc at the end of cycle 8
                 case 7:
-                    /* "idle" cycle, could do a dummy read but shouldn't matter */
+                    {idle_cycle()}
                     return false;
                 case 8:
-                    /* "idle" cycle, could do a dummy read but shouldn't matter */
+                    {idle_cycle()}
                     cpu->pc = cpu->addr;
                     return true;
 
