@@ -12,6 +12,7 @@ static inline void idle(struct SPC_State state[static 1])
     /* generated from generate_instructions.py: l.26 */
     (void)bus_read(state, state->cpu.pc);
 }
+
 static inline bool tcall_internal(struct SPC_State state[static 1], uint32_t cycle, uint16_t vector)
 {
     /* generated from generate_instructions.py: l.1446 */

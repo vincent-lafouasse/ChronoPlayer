@@ -1628,7 +1628,7 @@ def make_implementation():
         )
         f.write("\n\n")
 
-        f.write("\n".join(helpers))
+        f.write("\n\n".join(helpers))
 
         f.write("\n\n")
 
