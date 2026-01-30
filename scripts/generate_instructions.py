@@ -50,6 +50,7 @@ class PSW(StrEnum):
     Carry = "carry"
     Overflow = "overflow"
     HalfCarry = "half_carry"
+    InterruptEnable = "interrupt_enable"
 
 
 class BitOp(Enum):
