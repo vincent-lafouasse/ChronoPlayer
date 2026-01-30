@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.1769 */
+/* generated from generate_instructions.py: l.1980 */
 #pragma once
 
 #include <stdbool.h>
@@ -84,33 +84,61 @@ extern bool mov_register_direct_indexed_a_x(struct SPC_State state[static 1], ui
 
 /* 0x05     OR    A, !a */
 extern bool or_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x15     OR    A, !a+X */
+extern bool or_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x25     AND   A, !a */
 extern bool and_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x35     AND   A, !a+X */
+extern bool and_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x45     EOR   A, !a */
 extern bool eor_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x55     EOR   A, !a+X */
+extern bool eor_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x65     CMP   A, !a */
 extern bool cmp_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x75     CMP   A, !a+X */
+extern bool cmp_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x85     ADC   A, !a */
 extern bool adc_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x95     ADC   A, !a+X */
+extern bool adc_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xa5     SBC   A, !a */
 extern bool sbc_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xb5     SBC   A, !a+X */
+extern bool sbc_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe5     MOV   A, !a */
 extern bool mov_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xf5     MOV   A, !a+X */
+extern bool mov_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle);
 
 /* 0x06     OR    A, (X) */
 extern bool or_register_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x16     OR    A, !a+Y */
+extern bool or_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x26     AND   A, (X) */
 extern bool and_register_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x36     AND   A, !a+Y */
+extern bool and_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x46     EOR   A, (X) */
 extern bool eor_register_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x56     EOR   A, !a+Y */
+extern bool eor_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x66     CMP   A, (X) */
 extern bool cmp_register_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x76     CMP   A, !a+Y */
+extern bool cmp_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x86     ADC   A, (X) */
 extern bool adc_register_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x96     ADC   A, !a+Y */
+extern bool adc_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xa6     SBC   A, (X) */
 extern bool sbc_register_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xb6     SBC   A, !a+Y */
+extern bool sbc_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe6     MOV   A, (X) */
 extern bool mov_register_indirect(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xf6     MOV   A, !a+Y */
+extern bool mov_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle);
 
 /* 0x07     OR    A, [d+X] */
 extern bool or_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle);
