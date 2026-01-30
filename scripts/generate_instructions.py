@@ -1049,7 +1049,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 || cycle <= 6);
+                assert(cycle >= 2 && cycle <= 6);
 
                 switch (cycle) {{
                     case 2:
@@ -1202,7 +1202,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 || cycle <= 6);
+                assert(cycle >= 2 && cycle <= 6);
 
                 switch (cycle) {{
                     case 2:
@@ -1348,7 +1348,7 @@ class RegisterAbsolute(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 || cycle <= 4);
+                assert(cycle >= 2 && cycle <= 4);
 
                 switch (cycle) {{
                     case 2:

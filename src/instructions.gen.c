@@ -877,7 +877,7 @@ bool or_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
     /* generated from generate_instructions.py: l.1348 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 4);
+    assert(cycle >= 2 && cycle <= 4);
 
     switch (cycle) {
         case 2:
@@ -918,7 +918,7 @@ bool and_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
     /* generated from generate_instructions.py: l.1348 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 4);
+    assert(cycle >= 2 && cycle <= 4);
 
     switch (cycle) {
         case 2:
@@ -959,7 +959,7 @@ bool eor_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
     /* generated from generate_instructions.py: l.1348 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 4);
+    assert(cycle >= 2 && cycle <= 4);
 
     switch (cycle) {
         case 2:
@@ -1000,7 +1000,7 @@ bool cmp_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
     /* generated from generate_instructions.py: l.1348 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 4);
+    assert(cycle >= 2 && cycle <= 4);
 
     switch (cycle) {
         case 2:
@@ -1048,7 +1048,7 @@ bool adc_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
     /* generated from generate_instructions.py: l.1348 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 4);
+    assert(cycle >= 2 && cycle <= 4);
 
     switch (cycle) {
         case 2:
@@ -1110,7 +1110,7 @@ bool sbc_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
     /* generated from generate_instructions.py: l.1348 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 4);
+    assert(cycle >= 2 && cycle <= 4);
 
     switch (cycle) {
         case 2:
@@ -1174,7 +1174,7 @@ bool mov_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
     /* generated from generate_instructions.py: l.1348 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 4);
+    assert(cycle >= 2 && cycle <= 4);
 
     switch (cycle) {
         case 2:
@@ -1506,7 +1506,7 @@ bool or_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cyc
     /* generated from generate_instructions.py: l.1049 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -1562,7 +1562,7 @@ bool or_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cyc
     /* generated from generate_instructions.py: l.1202 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -1612,7 +1612,7 @@ bool and_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
     /* generated from generate_instructions.py: l.1049 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -1668,7 +1668,7 @@ bool and_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cy
     /* generated from generate_instructions.py: l.1202 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -1718,7 +1718,7 @@ bool eor_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
     /* generated from generate_instructions.py: l.1049 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -1774,7 +1774,7 @@ bool eor_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cy
     /* generated from generate_instructions.py: l.1202 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -1824,7 +1824,7 @@ bool cmp_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
     /* generated from generate_instructions.py: l.1049 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -1887,7 +1887,7 @@ bool cmp_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cy
     /* generated from generate_instructions.py: l.1202 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -1944,7 +1944,7 @@ bool adc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
     /* generated from generate_instructions.py: l.1049 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -2021,7 +2021,7 @@ bool adc_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cy
     /* generated from generate_instructions.py: l.1202 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -2092,7 +2092,7 @@ bool sbc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
     /* generated from generate_instructions.py: l.1049 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -2171,7 +2171,7 @@ bool sbc_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cy
     /* generated from generate_instructions.py: l.1202 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -2244,7 +2244,7 @@ bool mov_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
     /* generated from generate_instructions.py: l.1049 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -2300,7 +2300,7 @@ bool mov_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cy
     /* generated from generate_instructions.py: l.1202 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 6);
+    assert(cycle >= 2 && cycle <= 6);
 
     switch (cycle) {
         case 2:
@@ -2620,7 +2620,7 @@ bool mov_register_absolute_x(struct SPC_State state[static 1], uint32_t cycle)
     /* generated from generate_instructions.py: l.1348 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 4);
+    assert(cycle >= 2 && cycle <= 4);
 
     switch (cycle) {
         case 2:
@@ -2778,7 +2778,7 @@ bool mov_register_absolute_y(struct SPC_State state[static 1], uint32_t cycle)
     /* generated from generate_instructions.py: l.1348 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 4);
+    assert(cycle >= 2 && cycle <= 4);
 
     switch (cycle) {
         case 2:
@@ -3014,7 +3014,7 @@ bool cmp_register_absolute_x(struct SPC_State state[static 1], uint32_t cycle)
     /* generated from generate_instructions.py: l.1348 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 4);
+    assert(cycle >= 2 && cycle <= 4);
 
     switch (cycle) {
         case 2:
@@ -3103,7 +3103,7 @@ bool cmp_register_absolute_y(struct SPC_State state[static 1], uint32_t cycle)
     /* generated from generate_instructions.py: l.1348 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 || cycle <= 4);
+    assert(cycle >= 2 && cycle <= 4);
 
     switch (cycle) {
         case 2:
