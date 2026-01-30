@@ -3,6 +3,14 @@ import inspect
 import os
 
 
+# an array of static inline C functions to prepend before the instructions
+helpers = []
+
+
+def register_helper(function_block):
+    helpers.append(function_block)
+
+
 instructions = dict()
 
 
@@ -1260,6 +1268,7 @@ class TCallInstruction(Instruction):
         if n not in range(16):
             raise ValueError(f"{n} is not a nibble")
         self.n = n
+        self.vector = 0xFFC0 + (15 - self.n) * 2
 
     def name(self):
         return f"tcall_{self.n}"
@@ -1267,63 +1276,72 @@ class TCallInstruction(Instruction):
     def full_mnemonic(self):
         return f"TCALL {self.n}"
 
+    @staticmethod
+    def helper():
+        return inspect.cleandoc(
+            f"""
+        static inline bool tcall_internal(struct SPC_State state[static 1], uint32_t cycle, uint16_t vector)
+        {{
+            {trace_source()}
+            struct CPU_State* const cpu = &state->cpu;
+
+            assert(cycle >= 2 && cycle <= 8);
+            switch (cycle) {{
+                // cycle 2-3: cache the PC on the stack for later return
+                case 2:
+                    // effective stack address
+                    cpu->addr = 0x100 + cpu->sp;
+                    bus_write(state, cpu->addr, u16_msb(cpu->pc));
+                    cpu->sp -= 1;
+                    return false;
+                case 3:
+                    cpu->addr = 0x100 + cpu->sp;
+                    bus_write(state, cpu->addr, u16_lsb(cpu->pc));
+                    cpu->sp -= 1;
+                    return false;
+                case 4:
+                    /* "idle" cycle, could do a dummy read but shouldn't matter */
+                    return false;
+
+                // cycle 5-6 fetch the address to go to at a predetermined address
+                case 5:
+                    cpu->data8[0] = bus_read(state, vector);
+                    return false;
+                case 6:
+                    cpu->data8[1] = bus_read(state, vector + 1);
+                    // new pc
+                    cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+                    return false;
+
+                // cycle 7-8 are idle, we just publish the new pc at the end of cycle 8
+                case 7:
+                    /* "idle" cycle, could do a dummy read but shouldn't matter */
+                    return false;
+                case 8:
+                    /* "idle" cycle, could do a dummy read but shouldn't matter */
+                    cpu->pc = cpu->addr;
+                    return true;
+
+                default:
+                    // unreachable
+                    // terminate instr. just in case
+                    return true;
+            }}
+
+            return true;
+        }}
+        """
+        )
+
     def declaration(self):
         return f"bool {self.name()}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def body(self):
-        vector_low = 0xFFC0 + (15 - self.n) * 2
-        vector_hi = vector_low + 1
-
         return inspect.cleandoc(
             f"""
             {{
                 {trace_source()}
-                struct CPU_State* const cpu = &state->cpu;
-
-                assert(cycle >= 2 && cycle <= 8);
-                switch (cycle) {{
-                    // cycle 2-3: cache the PC on the stack for later return
-                    case 2:
-                        // effective stack address
-                        cpu->addr = 0x100 + cpu->sp;
-                        bus_write(state, cpu->addr, u16_msb(cpu->pc));
-                        cpu->sp -= 1;
-                        return false;
-                    case 3:
-                        cpu->addr = 0x100 + cpu->sp;
-                        bus_write(state, cpu->addr, u16_lsb(cpu->pc));
-                        cpu->sp -= 1;
-                        return false;
-                    case 4:
-                        /* "idle" cycle, could do a dummy read but shouldn't matter */
-                        return false;
-
-                    // cycle 5-6 fetch the address to go to at a predetermined address
-                    case 5:
-                        cpu->data8[0] = bus_read(state, 0x{vector_low:x});
-                        return false;
-                    case 6:
-                        cpu->data8[1] = bus_read(state, 0x{vector_hi:x});
-                        // new pc
-                        cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
-                        return false;
-
-                    // cycle 7-8 are idle, we just publish the new pc at the end of cycle 8
-                    case 7:
-                        /* "idle" cycle, could do a dummy read but shouldn't matter */
-                        return false;
-                    case 8:
-                        /* "idle" cycle, could do a dummy read but shouldn't matter */
-                        cpu->pc = cpu->addr;
-                        return true;
-
-                    default:
-                        // unreachable
-                        // terminate instr. just in case
-                        return true;
-                }}
-
-                return true;
+                return tcall_internal(state, cycle, 0x{self.vector:x});
             }}
             """
         )
@@ -1333,6 +1351,7 @@ class TCallInstruction(Instruction):
 
     @classmethod
     def register_instructions(cls):
+        register_helper(cls.helper())
         for i in range(16):
             opcode = 1 + 16 * i
             add_instruction(
@@ -1594,6 +1613,10 @@ def make_implementation():
             """
             )
         )
+        f.write("\n\n")
+
+        f.write("\n".join(helpers))
+
         f.write("\n\n")
 
         for lsb in range(16):
