@@ -2171,6 +2171,69 @@ def generate_indirect_indexed_register():
     )
 
 
+def generate_absolute_register():
+    """
+    16 Absolute, Register -- !a,A; !a,X; !a,Y
+     (MOV,MOV,MOV)
+     (3 bytes)
+     (5 cycles)
+           1       PC      Op Code         1
+           2       PC+1    AAL             1
+           3       PC+2    AAH             1
+           4       AA      Data (read)     1
+           5       AA      Data (write)    0
+       * Verified by blargg. 2 and 3 could be swapped, but that's unlikely.
+       * Yes, RMW even for MOV
+    """
+
+    def generate_absolute_register_inner(opcode, reg):
+        add_instruction(
+            opcode,
+            HardcodedInstruction(
+                mnemonic="MOV",
+                _full_mnemonic=f"MOV   !a, {reg}",
+                function_name=f"mov_absolute_{reg}",
+                body=inspect.cleandoc(
+                    f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    assert(cycle >= 2 && cycle <= 5);
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            // AAL
+                            cpu->data8[0] = cpu->operands[0];
+                            return false;
+                        case 3:
+                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            // AAH
+                            cpu->data8[1] = cpu->operands[1];
+                            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+                            return false;
+                        case 4:
+                            // "useless" RMW read
+                            (void)bus_read(state, cpu->addr);
+                            return false;
+                        case 5:
+                            bus_write(state, cpu->addr, cpu->{reg});
+                            return true;
+                        default:
+                            /* unreachable but true terminates the instruction just in case */
+                            return true;
+                    }}
+                }}
+                """
+                ),
+            ),
+        )
+
+    generate_absolute_register_inner(0xC5, Register.A)
+    generate_absolute_register_inner(0xC9, Register.X)
+    generate_absolute_register_inner(0xCC, Register.Y)
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -2393,6 +2456,7 @@ DirectRegister.register_instructions()
 generate_Anomie_13()
 generate_indexed_indirect_register()
 generate_indirect_indexed_register()
+generate_absolute_register()
 
 
 def print_opcode_matrix():
