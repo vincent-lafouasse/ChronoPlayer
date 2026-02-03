@@ -2037,6 +2037,73 @@ def generate_Anomie_13():
     )
 
 
+def generate_indexed_indirect_register():
+    """
+    14 Indexed Indirect, Register -- [d+X],A
+     (MOV)
+     (2 bytes)
+     (7 cycles)
+           1       PC      Op Code         1
+           2       PC+1    DO              1
+           3       ??      IO              ?
+           4       DO+X    AAL             1
+           5       DO+X+1  AAH             1
+           6       AA      Data (read)     1
+           7       AA      Data (write)    0
+       * blargg verifies cycles 6 and 7.
+       * Yes, RMW even for MOV
+    """
+    add_instruction(
+        0xC7,
+        HardcodedInstruction(
+            mnemonic="MOV",
+            _full_mnemonic="MOV   [d+X],A",
+            function_name="mov_indexed_indirect_register",
+            body=inspect.cleandoc(
+                f"""
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle >= 2 && cycle <= 7);
+                switch (cycle) {{
+                    case 2:
+                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        cpu->data8[0] = cpu->operands[0] + cpu->x;
+                        return false;
+                    case 3:
+                        /* internal operation */
+                        {idle_cycle()}
+                        return false;
+                    case 4:
+                        // AAL
+                        cpu->addr = direct_page(cpu, cpu->data8[0]);
+                        cpu->data8[1] = bus_read(state, cpu->addr);
+                        return false;
+                    case 5:
+                        // AAH
+                        cpu->addr = direct_page(cpu, cpu->data8[0] + 1);
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        cpu->addr = u16_parse(cpu->data8[1], cpu->data8[0]);
+                        return false;
+                    case 6:
+                        // "useless" RMW read
+                        (void)bus_read(state, cpu->addr);
+                        return false;
+                    case 7:
+                        bus_write(state, cpu->addr, cpu->a);
+                        return true;
+                    default:
+                        /* unreachable but true terminates the instruction just in case */
+                        return true;
+                }}
+            }}
+            """
+            ),
+        ),
+    )
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -2257,6 +2324,7 @@ RegisterAbsoluteIndexed.register_instructions()
 DirectImmediateMode.register_instructions()
 DirectRegister.register_instructions()
 generate_Anomie_13()
+generate_indexed_indirect_register()
 
 
 def print_opcode_matrix():
