@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.2517 */
+/* generated from generate_instructions.py: l.2587 */
 #pragma once
 
 #include <stdbool.h>
@@ -110,6 +110,8 @@ extern bool sbc_register_absolute_a(struct SPC_State state[static 1], uint32_t c
 extern bool sbc_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xc5     MOV   !a, a */
 extern bool mov_absolute_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xd5     MOV   !a+x, A */
+extern bool mov_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe5     MOV   A, !a */
 extern bool mov_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xf5     MOV   A, !a+X */
@@ -141,6 +143,8 @@ extern bool sbc_register_indirect(struct SPC_State state[static 1], uint32_t cyc
 extern bool sbc_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xc6     MOV   (X), A */
 extern bool mov_indirect_register(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xd6     MOV   !a+y, A */
+extern bool mov_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe6     MOV   A, (X) */
 extern bool mov_register_indirect(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xf6     MOV   A, !a+Y */

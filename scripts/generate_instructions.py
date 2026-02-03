@@ -2234,6 +2234,75 @@ def generate_absolute_register():
     generate_absolute_register_inner(0xCC, Register.Y)
 
 
+def generate_absolute_indexed_register():
+    """
+    17 Absolute Indexed, Register -- !a+X,A; !a+Y,A
+     (MOV,MOV)
+     (3 bytes)
+     (6 cycles)
+           1       PC      Op Code         1
+           2       PC+1    AAL             1
+           3       PC+2    AAH             1
+           4       ??      IO              ?
+           5       AA+X/Y  Data (read)     1
+           6       AA+X/Y  Data (write)    0
+       * blargg verified cycles 5 and 6.
+       * Yes, RMW even for MOV
+    """
+
+    def generate_absolute_indexed_register_inner(opcode, reg):
+        add_instruction(
+            opcode,
+            HardcodedInstruction(
+                mnemonic="MOV",
+                _full_mnemonic=f"MOV   !a+{reg}, A",
+                function_name=f"mov_absolute_indexed_{reg}",
+                body=inspect.cleandoc(
+                    f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    assert(cycle >= 2 && cycle <= 6);
+                    switch (cycle) {{
+                        case 2:
+                            // AAL
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            cpu->data8[0] = cpu->operands[0];
+                            return false;
+                        case 3:
+                            // AAH
+                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            cpu->data8[1] = cpu->operands[1];
+                            // AA + {reg}
+                            cpu->addr = u16_read_little_endian(cpu->data8);
+                            cpu->addr += cpu->{reg};
+                            return false;
+                        case 4:
+                            // internal operation
+                            {idle_cycle()}
+                            return false;
+                        case 5:
+                            // "useless" RMW read for MOV
+                            (void)bus_read(state, cpu->addr);
+                            return false;
+                        case 6:
+                            bus_write(state, cpu->addr, cpu->a);
+                            return true;
+                        default:
+                            /* unreachable but true terminates the instruction just in case */
+                            return true;
+                    }}
+                }}
+                """
+                ),
+            ),
+        )
+
+    generate_absolute_indexed_register_inner(0xD5, Register.X)
+    generate_absolute_indexed_register_inner(0xD6, Register.Y)
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -2457,6 +2526,7 @@ generate_Anomie_13()
 generate_indexed_indirect_register()
 generate_indirect_indexed_register()
 generate_absolute_register()
+generate_absolute_indexed_register()
 
 
 def print_opcode_matrix():
