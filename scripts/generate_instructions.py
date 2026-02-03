@@ -30,6 +30,21 @@ register_helper(
     )
 )
 
+register_helper(
+    inspect.cleandoc(
+        f"""
+        static inline void parse_membit(uint16_t operand, uint16_t* addr, uint8_t* bit)
+        {{
+            {trace_source()}
+            // top 3 bits encode the bit
+            // the 13 ls bits encode the address in the first 8KB of RAM
+            *bit = (uint8_t)(operand >> 13);
+            *addr = (operand & 0x1fff);
+        }}
+        """
+    )
+)
+
 
 def idle_cycle():
     return "idle(state); // dummy read of PC, let's hope PC is not on a timer"
