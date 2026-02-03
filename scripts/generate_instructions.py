@@ -453,7 +453,9 @@ add_instruction(
             f"""
             {{
                 {trace_source()}
+
                 if (cycle != 2) {{ TRACE_TRAP(); }}
+            
                 {idle_cycle()}
                 return true;
             }}
@@ -498,6 +500,7 @@ class RegisterImmediateMode(AddressingMode):
                 struct CPU_State* const cpu = &state->cpu;
 
                 if (cycle != 2) {{ TRACE_TRAP(); }}
+
                 cpu->operands[0] = bus_read(state, cpu->pc++);
                 cpu->data8[0] = cpu->operands[0];
             """
@@ -655,6 +658,7 @@ class MovRegisterRegister(Instruction):
                 struct CPU_State* const cpu = &state->cpu;
 
                 if (cycle != 2) {{ TRACE_TRAP(); }}
+
                 {idle_cycle()}
             """
         )
@@ -3144,6 +3148,7 @@ class PswInstruction(Instruction):
                 struct CPU_State* const cpu = &state->cpu;
 
                 if (cycle != 2) {{ TRACE_TRAP(); }}
+
                 {idle_cycle()}
             """
             )
@@ -3227,6 +3232,7 @@ class TCallInstruction(Instruction):
             struct CPU_State* const cpu = &state->cpu;
 
             if (cycle < 2 || cycle > 8) {{ TRACE_TRAP(); }}
+
             switch (cycle) {{
                 // cycle 2-3: cache the PC on the stack for later return
                 case 2:
