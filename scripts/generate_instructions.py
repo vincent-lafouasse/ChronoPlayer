@@ -258,6 +258,150 @@ def write_register(reg, data, is_16bit=False, updates_flags=True):
     return lines
 
 
+def do_asl():
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            // ASL - Arithmetic Shift Left
+            // high bit -> Carry, 0 -> low bit
+            const uint8_t value = cpu->data8[0];
+            
+            psw_write_carry(cpu, value & 0x80);
+            
+            const uint8_t result = value << 1;
+            psw_write_zero(cpu, result == 0);
+            psw_write_neg(cpu, result & 0x80);
+            
+            cpu->data8[0] = result;
+        }}
+        """
+    ).splitlines()
+
+
+def do_dec():
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            // DEC - Decrement
+            const uint8_t result = cpu->data8[0] - 1;
+            
+            psw_write_zero(cpu, result == 0);
+            psw_write_neg(cpu, result & 0x80);
+            
+            cpu->data8[0] = result;
+        }}
+        """
+    ).splitlines()
+
+
+def do_inc():
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            // INC - Increment
+            const uint8_t result = cpu->data8[0] + 1;
+            
+            psw_write_zero(cpu, result == 0);
+            psw_write_neg(cpu, result & 0x80);
+            
+            cpu->data8[0] = result;
+        }}
+        """
+    ).splitlines()
+
+
+def do_lsr():
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            // LSR - Logical Shift Right
+            // 0 -> high bit, low bit -> Carry
+            const uint8_t value = cpu->data8[0];
+            
+            psw_write_carry(cpu, value & 0x01);
+            
+            const uint8_t result = value >> 1;
+            psw_write_zero(cpu, result == 0);
+            psw_write_neg(cpu, result & 0x80);
+            
+            cpu->data8[0] = result;
+        }}
+        """
+    ).splitlines()
+
+
+def do_rol():
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            // ROL - Rotate Left
+            // low bit = Carry, Carry = high bit
+            const uint8_t value = cpu->data8[0];
+            const uint8_t carry_in = psw_carry(cpu);
+            
+            psw_write_carry(cpu, value & 0x80);
+            
+            const uint8_t result = (value << 1) | carry_in;
+            psw_write_zero(cpu, result == 0);
+            psw_write_neg(cpu, result & 0x80);
+            
+            cpu->data8[0] = result;
+        }}
+        """
+    ).splitlines()
+
+
+def do_ror():
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            // ROR - Rotate Right
+            // high bit = Carry, Carry = low bit
+            const uint8_t value = cpu->data8[0];
+            const uint8_t carry_in = psw_carry(cpu);
+            
+            psw_write_carry(cpu, value & 0x01);
+            
+            const uint8_t result = (value >> 1) | (carry_in << 7);
+            psw_write_zero(cpu, result == 0);
+            psw_write_neg(cpu, result & 0x80);
+            
+            cpu->data8[0] = result;
+        }}
+        """
+    ).splitlines()
+
+
+def do_set1(bit):
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            // SET1 - Set bit {bit}
+            cpu->data8[0] |= (1 << {bit});
+        }}
+        """
+    ).splitlines()
+
+
+def do_clr1(bit):
+    return inspect.cleandoc(
+        f"""
+        {{
+            {trace_source()}
+            // CLR1 - Clear bit {bit}
+            cpu->data8[0] &= ~(1 << {bit});
+        }}
+        """
+    ).splitlines()
+
+
 add_instruction(
     0x00,
     HardcodedInstruction(
