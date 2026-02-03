@@ -740,9 +740,7 @@ class RegisterDirectMode(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -908,9 +906,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -1056,9 +1052,7 @@ class RegisterIndirectMode(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -1181,8 +1175,7 @@ def generate_register_indirect_incremented():
                             cpu->x += 1;
                             return true;
                         default:
-                            /* unreachable but true terminates the instruction just in case */
-                            return true;
+                            UNREACHABLE();
                     }}
                 }}
                 """
@@ -1263,9 +1256,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -1410,9 +1401,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -1547,9 +1536,7 @@ class RegisterAbsolute(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -1730,9 +1717,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -1938,9 +1923,7 @@ class DirectImmediateMode(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -2072,9 +2055,7 @@ class DirectRegister(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -2169,8 +2150,7 @@ def generate_Anomie_13():
                             bus_write(state, cpu->addr, cpu->a);
                             return true;
                         default:
-                            /* unreachable but true terminates the instruction just in case */
-                            return true;
+                            UNREACHABLE();
                     }}
                 }}
                 """
@@ -2204,8 +2184,7 @@ def generate_Anomie_13():
                             bus_write(state, cpu->addr, cpu->a);
                             return true;
                         default:
-                            /* unreachable but true terminates the instruction just in case */
-                            return true;
+                            UNREACHABLE();
                     }}
                 }}
                 """
@@ -2271,8 +2250,7 @@ def generate_indexed_indirect_register():
                         bus_write(state, cpu->addr, cpu->a);
                         return true;
                     default:
-                        /* unreachable but true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -2338,8 +2316,7 @@ def generate_indirect_indexed_register():
                         bus_write(state, cpu->addr, cpu->a);
                         return true;
                     default:
-                        /* unreachable but true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -2397,8 +2374,7 @@ def generate_absolute_register():
                             bus_write(state, cpu->addr, cpu->{reg});
                             return true;
                         default:
-                            /* unreachable but true terminates the instruction just in case */
-                            return true;
+                            UNREACHABLE();
                     }}
                 }}
                 """
@@ -2467,8 +2443,7 @@ def generate_absolute_indexed_register():
                             bus_write(state, cpu->addr, cpu->a);
                             return true;
                         default:
-                            /* unreachable but true terminates the instruction just in case */
-                            return true;
+                            UNREACHABLE();
                     }}
                 }}
                 """
@@ -2546,9 +2521,7 @@ class DirectDirect(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -2652,9 +2625,7 @@ class DirectDirect(AddressingMode):
                             bus_write(state, cpu->addr, cpu->data8[0]);
                             return true;
                         default:
-                            /* unreachable */
-                            /* true terminates the instruction just in case */
-                            return true;
+                            UNREACHABLE();
                     }}
                 }}
                 """
@@ -2721,9 +2692,7 @@ class IndirectIndirect(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -2851,9 +2820,7 @@ class Direct(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -2986,8 +2953,7 @@ def generate_not1():
                         bus_write(state, cpu->addr, cpu->data8[0]);
                         return true;
                     default:
-                        /* unreachable but true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -3056,9 +3022,7 @@ class DirectIndexed(AddressingMode):
                         return true;
                     }}
                     default:
-                        /* unreachable */
-                        /* true terminates the instruction just in case */
-                        return true;
+                        UNREACHABLE();
                 }}
             }}
             """
@@ -3292,9 +3256,7 @@ class TCallInstruction(Instruction):
                     return true;
 
                 default:
-                    // unreachable
-                    // terminate instr. just in case
-                    return true;
+                    UNREACHABLE();
             }}
 
             return true;
