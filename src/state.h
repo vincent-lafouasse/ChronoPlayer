@@ -17,6 +17,7 @@ struct CPU_State {
     uint8_t data8[2];
     uint16_t data16;
     uint16_t addr;
+    uint8_t bit;
 
     uint64_t total_cycles;
 };
