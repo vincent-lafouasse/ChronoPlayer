@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.2771 */
+/* generated from generate_instructions.py: l.2903 */
 #pragma once
 
 #include <stdbool.h>
@@ -218,16 +218,28 @@ extern bool mov_register_direct_x(struct SPC_State state[static 1], uint32_t cyc
 
 /* 0x09     OR    dd, ds */
 extern bool or_direct_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x19     OR    (X), (Y) */
+extern bool or_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x29     AND   dd, ds */
 extern bool and_direct_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x39     AND   (X), (Y) */
+extern bool and_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x49     EOR   dd, ds */
 extern bool eor_direct_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x59     EOR   (X), (Y) */
+extern bool eor_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x69     CMP   dd, ds */
 extern bool cmp_direct_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x79     CMP   (X), (Y) */
+extern bool cmp_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x89     ADC   dd, ds */
 extern bool adc_direct_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x99     ADC   (X), (Y) */
+extern bool adc_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xa9     SBC   dd, ds */
 extern bool sbc_direct_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xb9     SBC   (X), (Y) */
+extern bool sbc_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xc9     MOV   !a, x */
 extern bool mov_absolute_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe9     MOV   X, !a */

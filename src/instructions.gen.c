@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.2798 */
+/* generated from generate_instructions.py: l.2930 */
 
 #include "instructions.gen.h"
 
@@ -15,7 +15,7 @@ static inline void idle(struct SPC_State state[static 1])
 
 static inline bool tcall_internal(struct SPC_State state[static 1], uint32_t cycle, uint16_t vector)
 {
-    /* generated from generate_instructions.py: l.2616 */
+    /* generated from generate_instructions.py: l.2747 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle >= 2 && cycle <= 8);
@@ -76,7 +76,7 @@ bool nop(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x20     CLRP */
 bool clrp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2533 */
+    /* generated from generate_instructions.py: l.2664 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -88,7 +88,7 @@ bool clrp(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x40     SETP */
 bool setp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2533 */
+    /* generated from generate_instructions.py: l.2664 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -100,7 +100,7 @@ bool setp(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x60     CLRC */
 bool clrc(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2533 */
+    /* generated from generate_instructions.py: l.2664 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -112,7 +112,7 @@ bool clrc(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x80     SETC */
 bool setc(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2533 */
+    /* generated from generate_instructions.py: l.2664 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -124,7 +124,7 @@ bool setc(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xe0     CLRV */
 bool clrv(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2533 */
+    /* generated from generate_instructions.py: l.2664 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -138,112 +138,112 @@ bool clrv(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x01     TCALL 0 */
 bool tcall_0(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffde);
 }
 
 /* 0x11     TCALL 1 */
 bool tcall_1(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffdc);
 }
 
 /* 0x21     TCALL 2 */
 bool tcall_2(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffda);
 }
 
 /* 0x31     TCALL 3 */
 bool tcall_3(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffd8);
 }
 
 /* 0x41     TCALL 4 */
 bool tcall_4(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffd6);
 }
 
 /* 0x51     TCALL 5 */
 bool tcall_5(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffd4);
 }
 
 /* 0x61     TCALL 6 */
 bool tcall_6(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffd2);
 }
 
 /* 0x71     TCALL 7 */
 bool tcall_7(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffd0);
 }
 
 /* 0x81     TCALL 8 */
 bool tcall_8(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffce);
 }
 
 /* 0x91     TCALL 9 */
 bool tcall_9(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffcc);
 }
 
 /* 0xa1     TCALL 10 */
 bool tcall_10(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffca);
 }
 
 /* 0xb1     TCALL 11 */
 bool tcall_11(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffc8);
 }
 
 /* 0xc1     TCALL 12 */
 bool tcall_12(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffc6);
 }
 
 /* 0xd1     TCALL 13 */
 bool tcall_13(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffc4);
 }
 
 /* 0xe1     TCALL 14 */
 bool tcall_14(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffc2);
 }
 
 /* 0xf1     TCALL 15 */
 bool tcall_15(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2674 */
+    /* generated from generate_instructions.py: l.2805 */
     return tcall_internal(state, cycle, 0xffc0);
 }
 
@@ -4000,6 +4000,51 @@ bool or_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
     }
 }
 
+/* 0x19     OR    (X), (Y) */
+bool or_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.2518 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 && cycle <= 5);
+
+    switch (cycle) {
+        case 2:
+            // internal operation
+            idle(state); // dummy read of PC, let's hope PC is not on a timer
+            return false;
+        case 3:
+            // src: (Y)
+            cpu->addr = direct_page(cpu, cpu->y);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            return false;
+        case 4:
+            // dst: (X)
+            cpu->addr = direct_page(cpu, cpu->x);
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return false;
+        case 5: {
+
+            /* payload */
+            /* generated from generate_instructions.py: l.251 */
+            cpu->data8[0] |= cpu->data8[1];
+            {
+                /* generated from generate_instructions.py: l.147 */
+                const uint16_t v = cpu->data8[0];
+                psw_write_zero(cpu, v == 0);
+                psw_write_neg(cpu, v & 0x80);
+            }
+            /* generated from generate_instructions.py: l.2605 */
+            bus_write(state, cpu->addr, cpu->data8[0]);
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
 /* 0x29     AND   dd, ds */
 bool and_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -4039,6 +4084,51 @@ bool and_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
                 psw_write_neg(cpu, v & 0x80);
             }
             /* generated from generate_instructions.py: l.2401 */
+            bus_write(state, cpu->addr, cpu->data8[0]);
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0x39     AND   (X), (Y) */
+bool and_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.2518 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 && cycle <= 5);
+
+    switch (cycle) {
+        case 2:
+            // internal operation
+            idle(state); // dummy read of PC, let's hope PC is not on a timer
+            return false;
+        case 3:
+            // src: (Y)
+            cpu->addr = direct_page(cpu, cpu->y);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            return false;
+        case 4:
+            // dst: (X)
+            cpu->addr = direct_page(cpu, cpu->x);
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return false;
+        case 5: {
+
+            /* payload */
+            /* generated from generate_instructions.py: l.251 */
+            cpu->data8[0] &= cpu->data8[1];
+            {
+                /* generated from generate_instructions.py: l.147 */
+                const uint16_t v = cpu->data8[0];
+                psw_write_zero(cpu, v == 0);
+                psw_write_neg(cpu, v & 0x80);
+            }
+            /* generated from generate_instructions.py: l.2576 */
             bus_write(state, cpu->addr, cpu->data8[0]);
             return true;
         }
@@ -4098,6 +4188,51 @@ bool eor_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
     }
 }
 
+/* 0x59     EOR   (X), (Y) */
+bool eor_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.2518 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 && cycle <= 5);
+
+    switch (cycle) {
+        case 2:
+            // internal operation
+            idle(state); // dummy read of PC, let's hope PC is not on a timer
+            return false;
+        case 3:
+            // src: (Y)
+            cpu->addr = direct_page(cpu, cpu->y);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            return false;
+        case 4:
+            // dst: (X)
+            cpu->addr = direct_page(cpu, cpu->x);
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return false;
+        case 5: {
+
+            /* payload */
+            /* generated from generate_instructions.py: l.251 */
+            cpu->data8[0] ^= cpu->data8[1];
+            {
+                /* generated from generate_instructions.py: l.147 */
+                const uint16_t v = cpu->data8[0];
+                psw_write_zero(cpu, v == 0);
+                psw_write_neg(cpu, v & 0x80);
+            }
+            /* generated from generate_instructions.py: l.2595 */
+            bus_write(state, cpu->addr, cpu->data8[0]);
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
 /* 0x69     CMP   dd, ds */
 bool cmp_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -4126,6 +4261,56 @@ bool cmp_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
             cpu->data8[0] = bus_read(state, cpu->addr);
             return false;
         case 6: {
+
+            /* payload */
+            {
+                /* generated from generate_instructions.py: l.232 */
+                // compute (a - b), no borrow, update NZC then discard result
+                const uint8_t operand_a = (uint8_t)(cpu->data8[0]);
+                const uint8_t operand_b = (uint8_t)(cpu->data8[1]);
+
+                // no borrow so underflow/borrow if a < b
+                // so carry = a >= b
+                psw_write_carry(cpu, operand_a >= operand_b);
+
+                // let it underflow, it's expected and fine
+                const uint8_t res = operand_a - operand_b;
+                psw_write_zero(cpu, res == 0);
+                psw_write_neg(cpu, res & 0x80);
+            }
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0x79     CMP   (X), (Y) */
+bool cmp_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.2518 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 && cycle <= 5);
+
+    switch (cycle) {
+        case 2:
+            // internal operation
+            idle(state); // dummy read of PC, let's hope PC is not on a timer
+            return false;
+        case 3:
+            // src: (Y)
+            cpu->addr = direct_page(cpu, cpu->y);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            return false;
+        case 4:
+            // dst: (X)
+            cpu->addr = direct_page(cpu, cpu->x);
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return false;
+        case 5: {
 
             /* payload */
             {
@@ -4220,6 +4405,70 @@ bool adc_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
     }
 }
 
+/* 0x99     ADC   (X), (Y) */
+bool adc_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.2518 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 && cycle <= 5);
+
+    switch (cycle) {
+        case 2:
+            // internal operation
+            idle(state); // dummy read of PC, let's hope PC is not on a timer
+            return false;
+        case 3:
+            // src: (Y)
+            cpu->addr = direct_page(cpu, cpu->y);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            return false;
+        case 4:
+            // dst: (X)
+            cpu->addr = direct_page(cpu, cpu->x);
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return false;
+        case 5: {
+
+            /* payload */
+            {
+                /* generated from generate_instructions.py: l.161 */
+                const uint32_t operand_a = (uint32_t)(cpu->data8[0]);
+                const uint32_t operand_b = (uint32_t)(cpu->data8[1]);
+                const uint32_t carry     = psw_carry(cpu);
+
+                // half-carry check: sum of nibbles overflows nibble
+                const uint32_t nibble_sum = (operand_a & 0xf) + (operand_b & 0xf) + carry;
+                psw_write_half_carry(cpu, nibble_sum > 0xf);
+
+                const uint32_t full_res = operand_a + operand_b + carry;
+                psw_write_carry(cpu, full_res > 0xff);
+
+                // overflow if a mathematically impossible result has happened
+                // i.e. (pos + pos = neg) or (neg + neg = pos)
+                const bool sign_a = operand_a & 0x80;
+                const bool sign_b = operand_b & 0x80;
+                const bool sign_r = full_res & 0x80;
+                const bool overflow = (sign_a == sign_b) && (sign_a != sign_r);
+                psw_write_overflow(cpu, overflow);
+
+                psw_write_zero(cpu, (full_res & 0xff) == 0);
+                psw_write_neg(cpu, full_res & 0x80);
+
+                // cache back the 8bit result for assignment
+                cpu->data8[0] = full_res & 0xff;
+            }
+            /* generated from generate_instructions.py: l.2566 */
+            bus_write(state, cpu->addr, cpu->data8[0]);
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
 /* 0xa9     SBC   dd, ds */
 bool sbc_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -4280,6 +4529,72 @@ bool sbc_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
                 cpu->data8[0] = full_res & 0xff;
             }
             /* generated from generate_instructions.py: l.2440 */
+            bus_write(state, cpu->addr, cpu->data8[0]);
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0xb9     SBC   (X), (Y) */
+bool sbc_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.2518 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 && cycle <= 5);
+
+    switch (cycle) {
+        case 2:
+            // internal operation
+            idle(state); // dummy read of PC, let's hope PC is not on a timer
+            return false;
+        case 3:
+            // src: (Y)
+            cpu->addr = direct_page(cpu, cpu->y);
+            cpu->data8[1] = bus_read(state, cpu->addr);
+            return false;
+        case 4:
+            // dst: (X)
+            cpu->addr = direct_page(cpu, cpu->x);
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return false;
+        case 5: {
+
+            /* payload */
+            {
+                /* generated from generate_instructions.py: l.196 */
+                const uint32_t operand_a = (uint32_t)(cpu->data8[0]);
+                const uint32_t operand_b = (uint32_t)(cpu->data8[1]);
+                const uint32_t borrow    = !psw_carry(cpu);
+
+                // half-borrow check: if (u4)a - (u4)b - borrow underflowed
+                // i.e. (u4)a < (u4)b + borrow
+                const bool half_borrow = (operand_a & 0xf) < (operand_b & 0xf) + borrow;
+                psw_write_half_carry(cpu, !half_borrow);
+
+                const int32_t full_res = operand_a - operand_b - borrow;
+                // set borrow if underflowed, ie set carry if not underflowed
+                psw_write_carry(cpu, full_res >= 0x00);
+
+                // overflow if a mathematically impossible result has happened
+                // i.e. (pos - neg = neg) or (neg - pos = pos)
+                const bool sign_a = operand_a & 0x80;
+                const bool sign_b = operand_b & 0x80;
+                const bool sign_r = full_res & 0x80;
+                const bool overflow = (sign_a != sign_b) && (sign_a != sign_r);
+                psw_write_overflow(cpu, overflow);
+
+                psw_write_zero(cpu, (full_res & 0xff) == 0);
+                psw_write_neg(cpu, full_res & 0x80);
+
+                // cache back the 8bit result for assignment
+                cpu->data8[0] = full_res & 0xff;
+            }
+            /* generated from generate_instructions.py: l.2615 */
             bus_write(state, cpu->addr, cpu->data8[0]);
             return true;
         }

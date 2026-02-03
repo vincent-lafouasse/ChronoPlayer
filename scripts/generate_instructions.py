@@ -2486,6 +2486,137 @@ class DirectDirect(AddressingMode):
         )
 
 
+class IndirectIndirect(AddressingMode):
+    """
+    19 Indirect, Indirect -- (X),(Y)
+     (ADC,AND,CMP,EOR,OR,SBC)
+     (1 byte)
+     (5 cycles)
+           1       PC      Op Code         1
+           2       ??      IO              ?
+           3       Y       Data 1          1
+           4       X       Data 2 (read)   1
+           5       X       Data 2 (write)  0
+       * Verified by blargg.
+       * CMP does not write for cycle 5; it is an IO cycle.
+    """
+
+    def __init__(self):
+        super().__init__()
+
+    def name(self, mnemonic):
+        return f"{mnemonic.lower()}_indirect_indirect"
+
+    def declaration(self, mnemonic):
+        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def render(self, mnemonic, payload):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration(mnemonic)}
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle >= 2 && cycle <= 5);
+
+                switch (cycle) {{
+                    case 2:
+                        // internal operation
+                        {idle_cycle()}
+                        return false;
+                    case 3:
+                        // src: (Y)
+                        cpu->addr = direct_page(cpu, cpu->y);
+                        cpu->data8[1] = bus_read(state, cpu->addr);
+                        return false;
+                    case 4:
+                        // dst: (X)
+                        cpu->addr = direct_page(cpu, cpu->x);
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        return false;
+                    case 5: {{
+            """
+        )
+
+        footer = inspect.cleandoc(
+            f"""
+                        return true;
+                    }}
+                    default:
+                        /* unreachable */
+                        /* true terminates the instruction just in case */
+                        return true;
+                }}
+            }}
+            """
+        )
+
+        return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @classmethod
+    def register_instructions(cls):
+        add_instruction(
+            0x99,
+            TemplateInstruction(
+                "ADC",
+                "ADC   (X), (Y)",
+                cls(),
+                do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
+                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+            ),
+        )
+        add_instruction(
+            0x39,
+            TemplateInstruction(
+                "AND",
+                "AND   (X), (Y)",
+                cls(),
+                logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]")
+                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+            ),
+        )
+        add_instruction(
+            0x79,
+            TemplateInstruction(
+                "CMP",
+                "CMP   (X), (Y)",
+                cls(),
+                do_cmp_and_check_psw("cpu->data8[0]", "cpu->data8[1]"),
+            ),
+        )
+        add_instruction(
+            0x59,
+            TemplateInstruction(
+                "EOR",
+                "EOR   (X), (Y)",
+                cls(),
+                logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]")
+                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+            ),
+        )
+        add_instruction(
+            0x19,
+            TemplateInstruction(
+                "OR",
+                "OR    (X), (Y)",
+                cls(),
+                logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]")
+                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+            ),
+        )
+        add_instruction(
+            0xB9,
+            TemplateInstruction(
+                "SBC",
+                "SBC   (X), (Y)",
+                cls(),
+                do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
+                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+            ),
+        )
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -2711,6 +2842,7 @@ generate_indirect_indexed_register()
 generate_absolute_register()
 generate_absolute_indexed_register()
 DirectDirect.register_instructions()
+IndirectIndirect.register_instructions()
 
 
 def print_opcode_matrix():
