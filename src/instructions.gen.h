@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3047 */
+/* generated from generate_instructions.py: l.3194 */
 #pragma once
 
 #include <stdbool.h>
@@ -51,6 +51,38 @@ extern bool tcall_14(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xf1     TCALL 15 */
 extern bool tcall_15(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0x02     SET1  d */
+extern bool set1_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x12     CLR1  d */
+extern bool clr1_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x22     SET1  d */
+extern bool set1_1_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x32     CLR1  d */
+extern bool clr1_1_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x42     SET1  d */
+extern bool set1_2_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x52     CLR1  d */
+extern bool clr1_2_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x62     SET1  d */
+extern bool set1_3_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x72     CLR1  d */
+extern bool clr1_3_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x82     SET1  d */
+extern bool set1_4_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x92     CLR1  d */
+extern bool clr1_4_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xa2     SET1  d */
+extern bool set1_5_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xb2     CLR1  d */
+extern bool clr1_5_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xc2     SET1  d */
+extern bool set1_6_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xd2     CLR1  d */
+extern bool clr1_6_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xe2     SET1  d */
+extern bool set1_7_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xf2     CLR1  d */
+extern bool clr1_7_direct(struct SPC_State state[static 1], uint32_t cycle);
 
 
 /* 0x04     OR    A, d */
@@ -250,6 +282,18 @@ extern bool mov_register_direct_indexed_x_y(struct SPC_State state[static 1], ui
 /* 0xfa     MOV   dd, ds */
 extern bool mov_direct_direct(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0x0b     ASL   d */
+extern bool asl_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x2b     ROL   d */
+extern bool rol_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x4b     LSR   d */
+extern bool lsr_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x6b     ROR   d */
+extern bool ror_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x8b     DEC   d */
+extern bool dec_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xab     INC   d */
+extern bool inc_direct(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xcb     MOV   d, y */
 extern bool mov_direct_register_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xeb     MOV   Y, d */

@@ -2761,6 +2761,152 @@ class IndirectIndirect(AddressingMode):
         )
 
 
+# not bitwise
+class Direct(AddressingMode):
+    """
+    20a Direct (RMW) -- d
+     (ASL,CLR1,DEC,INC,LSR,ROL,ROR,SET1)
+     (2 bytes)
+     (4 cycles)
+           1       PC      Op Code         1
+           2       PC+1    DO              1
+           3       DO      Data (read)     1
+           4       DO      Data (write)    0
+       * Verified by blargg.
+    """
+
+    def __init__(self, bit=None):
+        super().__init__()
+        self.bit = bit
+
+    def name(self, mnemonic):
+        bit_str = f"_{self.bit}" if self.bit else ""
+        return f"{mnemonic.lower()}{bit_str}_direct"
+
+    def declaration(self, mnemonic):
+        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def render(self, mnemonic, payload):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration(mnemonic)}
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle >= 2 && cycle <= 4);
+
+                switch (cycle) {{
+                    case 2:
+                        // direct offset
+                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        cpu->addr = direct_page(cpu, cpu->operands[0]);
+                        return false;
+                    case 3:
+                        // RMW read
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        return false;
+                    case 4: {{
+                        // RMW modify
+            """
+        )
+
+        footer = inspect.cleandoc(
+            f"""
+                        // RMW write
+                        bus_write(state, cpu->addr, cpu->data8[0]);
+                        return true;
+                    }}
+                    default:
+                        /* unreachable */
+                        /* true terminates the instruction just in case */
+                        return true;
+                }}
+            }}
+            """
+        )
+
+        return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @classmethod
+    def register_instructions(cls):
+        add_instruction(
+            0x0B,
+            TemplateInstruction(
+                "ASL",
+                "ASL   d",
+                cls(bit=None),
+                do_asl(),
+            ),
+        )
+        add_instruction(
+            0x8B,
+            TemplateInstruction(
+                "DEC",
+                "DEC   d",
+                cls(bit=None),
+                do_dec(),
+            ),
+        )
+        add_instruction(
+            0xAB,
+            TemplateInstruction(
+                "INC",
+                "INC   d",
+                cls(bit=None),
+                do_inc(),
+            ),
+        )
+        add_instruction(
+            0x4B,
+            TemplateInstruction(
+                "LSR",
+                "LSR   d",
+                cls(bit=None),
+                do_lsr(),
+            ),
+        )
+        add_instruction(
+            0x2B,
+            TemplateInstruction(
+                "ROL",
+                "ROL   d",
+                cls(bit=None),
+                do_rol(),
+            ),
+        )
+        add_instruction(
+            0x6B,
+            TemplateInstruction(
+                "ROR",
+                "ROR   d",
+                cls(bit=None),
+                do_ror(),
+            ),
+        )
+        for bit in range(8):
+            set1_op = 2 * bit * 16 + 2
+            clr1_op = (2 * bit + 1) * 16 + 2
+            add_instruction(
+                set1_op,
+                TemplateInstruction(
+                    "SET1",
+                    "SET1  d",
+                    cls(bit),
+                    do_set1(bit),
+                ),
+            )
+            add_instruction(
+                clr1_op,
+                TemplateInstruction(
+                    "CLR1",
+                    "CLR1  d",
+                    cls(bit),
+                    do_clr1(bit),
+                ),
+            )
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -2987,6 +3133,7 @@ generate_absolute_register()
 generate_absolute_indexed_register()
 DirectDirect.register_instructions()
 IndirectIndirect.register_instructions()
+Direct.register_instructions()
 
 
 def print_opcode_matrix():
