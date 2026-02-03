@@ -1843,6 +1843,102 @@ class DirectImmediateMode(AddressingMode):
         )
 
 
+class DirectRegister(AddressingMode):
+    """
+    11 Direct, Register -- d,A; d,X; d,Y
+     (MOV,MOV,MOV)
+     (2 bytes)
+     (4 cycles)
+           1       PC      Op Code         1
+           2       PC+1    DO              1
+           3       DO      Data (read)     1
+           4       DO      Data (write)    0
+       * Verified by blargg.
+       * Yes, RMW even for MOV
+    """
+
+    def __init__(self, reg):
+        super().__init__()
+        self.reg = reg
+
+    def name(self, mnemonic):
+        return f"{mnemonic.lower()}_direct_register_{self.reg}"
+
+    def declaration(self, mnemonic):
+        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def render(self, mnemonic, payload):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration(mnemonic)}
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle >= 2 && cycle <= 4);
+
+                switch (cycle) {{
+                    case 2:
+                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        cpu->addr = direct_page(cpu, cpu->operands[0]);
+                        return false;
+                    case 3:
+                        // "useless" read in RMW mov
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        return false;
+                    case 4: {{
+            """
+        )
+
+        footer = inspect.cleandoc(
+            f"""
+                        return true;
+                    }}
+                    default:
+                        /* unreachable */
+                        /* true terminates the instruction just in case */
+                        return true;
+                }}
+            }}
+            """
+        )
+
+        return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @classmethod
+    def register_instructions(cls):
+        reg = Register.A
+        add_instruction(
+            0xC4,
+            TemplateInstruction(
+                "MOV",
+                f"MOV   d, {reg}",
+                cls(reg),
+                [trace_source(), f"bus_write(state, cpu->addr, cpu->{reg});"],
+            ),
+        )
+        reg = Register.X
+        add_instruction(
+            0xD8,
+            TemplateInstruction(
+                "MOV",
+                f"MOV   d, {reg}",
+                cls(reg),
+                [trace_source(), f"bus_write(state, cpu->addr, cpu->{reg});"],
+            ),
+        )
+        reg = Register.Y
+        add_instruction(
+            0xCB,
+            TemplateInstruction(
+                "MOV",
+                f"MOV   d, {reg}",
+                cls(reg),
+                [trace_source(), f"bus_write(state, cpu->addr, cpu->{reg});"],
+            ),
+        )
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -2061,6 +2157,7 @@ RegisterIndirectIndexedMode.register_instructions()
 RegisterAbsolute.register_instructions()
 RegisterAbsoluteIndexed.register_instructions()
 DirectImmediateMode.register_instructions()
+DirectRegister.register_instructions()
 
 
 def print_opcode_matrix():

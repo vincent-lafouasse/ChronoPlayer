@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.2149 */
+/* generated from generate_instructions.py: l.2246 */
 
 #include "instructions.gen.h"
 
@@ -15,7 +15,7 @@ static inline void idle(struct SPC_State state[static 1])
 
 static inline bool tcall_internal(struct SPC_State state[static 1], uint32_t cycle, uint16_t vector)
 {
-    /* generated from generate_instructions.py: l.1974 */
+    /* generated from generate_instructions.py: l.2070 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle >= 2 && cycle <= 8);
@@ -76,7 +76,7 @@ bool nop(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x20     CLRP */
 bool clrp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1891 */
+    /* generated from generate_instructions.py: l.1987 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -88,7 +88,7 @@ bool clrp(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x40     SETP */
 bool setp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1891 */
+    /* generated from generate_instructions.py: l.1987 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -100,7 +100,7 @@ bool setp(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x60     CLRC */
 bool clrc(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1891 */
+    /* generated from generate_instructions.py: l.1987 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -112,7 +112,7 @@ bool clrc(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x80     SETC */
 bool setc(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1891 */
+    /* generated from generate_instructions.py: l.1987 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -124,7 +124,7 @@ bool setc(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xe0     CLRV */
 bool clrv(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1891 */
+    /* generated from generate_instructions.py: l.1987 */
     struct CPU_State* const cpu = &state->cpu;
 
     assert(cycle == 2);
@@ -138,112 +138,112 @@ bool clrv(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x01     TCALL 0 */
 bool tcall_0(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffde);
 }
 
 /* 0x11     TCALL 1 */
 bool tcall_1(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffdc);
 }
 
 /* 0x21     TCALL 2 */
 bool tcall_2(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffda);
 }
 
 /* 0x31     TCALL 3 */
 bool tcall_3(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffd8);
 }
 
 /* 0x41     TCALL 4 */
 bool tcall_4(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffd6);
 }
 
 /* 0x51     TCALL 5 */
 bool tcall_5(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffd4);
 }
 
 /* 0x61     TCALL 6 */
 bool tcall_6(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffd2);
 }
 
 /* 0x71     TCALL 7 */
 bool tcall_7(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffd0);
 }
 
 /* 0x81     TCALL 8 */
 bool tcall_8(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffce);
 }
 
 /* 0x91     TCALL 9 */
 bool tcall_9(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffcc);
 }
 
 /* 0xa1     TCALL 10 */
 bool tcall_10(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffca);
 }
 
 /* 0xb1     TCALL 11 */
 bool tcall_11(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffc8);
 }
 
 /* 0xc1     TCALL 12 */
 bool tcall_12(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffc6);
 }
 
 /* 0xd1     TCALL 13 */
 bool tcall_13(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffc4);
 }
 
 /* 0xe1     TCALL 14 */
 bool tcall_14(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffc2);
 }
 
 /* 0xf1     TCALL 15 */
 bool tcall_15(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2032 */
+    /* generated from generate_instructions.py: l.2128 */
     return tcall_internal(state, cycle, 0xffc0);
 }
 
@@ -787,6 +787,37 @@ bool sbc_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t 
             }
             /* generated from generate_instructions.py: l.832 */
             cpu->a = cpu->data8[0];
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
+/* 0xc4     MOV   d, a */
+bool mov_direct_register_a(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1875 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 && cycle <= 4);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            return false;
+        case 3:
+            // "useless" read in RMW mov
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return false;
+        case 4: {
+
+            /* payload */
+            /* generated from generate_instructions.py: l.1917 */
+            bus_write(state, cpu->addr, cpu->a);
             return true;
         }
         default:
@@ -3618,6 +3649,37 @@ bool cmp_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle)
     return true;
 }
 
+/* 0xd8     MOV   d, x */
+bool mov_direct_register_x(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1875 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 && cycle <= 4);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            return false;
+        case 3:
+            // "useless" read in RMW mov
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return false;
+        case 4: {
+
+            /* payload */
+            /* generated from generate_instructions.py: l.1927 */
+            bus_write(state, cpu->addr, cpu->x);
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
+
 /* 0xe8     MOV   A, #i */
 bool mov_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -3757,6 +3819,37 @@ bool mov_register_direct_indexed_x_y(struct SPC_State state[static 1], uint32_t 
 }
 
 
+
+/* 0xcb     MOV   d, y */
+bool mov_direct_register_y(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.1875 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    assert(cycle >= 2 && cycle <= 4);
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            return false;
+        case 3:
+            // "useless" read in RMW mov
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return false;
+        case 4: {
+
+            /* payload */
+            /* generated from generate_instructions.py: l.1937 */
+            bus_write(state, cpu->addr, cpu->y);
+            return true;
+        }
+        default:
+            /* unreachable */
+            /* true terminates the instruction just in case */
+            return true;
+    }
+}
 
 /* 0xeb     MOV   Y, d */
 bool mov_register_direct_y(struct SPC_State state[static 1], uint32_t cycle)
