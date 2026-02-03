@@ -2441,6 +2441,50 @@ class DirectDirect(AddressingMode):
             ),
         )
 
+        add_instruction(
+            0xFA,
+            HardcodedInstruction(
+                mnemonic="MOV",
+                _full_mnemonic=f"MOV   dd, ds",
+                function_name=f"mov_direct_direct",
+                body=inspect.cleandoc(
+                    f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    assert(cycle >= 2 && cycle <= 5);
+
+                    switch (cycle) {{
+                        case 2:
+                            // DS - source address
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            cpu->addr = direct_page(cpu, cpu->operands[0]);
+                            return false;
+                        case 3:
+                            // Read data from source
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return false;
+                        case 4:
+                            // DD - destination address
+                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            cpu->addr = direct_page(cpu, cpu->operands[1]);
+                            return false;
+                        case 5:
+                            // no RMW read
+                            bus_write(state, cpu->addr, cpu->data8[0]);
+                            return true;
+                        default:
+                            /* unreachable */
+                            /* true terminates the instruction just in case */
+                            return true;
+                    }}
+                }}
+                """
+                ),
+            ),
+        )
+
 
 class PswInstruction(Instruction):
     """
