@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.1980 */
+/* generated from generate_instructions.py: l.2122 */
 #pragma once
 
 #include <stdbool.h>
@@ -171,16 +171,28 @@ extern bool mov_register_indirect_indexed(struct SPC_State state[static 1], uint
 
 /* 0x08     OR    A, #i */
 extern bool or_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x18     OR    d, #i */
+extern bool or_direct_immediate(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x28     AND   A, #i */
 extern bool and_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x38     AND   d, #i */
+extern bool and_direct_immediate(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x48     EOR   A, #i */
 extern bool eor_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x58     EOR   d, #i */
+extern bool eor_direct_immediate(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x68     CMP   A, #i */
 extern bool cmp_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x78     CMP   d, #i */
+extern bool cmp_direct_immediate(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x88     ADC   A, #i */
 extern bool adc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x98     ADC   d, #i */
+extern bool adc_direct_immediate(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xa8     SBC   A, #i */
 extern bool sbc_register_immediate_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xb8     SBC   d, #i */
+extern bool sbc_direct_immediate(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xc8     CMP   X, #i */
 extern bool cmp_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe8     MOV   A, #i */
@@ -228,6 +240,8 @@ extern bool cmp_register_direct_x(struct SPC_State state[static 1], uint32_t cyc
 /* 0x5e     CMP   Y, !a */
 extern bool cmp_register_absolute_y(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0x8f     MOV   d, #i */
+extern bool mov_direct_immediate(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xbf     MOV   A, (X)+ */
 extern bool mov_register_indirect_incremented(struct SPC_State state[static 1], uint32_t cycle);
 

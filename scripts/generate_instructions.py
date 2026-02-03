@@ -247,9 +247,7 @@ def do_cmp_and_check_psw(a, b):
     ).splitlines()
 
 
-def logic_op_payload(reg, op, data):
-    dest = f"cpu->{reg}"
-
+def logic_op_payload(dest, op, data):
     return [trace_source(), f"{dest} {op}= {data};"] + check_zero_neg(dest)
 
 
@@ -337,7 +335,7 @@ class RegisterImmediateMode(AddressingMode):
                 "OR",
                 "OR    A, #i",
                 cls(Register.A),
-                logic_op_payload("a", "|", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -346,7 +344,7 @@ class RegisterImmediateMode(AddressingMode):
                 "AND",
                 "AND   A, #i",
                 cls(Register.A),
-                logic_op_payload("a", "&", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -355,7 +353,7 @@ class RegisterImmediateMode(AddressingMode):
                 "EOR",
                 "EOR   A, #i",
                 cls(Register.A),
-                logic_op_payload("a", "^", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -583,7 +581,7 @@ class RegisterDirectMode(AddressingMode):
                 "OR",
                 "OR    A, d",
                 cls(Register.A),
-                logic_op_payload("a", "|", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -592,7 +590,7 @@ class RegisterDirectMode(AddressingMode):
                 "AND",
                 "AND   A, d",
                 cls(Register.A),
-                logic_op_payload("a", "&", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -601,7 +599,7 @@ class RegisterDirectMode(AddressingMode):
                 "EOR",
                 "EOR   A, d",
                 cls(Register.A),
-                logic_op_payload("a", "^", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -761,7 +759,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 "AND",
                 "AND   A, d+X",
                 cls(Register.A, Register.X),
-                logic_op_payload("a", "&", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -779,7 +777,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 "EOR",
                 "EOR   A, d+X",
                 cls(Register.A, Register.X),
-                logic_op_payload("a", "^", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -821,7 +819,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 "OR",
                 "OR    A, d+X",
                 cls(Register.A, Register.X),
-                logic_op_payload("a", "|", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -909,7 +907,7 @@ class RegisterIndirectMode(AddressingMode):
                 "AND",
                 "AND   A, (X)",
                 cls(),
-                logic_op_payload("a", "&", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -927,7 +925,7 @@ class RegisterIndirectMode(AddressingMode):
                 "EOR",
                 "EOR   A, (X)",
                 cls(),
-                logic_op_payload("a", "^", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -947,7 +945,7 @@ class RegisterIndirectMode(AddressingMode):
                 "OR",
                 "OR    A, (X)",
                 cls(),
-                logic_op_payload("a", "|", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1116,7 +1114,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 "AND",
                 "AND   A, [d+X]",
                 cls(),
-                logic_op_payload("a", "&", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1134,7 +1132,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 "EOR",
                 "EOR   A, [d+X]",
                 cls(),
-                logic_op_payload("a", "^", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1154,7 +1152,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 "OR",
                 "OR    A, [d+X]",
                 cls(),
-                logic_op_payload("a", "|", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1263,7 +1261,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 "AND",
                 "AND   A, [d]+Y",
                 cls(),
-                logic_op_payload("a", "&", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1281,7 +1279,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 "EOR",
                 "EOR   A, [d]+Y",
                 cls(),
-                logic_op_payload("a", "^", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1301,7 +1299,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 "OR",
                 "OR    A, [d]+Y",
                 cls(),
-                logic_op_payload("a", "|", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1400,7 +1398,7 @@ class RegisterAbsolute(AddressingMode):
                 "AND",
                 "AND   A, !a",
                 cls(Register.A),
-                logic_op_payload("a", "&", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1436,7 +1434,7 @@ class RegisterAbsolute(AddressingMode):
                 "EOR",
                 "EOR   A, !a",
                 cls(Register.A),
-                logic_op_payload("a", "^", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1478,7 +1476,7 @@ class RegisterAbsolute(AddressingMode):
                 "OR",
                 "OR    A, !a",
                 cls(Register.A),
-                logic_op_payload("a", "|", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1593,7 +1591,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "AND",
                 "AND   A, !a+X",
                 cls(Register.X),
-                logic_op_payload("a", "&", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1602,7 +1600,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "AND",
                 "AND   A, !a+Y",
                 cls(Register.Y),
-                logic_op_payload("a", "&", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1629,7 +1627,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "EOR",
                 "EOR   A, !a+X",
                 cls(Register.X),
-                logic_op_payload("a", "^", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1638,7 +1636,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "EOR",
                 "EOR   A, !a+Y",
                 cls(Register.Y),
-                logic_op_payload("a", "^", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1669,7 +1667,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "OR",
                 "OR    A, !a+X",
                 cls(Register.X),
-                logic_op_payload("a", "|", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1678,7 +1676,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "OR",
                 "OR    A, !a+Y",
                 cls(Register.Y),
-                logic_op_payload("a", "|", "cpu->data8[0]"),
+                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
             ),
         )
         add_instruction(
@@ -1699,6 +1697,148 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 cls(Register.Y),
                 do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
                 + [trace_source(), "cpu->a = cpu->data8[0];"],
+            ),
+        )
+
+
+# write (d) in data8[0], #i in data8[1] and the cache back address in addr
+class DirectImmediateMode(AddressingMode):
+    """
+    10 Direct, Immediate -- d,#i
+     (ADC,AND,CMP,EOR,MOV,OR,SBC)
+     (3 bytes)
+     (5 cycles)
+           1       PC      Op Code         1
+           2       PC+1    Data 1          1
+           3       PC+2    DO              1
+           4       DO      Data 2 (read)   1
+           5       DO      Data 2 (write)  0
+       * Verified by blargg. 2 and 3 could be swapped, but that's unlikely.
+       * Yes, RMW even for MOV.
+       * CMP does not write for cycle 5; does it IO or read again?
+    """
+
+    def __init__(self):
+        super().__init__()
+
+    def name(self, mnemonic):
+        return f"{mnemonic.lower()}_direct_immediate"
+
+    def declaration(self, mnemonic):
+        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def render(self, mnemonic, payload):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration(mnemonic)}
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle >= 2 && cycle <= 5);
+
+                switch (cycle) {{
+                    case 2:
+                        // #i
+                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        cpu->data8[1] = cpu->operands[0];
+                        return false;
+                    case 3:
+                        // direct page
+                        cpu->operands[1] = bus_read(state, cpu->pc++);
+                        cpu->addr = direct_page(cpu, cpu->operands[1]);
+                        return false;
+                    case 4:
+                        // data
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        return false;
+                    case 5: {{
+            """
+        )
+
+        footer = inspect.cleandoc(
+            f"""
+                        return true;
+                    }}
+                    default:
+                        /* unreachable */
+                        /* true terminates the instruction just in case */
+                        return true;
+                }}
+            }}
+            """
+        )
+
+        return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @classmethod
+    def register_instructions(cls):
+        add_instruction(
+            0x98,
+            TemplateInstruction(
+                "ADC",
+                "ADC   d, #i",
+                cls(),
+                do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
+                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+            ),
+        )
+        add_instruction(
+            0x38,
+            TemplateInstruction(
+                "AND",
+                "AND   d, #i",
+                cls(),
+                logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]")
+                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+            ),
+        )
+        add_instruction(
+            0x78,
+            TemplateInstruction(
+                "CMP",
+                "CMP   d, #i",
+                cls(),
+                do_cmp_and_check_psw("cpu->data8[0]", "cpu->data8[1]"),
+            ),
+        )
+        add_instruction(
+            0x58,
+            TemplateInstruction(
+                "EOR",
+                "EOR   d, #i",
+                cls(),
+                logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]")
+                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+            ),
+        )
+        add_instruction(
+            0x8F,
+            TemplateInstruction(
+                "MOV",
+                "MOV   d, #i",
+                cls(),
+                [trace_source(), "bus_write(state, cpu->addr, cpu->data8[1]);"],
+            ),
+        )
+        add_instruction(
+            0x18,
+            TemplateInstruction(
+                "OR",
+                "OR    d, #i",
+                cls(),
+                logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]")
+                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+            ),
+        )
+        add_instruction(
+            0xB8,
+            TemplateInstruction(
+                "SBC",
+                "SBC   d, #i",
+                cls(),
+                do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
+                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
             ),
         )
 
@@ -1920,6 +2060,7 @@ TCallInstruction.register_instructions()
 RegisterIndirectIndexedMode.register_instructions()
 RegisterAbsolute.register_instructions()
 RegisterAbsoluteIndexed.register_instructions()
+DirectImmediateMode.register_instructions()
 
 
 def print_opcode_matrix():
