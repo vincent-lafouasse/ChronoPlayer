@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdbool.h>
 #include <stdint.h>
 
 // Sony SPC700
@@ -18,6 +19,7 @@ struct CPU_State {
     uint16_t data16;
     uint16_t addr;
     uint8_t bit;
+    bool branch_taken;
 
     uint64_t total_cycles;
 };
