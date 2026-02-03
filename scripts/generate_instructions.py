@@ -2978,6 +2978,134 @@ def generate_not1():
     )
 
 
+class DirectIndexed(AddressingMode):
+    """
+    21 Direct Indexed (RMW) -- d+X
+     (ASL,DEC,INC,LSR,ROL,ROR)
+     (2 bytes)
+     (5 cycles)
+           1       PC      Op Code         1
+           2       PC+1    DO              1
+           3       ??      IO              ?
+           4       DO      Data (read)     1
+           5       DO      Data (write)    0
+       * blargg verified cycles 4 and 5.
+       * 2 and 3 could be swapped, but that would be odd.
+    """
+
+    def __init__(self):
+        super().__init__()
+
+    def name(self, mnemonic):
+        return f"{mnemonic.lower()}_direct_indexed"
+
+    def declaration(self, mnemonic):
+        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
+
+    def render(self, mnemonic, payload):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration(mnemonic)}
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle >= 2 && cycle <= 5);
+
+                switch (cycle) {{
+                    case 2:
+                        // direct offset
+                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        return false;
+                    case 3:
+                        // internal operation
+                        {idle_cycle()}
+                        cpu->addr = direct_page(cpu, cpu->operands[0] + cpu->x);
+                        return false;
+                    case 4:
+                        // RMW read
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        return false;
+                    case 5: {{
+                        // RMW modify
+            """
+        )
+
+        footer = inspect.cleandoc(
+            f"""
+                        // RMW write
+                        bus_write(state, cpu->addr, cpu->data8[0]);
+                        return true;
+                    }}
+                    default:
+                        /* unreachable */
+                        /* true terminates the instruction just in case */
+                        return true;
+                }}
+            }}
+            """
+        )
+
+        return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @classmethod
+    def register_instructions(cls):
+        add_instruction(
+            0x1B,
+            TemplateInstruction(
+                "ASL",
+                "ASL   d+X",
+                cls(),
+                do_asl(),
+            ),
+        )
+        add_instruction(
+            0x9B,
+            TemplateInstruction(
+                "DEC",
+                "DEC   d+X",
+                cls(),
+                do_dec(),
+            ),
+        )
+        add_instruction(
+            0xBB,
+            TemplateInstruction(
+                "INC",
+                "INC   d+X",
+                cls(),
+                do_inc(),
+            ),
+        )
+        add_instruction(
+            0x5B,
+            TemplateInstruction(
+                "LSR",
+                "LSR   d+X",
+                cls(),
+                do_lsr(),
+            ),
+        )
+        add_instruction(
+            0x3B,
+            TemplateInstruction(
+                "ROL",
+                "ROL   d+X",
+                cls(),
+                do_rol(),
+            ),
+        )
+        add_instruction(
+            0x7B,
+            TemplateInstruction(
+                "ROR",
+                "ROR   d+X",
+                cls(),
+                do_ror(),
+            ),
+        )
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -3206,6 +3334,7 @@ DirectDirect.register_instructions()
 IndirectIndirect.register_instructions()
 Direct.register_instructions()
 generate_not1()
+DirectIndexed.register_instructions()
 
 
 def print_opcode_matrix():

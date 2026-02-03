@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3266 */
+/* generated from generate_instructions.py: l.3395 */
 #pragma once
 
 #include <stdbool.h>
@@ -286,16 +286,28 @@ extern bool mov_direct_direct(struct SPC_State state[static 1], uint32_t cycle);
 
 /* 0x0b     ASL   d */
 extern bool asl_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x1b     ASL   d+X */
+extern bool asl_direct_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x2b     ROL   d */
 extern bool rol_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x3b     ROL   d+X */
+extern bool rol_direct_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x4b     LSR   d */
 extern bool lsr_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x5b     LSR   d+X */
+extern bool lsr_direct_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x6b     ROR   d */
 extern bool ror_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x7b     ROR   d+X */
+extern bool ror_direct_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x8b     DEC   d */
 extern bool dec_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x9b     DEC   d+X */
+extern bool dec_direct_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xab     INC   d */
 extern bool inc_direct(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xbb     INC   d+X */
+extern bool inc_direct_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xcb     MOV   d, y */
 extern bool mov_direct_register_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xeb     MOV   Y, d */
