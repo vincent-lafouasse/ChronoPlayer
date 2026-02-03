@@ -11,12 +11,30 @@ def trace_source():
 
 
 # an array of static inline C functions to prepend before the instructions
+# or any global scope code snippet really
 helpers = []
 
 
 def register_helper(function_block):
     helpers.append(function_block)
 
+
+register_helper(
+    inspect.cleandoc(
+        """
+        #include <stdlib.h>  // for abort()
+
+        #if defined(__GNUC__) || defined(__clang__)
+            #define UNREACHABLE() do { __builtin_trap(); __builtin_unreachable(); } while(0)
+        #elif defined(_MSC_VER)
+            #include <intrin.h>  // for __debugbreak()
+            #define UNREACHABLE() do { __debugbreak(); __assume(0); } while(0)
+        #else
+            #define UNREACHABLE() abort()
+        #endif
+        """
+    )
+)
 
 register_helper(
     inspect.cleandoc(
