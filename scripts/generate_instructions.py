@@ -1072,7 +1072,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                         cpu->addr = direct_page(cpu, cpu->data8[1]);
                         cpu->data8[1] = bus_read(state, cpu->addr);
                         // assemble the absolute address
-                        cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+                        cpu->addr = u16_read_little_endian(cpu->data8);
                         return false;
                     case 6: {{
                         // second indirection
@@ -1216,7 +1216,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                         // AAH
                         cpu->data8[1] = bus_read(state, cpu->addr);
                         // AA
-                        cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+                        cpu->addr = u16_read_little_endian(cpu->data8);
                         return false;
                     case 5:
                         {idle_cycle()}
@@ -2084,7 +2084,7 @@ def generate_indexed_indirect_register():
                         // AAH
                         cpu->addr = direct_page(cpu, cpu->data8[0] + 1);
                         cpu->data8[0] = bus_read(state, cpu->addr);
-                        cpu->addr = u16_parse(cpu->data8[1], cpu->data8[0]);
+                        cpu->addr = u16_read_big_endian(cpu->data8);
                         return false;
                     case 6:
                         // "useless" RMW read
@@ -2146,7 +2146,7 @@ def generate_indirect_indexed_register():
                         // AAL
                         cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
                         cpu->data8[1] = bus_read(state, cpu->addr);
-                        cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+                        cpu->addr = u16_read_little_endian(cpu->data8);
                         cpu->addr += cpu->y;
                         return false;
                     case 5:
@@ -2210,7 +2210,7 @@ def generate_absolute_register():
                             cpu->operands[1] = bus_read(state, cpu->pc++);
                             // AAH
                             cpu->data8[1] = cpu->operands[1];
-                            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+                            cpu->addr = u16_read_little_endian(cpu->data8);
                             return false;
                         case 4:
                             // "useless" RMW read
@@ -2389,7 +2389,7 @@ class TCallInstruction(Instruction):
                 case 6:
                     cpu->data8[1] = bus_read(state, vector + 1);
                     // new pc
-                    cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+                    cpu->addr = u16_read_little_endian(cpu->data8);
                     return false;
 
                 // cycle 7-8 are idle, we just publish the new pc at the end of cycle 8

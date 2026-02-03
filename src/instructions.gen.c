@@ -43,7 +43,7 @@ static inline bool tcall_internal(struct SPC_State state[static 1], uint32_t cyc
         case 6:
             cpu->data8[1] = bus_read(state, vector + 1);
             // new pc
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
 
         // cycle 7-8 are idle, we just publish the new pc at the end of cycle 8
@@ -1543,7 +1543,7 @@ bool mov_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
             cpu->operands[1] = bus_read(state, cpu->pc++);
             // AAH
             cpu->data8[1] = cpu->operands[1];
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 4:
             // "useless" RMW read
@@ -2366,7 +2366,7 @@ bool or_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cyc
             cpu->addr = direct_page(cpu, cpu->data8[1]);
             cpu->data8[1] = bus_read(state, cpu->addr);
             // assemble the absolute address
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 6: {
             // second indirection
@@ -2413,7 +2413,7 @@ bool or_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cyc
             // AAH
             cpu->data8[1] = bus_read(state, cpu->addr);
             // AA
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 5:
             idle(state); // dummy read of PC, let's hope PC is not on a timer
@@ -2472,7 +2472,7 @@ bool and_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
             cpu->addr = direct_page(cpu, cpu->data8[1]);
             cpu->data8[1] = bus_read(state, cpu->addr);
             // assemble the absolute address
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 6: {
             // second indirection
@@ -2519,7 +2519,7 @@ bool and_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cy
             // AAH
             cpu->data8[1] = bus_read(state, cpu->addr);
             // AA
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 5:
             idle(state); // dummy read of PC, let's hope PC is not on a timer
@@ -2578,7 +2578,7 @@ bool eor_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
             cpu->addr = direct_page(cpu, cpu->data8[1]);
             cpu->data8[1] = bus_read(state, cpu->addr);
             // assemble the absolute address
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 6: {
             // second indirection
@@ -2625,7 +2625,7 @@ bool eor_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cy
             // AAH
             cpu->data8[1] = bus_read(state, cpu->addr);
             // AA
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 5:
             idle(state); // dummy read of PC, let's hope PC is not on a timer
@@ -2684,7 +2684,7 @@ bool cmp_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
             cpu->addr = direct_page(cpu, cpu->data8[1]);
             cpu->data8[1] = bus_read(state, cpu->addr);
             // assemble the absolute address
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 6: {
             // second indirection
@@ -2738,7 +2738,7 @@ bool cmp_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cy
             // AAH
             cpu->data8[1] = bus_read(state, cpu->addr);
             // AA
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 5:
             idle(state); // dummy read of PC, let's hope PC is not on a timer
@@ -2804,7 +2804,7 @@ bool adc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
             cpu->addr = direct_page(cpu, cpu->data8[1]);
             cpu->data8[1] = bus_read(state, cpu->addr);
             // assemble the absolute address
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 6: {
             // second indirection
@@ -2872,7 +2872,7 @@ bool adc_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cy
             // AAH
             cpu->data8[1] = bus_read(state, cpu->addr);
             // AA
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 5:
             idle(state); // dummy read of PC, let's hope PC is not on a timer
@@ -2952,7 +2952,7 @@ bool sbc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
             cpu->addr = direct_page(cpu, cpu->data8[1]);
             cpu->data8[1] = bus_read(state, cpu->addr);
             // assemble the absolute address
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 6: {
             // second indirection
@@ -3022,7 +3022,7 @@ bool sbc_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cy
             // AAH
             cpu->data8[1] = bus_read(state, cpu->addr);
             // AA
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 5:
             idle(state); // dummy read of PC, let's hope PC is not on a timer
@@ -3098,7 +3098,7 @@ bool mov_indexed_indirect_register(struct SPC_State state[static 1], uint32_t cy
             // AAH
             cpu->addr = direct_page(cpu, cpu->data8[0] + 1);
             cpu->data8[0] = bus_read(state, cpu->addr);
-            cpu->addr = u16_parse(cpu->data8[1], cpu->data8[0]);
+            cpu->addr = u16_read_big_endian(cpu->data8);
             return false;
         case 6:
             // "useless" RMW read
@@ -3133,7 +3133,7 @@ bool mov_indirect_indexed_register(struct SPC_State state[static 1], uint32_t cy
             // AAL
             cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
             cpu->data8[1] = bus_read(state, cpu->addr);
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             cpu->addr += cpu->y;
             return false;
         case 5:
@@ -3184,7 +3184,7 @@ bool mov_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cy
             cpu->addr = direct_page(cpu, cpu->data8[1]);
             cpu->data8[1] = bus_read(state, cpu->addr);
             // assemble the absolute address
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 6: {
             // second indirection
@@ -3231,7 +3231,7 @@ bool mov_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cy
             // AAH
             cpu->data8[1] = bus_read(state, cpu->addr);
             // AA
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 5:
             idle(state); // dummy read of PC, let's hope PC is not on a timer
@@ -3892,7 +3892,7 @@ bool mov_absolute_x(struct SPC_State state[static 1], uint32_t cycle)
             cpu->operands[1] = bus_read(state, cpu->pc++);
             // AAH
             cpu->data8[1] = cpu->operands[1];
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 4:
             // "useless" RMW read
@@ -4113,7 +4113,7 @@ bool mov_absolute_y(struct SPC_State state[static 1], uint32_t cycle)
             cpu->operands[1] = bus_read(state, cpu->pc++);
             // AAH
             cpu->data8[1] = cpu->operands[1];
-            cpu->addr = u16_parse(cpu->data8[0], cpu->data8[1]);
+            cpu->addr = u16_read_little_endian(cpu->data8);
             return false;
         case 4:
             // "useless" RMW read
