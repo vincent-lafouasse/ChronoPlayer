@@ -46,7 +46,7 @@ static inline bool tcall_internal(struct SPC_State state[static 1], uint32_t cyc
     /* generated from generate_instructions.py: l.3226 */
     struct CPU_State* const cpu = &state->cpu;
 
-    assert(cycle >= 2 && cycle <= 8);
+    if (cycle < 2 || cycle > 8) { TRACE_TRAP(); }
     switch (cycle) {
         // cycle 2-3: cache the PC on the stack for later return
         case 2:
