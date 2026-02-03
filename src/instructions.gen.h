@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3209 */
+/* generated from generate_instructions.py: l.3266 */
 #pragma once
 
 #include <stdbool.h>
@@ -279,6 +279,8 @@ extern bool mov_register_absolute_x(struct SPC_State state[static 1], uint32_t c
 /* 0xf9     MOV   X, d+Y */
 extern bool mov_register_direct_indexed_x_y(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0xea     NOT1  m.b */
+extern bool not1(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xfa     MOV   dd, ds */
 extern bool mov_direct_direct(struct SPC_State state[static 1], uint32_t cycle);
 

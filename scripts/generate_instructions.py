@@ -2922,6 +2922,62 @@ class Direct(AddressingMode):
             )
 
 
+def generate_not1():
+    """
+    20b Direct (RMW) -- m.b
+     (NOT1)
+     (3 bytes)
+     (5 cycles)
+           1       PC      Op Code         1
+           2       PC+1    AAL             1
+           3       PC+2    AAH & BIT       1
+           4       DO      Data (read)     1
+           5       DO      Data (write)    0
+       * Verified by blargg. 2 and 3 could be swapped, but that's unlikely.
+    """
+    add_instruction(
+        0xEA,
+        HardcodedInstruction(
+            mnemonic="NOT1",
+            _full_mnemonic=f"NOT1  m.b",
+            function_name=f"not1",
+            body=inspect.cleandoc(
+                f"""
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                assert(cycle >= 2 && cycle <= 5);
+                switch (cycle) {{
+                    case 2:
+                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        return false;
+                    case 3:
+                        cpu->operands[1] = bus_read(state, cpu->pc++);
+                        cpu->data16 = u16_read_little_endian(cpu->operands);
+                        parse_membit(cpu->data16, &cpu->addr, &cpu->bit);
+                        return false;
+                    case 4:
+                        // RMW read
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        // RMW modify
+                        bit_toggle(cpu->data8, cpu->bit);
+                        return false;
+                    case 5:
+                        // RMW write
+                        bus_write(state, cpu->addr, cpu->data8[0]);
+                        return true;
+                    default:
+                        /* unreachable but true terminates the instruction just in case */
+                        return true;
+                }}
+            }}
+            """
+            ),
+        ),
+    )
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -3149,6 +3205,7 @@ generate_absolute_indexed_register()
 DirectDirect.register_instructions()
 IndirectIndirect.register_instructions()
 Direct.register_instructions()
+generate_not1()
 
 
 def print_opcode_matrix():
