@@ -1939,6 +1939,104 @@ class DirectRegister(AddressingMode):
         )
 
 
+def generate_Anomie_13():
+    """
+    13a Indirect, Register -- (X),A
+     (MOV)
+     (1 byte)
+     (4 cycles)
+           1       PC      Op Code         1
+           2       ??      IO              ?
+           3       X       Data (read)     1
+           4       X       Data (write)    0
+       * Verified by blargg.
+       * Yes, RMW even for MOV
+
+    13b Indirect++, Register -- (X)+,A
+     (MOV)
+     (1 byte)
+     (4 cycles)
+           1       PC      Op Code         1
+           2       ??      IO              ?
+           3       ??      IO              ?
+           4       DO      Data (write)    0
+       * Verified by blargg.
+       * No RMW here
+    """
+    "C6: (X) = A"
+    "AF: (X++) = A"
+    add_instruction(
+        0xC6,
+        HardcodedInstruction(
+            mnemonic="MOV",
+            _full_mnemonic="MOV   (X), A",
+            function_name="mov_indirect_register",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    assert(cycle >= 2 && cycle <= 4);
+                    switch (cycle) {{
+                        case 2:
+                            /* internal operation */
+                            {idle_cycle()}
+                            cpu->addr = direct_page(cpu, cpu->x);
+                            return false;
+                        case 3:
+                            // "useless" read for RMW MOV
+                            (void)bus_read(state, cpu->addr);
+                            return false;
+                        case 4:
+                            bus_write(state, cpu->addr, cpu->a);
+                            return true;
+                        default:
+                            /* unreachable but true terminates the instruction just in case */
+                            return true;
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+    add_instruction(
+        0xAF,
+        HardcodedInstruction(
+            mnemonic="MOV",
+            _full_mnemonic="MOV   (X)+, A",
+            function_name="mov_indirect_incremented_register",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    assert(cycle >= 2 && cycle <= 4);
+                    switch (cycle) {{
+                        case 2:
+                            /* internal operation */
+                            {idle_cycle()}
+                            cpu->addr = direct_page(cpu, cpu->x++);
+                            return false;
+                        case 3:
+                            /* internal operation */
+                            {idle_cycle()}
+                            return false;
+                        case 4:
+                            bus_write(state, cpu->addr, cpu->a);
+                            return true;
+                        default:
+                            /* unreachable but true terminates the instruction just in case */
+                            return true;
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -2158,6 +2256,7 @@ RegisterAbsolute.register_instructions()
 RegisterAbsoluteIndexed.register_instructions()
 DirectImmediateMode.register_instructions()
 DirectRegister.register_instructions()
+generate_Anomie_13()
 
 
 def print_opcode_matrix():

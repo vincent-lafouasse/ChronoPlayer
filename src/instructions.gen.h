@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.2219 */
+/* generated from generate_instructions.py: l.2317 */
 #pragma once
 
 #include <stdbool.h>
@@ -137,6 +137,8 @@ extern bool adc_register_absolute_indexed_y(struct SPC_State state[static 1], ui
 extern bool sbc_register_indirect(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xb6     SBC   A, !a+Y */
 extern bool sbc_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xc6     MOV   (X), A */
+extern bool mov_indirect_register(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe6     MOV   A, (X) */
 extern bool mov_register_indirect(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xf6     MOV   A, !a+Y */
@@ -248,6 +250,8 @@ extern bool cmp_register_absolute_y(struct SPC_State state[static 1], uint32_t c
 
 /* 0x8f     MOV   d, #i */
 extern bool mov_direct_immediate(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xaf     MOV   (X)+, A */
+extern bool mov_indirect_incremented_register(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xbf     MOV   A, (X)+ */
 extern bool mov_register_indirect_incremented(struct SPC_State state[static 1], uint32_t cycle);
 
