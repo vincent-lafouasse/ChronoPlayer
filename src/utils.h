@@ -11,6 +11,16 @@ static inline uint16_t u16_parse(uint8_t lsb, uint8_t msb)
     return AS_U16(lsb) | (AS_U16(msb) << 8);
 }
 
+static inline uint16_t u16_read_little_endian(uint8_t bytes[static 2])
+{
+    return u16_parse(bytes[0], bytes[1]);
+}
+
+static inline uint16_t u16_read_big_endian(uint8_t bytes[static 2])
+{
+    return u16_parse(bytes[1], bytes[0]);
+}
+
 static inline uint8_t u16_msb(uint16_t x)
 {
     return AS_U8(x >> 8);
