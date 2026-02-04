@@ -50,7 +50,8 @@ register_helper(
     static inline void idle(struct SPC_State state[static 1])
     {{
         {trace_source()}
-        (void)bus_read(state, state->cpu.pc);
+        // dummy read from the last latched address
+        (void)bus_read(state, state->cpu.addr);
     }}
     """
     )
@@ -73,7 +74,22 @@ register_helper(
 
 
 def idle_cycle():
-    return "idle(state); // dummy read of PC, let's hope PC is not on a timer"
+    return "idle(state); // dummy read from the last latched address (cpu->addr)"
+
+
+def read_pc_to(dest):
+    """Generate code to read from PC and latch it to cpu->addr. PC is incremented after."""
+    return f"cpu->addr = cpu->pc++; {dest} = bus_read(state, cpu->addr);"
+
+
+def read_from_addr(dest):
+    """Generate code to read from cpu->addr (already latched)."""
+    return f"{dest} = bus_read(state, cpu->addr);"
+
+
+def write_to_addr(value):
+    """Generate code to write to cpu->addr (already latched)."""
+    return f"bus_write(state, cpu->addr, {value});"
 
 
 instructions = dict()
@@ -502,7 +518,7 @@ class RegisterImmediateMode(AddressingMode):
 
                 if (cycle != 2) {{ TRACE_TRAP(); }}
 
-                cpu->operands[0] = bus_read(state, cpu->pc++);
+                {read_pc_to("cpu->operands[0]")}
                 cpu->data8[0] = cpu->operands[0];
             """
         )
@@ -741,11 +757,11 @@ class RegisterDirectMode(AddressingMode):
 
                 switch (cycle) {{
                     case 2:
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
-                        cpu->addr = direct_page(cpu, cpu->operands[0]);
+                        {read_pc_to("cpu->operands[0]")}
                         return false;
                     case 3: {{
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        cpu->addr = direct_page(cpu, cpu->operands[0]);
+                        {read_from_addr("cpu->data8[0]")}
             """
         )
 
@@ -902,17 +918,17 @@ class RegisterDirectIndexedMode(AddressingMode):
 
                 switch (cycle) {{
                     case 2:
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[0]")}
                         // direct offset indexed by {self.src.name}
                         // wrapped within the direct page
                         cpu->data8[0] = (cpu->operands[0] + cpu->{self.src}) & 0xff;
-                        cpu->addr = direct_page(cpu, cpu->data8[0]);
                         return false;
                     case 3:
                         {idle_cycle()}
                         return false;
                     case 4: {{
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        cpu->addr = direct_page(cpu, cpu->data8[0]);
+                        {read_from_addr("cpu->data8[0]")}
             """
         )
 
@@ -1055,11 +1071,12 @@ class RegisterIndirectMode(AddressingMode):
 
                 switch (cycle) {{
                     case 2:
-                        // an idle cycle, lets calculate addr here since we can
-                        cpu->addr = direct_page(cpu, cpu->x);
+                        // an idle cycle - dummy read from last latched addr (PC from opcode fetch)
+                        {idle_cycle()}
                         return false;
                     case 3: {{
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        cpu->addr = direct_page(cpu, cpu->x);
+                        {read_from_addr("cpu->data8[0]")}
             """
         )
 
@@ -1175,19 +1192,19 @@ def generate_register_indirect_incremented():
 
                     switch (cycle) {{
                         case 2:
-                            /* internal operation */
+                            /* internal operation - dummy read from last latched addr */
                             {idle_cycle()}
-                            cpu->addr = direct_page(cpu, cpu->x);
                             return false;
                         case 3:
-                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            cpu->addr = direct_page(cpu, cpu->x);
+                            {read_from_addr("cpu->data8[0]")}
                             cpu->a = cpu->data8[0];
                             psw_write_zero(cpu, cpu->a == 0);
                             psw_write_neg(cpu, cpu->a & 0x80);
                             /* we could increment X now but let's do it cycle 4 bc why not */
                             return false;
                         case 4:
-                            /* internal operation */
+                            /* internal operation - dummy read from last latched addr */
                             {idle_cycle()}
                             cpu->x += 1;
                             return true;
@@ -1239,33 +1256,33 @@ class RegisterIndexedIndirectMode(AddressingMode):
 
                 switch (cycle) {{
                     case 2:
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[0]")}
                         // &AAL on the direct page
                         cpu->data8[0] = cpu->operands[0] + cpu->x;
                         // &AAH on the direct page as well (wrapped to the 256B page)
                         cpu->data8[1] = cpu->data8[0] + 1;
                         return false;
                     case 3:
-                        /* internal operation */
+                        /* internal operation - dummy read from last latched addr */
                         {idle_cycle()}
-                        cpu->addr = direct_page(cpu, cpu->data8[0]);
                         return false;
                     case 4:
                         // first indirection
                         // AAL
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        cpu->addr = direct_page(cpu, cpu->data8[0]);
+                        {read_from_addr("cpu->data8[0]")}
                         return false;
                     case 5:
                         // AAH
                         cpu->addr = direct_page(cpu, cpu->data8[1]);
-                        cpu->data8[1] = bus_read(state, cpu->addr);
-                        // assemble the absolute address
-                        cpu->addr = u16_read_little_endian(cpu->data8);
+                        {read_from_addr("cpu->data8[1]")}
                         return false;
                     case 6: {{
+                        // assemble the absolute address
+                        cpu->addr = u16_read_little_endian(cpu->data8);
                         // second indirection
+                        {read_from_addr("cpu->data8[0]")}
                         // operand is ready for ALU execution
-                        cpu->data8[0] = bus_read(state, cpu->addr);
             """
         )
 
@@ -1391,27 +1408,27 @@ class RegisterIndirectIndexedMode(AddressingMode):
 
                 switch (cycle) {{
                     case 2:
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
-                        cpu->addr = direct_page(cpu, cpu->operands[0]);
+                        {read_pc_to("cpu->operands[0]")}
                         return false;
                     case 3:
                         // AAL
-                        cpu->data8[0] = bus_read(state, cpu->addr);
-                        cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
+                        cpu->addr = direct_page(cpu, cpu->operands[0]);
+                        {read_from_addr("cpu->data8[0]")}
                         return false;
                     case 4:
                         // AAH
-                        cpu->data8[1] = bus_read(state, cpu->addr);
+                        cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
+                        {read_from_addr("cpu->data8[1]")}
                         // AA
                         cpu->addr = u16_read_little_endian(cpu->data8);
                         return false;
                     case 5:
-                        {idle_cycle()}
+                        {idle_cycle()} // read before the indexing
                         cpu->addr += cpu->y;
                         return false;
                     case 6: {{
                         // data is ready to hit the ALU
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[0]")}
             """
         )
 
@@ -1537,17 +1554,17 @@ class RegisterAbsolute(AddressingMode):
                 switch (cycle) {{
                     case 2:
                         // AAL
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[0]")}
                         return false;
                     case 3:
                         // AAH
-                        cpu->operands[1] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[1]")}
                         // full absolute address
                         cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
                         return false;
                     case 4: {{
                         // data is ready to hit the ALU
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[0]")}
             """
         )
 
@@ -1714,22 +1731,22 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 switch (cycle) {{
                     case 2:
                         // AAL
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[0]")}
                         return false;
                     case 3:
                         // AAH
-                        cpu->operands[1] = bus_read(state, cpu->pc++);
-                        // full absolute address
+                        {read_pc_to("cpu->operands[1]")}
+                        // full absolute address (before indexing)
                         cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
                         return false;
                     case 4:
                         {idle_cycle()}
-                        // let's index AA now bc why not
+                        // index AA now
                         cpu->addr += cpu->{self.reg};
                         return false;
                     case 5: {{
                         // data is ready to hit the ALU
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[0]")}
             """
         )
 
@@ -1924,17 +1941,17 @@ class DirectImmediateMode(AddressingMode):
                 switch (cycle) {{
                     case 2:
                         // #i
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[0]")}
                         cpu->data8[1] = cpu->operands[0];
                         return false;
                     case 3:
                         // direct page
-                        cpu->operands[1] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[1]")}
                         cpu->addr = direct_page(cpu, cpu->operands[1]);
                         return false;
                     case 4:
                         // data
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[0]")}
                         return false;
                     case 5: {{
             """
@@ -2062,12 +2079,12 @@ class DirectRegister(AddressingMode):
 
                 switch (cycle) {{
                     case 2:
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[0]")}
                         cpu->addr = direct_page(cpu, cpu->operands[0]);
                         return false;
                     case 3:
                         // "useless" read in RMW mov
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[0]")}
                         return false;
                     case 4: {{
             """
@@ -2162,7 +2179,7 @@ def generate_Anomie_13():
 
                     switch (cycle) {{
                         case 2:
-                            /* internal operation */
+                            /* internal operation - dummy read from last latched addr */
                             {idle_cycle()}
                             cpu->addr = direct_page(cpu, cpu->x);
                             return false;
@@ -2171,7 +2188,7 @@ def generate_Anomie_13():
                             (void)bus_read(state, cpu->addr);
                             return false;
                         case 4:
-                            bus_write(state, cpu->addr, cpu->a);
+                            {write_to_addr("cpu->a")}
                             return true;
                         default:
                             UNREACHABLE();
@@ -2197,16 +2214,16 @@ def generate_Anomie_13():
 
                     switch (cycle) {{
                         case 2:
-                            /* internal operation */
+                            /* internal operation - dummy read from last latched addr */
                             {idle_cycle()}
                             cpu->addr = direct_page(cpu, cpu->x++);
                             return false;
                         case 3:
-                            /* internal operation */
+                            /* internal operation - dummy read from last latched addr */
                             {idle_cycle()}
                             return false;
                         case 4:
-                            bus_write(state, cpu->addr, cpu->a);
+                            {write_to_addr("cpu->a")}
                             return true;
                         default:
                             UNREACHABLE();
@@ -2250,22 +2267,22 @@ def generate_indexed_indirect_register():
 
                 switch (cycle) {{
                     case 2:
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[0]")}
                         cpu->data8[0] = cpu->operands[0] + cpu->x;
                         return false;
                     case 3:
-                        /* internal operation */
+                        /* internal operation - dummy read from last latched addr */
                         {idle_cycle()}
                         return false;
                     case 4:
                         // AAL
                         cpu->addr = direct_page(cpu, cpu->data8[0]);
-                        cpu->data8[1] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[1]")}
                         return false;
                     case 5:
                         // AAH
                         cpu->addr = direct_page(cpu, cpu->data8[0] + 1);
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[0]")}
                         cpu->addr = u16_read_big_endian(cpu->data8);
                         return false;
                     case 6:
@@ -2273,7 +2290,7 @@ def generate_indexed_indirect_register():
                         (void)bus_read(state, cpu->addr);
                         return false;
                     case 7:
-                        bus_write(state, cpu->addr, cpu->a);
+                        {write_to_addr("cpu->a")}
                         return true;
                     default:
                         UNREACHABLE();
@@ -2317,30 +2334,31 @@ def generate_indirect_indexed_register():
 
                 switch (cycle) {{
                     case 2:
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[0]")}
+                        cpu->addr = direct_page(cpu, cpu->operands[0]);
                         return false;
                     case 3:
                         // AAL
-                        cpu->addr = direct_page(cpu, cpu->operands[0]);
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[0]")}
+                        cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
                         return false;
                     case 4:
-                        // AAL
-                        cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
-                        cpu->data8[1] = bus_read(state, cpu->addr);
-                        cpu->addr = u16_read_little_endian(cpu->data8);
-                        cpu->addr += cpu->y;
+                        // AAH
+                        {read_from_addr("cpu->data8[1]")}
+                        // compute AA + Y, but don't latch yet (next cycle is idle)
+                        cpu->data16 = u16_read_little_endian(cpu->data8) + cpu->y;
                         return false;
                     case 5:
-                        // internal operations
+                        // internal operations - dummy read from last latched addr
                         {idle_cycle()}
+                        cpu->addr = cpu->data16;
                         return false;
                     case 6:
                         // "useless" RMW read
                         (void)bus_read(state, cpu->addr);
                         return false;
                     case 7:
-                        bus_write(state, cpu->addr, cpu->a);
+                        {write_to_addr("cpu->a")}
                         return true;
                     default:
                         UNREACHABLE();
@@ -2384,12 +2402,12 @@ def generate_absolute_register():
 
                     switch (cycle) {{
                         case 2:
-                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            {read_pc_to("cpu->operands[0]")}
                             // AAL
                             cpu->data8[0] = cpu->operands[0];
                             return false;
                         case 3:
-                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            {read_pc_to("cpu->operands[1]")}
                             // AAH
                             cpu->data8[1] = cpu->operands[1];
                             cpu->addr = u16_read_little_endian(cpu->data8);
@@ -2399,7 +2417,7 @@ def generate_absolute_register():
                             (void)bus_read(state, cpu->addr);
                             return false;
                         case 5:
-                            bus_write(state, cpu->addr, cpu->{reg});
+                            {write_to_addr(f"cpu->{reg}")}
                             return true;
                         default:
                             UNREACHABLE();
@@ -2449,27 +2467,27 @@ def generate_absolute_indexed_register():
                     switch (cycle) {{
                         case 2:
                             // AAL
-                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            {read_pc_to("cpu->operands[0]")}
                             cpu->data8[0] = cpu->operands[0];
                             return false;
                         case 3:
                             // AAH
-                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            {read_pc_to("cpu->operands[1]")}
                             cpu->data8[1] = cpu->operands[1];
-                            // AA + {reg}
-                            cpu->addr = u16_read_little_endian(cpu->data8);
-                            cpu->addr += cpu->{reg};
+                            // compute AA + {reg} but don't latch yet (next cycle is idle)
+                            cpu->data16 = u16_read_little_endian(cpu->data8) + cpu->{reg};
                             return false;
                         case 4:
-                            // internal operation
+                            // internal operation - dummy read from last latched addr
                             {idle_cycle()}
+                            cpu->addr = cpu->data16;
                             return false;
                         case 5:
                             // "useless" RMW read for MOV
                             (void)bus_read(state, cpu->addr);
                             return false;
                         case 6:
-                            bus_write(state, cpu->addr, cpu->a);
+                            {write_to_addr("cpu->a")}
                             return true;
                         default:
                             UNREACHABLE();
@@ -2526,21 +2544,21 @@ class DirectDirect(AddressingMode):
                 switch (cycle) {{
                     case 2:
                         // DS - source address
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[0]")}
                         cpu->addr = direct_page(cpu, cpu->operands[0]);
                         return false;
                     case 3:
                         // Read data from source
-                        cpu->data8[1] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[1]")}
                         return false;
                     case 4:
                         // DD - destination address
-                        cpu->operands[1] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[1]")}
                         cpu->addr = direct_page(cpu, cpu->operands[1]);
                         return false;
                     case 5:
                         // Read data from dest
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[0]")}
                         return false;
                     case 6: {{
             """
@@ -2638,21 +2656,21 @@ class DirectDirect(AddressingMode):
                     switch (cycle) {{
                         case 2:
                             // DS - source address
-                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            {read_pc_to("cpu->operands[0]")}
                             cpu->addr = direct_page(cpu, cpu->operands[0]);
                             return false;
                         case 3:
                             // Read data from source
-                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            {read_from_addr("cpu->data8[0]")}
                             return false;
                         case 4:
                             // DD - destination address
-                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            {read_pc_to("cpu->operands[1]")}
                             cpu->addr = direct_page(cpu, cpu->operands[1]);
                             return false;
                         case 5:
                             // no RMW read
-                            bus_write(state, cpu->addr, cpu->data8[0]);
+                            {write_to_addr("cpu->data8[0]")}
                             return true;
                         default:
                             UNREACHABLE();
@@ -2701,18 +2719,18 @@ class IndirectIndirect(AddressingMode):
 
                 switch (cycle) {{
                     case 2:
-                        // internal operation
+                        // internal operation - dummy read from last latched addr
                         {idle_cycle()}
                         return false;
                     case 3:
                         // src: (Y)
                         cpu->addr = direct_page(cpu, cpu->y);
-                        cpu->data8[1] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[1]")}
                         return false;
                     case 4:
                         // dst: (X)
                         cpu->addr = direct_page(cpu, cpu->x);
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[0]")}
                         return false;
                     case 5: {{
             """
@@ -2833,12 +2851,12 @@ class Direct(AddressingMode):
                 switch (cycle) {{
                     case 2:
                         // direct offset
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[0]")}
                         cpu->addr = direct_page(cpu, cpu->operands[0]);
                         return false;
                     case 3:
                         // RMW read
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[0]")}
                         return false;
                     case 4: {{
                         // RMW modify
@@ -2848,7 +2866,7 @@ class Direct(AddressingMode):
         footer = inspect.cleandoc(
             f"""
                         // RMW write
-                        bus_write(state, cpu->addr, cpu->data8[0]);
+                        {write_to_addr("cpu->data8[0]")}
                         return true;
                     }}
                     default:
@@ -2968,22 +2986,22 @@ def generate_not1():
 
                 switch (cycle) {{
                     case 2:
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[0]")}
                         return false;
                     case 3:
-                        cpu->operands[1] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[1]")}
                         cpu->data16 = u16_read_little_endian(cpu->operands);
                         parse_membit(cpu->data16, &cpu->addr, &cpu->bit);
                         return false;
                     case 4:
                         // RMW read
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[0]")}
                         // RMW modify
                         bit_toggle(cpu->data8, cpu->bit);
                         return false;
                     case 5:
                         // RMW write
-                        bus_write(state, cpu->addr, cpu->data8[0]);
+                        {write_to_addr("cpu->data8[0]")}
                         return true;
                     default:
                         UNREACHABLE();
@@ -3033,16 +3051,16 @@ class DirectIndexed(AddressingMode):
                 switch (cycle) {{
                     case 2:
                         // direct offset
-                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        {read_pc_to("cpu->operands[0]")}
                         return false;
                     case 3:
-                        // internal operation
+                        // internal operation - dummy read from last latched addr
                         {idle_cycle()}
                         cpu->addr = direct_page(cpu, cpu->operands[0] + cpu->x);
                         return false;
                     case 4:
                         // RMW read
-                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        {read_from_addr("cpu->data8[0]")}
                         return false;
                     case 5: {{
                         // RMW modify
@@ -3052,7 +3070,7 @@ class DirectIndexed(AddressingMode):
         footer = inspect.cleandoc(
             f"""
                         // RMW write
-                        bus_write(state, cpu->addr, cpu->data8[0]);
+                        {write_to_addr("cpu->data8[0]")}
                         return true;
                     }}
                     default:
@@ -3260,12 +3278,12 @@ class TCallInstruction(Instruction):
                 case 2:
                     // effective stack address
                     cpu->addr = 0x100 + cpu->sp;
-                    bus_write(state, cpu->addr, u16_msb(cpu->pc));
+                    {write_to_addr("u16_msb(cpu->pc)")}
                     cpu->sp -= 1;
                     return false;
                 case 3:
                     cpu->addr = 0x100 + cpu->sp;
-                    bus_write(state, cpu->addr, u16_lsb(cpu->pc));
+                    {write_to_addr("u16_lsb(cpu->pc)")}
                     cpu->sp -= 1;
                     return false;
                 case 4:
@@ -3274,12 +3292,14 @@ class TCallInstruction(Instruction):
 
                 // cycle 5-6 fetch the address to go to at a predetermined address
                 case 5:
-                    cpu->data8[0] = bus_read(state, vector);
+                    cpu->addr = vector;
+                    {read_from_addr("cpu->data8[0]")}
                     return false;
                 case 6:
-                    cpu->data8[1] = bus_read(state, vector + 1);
-                    // new pc
-                    cpu->addr = u16_read_little_endian(cpu->data8);
+                    cpu->addr = vector + 1;
+                    {read_from_addr("cpu->data8[1]")}
+                    // new pc (store in data16, not addr yet - next cycles are idle)
+                    cpu->data16 = u16_read_little_endian(cpu->data8);
                     return false;
 
                 // cycle 7-8 are idle, we just publish the new pc at the end of cycle 8
@@ -3288,7 +3308,7 @@ class TCallInstruction(Instruction):
                     return false;
                 case 8:
                     {idle_cycle()}
-                    cpu->pc = cpu->addr;
+                    cpu->pc = cpu->data16;
                     return true;
 
                 default:
