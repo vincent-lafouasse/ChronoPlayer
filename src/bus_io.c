@@ -1,6 +1,10 @@
 #include "bus_io.h"
 
 #include <stdbool.h>
+#include <stddef.h>
+
+BusTraceFn g_bus_trace_hook = NULL;
+void* g_bus_trace_userdata = NULL;
 
 /*
 SPC700 Memory Map
@@ -126,19 +130,33 @@ void bus_write_port(struct SPC_State* state, uint16_t addr, uint8_t val)
 
 uint8_t bus_read(const struct SPC_State* state, uint16_t addr)
 {
+    uint8_t value;
+
     if ((addr & 0xfff0) == 0xf0) {
-        return bus_read_port(state, addr);
+        value = bus_read_port(state, addr);
+        goto out;
     }
 
     if (addr >= 0xffc0 && use_ipl_rom(state)) {
-        return state->ipl_rom[addr - 0xffc0];
+        value = state->ipl_rom[addr - 0xffc0];
+        goto out;
     }
 
-    return state->aram[addr];
+    value = state->aram[addr];
+
+out:
+    if (g_bus_trace_hook != NULL) {
+        g_bus_trace_hook(g_bus_trace_userdata, addr, value, false);
+    }
+    return value;
 }
 
 void bus_write(struct SPC_State* state, uint16_t addr, uint8_t val)
 {
+    if (g_bus_trace_hook != NULL) {
+        g_bus_trace_hook(g_bus_trace_userdata, addr, val, true);
+    }
+
     state->aram[addr] = val;
 
     if ((addr & 0xfff0) == 0xf0) {
