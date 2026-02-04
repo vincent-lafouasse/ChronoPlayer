@@ -1,2 +1,5 @@
 src/instructions.gen.h diff=nocodegen
 src/instructions.gen.c diff=nocodegen
+
+test/SingleStepTests/** linguist-vendored
+test/utest.h/** linguist-vendored
