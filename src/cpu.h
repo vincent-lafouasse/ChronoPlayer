@@ -70,9 +70,6 @@ static inline uint16_t direct_page(struct CPU_State cpu[static 1],
     return u16_parse(offset, psw_direct_page(cpu));
 }
 
-void cpu_init(struct CPU_State* cpu);
-int cpu_step(struct CPU_State* cpu, uint8_t* ram, void* dsp);
-
 int dump_cpu_state(char buf[static 41],
                    size_t len,
                    const struct CPU_State* cpu);
