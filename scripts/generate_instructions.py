@@ -352,6 +352,11 @@ do_cmp_y = lambda: do_cmp_and_check_psw("cpu->y", "cpu->data8[0]")
 # stored back in cpu->data8[0] then stored to cpu->addr
 store = lambda: [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"]
 
+do_or_mem = lambda: logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]") + store()
+do_and_mem = lambda: logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]") + store()
+do_xor_mem = lambda: logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]") + store()
+do_cmp_mem = lambda: do_cmp_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
+
 
 def do_asl():
     return inspect.cleandoc(
@@ -1973,7 +1978,7 @@ class DirectImmediateMode(AddressingMode):
                 "AND",
                 "AND   d, #i",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]") + store(),
+                do_and_mem(),
             ),
         )
         add_instruction(
@@ -1982,7 +1987,7 @@ class DirectImmediateMode(AddressingMode):
                 "CMP",
                 "CMP   d, #i",
                 cls(),
-                do_cmp_and_check_psw("cpu->data8[0]", "cpu->data8[1]"),
+                do_cmp_mem(),
             ),
         )
         add_instruction(
@@ -1991,7 +1996,7 @@ class DirectImmediateMode(AddressingMode):
                 "EOR",
                 "EOR   d, #i",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]") + store(),
+                do_xor_mem(),
             ),
         )
         add_instruction(
@@ -2009,7 +2014,7 @@ class DirectImmediateMode(AddressingMode):
                 "OR",
                 "OR    d, #i",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]") + store(),
+                do_or_mem(),
             ),
         )
         add_instruction(
@@ -2575,7 +2580,7 @@ class DirectDirect(AddressingMode):
                 "AND",
                 "AND   dd, ds",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]") + store(),
+                do_and_mem(),
             ),
         )
         add_instruction(
@@ -2584,7 +2589,7 @@ class DirectDirect(AddressingMode):
                 "CMP",
                 "CMP   dd, ds",
                 cls(),
-                do_cmp_and_check_psw("cpu->data8[0]", "cpu->data8[1]"),
+                do_cmp_mem(),
             ),
         )
         add_instruction(
@@ -2593,7 +2598,7 @@ class DirectDirect(AddressingMode):
                 "EOR",
                 "EOR   dd, ds",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]") + store(),
+                do_xor_mem(),
             ),
         )
         add_instruction(
@@ -2602,7 +2607,7 @@ class DirectDirect(AddressingMode):
                 "OR",
                 "OR    dd, ds",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]") + store(),
+                do_or_mem(),
             ),
         )
         add_instruction(
@@ -2742,7 +2747,7 @@ class IndirectIndirect(AddressingMode):
                 "AND",
                 "AND   (X), (Y)",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]") + store(),
+                do_and_mem(),
             ),
         )
         add_instruction(
@@ -2751,7 +2756,7 @@ class IndirectIndirect(AddressingMode):
                 "CMP",
                 "CMP   (X), (Y)",
                 cls(),
-                do_cmp_and_check_psw("cpu->data8[0]", "cpu->data8[1]"),
+                do_cmp_mem(),
             ),
         )
         add_instruction(
@@ -2760,7 +2765,7 @@ class IndirectIndirect(AddressingMode):
                 "EOR",
                 "EOR   (X), (Y)",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]") + store(),
+                do_xor_mem(),
             ),
         )
         add_instruction(
@@ -2769,7 +2774,7 @@ class IndirectIndirect(AddressingMode):
                 "OR",
                 "OR    (X), (Y)",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]") + store(),
+                do_or_mem(),
             ),
         )
         add_instruction(
