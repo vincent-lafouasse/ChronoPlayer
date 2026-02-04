@@ -1,8 +1,9 @@
 #include "../utest.h/utest.h"
-#include "instructions.gen.h"
-#include "state.h"
 
 #include <string.h>
+
+#include "instructions.gen.h"
+#include "state.h"
 
 UTEST(InstructionTest, nop_linkage)
 {
