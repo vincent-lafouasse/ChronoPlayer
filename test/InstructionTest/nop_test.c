@@ -1,7 +1,9 @@
 #include "../utest.h/utest.h"
 
+#include <stdio.h>
 #include <string.h>
 
+#include "bus_io.h"
 #include "instructions.gen.h"
 #include "state.h"
 
@@ -22,6 +24,12 @@ struct BusEvent {
     enum IoType type;
 };
 
+void log_bus_event(struct BusEvent e)
+{
+    fprintf(stderr, "0x%02x: 0x%04x %s 0x%02x\n", e.instruction_cycle, e.addr,
+            (e.type == IO_READ) ? "->" : "<-", e.value);
+}
+
 #define LOG_SZ 128
 
 struct BusEventLog {
@@ -30,13 +38,23 @@ struct BusEventLog {
     uint32_t cap;
 };
 
+struct BusEventLog log_new(void)
+{
+    return (struct BusEventLog){
+        .events = {0},
+        .len = 0,
+        .cap = LOG_SZ,
+    };
+}
+
 void event_push(struct BusEventLog log[static 1], struct BusEvent event)
 {
     if (log->len >= log->cap) {
         return;
     }
 
-    log->events[log->len++] = event;
+    log->events[log->len] = event;
+    log->len += 1;
 }
 
 void bus_hook(void* userdata,
@@ -60,7 +78,10 @@ void bus_hook(void* userdata,
 
 UTEST(InstructionTest, H00_NOP)
 {
-    struct SPC_State state;
+    struct SPC_State state = {0};
+    struct BusEventLog log;
+    g_bus_trace_userdata = &log;
+    g_bus_trace_hook = &bus_hook;
 
     int cycle;
     enum InstructionStatus expected;
@@ -68,18 +89,27 @@ UTEST(InstructionTest, H00_NOP)
 
     cycle = 1;
     expected = I_ERROR;
+    log = log_new();
     actual = nop(&state, cycle);
     ASSERT_EQ(expected, actual);
+    ASSERT_EQ(log.len, 0u);
 
     cycle = 2;
     expected = I_OK;
+    log = log_new();
     actual = nop(&state, cycle);
     ASSERT_EQ(expected, actual);
+    ASSERT_EQ(log.len, 1u);  // fails, len==0
+    log_bus_event(log.events[0]);
 
     cycle = 3;
     expected = I_ERROR;
+    log = log_new();
     actual = nop(&state, cycle);
     ASSERT_EQ(expected, actual);
+    ASSERT_EQ(log.len, 0u);
+
+    g_bus_trace_userdata = NULL;
 }
 
 UTEST_MAIN()
