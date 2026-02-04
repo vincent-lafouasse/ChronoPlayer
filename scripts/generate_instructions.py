@@ -357,6 +357,9 @@ do_and_mem = lambda: logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]") + s
 do_xor_mem = lambda: logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]") + store()
 do_cmp_mem = lambda: do_cmp_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
 
+do_sbc8_mem = lambda: do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store()
+do_adc8_mem = lambda: do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store()
+
 
 def do_asl():
     return inspect.cleandoc(
@@ -1969,7 +1972,7 @@ class DirectImmediateMode(AddressingMode):
                 "ADC",
                 "ADC   d, #i",
                 cls(),
-                do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store(),
+                do_adc8_mem(),
             ),
         )
         add_instruction(
@@ -2023,7 +2026,7 @@ class DirectImmediateMode(AddressingMode):
                 "SBC",
                 "SBC   d, #i",
                 cls(),
-                do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store(),
+                do_sbc8_mem(),
             ),
         )
 
@@ -2571,7 +2574,7 @@ class DirectDirect(AddressingMode):
                 "ADC",
                 "ADC   dd, ds",
                 cls(),
-                do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store(),
+                do_adc8_mem(),
             ),
         )
         add_instruction(
@@ -2616,7 +2619,7 @@ class DirectDirect(AddressingMode):
                 "SBC",
                 "SBC   dd, ds",
                 cls(),
-                do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store(),
+                do_sbc8_mem(),
             ),
         )
 
@@ -2738,7 +2741,7 @@ class IndirectIndirect(AddressingMode):
                 "ADC",
                 "ADC   (X), (Y)",
                 cls(),
-                do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store(),
+                do_adc8_mem(),
             ),
         )
         add_instruction(
@@ -2783,7 +2786,7 @@ class IndirectIndirect(AddressingMode):
                 "SBC",
                 "SBC   (X), (Y)",
                 cls(),
-                do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store(),
+                do_sbc8_mem(),
             ),
         )
 
