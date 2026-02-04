@@ -294,8 +294,20 @@ def do_cmp_and_check_psw(a, b):
     ).splitlines()
 
 
-def logic_op_payload(dest, op, data):
+def alu_op(dest, op, data):
     return [trace_source(), f"{dest} {op}= {data};"] + check_zero_neg(dest)
+
+
+def alu_and(dest, data):
+    return alu_op(dest, "&", data)
+
+
+def alu_xor(dest, data):
+    return alu_op(dest, "^", data)
+
+
+def alu_or(dest, data):
+    return alu_op(dest, "|", data)
 
 
 def write_register(reg, data, is_16bit=False, updates_flags=True):
@@ -320,9 +332,9 @@ load_y = lambda: write_register(
 # ALU operations on registers always expect the operand to be in cpu->data8[0]
 # and write back to the same register. it's the addressing mode's job to
 # respect this protocol and load data in data8
-do_or_a = lambda: logic_op_payload("cpu->a", "|", "cpu->data8[0]")
-do_and_a = lambda: logic_op_payload("cpu->a", "&", "cpu->data8[0]")
-do_xor_a = lambda: logic_op_payload("cpu->a", "^", "cpu->data8[0]")
+do_or_a = lambda: alu_or("cpu->a", "cpu->data8[0]")
+do_and_a = lambda: alu_and("cpu->a", "cpu->data8[0]")
+do_xor_a = lambda: alu_xor("cpu->a", "cpu->data8[0]")
 do_cmp_a = lambda: do_cmp_and_check_psw("cpu->a", "cpu->data8[0]")
 
 do_adc_a = lambda: (
@@ -342,9 +354,9 @@ do_cmp_y = lambda: do_cmp_and_check_psw("cpu->y", "cpu->data8[0]")
 # stored back in cpu->data8[0] then stored to cpu->addr
 store = lambda: [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"]
 
-do_or_mem = lambda: logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]") + store()
-do_and_mem = lambda: logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]") + store()
-do_xor_mem = lambda: logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]") + store()
+do_or_mem = lambda: alu_or("cpu->data8[0]", "cpu->data8[1]") + store()
+do_and_mem = lambda: alu_and("cpu->data8[0]", "cpu->data8[1]") + store()
+do_xor_mem = lambda: alu_xor("cpu->data8[0]", "cpu->data8[1]") + store()
 do_cmp_mem = lambda: do_cmp_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
 
 do_sbc8_mem = lambda: do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store()
