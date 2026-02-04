@@ -22,7 +22,7 @@ static bool use_ipl_rom(const struct SPC_State* state)
     return (control & 0x80) != 0;
 }
 
-static uint8_t bus_read_port(const struct SPC_State* state, uint16_t addr)
+static uint8_t bus_read_port(struct SPC_State* state, uint16_t addr)
 {
     switch (addr) {
         // write only ports
@@ -128,7 +128,7 @@ void bus_write_port(struct SPC_State* state, uint16_t addr, uint8_t val)
     }
 }
 
-uint8_t bus_read(const struct SPC_State* state, uint16_t addr)
+uint8_t bus_read(struct SPC_State* state, uint16_t addr)
 {
     uint8_t value;
 
