@@ -3294,8 +3294,6 @@ class TCallInstruction(Instruction):
                 default:
                     UNREACHABLE();
             }}
-
-            return true;
         }}
         """
         )
