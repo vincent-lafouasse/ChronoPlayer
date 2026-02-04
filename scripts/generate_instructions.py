@@ -480,6 +480,7 @@ class RegisterImmediateMode(AddressingMode):
 
     def __init__(self, register):
         super().__init__()
+        self.cycles = 2
         allowed_registers = [Register.A, Register.X, Register.Y]
         if register not in allowed_registers:
             raise ValueError(f"Disallowed register for Register, Immediate: {register}")
@@ -720,6 +721,7 @@ class RegisterDirectMode(AddressingMode):
     def __init__(self, register):
         super().__init__()
         self.register = register
+        self.cycles = 3
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_direct_{self.register}"
@@ -735,7 +737,7 @@ class RegisterDirectMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle == 2 || cycle == 3);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -878,6 +880,7 @@ class RegisterDirectIndexedMode(AddressingMode):
 
     def __init__(self, dst, src):
         super().__init__()
+        self.cycles = 4
         self.dst = dst
         self.src = src
 
@@ -895,7 +898,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle == 2 || cycle == 3 || cycle == 4);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -1032,6 +1035,7 @@ class RegisterIndirectMode(AddressingMode):
 
     def __init__(self):
         super().__init__()
+        self.cycles = 3
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_indirect"
@@ -1047,7 +1051,7 @@ class RegisterIndirectMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle == 2 || cycle == 3);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -1167,7 +1171,8 @@ def generate_register_indirect_incremented():
                     {trace_source()}
                     struct CPU_State* const cpu = &state->cpu;
 
-                    assert(cycle == 2 || cycle == 3 || cycle == 4);
+                    if (cycle < 2 || cycle > 4) {{ TRACE_TRAP(); }}
+
                     switch (cycle) {{
                         case 2:
                             /* internal operation */
@@ -1214,6 +1219,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
 
     def __init__(self):
         super().__init__()
+        self.cycles = 6
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_indexed_indirect"
@@ -1229,7 +1235,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 6);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -1365,6 +1371,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
 
     def __init__(self):
         super().__init__()
+        self.cycles = 6
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_indirect_indexed"
@@ -1380,7 +1387,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 6);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -1508,6 +1515,7 @@ class RegisterAbsolute(AddressingMode):
 
     def __init__(self, reg):
         super().__init__()
+        self.cycles = 4
         self.reg = reg
 
     def name(self, mnemonic):
@@ -1524,7 +1532,7 @@ class RegisterAbsolute(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 4);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -1684,6 +1692,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
 
     def __init__(self, reg):
         super().__init__()
+        self.cycles = 5
         self.reg = reg
 
     def name(self, mnemonic):
@@ -1700,7 +1709,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 5);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -1894,6 +1903,7 @@ class DirectImmediateMode(AddressingMode):
 
     def __init__(self):
         super().__init__()
+        self.cycles = 5
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_direct_immediate"
@@ -1909,7 +1919,7 @@ class DirectImmediateMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 5);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -2031,6 +2041,7 @@ class DirectRegister(AddressingMode):
 
     def __init__(self, reg):
         super().__init__()
+        self.cycles = 4
         self.reg = reg
 
     def name(self, mnemonic):
@@ -2047,7 +2058,7 @@ class DirectRegister(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 4);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -2147,7 +2158,8 @@ def generate_Anomie_13():
                     {trace_source()}
                     struct CPU_State* const cpu = &state->cpu;
 
-                    assert(cycle >= 2 && cycle <= 4);
+                    if (cycle < 2 || cycle > 4) {{ TRACE_TRAP(); }}
+
                     switch (cycle) {{
                         case 2:
                             /* internal operation */
@@ -2181,7 +2193,8 @@ def generate_Anomie_13():
                     {trace_source()}
                     struct CPU_State* const cpu = &state->cpu;
 
-                    assert(cycle >= 2 && cycle <= 4);
+                    if (cycle < 2 || cycle > 4) {{ TRACE_TRAP(); }}
+
                     switch (cycle) {{
                         case 2:
                             /* internal operation */
@@ -2233,7 +2246,8 @@ def generate_indexed_indirect_register():
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 7);
+                if (cycle < 2 || cycle > 7) {{ TRACE_TRAP(); }}
+
                 switch (cycle) {{
                     case 2:
                         cpu->operands[0] = bus_read(state, cpu->pc++);
@@ -2299,7 +2313,8 @@ def generate_indirect_indexed_register():
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 7);
+                if (cycle < 2 || cycle > 7) {{ TRACE_TRAP(); }}
+
                 switch (cycle) {{
                     case 2:
                         cpu->operands[0] = bus_read(state, cpu->pc++);
@@ -2365,7 +2380,8 @@ def generate_absolute_register():
                     {trace_source()}
                     struct CPU_State* const cpu = &state->cpu;
 
-                    assert(cycle >= 2 && cycle <= 5);
+                    if (cycle < 2 || cycle > 5) {{ TRACE_TRAP(); }}
+
                     switch (cycle) {{
                         case 2:
                             cpu->operands[0] = bus_read(state, cpu->pc++);
@@ -2428,7 +2444,8 @@ def generate_absolute_indexed_register():
                     {trace_source()}
                     struct CPU_State* const cpu = &state->cpu;
 
-                    assert(cycle >= 2 && cycle <= 6);
+                    if (cycle < 2 || cycle > 6) {{ TRACE_TRAP(); }}
+
                     switch (cycle) {{
                         case 2:
                             // AAL
@@ -2486,6 +2503,7 @@ class DirectDirect(AddressingMode):
 
     def __init__(self):
         super().__init__()
+        self.cycles = 6
 
     def name(self, mnemonic):
         if mnemonic == "MOV":
@@ -2503,7 +2521,7 @@ class DirectDirect(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 6);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -2615,7 +2633,7 @@ class DirectDirect(AddressingMode):
                     {trace_source()}
                     struct CPU_State* const cpu = &state->cpu;
 
-                    assert(cycle >= 2 && cycle <= 5);
+                    if (cycle < 2 || cycle > 5) {{ TRACE_TRAP(); }}
 
                     switch (cycle) {{
                         case 2:
@@ -2663,6 +2681,7 @@ class IndirectIndirect(AddressingMode):
 
     def __init__(self):
         super().__init__()
+        self.cycles = 5
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_indirect_indirect"
@@ -2678,7 +2697,7 @@ class IndirectIndirect(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 5);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -2791,6 +2810,7 @@ class Direct(AddressingMode):
 
     def __init__(self, bit=None):
         super().__init__()
+        self.cycles = 4
         self.bit = bit
 
     def name(self, mnemonic):
@@ -2808,7 +2828,7 @@ class Direct(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 4);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -2944,7 +2964,8 @@ def generate_not1():
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 5);
+                if (cycle < 2 || cycle > 5) {{ TRACE_TRAP(); }}
+
                 switch (cycle) {{
                     case 2:
                         cpu->operands[0] = bus_read(state, cpu->pc++);
@@ -2991,6 +3012,7 @@ class DirectIndexed(AddressingMode):
 
     def __init__(self):
         super().__init__()
+        self.cycles = 5
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_direct_indexed"
@@ -3006,7 +3028,7 @@ class DirectIndexed(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                assert(cycle >= 2 && cycle <= 5);
+                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
 
                 switch (cycle) {{
                     case 2:
@@ -3416,8 +3438,6 @@ def make_implementation():
             {trace_source()}
 
             #include "{HEADER}"
-
-            #include <assert.h>
 
             #include "bus_io.h"
             #include "cpu.h"
