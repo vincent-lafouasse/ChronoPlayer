@@ -335,6 +335,15 @@ do_and_a = lambda: logic_op_payload("cpu->a", "&", "cpu->data8[0]")
 do_xor_a = lambda: logic_op_payload("cpu->a", "^", "cpu->data8[0]")
 do_cmp_a = lambda: do_cmp_and_check_psw("cpu->a", "cpu->data8[0]")
 
+do_adc_a = lambda: (
+    do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
+    + [trace_source(), "cpu->a = cpu->data8[0];"]
+)
+do_sbc_a = lambda: (
+    do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
+    + [trace_source(), "cpu->a = cpu->data8[0];"]
+)
+
 do_cmp_x = lambda: do_cmp_and_check_psw("cpu->x", "cpu->data8[0]")
 do_cmp_y = lambda: do_cmp_and_check_psw("cpu->y", "cpu->data8[0]")
 
@@ -600,8 +609,7 @@ class RegisterImmediateMode(AddressingMode):
                 "ADC",
                 "ADC   A, #i",
                 cls(Register.A),
-                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_adc_a(),
             ),
         )
         add_instruction(
@@ -610,8 +618,7 @@ class RegisterImmediateMode(AddressingMode):
                 "SBC",
                 "SBC   A, #i",
                 cls(Register.A),
-                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_sbc_a(),
             ),
         )
         add_instruction(
@@ -840,8 +847,7 @@ class RegisterDirectMode(AddressingMode):
                 "ADC",
                 "ADC   A, d",
                 cls(Register.A),
-                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_adc_a(),
             ),
         )
         add_instruction(
@@ -850,8 +856,7 @@ class RegisterDirectMode(AddressingMode):
                 "SBC",
                 "SBC   A, d",
                 cls(Register.A),
-                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_sbc_a(),
             ),
         )
         add_instruction(
@@ -965,8 +970,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 "ADC",
                 "ADC   A, d+X",
                 cls(Register.A, Register.X),
-                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_adc_a(),
             ),
         )
         add_instruction(
@@ -1038,8 +1042,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 "SBC",
                 "SBC   A, d+X",
                 cls(Register.A, Register.X),
-                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_sbc_a(),
             ),
         )
 
@@ -1107,8 +1110,7 @@ class RegisterIndirectMode(AddressingMode):
                 "ADC",
                 "ADC   A, (X)",
                 cls(),
-                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_adc_a(),
             ),
         )
         add_instruction(
@@ -1162,8 +1164,7 @@ class RegisterIndirectMode(AddressingMode):
                 "SBC",
                 "SBC   A, (X)",
                 cls(),
-                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_sbc_a(),
             ),
         )
 
@@ -1311,8 +1312,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 "ADC",
                 "ADC   A, [d+X]",
                 cls(),
-                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_adc_a(),
             ),
         )
         add_instruction(
@@ -1366,8 +1366,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 "SBC",
                 "SBC   A, [d+X]",
                 cls(),
-                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_sbc_a(),
             ),
         )
 
@@ -1455,8 +1454,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 "ADC",
                 "ADC   A, [d]+Y",
                 cls(),
-                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_adc_a(),
             ),
         )
         add_instruction(
@@ -1510,8 +1508,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 "SBC",
                 "SBC   A, [d]+Y",
                 cls(),
-                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_sbc_a(),
             ),
         )
 
@@ -1589,8 +1586,7 @@ class RegisterAbsolute(AddressingMode):
                 "ADC",
                 "ADC   A, !a",
                 cls(Register.A),
-                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_adc_a(),
             ),
         )
         add_instruction(
@@ -1680,8 +1676,7 @@ class RegisterAbsolute(AddressingMode):
                 "SBC",
                 "SBC   A, !a",
                 cls(Register.A),
-                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_sbc_a(),
             ),
         )
 
@@ -1765,8 +1760,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "ADC",
                 "ADC   A, !a+X",
                 cls(Register.X),
-                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_adc_a(),
             ),
         )
         add_instruction(
@@ -1775,8 +1769,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "ADC",
                 "ADC   A, !a+Y",
                 cls(Register.Y),
-                do_add8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_adc_a(),
             ),
         )
         add_instruction(
@@ -1875,8 +1868,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "SBC",
                 "SBC   A, !a+X",
                 cls(Register.X),
-                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_sbc_a(),
             ),
         )
         add_instruction(
@@ -1885,8 +1877,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "SBC",
                 "SBC   A, !a+Y",
                 cls(Register.Y),
-                do_sub8_and_check_psw("cpu->a", "cpu->data8[0]")
-                + [trace_source(), "cpu->a = cpu->data8[0];"],
+                do_sbc_a(),
             ),
         )
 
