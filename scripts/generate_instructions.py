@@ -348,6 +348,11 @@ do_cmp_x = lambda: do_cmp_and_check_psw("cpu->x", "cpu->data8[0]")
 do_cmp_y = lambda: do_cmp_and_check_psw("cpu->y", "cpu->data8[0]")
 
 
+# RAM operations expect the operands to be in cpu->data8[0-1] the ALU result is
+# stored back in cpu->data8[0] then stored to cpu->addr
+store = lambda: [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"]
+
+
 def do_asl():
     return inspect.cleandoc(
         f"""
@@ -1959,8 +1964,7 @@ class DirectImmediateMode(AddressingMode):
                 "ADC",
                 "ADC   d, #i",
                 cls(),
-                do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store(),
             ),
         )
         add_instruction(
@@ -1969,8 +1973,7 @@ class DirectImmediateMode(AddressingMode):
                 "AND",
                 "AND   d, #i",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]") + store(),
             ),
         )
         add_instruction(
@@ -1988,8 +1991,7 @@ class DirectImmediateMode(AddressingMode):
                 "EOR",
                 "EOR   d, #i",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]") + store(),
             ),
         )
         add_instruction(
@@ -2007,8 +2009,7 @@ class DirectImmediateMode(AddressingMode):
                 "OR",
                 "OR    d, #i",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]") + store(),
             ),
         )
         add_instruction(
@@ -2017,8 +2018,7 @@ class DirectImmediateMode(AddressingMode):
                 "SBC",
                 "SBC   d, #i",
                 cls(),
-                do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store(),
             ),
         )
 
@@ -2566,8 +2566,7 @@ class DirectDirect(AddressingMode):
                 "ADC",
                 "ADC   dd, ds",
                 cls(),
-                do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store(),
             ),
         )
         add_instruction(
@@ -2576,8 +2575,7 @@ class DirectDirect(AddressingMode):
                 "AND",
                 "AND   dd, ds",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]") + store(),
             ),
         )
         add_instruction(
@@ -2595,8 +2593,7 @@ class DirectDirect(AddressingMode):
                 "EOR",
                 "EOR   dd, ds",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]") + store(),
             ),
         )
         add_instruction(
@@ -2605,8 +2602,7 @@ class DirectDirect(AddressingMode):
                 "OR",
                 "OR    dd, ds",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]") + store(),
             ),
         )
         add_instruction(
@@ -2615,8 +2611,7 @@ class DirectDirect(AddressingMode):
                 "SBC",
                 "SBC   dd, ds",
                 cls(),
-                do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store(),
             ),
         )
 
@@ -2738,8 +2733,7 @@ class IndirectIndirect(AddressingMode):
                 "ADC",
                 "ADC   (X), (Y)",
                 cls(),
-                do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store(),
             ),
         )
         add_instruction(
@@ -2748,8 +2742,7 @@ class IndirectIndirect(AddressingMode):
                 "AND",
                 "AND   (X), (Y)",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                logic_op_payload("cpu->data8[0]", "&", "cpu->data8[1]") + store(),
             ),
         )
         add_instruction(
@@ -2767,8 +2760,7 @@ class IndirectIndirect(AddressingMode):
                 "EOR",
                 "EOR   (X), (Y)",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                logic_op_payload("cpu->data8[0]", "^", "cpu->data8[1]") + store(),
             ),
         )
         add_instruction(
@@ -2777,8 +2769,7 @@ class IndirectIndirect(AddressingMode):
                 "OR",
                 "OR    (X), (Y)",
                 cls(),
-                logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                logic_op_payload("cpu->data8[0]", "|", "cpu->data8[1]") + store(),
             ),
         )
         add_instruction(
@@ -2787,8 +2778,7 @@ class IndirectIndirect(AddressingMode):
                 "SBC",
                 "SBC   (X), (Y)",
                 cls(),
-                do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
-                + [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"],
+                do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store(),
             ),
         )
 
