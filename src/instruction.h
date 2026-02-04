@@ -2,19 +2,21 @@
 
 #include <stdint.h>
 
-struct SPC700_State;
-struct APU_State;
+#include "state.h"
 
+enum InstructionStatus {
+    INSTRUCTION_STATUS_DONE,
+    INSTRUCTION_STATUS_PENDING,
+    INSTRUCTION_STATUS_UNEXPECTED_CYCLE,
+};
 
-typedef int (*Instruction_Handler)(struct SPC700_State* cpu,
-                                   struct APU_State* apu,
-                                   uint16_t operand1,
-                                   uint16_t operand2);
+typedef enum InstructionStatus (
+    *InstructionHandler)(struct SPC_State state[static 1], uint32_t cycle);
 
 struct Instruction {
     const char* mnemonic;
     const char* full_mnemonic;
-    Instruction_Handler handler;
+    InstructionHandler handler;
     uint8_t length;
     uint8_t cycles;
 };
