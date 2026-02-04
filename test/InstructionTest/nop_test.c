@@ -39,6 +39,25 @@ void event_push(struct BusEventLog log[static 1], struct BusEvent event)
     log->events[log->len++] = event;
 }
 
+void bus_hook(void* userdata,
+              const struct SPC_State state[static 1],
+              uint16_t addr,
+              uint8_t val,
+              bool is_write)
+{
+    struct BusEventLog* log = (struct BusEventLog*)userdata;
+
+    const struct BusEvent event = {
+        .total_cycles = state->cpu.total_cycles,
+        .instruction_cycle = state->cpu.instruction_cycle,
+        .value = val,
+        .addr = addr,
+        .type = is_write ? IO_WRITE : IO_READ,
+    };
+
+    event_push(log, event);
+}
+
 UTEST(InstructionTest, H00_NOP)
 {
     struct SPC_State state;
