@@ -315,6 +315,18 @@ def write_register(reg, data, is_16bit=False, updates_flags=True):
     return lines
 
 
+# ALU operations on registers always expect the operand to be in cpu->data8[0]
+# and write back to the same register. it's the addressing mode's job to
+# respect this protocol and load data in data8
+do_or_a = lambda: logic_op_payload("cpu->a", "|", "cpu->data8[0]")
+do_and_a = lambda: logic_op_payload("cpu->a", "&", "cpu->data8[0]")
+do_xor_a = lambda: logic_op_payload("cpu->a", "^", "cpu->data8[0]")
+do_cmp_a = lambda: do_cmp_and_check_psw("cpu->a", "cpu->data8[0]")
+
+do_cmp_x = lambda: do_cmp_and_check_psw("cpu->x", "cpu->data8[0]")
+do_cmp_y = lambda: do_cmp_and_check_psw("cpu->y", "cpu->data8[0]")
+
+
 def do_asl():
     return inspect.cleandoc(
         f"""
@@ -540,7 +552,7 @@ class RegisterImmediateMode(AddressingMode):
                 "OR",
                 "OR    A, #i",
                 cls(Register.A),
-                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
+                do_or_a(),
             ),
         )
         add_instruction(
@@ -549,7 +561,7 @@ class RegisterImmediateMode(AddressingMode):
                 "AND",
                 "AND   A, #i",
                 cls(Register.A),
-                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
+                do_and_a(),
             ),
         )
         add_instruction(
@@ -558,7 +570,7 @@ class RegisterImmediateMode(AddressingMode):
                 "EOR",
                 "EOR   A, #i",
                 cls(Register.A),
-                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
+                do_xor_a(),
             ),
         )
         add_instruction(
@@ -567,7 +579,7 @@ class RegisterImmediateMode(AddressingMode):
                 "CMP",
                 "CMP   A, #i",
                 cls(Register.A),
-                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+                do_cmp_a(),
             ),
         )
         add_instruction(
@@ -596,7 +608,7 @@ class RegisterImmediateMode(AddressingMode):
                 "CMP",
                 "CMP   X, #i",
                 cls(Register.X),
-                do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
+                do_cmp_x(),
             ),
         )
         add_instruction(
@@ -627,7 +639,7 @@ class RegisterImmediateMode(AddressingMode):
                 "CMP",
                 "CMP   Y, #i",
                 cls(Register.Y),
-                do_cmp_and_check_psw("cpu->y", "cpu->data8[0]"),
+                do_cmp_y(),
             ),
         )
         add_instruction(
@@ -786,7 +798,7 @@ class RegisterDirectMode(AddressingMode):
                 "OR",
                 "OR    A, d",
                 cls(Register.A),
-                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
+                do_or_a(),
             ),
         )
         add_instruction(
@@ -795,7 +807,7 @@ class RegisterDirectMode(AddressingMode):
                 "AND",
                 "AND   A, d",
                 cls(Register.A),
-                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
+                do_and_a(),
             ),
         )
         add_instruction(
@@ -804,7 +816,7 @@ class RegisterDirectMode(AddressingMode):
                 "EOR",
                 "EOR   A, d",
                 cls(Register.A),
-                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
+                do_xor_a(),
             ),
         )
         add_instruction(
@@ -813,7 +825,7 @@ class RegisterDirectMode(AddressingMode):
                 "CMP",
                 "CMP   A, d",
                 cls(Register.A),
-                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+                do_cmp_a(),
             ),
         )
         add_instruction(
@@ -842,7 +854,7 @@ class RegisterDirectMode(AddressingMode):
                 "CMP",
                 "CMP   X, d",
                 cls(Register.X),
-                do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
+                do_cmp_x(),
             ),
         )
         add_instruction(
@@ -963,7 +975,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 "AND",
                 "AND   A, d+X",
                 cls(Register.A, Register.X),
-                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
+                do_and_a(),
             ),
         )
         add_instruction(
@@ -972,7 +984,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 "CMP",
                 "CMP   A, d+X",
                 cls(Register.A, Register.X),
-                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+                do_cmp_a(),
             ),
         )
         add_instruction(
@@ -981,7 +993,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 "EOR",
                 "EOR   A, d+X",
                 cls(Register.A, Register.X),
-                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
+                do_xor_a(),
             ),
         )
         add_instruction(
@@ -1023,7 +1035,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 "OR",
                 "OR    A, d+X",
                 cls(Register.A, Register.X),
-                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
+                do_or_a(),
             ),
         )
         add_instruction(
@@ -1111,7 +1123,7 @@ class RegisterIndirectMode(AddressingMode):
                 "AND",
                 "AND   A, (X)",
                 cls(),
-                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
+                do_and_a(),
             ),
         )
         add_instruction(
@@ -1120,7 +1132,7 @@ class RegisterIndirectMode(AddressingMode):
                 "CMP",
                 "CMP   A, (X)",
                 cls(),
-                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+                do_cmp_a(),
             ),
         )
         add_instruction(
@@ -1129,7 +1141,7 @@ class RegisterIndirectMode(AddressingMode):
                 "EOR",
                 "EOR   A, (X)",
                 cls(),
-                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
+                do_xor_a(),
             ),
         )
         add_instruction(
@@ -1149,7 +1161,7 @@ class RegisterIndirectMode(AddressingMode):
                 "OR",
                 "OR    A, (X)",
                 cls(),
-                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
+                do_or_a(),
             ),
         )
         add_instruction(
@@ -1317,7 +1329,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 "AND",
                 "AND   A, [d+X]",
                 cls(),
-                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
+                do_and_a(),
             ),
         )
         add_instruction(
@@ -1326,7 +1338,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 "CMP",
                 "CMP   A, [d+X]",
                 cls(),
-                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+                do_cmp_a(),
             ),
         )
         add_instruction(
@@ -1335,7 +1347,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 "EOR",
                 "EOR   A, [d+X]",
                 cls(),
-                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
+                do_xor_a(),
             ),
         )
         add_instruction(
@@ -1355,7 +1367,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 "OR",
                 "OR    A, [d+X]",
                 cls(),
-                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
+                do_or_a(),
             ),
         )
         add_instruction(
@@ -1463,7 +1475,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 "AND",
                 "AND   A, [d]+Y",
                 cls(),
-                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
+                do_and_a(),
             ),
         )
         add_instruction(
@@ -1472,7 +1484,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 "CMP",
                 "CMP   A, [d]+Y",
                 cls(),
-                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+                do_cmp_a(),
             ),
         )
         add_instruction(
@@ -1481,7 +1493,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 "EOR",
                 "EOR   A, [d]+Y",
                 cls(),
-                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
+                do_xor_a(),
             ),
         )
         add_instruction(
@@ -1501,7 +1513,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 "OR",
                 "OR    A, [d]+Y",
                 cls(),
-                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
+                do_or_a(),
             ),
         )
         add_instruction(
@@ -1599,7 +1611,7 @@ class RegisterAbsolute(AddressingMode):
                 "AND",
                 "AND   A, !a",
                 cls(Register.A),
-                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
+                do_and_a(),
             ),
         )
         add_instruction(
@@ -1608,7 +1620,7 @@ class RegisterAbsolute(AddressingMode):
                 "CMP",
                 "CMP   A, !a",
                 cls(Register.A),
-                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+                do_cmp_a(),
             ),
         )
         add_instruction(
@@ -1617,7 +1629,7 @@ class RegisterAbsolute(AddressingMode):
                 "CMP",
                 "CMP   X, !a",
                 cls(Register.X),
-                do_cmp_and_check_psw("cpu->x", "cpu->data8[0]"),
+                do_cmp_x(),
             ),
         )
         add_instruction(
@@ -1626,7 +1638,7 @@ class RegisterAbsolute(AddressingMode):
                 "CMP",
                 "CMP   Y, !a",
                 cls(Register.Y),
-                do_cmp_and_check_psw("cpu->y", "cpu->data8[0]"),
+                do_cmp_y(),
             ),
         )
         add_instruction(
@@ -1635,7 +1647,7 @@ class RegisterAbsolute(AddressingMode):
                 "EOR",
                 "EOR   A, !a",
                 cls(Register.A),
-                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
+                do_xor_a(),
             ),
         )
         add_instruction(
@@ -1677,7 +1689,7 @@ class RegisterAbsolute(AddressingMode):
                 "OR",
                 "OR    A, !a",
                 cls(Register.A),
-                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
+                do_or_a(),
             ),
         )
         add_instruction(
@@ -1791,7 +1803,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "AND",
                 "AND   A, !a+X",
                 cls(Register.X),
-                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
+                do_and_a(),
             ),
         )
         add_instruction(
@@ -1800,7 +1812,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "AND",
                 "AND   A, !a+Y",
                 cls(Register.Y),
-                logic_op_payload("cpu->a", "&", "cpu->data8[0]"),
+                do_and_a(),
             ),
         )
         add_instruction(
@@ -1809,7 +1821,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "CMP",
                 "CMP   A, !a+X",
                 cls(Register.X),
-                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+                do_cmp_a(),
             ),
         )
         add_instruction(
@@ -1818,7 +1830,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "CMP",
                 "CMP   A, !a+Y",
                 cls(Register.Y),
-                do_cmp_and_check_psw("cpu->a", "cpu->data8[0]"),
+                do_cmp_a(),
             ),
         )
         add_instruction(
@@ -1827,7 +1839,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "EOR",
                 "EOR   A, !a+X",
                 cls(Register.X),
-                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
+                do_xor_a(),
             ),
         )
         add_instruction(
@@ -1836,7 +1848,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "EOR",
                 "EOR   A, !a+Y",
                 cls(Register.Y),
-                logic_op_payload("cpu->a", "^", "cpu->data8[0]"),
+                do_xor_a(),
             ),
         )
         add_instruction(
@@ -1867,7 +1879,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "OR",
                 "OR    A, !a+X",
                 cls(Register.X),
-                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
+                do_or_a(),
             ),
         )
         add_instruction(
@@ -1876,7 +1888,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "OR",
                 "OR    A, !a+Y",
                 cls(Register.Y),
-                logic_op_payload("cpu->a", "|", "cpu->data8[0]"),
+                do_or_a(),
             ),
         )
         add_instruction(
