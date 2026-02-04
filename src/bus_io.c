@@ -15,14 +15,14 @@ SPC700 Memory Map
   FFC0h..FFFFh  64-byte Boot ROM or RAM (selectable via Port 00F1h)
 */
 
-static bool use_ipl_rom(const struct SPC_State* state)
+static bool use_ipl_rom(const struct SPC_State state[static 1])
 {
     const uint8_t control = state->aram[0x00f1];
 
     return (control & 0x80) != 0;
 }
 
-static uint8_t bus_read_port(struct SPC_State* state, uint16_t addr)
+static uint8_t bus_read_port(struct SPC_State state[static 1], uint16_t addr)
 {
     switch (addr) {
         // write only ports
@@ -69,7 +69,9 @@ static uint8_t bus_read_port(struct SPC_State* state, uint16_t addr)
     }
 }
 
-void bus_write_port(struct SPC_State* state, uint16_t addr, uint8_t val)
+void bus_write_port(struct SPC_State state[static 1],
+                    uint16_t addr,
+                    uint8_t val)
 {
     switch (addr) {
         // TODO: cache these as bools in state probably
@@ -128,7 +130,7 @@ void bus_write_port(struct SPC_State* state, uint16_t addr, uint8_t val)
     }
 }
 
-uint8_t bus_read(struct SPC_State* state, uint16_t addr)
+uint8_t bus_read(struct SPC_State state[static 1], uint16_t addr)
 {
     uint8_t value;
 
