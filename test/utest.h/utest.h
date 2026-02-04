@@ -159,10 +159,10 @@ typedef union {
   utest_int64_t QuadPart;
 } utest_large_integer;
 
-UTEST_C_FUNC __declspec(dllimport) int __stdcall QueryPerformanceCounter(
-    utest_large_integer *);
-UTEST_C_FUNC __declspec(dllimport) int __stdcall QueryPerformanceFrequency(
-    utest_large_integer *);
+UTEST_C_FUNC __declspec(dllimport) int __stdcall
+QueryPerformanceCounter(utest_large_integer *);
+UTEST_C_FUNC __declspec(dllimport) int __stdcall
+QueryPerformanceFrequency(utest_large_integer *);
 
 #if defined(__MINGW64__) || defined(__MINGW32__)
 #pragma GCC diagnostic pop
@@ -553,8 +553,8 @@ template <typename T> struct utest_type_deducer<T, true> {
 
 // default printer for all other objects (specialize for custom printing)
 template <typename T> struct utest_type_deducer<T, false> {
-  static void _(const T& t) {
-    UTEST_PRINTF("(object %p)", static_cast<const void*>(&t));
+  static void _(const T &t) {
+    UTEST_PRINTF("(object %p)", static_cast<const void *>(&t));
   }
 };
 
@@ -565,7 +565,7 @@ template <> struct utest_type_deducer<std::nullptr_t, false> {
 };
 
 template <typename T>
-UTEST_WEAK UTEST_OVERLOADABLE void utest_type_printer(const T& t) {
+UTEST_WEAK UTEST_OVERLOADABLE void utest_type_printer(const T &t) {
   utest_type_deducer<T>::_(t);
 }
 
@@ -664,20 +664,20 @@ utest_type_printer(long long unsigned int i) {
 #define utest_type_printer(val)                                                \
   UTEST_PRINTF(                                                                \
       _Generic((val),                                                          \
-      signed char: "%d",                                                       \
-      unsigned char: "%u",                                                     \
-      short: "%d",                                                             \
-      unsigned short: "%u",                                                    \
-      int: "%d",                                                               \
-      long: "%ld",                                                             \
-      long long: "%lld",                                                       \
-      unsigned: "%u",                                                          \
-      unsigned long: "%lu",                                                    \
-      unsigned long long: "%llu",                                              \
-      float: "%f",                                                             \
-      double: "%f",                                                            \
-      long double: "%Lf",                                                      \
-      default: _Generic((val - val), ptrdiff_t: "%p", default: "undef")),      \
+          signed char: "%d",                                                   \
+          unsigned char: "%u",                                                 \
+          short: "%d",                                                         \
+          unsigned short: "%u",                                                \
+          int: "%d",                                                           \
+          long: "%ld",                                                         \
+          long long: "%lld",                                                   \
+          unsigned: "%u",                                                      \
+          unsigned long: "%lu",                                                \
+          unsigned long long: "%llu",                                          \
+          float: "%f",                                                         \
+          double: "%f",                                                        \
+          long double: "%Lf",                                                  \
+          default: _Generic((val - val), ptrdiff_t: "%p", default: "undef")),  \
       (val))
 #else
 /*
@@ -698,7 +698,7 @@ utest_type_printer(long long unsigned int i) {
 #endif
 
 #if defined(__cplusplus) && (__cplusplus >= 201103L)
-#define UTEST_AUTO(x) const auto&
+#define UTEST_AUTO(x) const auto &
 #elif !defined(__cplusplus)
 
 #if defined(__clang__)
