@@ -24,6 +24,4 @@ target_link_libraries(${PROJECT_NAME} PRIVATE m)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -g3
                                                -fdiagnostics-color=always)
 
-include(./cmake/fetch_gtest.cmake)
-
-add_subdirectory(./test/)
+add_subdirectory(test)
