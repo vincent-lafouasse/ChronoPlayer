@@ -47,19 +47,6 @@ register_helper(
 register_helper(
     inspect.cleandoc(
         f"""
-    static inline void idle(struct SPC_State state[static 1])
-    {{
-        {trace_source()}
-        // dummy read from the last latched address
-        (void)bus_read(state, state->cpu.addr);
-    }}
-    """
-    )
-)
-
-register_helper(
-    inspect.cleandoc(
-        f"""
         static inline void parse_membit(uint16_t operand, uint16_t* addr, uint8_t* bit)
         {{
             {trace_source()}
@@ -74,7 +61,7 @@ register_helper(
 
 
 def idle_cycle():
-    return "idle(state); // dummy read from the last latched address (cpu->addr)"
+    return "(void)bus_read(state, state->cpu.addr); // dummy read from the last latched address"
 
 
 def read_pc_to(dest):
