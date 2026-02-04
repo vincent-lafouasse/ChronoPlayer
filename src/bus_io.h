@@ -3,6 +3,7 @@
 #include "state.h"
 
 typedef void (*BusTraceFn)(void* userdata,
+                           const struct SPC_State state[static 1],
                            uint16_t addr,
                            uint8_t val,
                            bool is_write);
