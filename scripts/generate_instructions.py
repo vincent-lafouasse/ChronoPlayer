@@ -25,12 +25,21 @@ register_helper(
         #include <stdlib.h>  // for abort()
 
         #if defined(__GNUC__) || defined(__clang__)
-            #define TRACE_TRAP() __builtin_trap()
+            #define UNREACHABLE() do { __builtin_trap(); __builtin_unreachable(); } while(0)
         #elif defined(_MSC_VER)
-            #define TRACE_TRAP() __debugbreak()
+            #include <intrin.h>  // for __debugbreak()
+            #define UNREACHABLE() do { __debugbreak(); __assume(0); } while(0)
         #else
-            #define TRACE_TRAP() abort()
+            #define UNREACHABLE() abort()
         #endif
+        """
+    )
+)
+
+register_helper(
+    inspect.cleandoc(
+        """
+        #include "instruction.h"
 
         #if defined(__GNUC__) || defined(__clang__)
             #define UNREACHABLE() do { __builtin_trap(); __builtin_unreachable(); } while(0)
@@ -43,6 +52,14 @@ register_helper(
         """
     )
 )
+
+
+class InstructionStatus(StrEnum):
+    Type = "enum InstructionStatus"
+    Done = "INSTRUCTION_STATUS_DONE"
+    Pending = "INSTRUCTION_STATUS_PENDING"
+    UnexpectedCycle = "INSTRUCTION_STATUS_UNEXPECTED_CYCLE"
+
 
 register_helper(
     inspect.cleandoc(
@@ -125,7 +142,7 @@ class AddressingMode:
         pass
 
     def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
+        return f"{InstructionStatus.Type} {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def render(self, mnemonic, payload):
         raise ValueError("cannot render base class")
@@ -142,7 +159,7 @@ class Instruction:
         raise NotImplementedError("can't call base Instruction.full_mnemonic()")
 
     def declaration(self):
-        return f"bool {self.name()}(struct SPC_State state[static 1], uint32_t cycle)"
+        return f"{InstructionStatus.Type} {self.name()}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def render(self):
         raise NotImplementedError("can't call base Instruction.render()")
@@ -518,10 +535,10 @@ add_instruction(
             {{
                 {trace_source()}
 
-                if (cycle != 2) {{ TRACE_TRAP(); }}
+                if (cycle != 2) {{ return {InstructionStatus.UnexpectedCycle}; }}
             
                 {idle_cycle()}
-                return true;
+                return {InstructionStatus.Done};
             }}
             """
         ),
@@ -561,7 +578,7 @@ class RegisterImmediateMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle != 2) {{ TRACE_TRAP(); }}
+                if (cycle != 2) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 {read_pc_to("cpu->operands[0]")}
                 cpu->data8[0] = cpu->operands[0];
@@ -570,7 +587,7 @@ class RegisterImmediateMode(AddressingMode):
         # payload goes here
         footer = inspect.cleandoc(
             f"""
-                return true;
+                return {InstructionStatus.Done};
             }}
             """
         )
@@ -711,7 +728,7 @@ class MovRegisterRegister(Instruction):
             {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle != 2) {{ TRACE_TRAP(); }}
+                if (cycle != 2) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 {idle_cycle()}
             """
@@ -724,7 +741,7 @@ class MovRegisterRegister(Instruction):
         )
         footer = inspect.cleandoc(
             f"""
-                return true;
+                return {InstructionStatus.Done};
             }}
             """
         )
@@ -787,12 +804,12 @@ class RegisterDirectMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         {read_pc_to("cpu->operands[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3: {{
                         cpu->addr = direct_page(cpu, cpu->operands[0]);
                         {read_from_addr("cpu->data8[0]")}
@@ -801,7 +818,7 @@ class RegisterDirectMode(AddressingMode):
 
         footer = inspect.cleandoc(
             f"""
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -937,7 +954,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -945,10 +962,10 @@ class RegisterDirectIndexedMode(AddressingMode):
                         // direct offset indexed by {self.src.name}
                         // wrapped within the direct page
                         cpu->data8[0] = (cpu->operands[0] + cpu->{self.src}) & 0xff;
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         {idle_cycle()}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4: {{
                         cpu->addr = direct_page(cpu, cpu->data8[0]);
                         {read_from_addr("cpu->data8[0]")}
@@ -957,7 +974,7 @@ class RegisterDirectIndexedMode(AddressingMode):
 
         footer = inspect.cleandoc(
             f"""
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -1079,13 +1096,13 @@ class RegisterIndirectMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         // an idle cycle - dummy read from last latched addr (PC from opcode fetch)
                         {idle_cycle()}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3: {{
                         cpu->addr = direct_page(cpu, cpu->x);
                         {read_from_addr("cpu->data8[0]")}
@@ -1094,7 +1111,7 @@ class RegisterIndirectMode(AddressingMode):
 
         footer = inspect.cleandoc(
             f"""
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -1196,13 +1213,13 @@ def generate_register_indirect_incremented():
                     {trace_source()}
                     struct CPU_State* const cpu = &state->cpu;
 
-                    if (cycle < 2 || cycle > 4) {{ TRACE_TRAP(); }}
+                    if (cycle < 2 || cycle > 4) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                     switch (cycle) {{
                         case 2:
                             /* internal operation - dummy read from last latched addr */
                             {idle_cycle()}
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 3:
                             cpu->addr = direct_page(cpu, cpu->x);
                             {read_from_addr("cpu->data8[0]")}
@@ -1210,12 +1227,12 @@ def generate_register_indirect_incremented():
                             psw_write_zero(cpu, cpu->a == 0);
                             psw_write_neg(cpu, cpu->a & 0x80);
                             /* we could increment X now but let's do it cycle 4 bc why not */
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 4:
                             /* internal operation - dummy read from last latched addr */
                             {idle_cycle()}
                             cpu->x += 1;
-                            return true;
+                            return {InstructionStatus.Done};
                         default:
                             UNREACHABLE();
                     }}
@@ -1257,7 +1274,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -1266,22 +1283,22 @@ class RegisterIndexedIndirectMode(AddressingMode):
                         cpu->data8[0] = cpu->operands[0] + cpu->x;
                         // &AAH on the direct page as well (wrapped to the 256B page)
                         cpu->data8[1] = cpu->data8[0] + 1;
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         /* internal operation - dummy read from last latched addr */
                         {idle_cycle()}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4:
                         // first indirection
                         // AAL
                         cpu->addr = direct_page(cpu, cpu->data8[0]);
                         {read_from_addr("cpu->data8[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 5:
                         // AAH
                         cpu->addr = direct_page(cpu, cpu->data8[1]);
                         {read_from_addr("cpu->data8[1]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 6: {{
                         // assemble the absolute address
                         cpu->addr = u16_read_little_endian(cpu->data8);
@@ -1293,7 +1310,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
 
         footer = inspect.cleandoc(
             f"""
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -1402,28 +1419,28 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         {read_pc_to("cpu->operands[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         // AAL
                         cpu->addr = direct_page(cpu, cpu->operands[0]);
                         {read_from_addr("cpu->data8[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4:
                         // AAH
                         cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
                         {read_from_addr("cpu->data8[1]")}
                         // AA
                         cpu->addr = u16_read_little_endian(cpu->data8);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 5:
                         {idle_cycle()} // read before the indexing
                         cpu->addr += cpu->y;
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 6: {{
                         // data is ready to hit the ALU
                         {read_from_addr("cpu->data8[0]")}
@@ -1432,7 +1449,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
 
         footer = inspect.cleandoc(
             f"""
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -1540,19 +1557,19 @@ class RegisterAbsolute(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         // AAL
                         {read_pc_to("cpu->operands[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         // AAH
                         {read_pc_to("cpu->operands[1]")}
                         // full absolute address
                         cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4: {{
                         // data is ready to hit the ALU
                         {read_from_addr("cpu->data8[0]")}
@@ -1561,7 +1578,7 @@ class RegisterAbsolute(AddressingMode):
 
         footer = inspect.cleandoc(
             f"""
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -1706,24 +1723,24 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         // AAL
                         {read_pc_to("cpu->operands[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         // AAH
                         {read_pc_to("cpu->operands[1]")}
                         // full absolute address (before indexing)
                         cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4:
                         {idle_cycle()}
                         // index AA now
                         cpu->addr += cpu->{self.reg};
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 5: {{
                         // data is ready to hit the ALU
                         {read_from_addr("cpu->data8[0]")}
@@ -1732,7 +1749,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
 
         footer = inspect.cleandoc(
             f"""
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -1905,30 +1922,30 @@ class DirectImmediateMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         // #i
                         {read_pc_to("cpu->operands[0]")}
                         cpu->data8[1] = cpu->operands[0];
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         // direct page
                         {read_pc_to("cpu->operands[1]")}
                         cpu->addr = direct_page(cpu, cpu->operands[1]);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4:
                         // data
                         {read_from_addr("cpu->data8[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 5: {{
             """
         )
 
         footer = inspect.cleandoc(
             f"""
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -2036,24 +2053,24 @@ class DirectRegister(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         {read_pc_to("cpu->operands[0]")}
                         cpu->addr = direct_page(cpu, cpu->operands[0]);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         // "useless" read in RMW mov
                         {read_from_addr("cpu->data8[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4: {{
             """
         )
 
         footer = inspect.cleandoc(
             f"""
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -2136,21 +2153,21 @@ def generate_Anomie_13():
                     {trace_source()}
                     struct CPU_State* const cpu = &state->cpu;
 
-                    if (cycle < 2 || cycle > 4) {{ TRACE_TRAP(); }}
+                    if (cycle < 2 || cycle > 4) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                     switch (cycle) {{
                         case 2:
                             /* internal operation - dummy read from last latched addr */
                             {idle_cycle()}
                             cpu->addr = direct_page(cpu, cpu->x);
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 3:
                             // "useless" read for RMW MOV
                             (void)bus_read(state, cpu->addr);
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 4:
                             {write_to_addr("cpu->a")}
-                            return true;
+                            return {InstructionStatus.Done};
                         default:
                             UNREACHABLE();
                     }}
@@ -2171,21 +2188,21 @@ def generate_Anomie_13():
                     {trace_source()}
                     struct CPU_State* const cpu = &state->cpu;
 
-                    if (cycle < 2 || cycle > 4) {{ TRACE_TRAP(); }}
+                    if (cycle < 2 || cycle > 4) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                     switch (cycle) {{
                         case 2:
                             /* internal operation - dummy read from last latched addr */
                             {idle_cycle()}
                             cpu->addr = direct_page(cpu, cpu->x++);
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 3:
                             /* internal operation - dummy read from last latched addr */
                             {idle_cycle()}
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 4:
                             {write_to_addr("cpu->a")}
-                            return true;
+                            return {InstructionStatus.Done};
                         default:
                             UNREACHABLE();
                     }}
@@ -2224,35 +2241,35 @@ def generate_indexed_indirect_register():
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > 7) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > 7) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         {read_pc_to("cpu->operands[0]")}
                         cpu->data8[0] = cpu->operands[0] + cpu->x;
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         /* internal operation - dummy read from last latched addr */
                         {idle_cycle()}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4:
                         // AAL
                         cpu->addr = direct_page(cpu, cpu->data8[0]);
                         {read_from_addr("cpu->data8[1]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 5:
                         // AAH
                         cpu->addr = direct_page(cpu, cpu->data8[0] + 1);
                         {read_from_addr("cpu->data8[0]")}
                         cpu->addr = u16_read_big_endian(cpu->data8);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 6:
                         // "useless" RMW read
                         (void)bus_read(state, cpu->addr);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 7:
                         {write_to_addr("cpu->a")}
-                        return true;
+                        return {InstructionStatus.Done};
                     default:
                         UNREACHABLE();
                 }}
@@ -2291,36 +2308,36 @@ def generate_indirect_indexed_register():
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > 7) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > 7) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         {read_pc_to("cpu->operands[0]")}
                         cpu->addr = direct_page(cpu, cpu->operands[0]);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         // AAL
                         {read_from_addr("cpu->data8[0]")}
                         cpu->addr = direct_page(cpu, cpu->operands[0] + 1);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4:
                         // AAH
                         {read_from_addr("cpu->data8[1]")}
                         // compute AA + Y, but don't latch yet (next cycle is idle)
                         cpu->data16 = u16_read_little_endian(cpu->data8) + cpu->y;
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 5:
                         // internal operations - dummy read from last latched addr
                         {idle_cycle()}
                         cpu->addr = cpu->data16;
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 6:
                         // "useless" RMW read
                         (void)bus_read(state, cpu->addr);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 7:
                         {write_to_addr("cpu->a")}
-                        return true;
+                        return {InstructionStatus.Done};
                     default:
                         UNREACHABLE();
                 }}
@@ -2359,27 +2376,27 @@ def generate_absolute_register():
                     {trace_source()}
                     struct CPU_State* const cpu = &state->cpu;
 
-                    if (cycle < 2 || cycle > 5) {{ TRACE_TRAP(); }}
+                    if (cycle < 2 || cycle > 5) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                     switch (cycle) {{
                         case 2:
                             {read_pc_to("cpu->operands[0]")}
                             // AAL
                             cpu->data8[0] = cpu->operands[0];
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 3:
                             {read_pc_to("cpu->operands[1]")}
                             // AAH
                             cpu->data8[1] = cpu->operands[1];
                             cpu->addr = u16_read_little_endian(cpu->data8);
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 4:
                             // "useless" RMW read
                             (void)bus_read(state, cpu->addr);
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 5:
                             {write_to_addr(f"cpu->{reg}")}
-                            return true;
+                            return {InstructionStatus.Done};
                         default:
                             UNREACHABLE();
                     }}
@@ -2423,33 +2440,33 @@ def generate_absolute_indexed_register():
                     {trace_source()}
                     struct CPU_State* const cpu = &state->cpu;
 
-                    if (cycle < 2 || cycle > 6) {{ TRACE_TRAP(); }}
+                    if (cycle < 2 || cycle > 6) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                     switch (cycle) {{
                         case 2:
                             // AAL
                             {read_pc_to("cpu->operands[0]")}
                             cpu->data8[0] = cpu->operands[0];
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 3:
                             // AAH
                             {read_pc_to("cpu->operands[1]")}
                             cpu->data8[1] = cpu->operands[1];
                             // compute AA + {reg} but don't latch yet (next cycle is idle)
                             cpu->data16 = u16_read_little_endian(cpu->data8) + cpu->{reg};
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 4:
                             // internal operation - dummy read from last latched addr
                             {idle_cycle()}
                             cpu->addr = cpu->data16;
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 5:
                             // "useless" RMW read for MOV
                             (void)bus_read(state, cpu->addr);
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 6:
                             {write_to_addr("cpu->a")}
-                            return true;
+                            return {InstructionStatus.Done};
                         default:
                             UNREACHABLE();
                     }}
@@ -2497,34 +2514,34 @@ class DirectDirect(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         // DS - source address
                         {read_pc_to("cpu->operands[0]")}
                         cpu->addr = direct_page(cpu, cpu->operands[0]);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         // Read data from source
                         {read_from_addr("cpu->data8[1]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4:
                         // DD - destination address
                         {read_pc_to("cpu->operands[1]")}
                         cpu->addr = direct_page(cpu, cpu->operands[1]);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 5:
                         // Read data from dest
                         {read_from_addr("cpu->data8[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 6: {{
             """
         )
 
         footer = inspect.cleandoc(
             f"""
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -2604,27 +2621,27 @@ class DirectDirect(AddressingMode):
                     {trace_source()}
                     struct CPU_State* const cpu = &state->cpu;
 
-                    if (cycle < 2 || cycle > 5) {{ TRACE_TRAP(); }}
+                    if (cycle < 2 || cycle > 5) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                     switch (cycle) {{
                         case 2:
                             // DS - source address
                             {read_pc_to("cpu->operands[0]")}
                             cpu->addr = direct_page(cpu, cpu->operands[0]);
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 3:
                             // Read data from source
                             {read_from_addr("cpu->data8[0]")}
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 4:
                             // DD - destination address
                             {read_pc_to("cpu->operands[1]")}
                             cpu->addr = direct_page(cpu, cpu->operands[1]);
-                            return false;
+                            return {InstructionStatus.Pending};
                         case 5:
                             // no RMW read
                             {write_to_addr("cpu->data8[0]")}
-                            return true;
+                            return {InstructionStatus.Done};
                         default:
                             UNREACHABLE();
                     }}
@@ -2665,30 +2682,30 @@ class IndirectIndirect(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         // internal operation - dummy read from last latched addr
                         {idle_cycle()}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         // src: (Y)
                         cpu->addr = direct_page(cpu, cpu->y);
                         {read_from_addr("cpu->data8[1]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4:
                         // dst: (X)
                         cpu->addr = direct_page(cpu, cpu->x);
                         {read_from_addr("cpu->data8[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 5: {{
             """
         )
 
         footer = inspect.cleandoc(
             f"""
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -2788,18 +2805,18 @@ class Direct(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         // direct offset
                         {read_pc_to("cpu->operands[0]")}
                         cpu->addr = direct_page(cpu, cpu->operands[0]);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         // RMW read
                         {read_from_addr("cpu->data8[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4: {{
                         // RMW modify
             """
@@ -2809,7 +2826,7 @@ class Direct(AddressingMode):
             f"""
                         // RMW write
                         {write_to_addr("cpu->data8[0]")}
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -2924,27 +2941,27 @@ def generate_not1():
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > 5) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > 5) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         {read_pc_to("cpu->operands[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         {read_pc_to("cpu->operands[1]")}
                         cpu->data16 = u16_read_little_endian(cpu->operands);
                         parse_membit(cpu->data16, &cpu->addr, &cpu->bit);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4:
                         // RMW read
                         {read_from_addr("cpu->data8[0]")}
                         // RMW modify
                         bit_toggle(cpu->data8, cpu->bit);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 5:
                         // RMW write
                         {write_to_addr("cpu->data8[0]")}
-                        return true;
+                        return {InstructionStatus.Done};
                     default:
                         UNREACHABLE();
                 }}
@@ -2985,22 +3002,22 @@ class DirectIndexed(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ TRACE_TRAP(); }}
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
                         // direct offset
                         {read_pc_to("cpu->operands[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 3:
                         // internal operation - dummy read from last latched addr
                         {idle_cycle()}
                         cpu->addr = direct_page(cpu, cpu->operands[0] + cpu->x);
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 4:
                         // RMW read
                         {read_from_addr("cpu->data8[0]")}
-                        return false;
+                        return {InstructionStatus.Pending};
                     case 5: {{
                         // RMW modify
             """
@@ -3010,7 +3027,7 @@ class DirectIndexed(AddressingMode):
             f"""
                         // RMW write
                         {write_to_addr("cpu->data8[0]")}
-                        return true;
+                        return {InstructionStatus.Done};
                     }}
                     default:
                         UNREACHABLE();
@@ -3123,7 +3140,7 @@ class PswInstruction(Instruction):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle != 2) {{ TRACE_TRAP(); }}
+                if (cycle != 2) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 {idle_cycle()}
             """
@@ -3133,7 +3150,7 @@ class PswInstruction(Instruction):
             + "\n"
             + inspect.cleandoc(
                 f"""
-                return true;
+                return {InstructionStatus.Done};
             }}
             """
             )
@@ -3202,12 +3219,12 @@ class TCallInstruction(Instruction):
     def helper():
         return inspect.cleandoc(
             f"""
-        static inline bool tcall_internal(struct SPC_State state[static 1], uint32_t cycle, uint16_t vector)
+        static inline {InstructionStatus.Type} tcall_internal(struct SPC_State state[static 1], uint32_t cycle, uint16_t vector)
         {{
             {trace_source()}
             struct CPU_State* const cpu = &state->cpu;
 
-            if (cycle < 2 || cycle > 8) {{ TRACE_TRAP(); }}
+            if (cycle < 2 || cycle > 8) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
             switch (cycle) {{
                 // cycle 2-3: cache the PC on the stack for later return
@@ -3216,36 +3233,36 @@ class TCallInstruction(Instruction):
                     cpu->addr = 0x100 + cpu->sp;
                     {write_to_addr("u16_msb(cpu->pc)")}
                     cpu->sp -= 1;
-                    return false;
+                    return {InstructionStatus.Pending};
                 case 3:
                     cpu->addr = 0x100 + cpu->sp;
                     {write_to_addr("u16_lsb(cpu->pc)")}
                     cpu->sp -= 1;
-                    return false;
+                    return {InstructionStatus.Pending};
                 case 4:
                     {idle_cycle()}
-                    return false;
+                    return {InstructionStatus.Pending};
 
                 // cycle 5-6 fetch the address to go to at a predetermined address
                 case 5:
                     cpu->addr = vector;
                     {read_from_addr("cpu->data8[0]")}
-                    return false;
+                    return {InstructionStatus.Pending};
                 case 6:
                     cpu->addr = vector + 1;
                     {read_from_addr("cpu->data8[1]")}
                     // new pc (store in data16, not addr yet - next cycles are idle)
                     cpu->data16 = u16_read_little_endian(cpu->data8);
-                    return false;
+                    return {InstructionStatus.Pending};
 
                 // cycle 7-8 are idle, we just publish the new pc at the end of cycle 8
                 case 7:
                     {idle_cycle()}
-                    return false;
+                    return {InstructionStatus.Pending};
                 case 8:
                     {idle_cycle()}
                     cpu->pc = cpu->data16;
-                    return true;
+                    return {InstructionStatus.Done};
 
                 default:
                     UNREACHABLE();
@@ -3365,6 +3382,7 @@ def make_header():
             #include <stdbool.h>
 
             #include "state.h"
+            #include "instruction.h"
             """
             )
         )
