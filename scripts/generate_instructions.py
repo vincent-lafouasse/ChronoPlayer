@@ -124,6 +124,9 @@ class AddressingMode:
     def __init__(self):
         pass
 
+    def declaration(self, mnemonic):
+        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
+
     def render(self, mnemonic, payload):
         raise ValueError("cannot render base class")
 
@@ -538,9 +541,6 @@ class RegisterImmediateMode(AddressingMode):
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_immediate_{self.register}"
 
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
-
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
             f"""
@@ -767,9 +767,6 @@ class RegisterDirectMode(AddressingMode):
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_direct_{self.register}"
 
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
-
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
             f"""
@@ -920,9 +917,6 @@ class RegisterDirectIndexedMode(AddressingMode):
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_direct_indexed_{self.dst}_{self.src}"
 
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
-
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
             f"""
@@ -1064,9 +1058,6 @@ class RegisterIndirectMode(AddressingMode):
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_indirect"
-
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
@@ -1246,9 +1237,6 @@ class RegisterIndexedIndirectMode(AddressingMode):
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_indexed_indirect"
 
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
-
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
             f"""
@@ -1394,9 +1382,6 @@ class RegisterIndirectIndexedMode(AddressingMode):
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_indirect_indexed"
 
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
-
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
             f"""
@@ -1534,9 +1519,6 @@ class RegisterAbsolute(AddressingMode):
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_absolute_{self.reg}"
-
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
@@ -1703,9 +1685,6 @@ class RegisterAbsoluteIndexed(AddressingMode):
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_absolute_indexed_{self.reg}"
-
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
@@ -1906,9 +1885,6 @@ class DirectImmediateMode(AddressingMode):
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_direct_immediate"
 
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
-
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
             f"""
@@ -2039,9 +2015,6 @@ class DirectRegister(AddressingMode):
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_direct_register_{self.reg}"
-
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
@@ -2504,9 +2477,6 @@ class DirectDirect(AddressingMode):
             raise ValueError("Direct direct mov will be implemented as a special case")
         return f"{mnemonic.lower()}_direct_direct"
 
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
-
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
             f"""
@@ -2675,9 +2645,6 @@ class IndirectIndirect(AddressingMode):
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_indirect_indirect"
 
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
-
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
             f"""
@@ -2800,9 +2767,6 @@ class Direct(AddressingMode):
     def name(self, mnemonic):
         bit_str = f"_{self.bit}" if self.bit else ""
         return f"{mnemonic.lower()}{bit_str}_direct"
-
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
@@ -3001,9 +2965,6 @@ class DirectIndexed(AddressingMode):
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_direct_indexed"
 
-    def declaration(self, mnemonic):
-        return f"bool {self.name(mnemonic)}(struct SPC_State state[static 1], uint32_t cycle)"
-
     def render(self, mnemonic, payload):
         header = inspect.cleandoc(
             f"""
@@ -3137,9 +3098,6 @@ class PswInstruction(Instruction):
 
     def full_mnemonic(self):
         return self.mnemonic
-
-    def declaration(self):
-        return f"bool {self.name()}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def body(self):
         execution = [f"    psw_write_{self.flag}(cpu, {self.value});"]
@@ -3283,9 +3241,6 @@ class TCallInstruction(Instruction):
         }}
         """
         )
-
-    def declaration(self):
-        return f"bool {self.name()}(struct SPC_State state[static 1], uint32_t cycle)"
 
     def body(self):
         return inspect.cleandoc(
