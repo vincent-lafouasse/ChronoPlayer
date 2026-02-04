@@ -315,6 +315,18 @@ def write_register(reg, data, is_16bit=False, updates_flags=True):
     return lines
 
 
+# convenience register loads
+# they expect the byte to be in cpu->data8[0]
+load_a = lambda: write_register(
+    Register.A, "cpu->data8[0]", is_16bit=False, updates_flags=True
+)
+load_x = lambda: write_register(
+    Register.X, "cpu->data8[0]", is_16bit=False, updates_flags=True
+)
+load_y = lambda: write_register(
+    Register.Y, "cpu->data8[0]", is_16bit=False, updates_flags=True
+)
+
 # ALU operations on registers always expect the operand to be in cpu->data8[0]
 # and write back to the same register. it's the addressing mode's job to
 # respect this protocol and load data in data8
@@ -617,9 +629,7 @@ class RegisterImmediateMode(AddressingMode):
                 "MOV",
                 "MOV   A, #i",
                 cls(Register.A),
-                write_register(
-                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_a(),
             ),
         )
         add_instruction(
@@ -628,9 +638,7 @@ class RegisterImmediateMode(AddressingMode):
                 "MOV",
                 "MOV   Y, #i",
                 cls(Register.Y),
-                write_register(
-                    "y", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_y(),
             ),
         )
         add_instruction(
@@ -648,9 +656,7 @@ class RegisterImmediateMode(AddressingMode):
                 "MOV",
                 "MOV   X, #i",
                 cls(Register.X),
-                write_register(
-                    "x", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_x(),
             ),
         )
 
@@ -863,9 +869,7 @@ class RegisterDirectMode(AddressingMode):
                 "MOV",
                 "MOV   A, d",
                 cls(Register.A),
-                write_register(
-                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_a(),
             ),
         )
         add_instruction(
@@ -874,9 +878,7 @@ class RegisterDirectMode(AddressingMode):
                 "MOV",
                 "MOV   Y, d",
                 cls(Register.Y),
-                write_register(
-                    "y", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_y(),
             ),
         )
         add_instruction(
@@ -885,9 +887,7 @@ class RegisterDirectMode(AddressingMode):
                 "MOV",
                 "MOV   X, d",
                 cls(Register.X),
-                write_register(
-                    "x", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_x(),
             ),
         )
 
@@ -1002,9 +1002,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 "MOV",
                 "MOV   A, d+X",
                 cls(Register.A, Register.X),
-                write_register(
-                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_a(),
             ),
         )
         add_instruction(
@@ -1013,9 +1011,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 "MOV",
                 "MOV   X, d+Y",
                 cls(Register.X, Register.Y),
-                write_register(
-                    "x", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_x(),
             ),
         )
         add_instruction(
@@ -1024,9 +1020,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 "MOV",
                 "MOV   Y, d+X",
                 cls(Register.Y, Register.X),
-                write_register(
-                    "y", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_y(),
             ),
         )
         add_instruction(
@@ -1150,9 +1144,7 @@ class RegisterIndirectMode(AddressingMode):
                 "MOV",
                 "MOV   A, (X)",
                 cls(),
-                write_register(
-                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_a(),
             ),
         )
         add_instruction(
@@ -1356,9 +1348,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 "MOV",
                 "MOV   A, [d+X]",
                 cls(),
-                write_register(
-                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_a(),
             ),
         )
         add_instruction(
@@ -1502,9 +1492,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 "MOV",
                 "MOV   A, [d]+Y",
                 cls(),
-                write_register(
-                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_a(),
             ),
         )
         add_instruction(
@@ -1656,9 +1644,7 @@ class RegisterAbsolute(AddressingMode):
                 "MOV",
                 "MOV   A, !a",
                 cls(Register.A),
-                write_register(
-                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_a(),
             ),
         )
         add_instruction(
@@ -1667,9 +1653,7 @@ class RegisterAbsolute(AddressingMode):
                 "MOV",
                 "MOV   X, !a",
                 cls(Register.X),
-                write_register(
-                    "x", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_x(),
             ),
         )
         add_instruction(
@@ -1678,9 +1662,7 @@ class RegisterAbsolute(AddressingMode):
                 "MOV",
                 "MOV   Y, !a",
                 cls(Register.Y),
-                write_register(
-                    "y", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_y(),
             ),
         )
         add_instruction(
@@ -1857,9 +1839,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "MOV",
                 "MOV   A, !a+X",
                 cls(Register.X),
-                write_register(
-                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_a(),
             ),
         )
         add_instruction(
@@ -1868,9 +1848,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 "MOV",
                 "MOV   A, !a+Y",
                 cls(Register.Y),
-                write_register(
-                    "a", "cpu->data8[0]", is_16bit=False, updates_flags=True
-                ),
+                load_a(),
             ),
         )
         add_instruction(
