@@ -130,7 +130,7 @@ static inline void run_and_check(const char* test_name,
     TEARDOWN_TEST();
 }
 
-UTEST(InstructionTest, H00_NOP_00_0000)
+UTEST(SingleStepTests_00, _00_0000)
 {
     // ----- data
     const struct CPU_State initial_cpu = (struct CPU_State){.pc = 0x7630,
