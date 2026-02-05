@@ -3211,8 +3211,8 @@ class TCallInstruction(Instruction):
         read(PC);                                 2. dummy read of PC
         idle();                                   3. true idle
         push(PC >> 8);                            4. push PCH
-        push(PC >> 0);   5. push PCL
-        idle();          6. true idle
+        push(PC >> 0);                            5. push PCL
+        idle();                                   6. true idle
         uint16 address = 0xffde - (vector << 1);  7. fetch AAL
         uint16 pc = read(address + 0);            8. fetch AAH
         pc |= read(address + 1) << 8;
