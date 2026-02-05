@@ -83,7 +83,7 @@ class TestCase:
         )
 
         # compact, wrap at ~100 cols
-        ram_entries = [f"{{0x{addr:04x},0x{val:02x}}}" for addr, val in s.aram]
+        ram_entries = [f"{{.addr=0x{addr:04x}, .value=0x{val:02x}}}" for addr, val in s.aram]
         ram_str = (
             "const struct RamEntry initial_ram[] = {" + ", ".join(ram_entries) + "};"
         )
@@ -107,7 +107,7 @@ class TestCase:
             f"    const struct CPU_State final_cpu = {{.pc=0x{s.pc:04x}, .a=0x{s.a:02x}, .x=0x{s.x:02x}, .y=0x{s.y:02x}, .sp=0x{s.sp:02x}, .status=0x{s.psw:02x}}};"
         )
 
-        ram_entries = [f"{{0x{addr:04x},0x{val:02x}}}" for addr, val in s.aram]
+        ram_entries = [f"{{.addr=0x{addr:04x}, .value=0x{val:02x}}}" for addr, val in s.aram]
         ram_str = (
             "const struct RamEntry final_ram[] = {" + ", ".join(ram_entries) + "};"
         )
@@ -129,7 +129,7 @@ class TestCase:
         for access in self.bus_accesses:
             io_type = "IO_READ" if access.operation == "read" else "IO_WRITE"
             val = "DUMMY" if access.value is None else f"0x{access.value:02x}"
-            lines.append(f"        {{0x{access.addr:04x}, {val}, {io_type}}},")
+            lines.append(f"        {{.addr=0x{access.addr:04x}, .value={val}, .type={io_type}}},")
         lines.append("    };")
 
         lines.append(
@@ -145,24 +145,28 @@ class TestCase:
 
 def main():
     json_path = Path(__file__).parent / "specs" / "00.json"
+    output_path = Path(__file__).parent / "00.c"
 
     with open(json_path) as f:
         tests_json = json.load(f)
 
-    print(f"Total tests in 00.json: {len(tests_json)}\n")
+    print(f"Generating {len(tests_json)} tests from 00.json...")
 
-    test = TestCase(tests_json[0])
+    # Generate all tests
+    test_cases = [TestCase(test_json) for test_json in tests_json]
 
-    # Generate C code
-    print("Generated C test:")
-    print("=" * 70)
-    print('#include "../utest.h/utest.h"')
-    print()
-    print('#include "test_helper.h"')
-    print()
-    print(test.generate_c_test())
-    print()
-    print("UTEST_MAIN()")
+    # Write to file
+    with open(output_path, "w") as f:
+        f.write('#include "../utest.h/utest.h"\n')
+        f.write('\n')
+        f.write('#include "test_helper.h"\n')
+        f.write('\n')
+
+        for test_case in test_cases[0:1]:
+            f.write(test_case.generate_c_test())
+            f.write('\n\n')
+
+        f.write("UTEST_MAIN()\n")
 
 
 if __name__ == "__main__":
