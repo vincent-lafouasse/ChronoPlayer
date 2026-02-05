@@ -40,6 +40,7 @@ class BusAccess:
         print(f"  addr=0x{self.addr:04X}, val={val_str}, op={op_str}")
 
 
+# {"name":"00 0000","initial":{"pc":30256,"a":56,"x":78,"y":127,"sp":236,"psw":145,"ram":[[30256,0]]},"final":{"a":56,"x":78,"y":127,"sp":236,"pc":30257,"psw":145,"ram":[[30256,0]]},"cycles":[[30256,0,"read"],[30257,null,"read"]]}
 class TestCase:
     def __init__(self, json_obj):
         self.raw = json_obj
