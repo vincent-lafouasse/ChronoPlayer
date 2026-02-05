@@ -3,6 +3,25 @@ from pathlib import Path
 from pprint import pprint
 
 
+class State:
+    def __init__(self, json, label):
+        self.pc = json[label]["pc"]
+        self.a = json[label]["a"]
+        self.x = json[label]["x"]
+        self.y = json[label]["y"]
+        self.sp = json[label]["sp"]
+        self.psw = json[label]["psw"]
+        self.aram = json[label]["ram"]
+
+
+class TestCase:
+    def __init__(self, json):
+        self.raw = ValueError("unimplemented")
+        self.initial_state = ValueError("unimplemented")
+        self.final_state = ValueError("unimplemented")
+        self.bus_accesses = ValueError("unimplemented")
+
+
 def main():
     json_path = Path(__file__).parent / "v1" / "00.json"
 
