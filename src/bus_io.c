@@ -148,7 +148,7 @@ uint8_t bus_read(struct SPC_State state[static 1], uint16_t addr)
 
 out:
     if (g_bus_trace_hook != NULL) {
-        g_bus_trace_hook(g_bus_trace_userdata, state, addr, value, false);
+        g_bus_trace_hook(g_bus_trace_userdata, state, addr, value, IO_READ);
     }
     return value;
 }
@@ -156,7 +156,7 @@ out:
 void bus_write(struct SPC_State* state, uint16_t addr, uint8_t val)
 {
     if (g_bus_trace_hook != NULL) {
-        g_bus_trace_hook(g_bus_trace_userdata, state, addr, val, true);
+        g_bus_trace_hook(g_bus_trace_userdata, state, addr, val, IO_WRITE);
     }
 
     state->aram[addr] = val;
@@ -166,7 +166,11 @@ void bus_write(struct SPC_State* state, uint16_t addr, uint8_t val)
     }
 }
 
+#define DUMMY 67
+
 void bus_true_idle(struct SPC_State state[static 1])
 {
-    (void)state;
+    if (g_bus_trace_hook != NULL) {
+        g_bus_trace_hook(g_bus_trace_userdata, state, DUMMY, DUMMY, IO_WAIT);
+    }
 }

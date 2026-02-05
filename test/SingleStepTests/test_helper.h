@@ -74,7 +74,7 @@ static inline void bus_hook(void* userdata,
                             const struct SPC_State state[static 1],
                             uint16_t addr,
                             uint8_t val,
-                            bool is_write)
+                           enum IoType io_type)
 {
     (void)state;
     struct BusEventQueue* queue = (struct BusEventQueue*)userdata;
@@ -82,7 +82,7 @@ static inline void bus_hook(void* userdata,
     const struct BusEvent event = {
         .value = val,
         .addr = addr,
-        .type = is_write ? IO_WRITE : IO_READ,
+        .type = io_type,
     };
 
     event_push(queue, event);
