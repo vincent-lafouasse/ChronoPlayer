@@ -170,7 +170,10 @@ def generate_test_suite(opcode: str):
         f.write("UTEST_MAIN()\n")
 
 def main():
-    generate_test_suite("20")
+    generate_test_suite("40")
+    generate_test_suite("60")
+    generate_test_suite("80")
+    generate_test_suite("e0")
 
 if __name__ == "__main__":
     main()
