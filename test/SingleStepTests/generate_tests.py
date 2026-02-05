@@ -42,7 +42,7 @@ class TestCase:
         Test data has: opcode, operand, WAIT, AAL, AAH, data
         But Anomie/Near document: opcode, operand, AAL, AAH, WAIT, data
         """
-        if opcode not in REORDERED_OPCODES:
+        if opcode.lower() not in REORDERED_OPCODES:
             return self.bus_accesses
 
         if len(self.bus_accesses) == 6 and self.bus_accesses[2].operation == "wait":
@@ -92,7 +92,7 @@ class TestCase:
     def _generate_bus_events(self, bus_accesses, opcode):
         """Generate bus event array."""
         lines = []
-        if opcode in REORDERED_OPCODES:
+        if opcode.lower() in REORDERED_OPCODES:
             lines.append(
                 "    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)"
             )

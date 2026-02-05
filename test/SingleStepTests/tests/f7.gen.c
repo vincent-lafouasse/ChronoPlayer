@@ -13,12 +13,13 @@ UTEST(SingleStepTests_F7, _F7_0000) {
         {.addr=0x0195, .value=0x05}, {.addr=0x0196, .value=0x49}, {.addr=0x49f6, .value=0xb0},
         {.addr=0x8601, .value=0xf7}, {.addr=0x8602, .value=0x95},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8601, .value=0xf7, .type=IO_READ},
         {.addr=0x8602, .value=0x95, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0195, .value=0x05, .type=IO_READ},
         {.addr=0x0196, .value=0x49, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x49f6, .value=0xb0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -36,12 +37,13 @@ UTEST(SingleStepTests_F7, _F7_0001) {
         {.addr=0x01c6, .value=0xac}, {.addr=0x01c7, .value=0x71}, {.addr=0x0520, .value=0xf7},
         {.addr=0x0521, .value=0xc6}, {.addr=0x7208, .value=0xb8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0520, .value=0xf7, .type=IO_READ},
         {.addr=0x0521, .value=0xc6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c6, .value=0xac, .type=IO_READ},
         {.addr=0x01c7, .value=0x71, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7208, .value=0xb8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -59,12 +61,13 @@ UTEST(SingleStepTests_F7, _F7_0002) {
         {.addr=0x00a3, .value=0x36}, {.addr=0x00a4, .value=0xc2}, {.addr=0xbe3b, .value=0xf7},
         {.addr=0xbe3c, .value=0xa3}, {.addr=0xc2c0, .value=0xb5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbe3b, .value=0xf7, .type=IO_READ},
         {.addr=0xbe3c, .value=0xa3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a3, .value=0x36, .type=IO_READ},
         {.addr=0x00a4, .value=0xc2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc2c0, .value=0xb5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -82,12 +85,13 @@ UTEST(SingleStepTests_F7, _F7_0003) {
         {.addr=0x01a7, .value=0x96}, {.addr=0x01a8, .value=0x58}, {.addr=0x5901, .value=0x79},
         {.addr=0xa80b, .value=0xf7}, {.addr=0xa80c, .value=0xa7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa80b, .value=0xf7, .type=IO_READ},
         {.addr=0xa80c, .value=0xa7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a7, .value=0x96, .type=IO_READ},
         {.addr=0x01a8, .value=0x58, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5901, .value=0x79, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -105,12 +109,13 @@ UTEST(SingleStepTests_F7, _F7_0004) {
         {.addr=0x01c7, .value=0xae}, {.addr=0x01c8, .value=0x0b}, {.addr=0x0c55, .value=0xf8},
         {.addr=0x2eb3, .value=0xf7}, {.addr=0x2eb4, .value=0xc7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2eb3, .value=0xf7, .type=IO_READ},
         {.addr=0x2eb4, .value=0xc7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c7, .value=0xae, .type=IO_READ},
         {.addr=0x01c8, .value=0x0b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0c55, .value=0xf8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -128,12 +133,13 @@ UTEST(SingleStepTests_F7, _F7_0005) {
         {.addr=0x0108, .value=0xe7}, {.addr=0x0109, .value=0x7e}, {.addr=0x46b8, .value=0xf7},
         {.addr=0x46b9, .value=0x08}, {.addr=0x7f00, .value=0x42},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x46b8, .value=0xf7, .type=IO_READ},
         {.addr=0x46b9, .value=0x08, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0108, .value=0xe7, .type=IO_READ},
         {.addr=0x0109, .value=0x7e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7f00, .value=0x42, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -151,12 +157,13 @@ UTEST(SingleStepTests_F7, _F7_0006) {
         {.addr=0x00ec, .value=0x08}, {.addr=0x00ed, .value=0xba}, {.addr=0x2da5, .value=0xf7},
         {.addr=0x2da6, .value=0xec}, {.addr=0xbaf6, .value=0x9b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2da5, .value=0xf7, .type=IO_READ},
         {.addr=0x2da6, .value=0xec, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ec, .value=0x08, .type=IO_READ},
         {.addr=0x00ed, .value=0xba, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbaf6, .value=0x9b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -174,12 +181,13 @@ UTEST(SingleStepTests_F7, _F7_0007) {
         {.addr=0x0112, .value=0x1e}, {.addr=0x0113, .value=0x31}, {.addr=0x313d, .value=0x23},
         {.addr=0xa92a, .value=0xf7}, {.addr=0xa92b, .value=0x12},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa92a, .value=0xf7, .type=IO_READ},
         {.addr=0xa92b, .value=0x12, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0112, .value=0x1e, .type=IO_READ},
         {.addr=0x0113, .value=0x31, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x313d, .value=0x23, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -197,12 +205,13 @@ UTEST(SingleStepTests_F7, _F7_0008) {
         {.addr=0x01d5, .value=0x03}, {.addr=0x01d6, .value=0x74}, {.addr=0x7497, .value=0x4a},
         {.addr=0x75f4, .value=0xf7}, {.addr=0x75f5, .value=0xd5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x75f4, .value=0xf7, .type=IO_READ},
         {.addr=0x75f5, .value=0xd5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d5, .value=0x03, .type=IO_READ},
         {.addr=0x01d6, .value=0x74, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7497, .value=0x4a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -220,12 +229,13 @@ UTEST(SingleStepTests_F7, _F7_0009) {
         {.addr=0x01c0, .value=0x94}, {.addr=0x01c1, .value=0xb0}, {.addr=0x92f9, .value=0xf7},
         {.addr=0x92fa, .value=0xc0}, {.addr=0xb15e, .value=0x07},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x92f9, .value=0xf7, .type=IO_READ},
         {.addr=0x92fa, .value=0xc0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c0, .value=0x94, .type=IO_READ},
         {.addr=0x01c1, .value=0xb0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb15e, .value=0x07, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -243,12 +253,13 @@ UTEST(SingleStepTests_F7, _F7_000A) {
         {.addr=0x015a, .value=0xd9}, {.addr=0x015b, .value=0x29}, {.addr=0x2aac, .value=0x16},
         {.addr=0xde4f, .value=0xf7}, {.addr=0xde50, .value=0x5a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xde4f, .value=0xf7, .type=IO_READ},
         {.addr=0xde50, .value=0x5a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x015a, .value=0xd9, .type=IO_READ},
         {.addr=0x015b, .value=0x29, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2aac, .value=0x16, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -266,12 +277,13 @@ UTEST(SingleStepTests_F7, _F7_000B) {
         {.addr=0x016a, .value=0xc2}, {.addr=0x016b, .value=0x3f}, {.addr=0x105a, .value=0xf7},
         {.addr=0x105b, .value=0x6a}, {.addr=0x4070, .value=0x0e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x105a, .value=0xf7, .type=IO_READ},
         {.addr=0x105b, .value=0x6a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016a, .value=0xc2, .type=IO_READ},
         {.addr=0x016b, .value=0x3f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4070, .value=0x0e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -289,12 +301,13 @@ UTEST(SingleStepTests_F7, _F7_000C) {
         {.addr=0x0068, .value=0x1a}, {.addr=0x0069, .value=0xe8}, {.addr=0x3b4d, .value=0xf7},
         {.addr=0x3b4e, .value=0x68}, {.addr=0xe8dd, .value=0x24},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3b4d, .value=0xf7, .type=IO_READ},
         {.addr=0x3b4e, .value=0x68, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0068, .value=0x1a, .type=IO_READ},
         {.addr=0x0069, .value=0xe8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe8dd, .value=0x24, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -312,12 +325,13 @@ UTEST(SingleStepTests_F7, _F7_000D) {
         {.addr=0x0084, .value=0x03}, {.addr=0x0085, .value=0xf1}, {.addr=0x8ae5, .value=0xf7},
         {.addr=0x8ae6, .value=0x84}, {.addr=0xf1c4, .value=0x0c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8ae5, .value=0xf7, .type=IO_READ},
         {.addr=0x8ae6, .value=0x84, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0084, .value=0x03, .type=IO_READ},
         {.addr=0x0085, .value=0xf1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf1c4, .value=0x0c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -335,12 +349,13 @@ UTEST(SingleStepTests_F7, _F7_000E) {
         {.addr=0x0141, .value=0x9e}, {.addr=0x0142, .value=0x61}, {.addr=0x534c, .value=0xf7},
         {.addr=0x534d, .value=0x41}, {.addr=0x6236, .value=0xa6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x534c, .value=0xf7, .type=IO_READ},
         {.addr=0x534d, .value=0x41, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0141, .value=0x9e, .type=IO_READ},
         {.addr=0x0142, .value=0x61, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6236, .value=0xa6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -358,12 +373,13 @@ UTEST(SingleStepTests_F7, _F7_000F) {
         {.addr=0x006d, .value=0x4c}, {.addr=0x006e, .value=0x80}, {.addr=0x80af, .value=0x30},
         {.addr=0xe042, .value=0xf7}, {.addr=0xe043, .value=0x6d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe042, .value=0xf7, .type=IO_READ},
         {.addr=0xe043, .value=0x6d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006d, .value=0x4c, .type=IO_READ},
         {.addr=0x006e, .value=0x80, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x80af, .value=0x30, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -381,12 +397,13 @@ UTEST(SingleStepTests_F7, _F7_0011) {
         {.addr=0x01f5, .value=0x97}, {.addr=0x01f6, .value=0x36}, {.addr=0x373f, .value=0x6d},
         {.addr=0xc2f8, .value=0xf7}, {.addr=0xc2f9, .value=0xf5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc2f8, .value=0xf7, .type=IO_READ},
         {.addr=0xc2f9, .value=0xf5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f5, .value=0x97, .type=IO_READ},
         {.addr=0x01f6, .value=0x36, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x373f, .value=0x6d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -404,12 +421,13 @@ UTEST(SingleStepTests_F7, _F7_0012) {
         {.addr=0x0175, .value=0x7d}, {.addr=0x0176, .value=0x36}, {.addr=0x3734, .value=0xd4},
         {.addr=0xb760, .value=0xf7}, {.addr=0xb761, .value=0x75},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb760, .value=0xf7, .type=IO_READ},
         {.addr=0xb761, .value=0x75, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0175, .value=0x7d, .type=IO_READ},
         {.addr=0x0176, .value=0x36, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3734, .value=0xd4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -427,12 +445,13 @@ UTEST(SingleStepTests_F7, _F7_0013) {
         {.addr=0x00d1, .value=0xfa}, {.addr=0x00d2, .value=0xb0}, {.addr=0x39ad, .value=0xf7},
         {.addr=0x39ae, .value=0xd1}, {.addr=0xb19c, .value=0x2e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x39ad, .value=0xf7, .type=IO_READ},
         {.addr=0x39ae, .value=0xd1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d1, .value=0xfa, .type=IO_READ},
         {.addr=0x00d2, .value=0xb0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb19c, .value=0x2e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -450,12 +469,13 @@ UTEST(SingleStepTests_F7, _F7_0014) {
         {.addr=0x01d5, .value=0x96}, {.addr=0x01d6, .value=0x0b}, {.addr=0x0c69, .value=0x4f},
         {.addr=0xe3d2, .value=0xf7}, {.addr=0xe3d3, .value=0xd5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe3d2, .value=0xf7, .type=IO_READ},
         {.addr=0xe3d3, .value=0xd5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d5, .value=0x96, .type=IO_READ},
         {.addr=0x01d6, .value=0x0b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0c69, .value=0x4f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -473,12 +493,13 @@ UTEST(SingleStepTests_F7, _F7_0015) {
         {.addr=0x01a5, .value=0x05}, {.addr=0x01a6, .value=0xe6}, {.addr=0x8dc2, .value=0xf7},
         {.addr=0x8dc3, .value=0xa5}, {.addr=0xe60e, .value=0xff},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8dc2, .value=0xf7, .type=IO_READ},
         {.addr=0x8dc3, .value=0xa5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a5, .value=0x05, .type=IO_READ},
         {.addr=0x01a6, .value=0xe6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe60e, .value=0xff, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -496,12 +517,13 @@ UTEST(SingleStepTests_F7, _F7_0016) {
         {.addr=0x002d, .value=0x7a}, {.addr=0x002e, .value=0x37}, {.addr=0x384a, .value=0xb1},
         {.addr=0x7ea2, .value=0xf7}, {.addr=0x7ea3, .value=0x2d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7ea2, .value=0xf7, .type=IO_READ},
         {.addr=0x7ea3, .value=0x2d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002d, .value=0x7a, .type=IO_READ},
         {.addr=0x002e, .value=0x37, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x384a, .value=0xb1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -519,12 +541,13 @@ UTEST(SingleStepTests_F7, _F7_0017) {
         {.addr=0x0184, .value=0x7e}, {.addr=0x0185, .value=0xb8}, {.addr=0x3f8f, .value=0xf7},
         {.addr=0x3f90, .value=0x84}, {.addr=0xb921, .value=0xa9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3f8f, .value=0xf7, .type=IO_READ},
         {.addr=0x3f90, .value=0x84, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0184, .value=0x7e, .type=IO_READ},
         {.addr=0x0185, .value=0xb8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb921, .value=0xa9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -542,12 +565,13 @@ UTEST(SingleStepTests_F7, _F7_0018) {
         {.addr=0x0091, .value=0x53}, {.addr=0x0092, .value=0x27}, {.addr=0x282c, .value=0xee},
         {.addr=0xc85c, .value=0xf7}, {.addr=0xc85d, .value=0x91},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc85c, .value=0xf7, .type=IO_READ},
         {.addr=0xc85d, .value=0x91, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0091, .value=0x53, .type=IO_READ},
         {.addr=0x0092, .value=0x27, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x282c, .value=0xee, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -565,12 +589,13 @@ UTEST(SingleStepTests_F7, _F7_0019) {
         {.addr=0x0012, .value=0xab}, {.addr=0x0013, .value=0x11}, {.addr=0x1247, .value=0x39},
         {.addr=0x363a, .value=0xf7}, {.addr=0x363b, .value=0x12},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x363a, .value=0xf7, .type=IO_READ},
         {.addr=0x363b, .value=0x12, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0012, .value=0xab, .type=IO_READ},
         {.addr=0x0013, .value=0x11, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1247, .value=0x39, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -588,12 +613,13 @@ UTEST(SingleStepTests_F7, _F7_001A) {
         {.addr=0x006c, .value=0xe4}, {.addr=0x006d, .value=0xac}, {.addr=0xad2f, .value=0x5c},
         {.addr=0xc79f, .value=0xf7}, {.addr=0xc7a0, .value=0x6c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc79f, .value=0xf7, .type=IO_READ},
         {.addr=0xc7a0, .value=0x6c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006c, .value=0xe4, .type=IO_READ},
         {.addr=0x006d, .value=0xac, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xad2f, .value=0x5c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -611,12 +637,13 @@ UTEST(SingleStepTests_F7, _F7_001B) {
         {.addr=0x0148, .value=0x6c}, {.addr=0x0149, .value=0xb2}, {.addr=0xa75f, .value=0xf7},
         {.addr=0xa760, .value=0x48}, {.addr=0xb2fe, .value=0x30},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa75f, .value=0xf7, .type=IO_READ},
         {.addr=0xa760, .value=0x48, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0148, .value=0x6c, .type=IO_READ},
         {.addr=0x0149, .value=0xb2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb2fe, .value=0x30, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -634,12 +661,13 @@ UTEST(SingleStepTests_F7, _F7_001C) {
         {.addr=0x0127, .value=0x93}, {.addr=0x0128, .value=0xf7}, {.addr=0x28b2, .value=0xf7},
         {.addr=0x28b3, .value=0x27}, {.addr=0xf837, .value=0x38},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x28b2, .value=0xf7, .type=IO_READ},
         {.addr=0x28b3, .value=0x27, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0127, .value=0x93, .type=IO_READ},
         {.addr=0x0128, .value=0xf7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf837, .value=0x38, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -657,12 +685,13 @@ UTEST(SingleStepTests_F7, _F7_001D) {
         {.addr=0x01e4, .value=0x40}, {.addr=0x01e5, .value=0x1c}, {.addr=0x1d05, .value=0x21},
         {.addr=0x765b, .value=0xf7}, {.addr=0x765c, .value=0xe4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x765b, .value=0xf7, .type=IO_READ},
         {.addr=0x765c, .value=0xe4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e4, .value=0x40, .type=IO_READ},
         {.addr=0x01e5, .value=0x1c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1d05, .value=0x21, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -680,12 +709,13 @@ UTEST(SingleStepTests_F7, _F7_001E) {
         {.addr=0x0135, .value=0x49}, {.addr=0x0136, .value=0xb0}, {.addr=0xb0ef, .value=0x33},
         {.addr=0xd1d1, .value=0xf7}, {.addr=0xd1d2, .value=0x35},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd1d1, .value=0xf7, .type=IO_READ},
         {.addr=0xd1d2, .value=0x35, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0135, .value=0x49, .type=IO_READ},
         {.addr=0x0136, .value=0xb0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb0ef, .value=0x33, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -703,12 +733,13 @@ UTEST(SingleStepTests_F7, _F7_001F) {
         {.addr=0x0044, .value=0x45}, {.addr=0x0045, .value=0x54}, {.addr=0x54e1, .value=0x22},
         {.addr=0x9286, .value=0xf7}, {.addr=0x9287, .value=0x44},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9286, .value=0xf7, .type=IO_READ},
         {.addr=0x9287, .value=0x44, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0044, .value=0x45, .type=IO_READ},
         {.addr=0x0045, .value=0x54, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x54e1, .value=0x22, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -726,12 +757,13 @@ UTEST(SingleStepTests_F7, _F7_0020) {
         {.addr=0x00dc, .value=0x30}, {.addr=0x00dd, .value=0x69}, {.addr=0x6a24, .value=0x1c},
         {.addr=0x98ee, .value=0xf7}, {.addr=0x98ef, .value=0xdc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x98ee, .value=0xf7, .type=IO_READ},
         {.addr=0x98ef, .value=0xdc, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00dc, .value=0x30, .type=IO_READ},
         {.addr=0x00dd, .value=0x69, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6a24, .value=0x1c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -749,12 +781,13 @@ UTEST(SingleStepTests_F7, _F7_0021) {
         {.addr=0x01b6, .value=0x15}, {.addr=0x01b7, .value=0x67}, {.addr=0x6799, .value=0xab},
         {.addr=0x7d49, .value=0xf7}, {.addr=0x7d4a, .value=0xb6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7d49, .value=0xf7, .type=IO_READ},
         {.addr=0x7d4a, .value=0xb6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b6, .value=0x15, .type=IO_READ},
         {.addr=0x01b7, .value=0x67, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6799, .value=0xab, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -772,12 +805,13 @@ UTEST(SingleStepTests_F7, _F7_0022) {
         {.addr=0x003f, .value=0x41}, {.addr=0x0040, .value=0x0e}, {.addr=0x0e70, .value=0xd8},
         {.addr=0xb2e6, .value=0xf7}, {.addr=0xb2e7, .value=0x3f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb2e6, .value=0xf7, .type=IO_READ},
         {.addr=0xb2e7, .value=0x3f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x003f, .value=0x41, .type=IO_READ},
         {.addr=0x0040, .value=0x0e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0e70, .value=0xd8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -795,12 +829,13 @@ UTEST(SingleStepTests_F7, _F7_0023) {
         {.addr=0x0175, .value=0x04}, {.addr=0x0176, .value=0x4d}, {.addr=0x4d73, .value=0x63},
         {.addr=0xdb75, .value=0xf7}, {.addr=0xdb76, .value=0x75},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdb75, .value=0xf7, .type=IO_READ},
         {.addr=0xdb76, .value=0x75, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0175, .value=0x04, .type=IO_READ},
         {.addr=0x0176, .value=0x4d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4d73, .value=0x63, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -818,12 +853,13 @@ UTEST(SingleStepTests_F7, _F7_0024) {
         {.addr=0x0170, .value=0x54}, {.addr=0x0171, .value=0xd9}, {.addr=0x91a7, .value=0xf7},
         {.addr=0x91a8, .value=0x70}, {.addr=0xda4d, .value=0x63},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x91a7, .value=0xf7, .type=IO_READ},
         {.addr=0x91a8, .value=0x70, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0170, .value=0x54, .type=IO_READ},
         {.addr=0x0171, .value=0xd9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xda4d, .value=0x63, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -841,12 +877,13 @@ UTEST(SingleStepTests_F7, _F7_0025) {
         {.addr=0x000a, .value=0x16}, {.addr=0x000b, .value=0x8f}, {.addr=0x1a98, .value=0xf7},
         {.addr=0x1a99, .value=0x0a}, {.addr=0x8f8d, .value=0x39},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1a98, .value=0xf7, .type=IO_READ},
         {.addr=0x1a99, .value=0x0a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000a, .value=0x16, .type=IO_READ},
         {.addr=0x000b, .value=0x8f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8f8d, .value=0x39, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -864,12 +901,13 @@ UTEST(SingleStepTests_F7, _F7_0026) {
         {.addr=0x0185, .value=0xd0}, {.addr=0x0186, .value=0x4f}, {.addr=0x50be, .value=0xf7},
         {.addr=0x6a89, .value=0xf7}, {.addr=0x6a8a, .value=0x85},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6a89, .value=0xf7, .type=IO_READ},
         {.addr=0x6a8a, .value=0x85, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0185, .value=0xd0, .type=IO_READ},
         {.addr=0x0186, .value=0x4f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x50be, .value=0xf7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -887,12 +925,13 @@ UTEST(SingleStepTests_F7, _F7_0027) {
         {.addr=0x00cb, .value=0xef}, {.addr=0x00cc, .value=0xf5}, {.addr=0xd4c7, .value=0xf7},
         {.addr=0xd4c8, .value=0xcb}, {.addr=0xf632, .value=0xf5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd4c7, .value=0xf7, .type=IO_READ},
         {.addr=0xd4c8, .value=0xcb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00cb, .value=0xef, .type=IO_READ},
         {.addr=0x00cc, .value=0xf5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf632, .value=0xf5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -910,12 +949,13 @@ UTEST(SingleStepTests_F7, _F7_0028) {
         {.addr=0x0056, .value=0x08}, {.addr=0x0057, .value=0x9c}, {.addr=0x173d, .value=0xf7},
         {.addr=0x173e, .value=0x56}, {.addr=0x9c4d, .value=0x2a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x173d, .value=0xf7, .type=IO_READ},
         {.addr=0x173e, .value=0x56, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0056, .value=0x08, .type=IO_READ},
         {.addr=0x0057, .value=0x9c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9c4d, .value=0x2a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -933,12 +973,13 @@ UTEST(SingleStepTests_F7, _F7_0029) {
         {.addr=0x00ac, .value=0xf7}, {.addr=0x00ad, .value=0x34}, {.addr=0x0134, .value=0xd6},
         {.addr=0x0135, .value=0x62}, {.addr=0x6314, .value=0x20},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x00ac, .value=0xf7, .type=IO_READ},
         {.addr=0x00ad, .value=0x34, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0134, .value=0xd6, .type=IO_READ},
         {.addr=0x0135, .value=0x62, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6314, .value=0x20, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -956,12 +997,13 @@ UTEST(SingleStepTests_F7, _F7_002A) {
         {.addr=0x0156, .value=0x62}, {.addr=0x0157, .value=0xa3}, {.addr=0xa3ae, .value=0x08},
         {.addr=0xce0a, .value=0xf7}, {.addr=0xce0b, .value=0x56},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xce0a, .value=0xf7, .type=IO_READ},
         {.addr=0xce0b, .value=0x56, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0156, .value=0x62, .type=IO_READ},
         {.addr=0x0157, .value=0xa3, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa3ae, .value=0x08, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -979,12 +1021,13 @@ UTEST(SingleStepTests_F7, _F7_002B) {
         {.addr=0x009d, .value=0x47}, {.addr=0x009e, .value=0x28}, {.addr=0x2876, .value=0xb2},
         {.addr=0x8332, .value=0xf7}, {.addr=0x8333, .value=0x9d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8332, .value=0xf7, .type=IO_READ},
         {.addr=0x8333, .value=0x9d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009d, .value=0x47, .type=IO_READ},
         {.addr=0x009e, .value=0x28, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2876, .value=0xb2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1002,12 +1045,13 @@ UTEST(SingleStepTests_F7, _F7_002C) {
         {.addr=0x0146, .value=0x4b}, {.addr=0x0147, .value=0xe8}, {.addr=0x6b4b, .value=0xf7},
         {.addr=0x6b4c, .value=0x46}, {.addr=0xe8f6, .value=0x63},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6b4b, .value=0xf7, .type=IO_READ},
         {.addr=0x6b4c, .value=0x46, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0146, .value=0x4b, .type=IO_READ},
         {.addr=0x0147, .value=0xe8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe8f6, .value=0x63, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1025,12 +1069,13 @@ UTEST(SingleStepTests_F7, _F7_002D) {
         {.addr=0x004d, .value=0xd6}, {.addr=0x004e, .value=0x1e}, {.addr=0x1fa8, .value=0xae},
         {.addr=0x70fa, .value=0xf7}, {.addr=0x70fb, .value=0x4d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x70fa, .value=0xf7, .type=IO_READ},
         {.addr=0x70fb, .value=0x4d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x004d, .value=0xd6, .type=IO_READ},
         {.addr=0x004e, .value=0x1e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1fa8, .value=0xae, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1048,12 +1093,13 @@ UTEST(SingleStepTests_F7, _F7_002E) {
         {.addr=0x00bf, .value=0x53}, {.addr=0x00c0, .value=0x4e}, {.addr=0x4f00, .value=0x6b},
         {.addr=0xbb37, .value=0xf7}, {.addr=0xbb38, .value=0xbf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbb37, .value=0xf7, .type=IO_READ},
         {.addr=0xbb38, .value=0xbf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00bf, .value=0x53, .type=IO_READ},
         {.addr=0x00c0, .value=0x4e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4f00, .value=0x6b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1071,12 +1117,13 @@ UTEST(SingleStepTests_F7, _F7_0030) {
         {.addr=0x01e3, .value=0x17}, {.addr=0x01e4, .value=0x4f}, {.addr=0x4f1f, .value=0xe5},
         {.addr=0x9584, .value=0xf7}, {.addr=0x9585, .value=0xe3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9584, .value=0xf7, .type=IO_READ},
         {.addr=0x9585, .value=0xe3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e3, .value=0x17, .type=IO_READ},
         {.addr=0x01e4, .value=0x4f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4f1f, .value=0xe5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1094,12 +1141,13 @@ UTEST(SingleStepTests_F7, _F7_0031) {
         {.addr=0x01e5, .value=0x78}, {.addr=0x01e6, .value=0x6b}, {.addr=0x6c53, .value=0x28},
         {.addr=0xcd5a, .value=0xf7}, {.addr=0xcd5b, .value=0xe5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcd5a, .value=0xf7, .type=IO_READ},
         {.addr=0xcd5b, .value=0xe5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e5, .value=0x78, .type=IO_READ},
         {.addr=0x01e6, .value=0x6b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6c53, .value=0x28, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1117,12 +1165,13 @@ UTEST(SingleStepTests_F7, _F7_0032) {
         {.addr=0x0074, .value=0x27}, {.addr=0x0075, .value=0xf5}, {.addr=0x15b4, .value=0xf7},
         {.addr=0x15b5, .value=0x74}, {.addr=0xf53b, .value=0x5b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x15b4, .value=0xf7, .type=IO_READ},
         {.addr=0x15b5, .value=0x74, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0074, .value=0x27, .type=IO_READ},
         {.addr=0x0075, .value=0xf5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf53b, .value=0x5b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1140,12 +1189,13 @@ UTEST(SingleStepTests_F7, _F7_0033) {
         {.addr=0x0161, .value=0xe1}, {.addr=0x0162, .value=0xe7}, {.addr=0xe8c1, .value=0x73},
         {.addr=0xfd0d, .value=0xf7}, {.addr=0xfd0e, .value=0x61},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfd0d, .value=0xf7, .type=IO_READ},
         {.addr=0xfd0e, .value=0x61, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0161, .value=0xe1, .type=IO_READ},
         {.addr=0x0162, .value=0xe7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe8c1, .value=0x73, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1163,12 +1213,13 @@ UTEST(SingleStepTests_F7, _F7_0034) {
         {.addr=0x01b8, .value=0xc4}, {.addr=0x01b9, .value=0x6f}, {.addr=0x2596, .value=0xf7},
         {.addr=0x2597, .value=0xb8}, {.addr=0x702f, .value=0x39},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2596, .value=0xf7, .type=IO_READ},
         {.addr=0x2597, .value=0xb8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b8, .value=0xc4, .type=IO_READ},
         {.addr=0x01b9, .value=0x6f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x702f, .value=0x39, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1186,12 +1237,13 @@ UTEST(SingleStepTests_F7, _F7_0035) {
         {.addr=0x01f0, .value=0xd6}, {.addr=0x01f1, .value=0x71}, {.addr=0x7271, .value=0x3a},
         {.addr=0xeaf1, .value=0xf7}, {.addr=0xeaf2, .value=0xf0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xeaf1, .value=0xf7, .type=IO_READ},
         {.addr=0xeaf2, .value=0xf0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f0, .value=0xd6, .type=IO_READ},
         {.addr=0x01f1, .value=0x71, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7271, .value=0x3a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1209,12 +1261,13 @@ UTEST(SingleStepTests_F7, _F7_0036) {
         {.addr=0x005b, .value=0x09}, {.addr=0x005c, .value=0x6b}, {.addr=0x6b8b, .value=0x90},
         {.addr=0xcc6d, .value=0xf7}, {.addr=0xcc6e, .value=0x5b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcc6d, .value=0xf7, .type=IO_READ},
         {.addr=0xcc6e, .value=0x5b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005b, .value=0x09, .type=IO_READ},
         {.addr=0x005c, .value=0x6b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6b8b, .value=0x90, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1232,12 +1285,13 @@ UTEST(SingleStepTests_F7, _F7_0037) {
         {.addr=0x00df, .value=0x17}, {.addr=0x00e0, .value=0x90}, {.addr=0x72a4, .value=0xf7},
         {.addr=0x72a5, .value=0xdf}, {.addr=0x9102, .value=0x6f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x72a4, .value=0xf7, .type=IO_READ},
         {.addr=0x72a5, .value=0xdf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00df, .value=0x17, .type=IO_READ},
         {.addr=0x00e0, .value=0x90, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9102, .value=0x6f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1255,12 +1309,13 @@ UTEST(SingleStepTests_F7, _F7_0038) {
         {.addr=0x00e9, .value=0x75}, {.addr=0x00ea, .value=0x5b}, {.addr=0x571c, .value=0xf7},
         {.addr=0x571d, .value=0xe9}, {.addr=0x5b89, .value=0x73},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x571c, .value=0xf7, .type=IO_READ},
         {.addr=0x571d, .value=0xe9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e9, .value=0x75, .type=IO_READ},
         {.addr=0x00ea, .value=0x5b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5b89, .value=0x73, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1278,12 +1333,13 @@ UTEST(SingleStepTests_F7, _F7_0039) {
         {.addr=0x00e9, .value=0xe2}, {.addr=0x00ea, .value=0xb3}, {.addr=0x7b0d, .value=0xf7},
         {.addr=0x7b0e, .value=0xe9}, {.addr=0xb4c7, .value=0x72},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7b0d, .value=0xf7, .type=IO_READ},
         {.addr=0x7b0e, .value=0xe9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e9, .value=0xe2, .type=IO_READ},
         {.addr=0x00ea, .value=0xb3, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb4c7, .value=0x72, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1301,12 +1357,13 @@ UTEST(SingleStepTests_F7, _F7_003A) {
         {.addr=0x00c3, .value=0x6d}, {.addr=0x00c4, .value=0xef}, {.addr=0xb116, .value=0xf7},
         {.addr=0xb117, .value=0xc3}, {.addr=0xef6f, .value=0x85},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb116, .value=0xf7, .type=IO_READ},
         {.addr=0xb117, .value=0xc3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c3, .value=0x6d, .type=IO_READ},
         {.addr=0x00c4, .value=0xef, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xef6f, .value=0x85, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1324,12 +1381,13 @@ UTEST(SingleStepTests_F7, _F7_003B) {
         {.addr=0x01ea, .value=0x66}, {.addr=0x01eb, .value=0xfa}, {.addr=0x9c0f, .value=0xf7},
         {.addr=0x9c10, .value=0xea}, {.addr=0xfaaa, .value=0x71},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9c0f, .value=0xf7, .type=IO_READ},
         {.addr=0x9c10, .value=0xea, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ea, .value=0x66, .type=IO_READ},
         {.addr=0x01eb, .value=0xfa, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfaaa, .value=0x71, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1347,12 +1405,13 @@ UTEST(SingleStepTests_F7, _F7_003C) {
         {.addr=0x0089, .value=0x79}, {.addr=0x008a, .value=0xae}, {.addr=0x3c5f, .value=0xf7},
         {.addr=0x3c60, .value=0x89}, {.addr=0xaeb5, .value=0x08},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3c5f, .value=0xf7, .type=IO_READ},
         {.addr=0x3c60, .value=0x89, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0089, .value=0x79, .type=IO_READ},
         {.addr=0x008a, .value=0xae, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xaeb5, .value=0x08, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1370,12 +1429,13 @@ UTEST(SingleStepTests_F7, _F7_003D) {
         {.addr=0x00cf, .value=0x5a}, {.addr=0x00d0, .value=0x22}, {.addr=0x22b8, .value=0x02},
         {.addr=0x23fc, .value=0xf7}, {.addr=0x23fd, .value=0xcf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x23fc, .value=0xf7, .type=IO_READ},
         {.addr=0x23fd, .value=0xcf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00cf, .value=0x5a, .type=IO_READ},
         {.addr=0x00d0, .value=0x22, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x22b8, .value=0x02, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1393,12 +1453,13 @@ UTEST(SingleStepTests_F7, _F7_003E) {
         {.addr=0x0155, .value=0x0b}, {.addr=0x0156, .value=0xe7}, {.addr=0x7872, .value=0xf7},
         {.addr=0x7873, .value=0x55}, {.addr=0xe7c1, .value=0xd9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7872, .value=0xf7, .type=IO_READ},
         {.addr=0x7873, .value=0x55, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0155, .value=0x0b, .type=IO_READ},
         {.addr=0x0156, .value=0xe7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe7c1, .value=0xd9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1416,12 +1477,13 @@ UTEST(SingleStepTests_F7, _F7_003F) {
         {.addr=0x0176, .value=0x8c}, {.addr=0x0177, .value=0xd3}, {.addr=0x3b47, .value=0xf7},
         {.addr=0x3b48, .value=0x76}, {.addr=0xd44d, .value=0x69},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3b47, .value=0xf7, .type=IO_READ},
         {.addr=0x3b48, .value=0x76, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0176, .value=0x8c, .type=IO_READ},
         {.addr=0x0177, .value=0xd3, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd44d, .value=0x69, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1439,12 +1501,13 @@ UTEST(SingleStepTests_F7, _F7_0040) {
         {.addr=0x0095, .value=0x5a}, {.addr=0x0096, .value=0xf2}, {.addr=0x67fe, .value=0xf7},
         {.addr=0x67ff, .value=0x95}, {.addr=0xf2fc, .value=0xcc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x67fe, .value=0xf7, .type=IO_READ},
         {.addr=0x67ff, .value=0x95, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0095, .value=0x5a, .type=IO_READ},
         {.addr=0x0096, .value=0xf2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf2fc, .value=0xcc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1462,12 +1525,13 @@ UTEST(SingleStepTests_F7, _F7_0041) {
         {.addr=0x01e4, .value=0x0b}, {.addr=0x01e5, .value=0x34}, {.addr=0x349c, .value=0xac},
         {.addr=0xd070, .value=0xf7}, {.addr=0xd071, .value=0xe4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd070, .value=0xf7, .type=IO_READ},
         {.addr=0xd071, .value=0xe4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e4, .value=0x0b, .type=IO_READ},
         {.addr=0x01e5, .value=0x34, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x349c, .value=0xac, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1485,12 +1549,13 @@ UTEST(SingleStepTests_F7, _F7_0042) {
         {.addr=0x0044, .value=0x7e}, {.addr=0x0045, .value=0x22}, {.addr=0x22ff, .value=0xcf},
         {.addr=0x886a, .value=0xf7}, {.addr=0x886b, .value=0x44},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x886a, .value=0xf7, .type=IO_READ},
         {.addr=0x886b, .value=0x44, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0044, .value=0x7e, .type=IO_READ},
         {.addr=0x0045, .value=0x22, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x22ff, .value=0xcf, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1508,12 +1573,13 @@ UTEST(SingleStepTests_F7, _F7_0043) {
         {.addr=0x0071, .value=0x6c}, {.addr=0x0072, .value=0xbb}, {.addr=0x9119, .value=0xf7},
         {.addr=0x911a, .value=0x71}, {.addr=0xbbce, .value=0xa8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9119, .value=0xf7, .type=IO_READ},
         {.addr=0x911a, .value=0x71, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0071, .value=0x6c, .type=IO_READ},
         {.addr=0x0072, .value=0xbb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbbce, .value=0xa8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1531,12 +1597,13 @@ UTEST(SingleStepTests_F7, _F7_0044) {
         {.addr=0x001f, .value=0xfc}, {.addr=0x0020, .value=0xb8}, {.addr=0xabfc, .value=0xf7},
         {.addr=0xabfd, .value=0x1f}, {.addr=0xb9d3, .value=0xd9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xabfc, .value=0xf7, .type=IO_READ},
         {.addr=0xabfd, .value=0x1f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x001f, .value=0xfc, .type=IO_READ},
         {.addr=0x0020, .value=0xb8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb9d3, .value=0xd9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1554,12 +1621,13 @@ UTEST(SingleStepTests_F7, _F7_0045) {
         {.addr=0x01ab, .value=0xc2}, {.addr=0x01ac, .value=0x4d}, {.addr=0x4dd2, .value=0x1e},
         {.addr=0xc9a7, .value=0xf7}, {.addr=0xc9a8, .value=0xab},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc9a7, .value=0xf7, .type=IO_READ},
         {.addr=0xc9a8, .value=0xab, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ab, .value=0xc2, .type=IO_READ},
         {.addr=0x01ac, .value=0x4d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4dd2, .value=0x1e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1577,12 +1645,13 @@ UTEST(SingleStepTests_F7, _F7_0046) {
         {.addr=0x017c, .value=0x13}, {.addr=0x017d, .value=0x50}, {.addr=0x0362, .value=0xf7},
         {.addr=0x0363, .value=0x7c}, {.addr=0x5043, .value=0xd4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0362, .value=0xf7, .type=IO_READ},
         {.addr=0x0363, .value=0x7c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x017c, .value=0x13, .type=IO_READ},
         {.addr=0x017d, .value=0x50, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5043, .value=0xd4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1600,12 +1669,13 @@ UTEST(SingleStepTests_F7, _F7_0048) {
         {.addr=0x0064, .value=0x92}, {.addr=0x0065, .value=0x03}, {.addr=0x03a1, .value=0xd9},
         {.addr=0xad6d, .value=0xf7}, {.addr=0xad6e, .value=0x64},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xad6d, .value=0xf7, .type=IO_READ},
         {.addr=0xad6e, .value=0x64, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0064, .value=0x92, .type=IO_READ},
         {.addr=0x0065, .value=0x03, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x03a1, .value=0xd9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1623,12 +1693,13 @@ UTEST(SingleStepTests_F7, _F7_0049) {
         {.addr=0x00c1, .value=0xcd}, {.addr=0x00c2, .value=0x7f}, {.addr=0x6b32, .value=0xf7},
         {.addr=0x6b33, .value=0xc1}, {.addr=0x7ffb, .value=0x96},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6b32, .value=0xf7, .type=IO_READ},
         {.addr=0x6b33, .value=0xc1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c1, .value=0xcd, .type=IO_READ},
         {.addr=0x00c2, .value=0x7f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7ffb, .value=0x96, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1646,12 +1717,13 @@ UTEST(SingleStepTests_F7, _F7_004A) {
         {.addr=0x0036, .value=0x18}, {.addr=0x0037, .value=0xa0}, {.addr=0x3f95, .value=0xf7},
         {.addr=0x3f96, .value=0x36}, {.addr=0xa061, .value=0x47},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3f95, .value=0xf7, .type=IO_READ},
         {.addr=0x3f96, .value=0x36, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0036, .value=0x18, .type=IO_READ},
         {.addr=0x0037, .value=0xa0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa061, .value=0x47, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1669,12 +1741,13 @@ UTEST(SingleStepTests_F7, _F7_004B) {
         {.addr=0x0071, .value=0xb4}, {.addr=0x0072, .value=0x7c}, {.addr=0x7d49, .value=0x2f},
         {.addr=0xafb5, .value=0xf7}, {.addr=0xafb6, .value=0x71},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xafb5, .value=0xf7, .type=IO_READ},
         {.addr=0xafb6, .value=0x71, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0071, .value=0xb4, .type=IO_READ},
         {.addr=0x0072, .value=0x7c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7d49, .value=0x2f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1692,12 +1765,13 @@ UTEST(SingleStepTests_F7, _F7_004C) {
         {.addr=0x002c, .value=0xf4}, {.addr=0x002d, .value=0xf4}, {.addr=0x055c, .value=0xf7},
         {.addr=0x055d, .value=0x2c}, {.addr=0xf5b6, .value=0x07},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x055c, .value=0xf7, .type=IO_READ},
         {.addr=0x055d, .value=0x2c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002c, .value=0xf4, .type=IO_READ},
         {.addr=0x002d, .value=0xf4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf5b6, .value=0x07, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1715,12 +1789,13 @@ UTEST(SingleStepTests_F7, _F7_004D) {
         {.addr=0x01c7, .value=0x6f}, {.addr=0x01c8, .value=0x4c}, {.addr=0x2ec7, .value=0xf7},
         {.addr=0x2ec8, .value=0xc7}, {.addr=0x4d38, .value=0x07},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2ec7, .value=0xf7, .type=IO_READ},
         {.addr=0x2ec8, .value=0xc7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c7, .value=0x6f, .type=IO_READ},
         {.addr=0x01c8, .value=0x4c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4d38, .value=0x07, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1738,12 +1813,13 @@ UTEST(SingleStepTests_F7, _F7_004E) {
         {.addr=0x0182, .value=0x32}, {.addr=0x0183, .value=0xa8}, {.addr=0xa83e, .value=0x95},
         {.addr=0xdd4f, .value=0xf7}, {.addr=0xdd50, .value=0x82},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdd4f, .value=0xf7, .type=IO_READ},
         {.addr=0xdd50, .value=0x82, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0182, .value=0x32, .type=IO_READ},
         {.addr=0x0183, .value=0xa8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa83e, .value=0x95, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1761,12 +1837,13 @@ UTEST(SingleStepTests_F7, _F7_004F) {
         {.addr=0x00e2, .value=0xbe}, {.addr=0x00e3, .value=0x96}, {.addr=0x4335, .value=0xf7},
         {.addr=0x4336, .value=0xe2}, {.addr=0x96dc, .value=0x51},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4335, .value=0xf7, .type=IO_READ},
         {.addr=0x4336, .value=0xe2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e2, .value=0xbe, .type=IO_READ},
         {.addr=0x00e3, .value=0x96, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x96dc, .value=0x51, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1784,12 +1861,13 @@ UTEST(SingleStepTests_F7, _F7_0050) {
         {.addr=0x0133, .value=0x5b}, {.addr=0x0134, .value=0xbe}, {.addr=0x4575, .value=0xf7},
         {.addr=0x4576, .value=0x33}, {.addr=0xbf59, .value=0x3e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4575, .value=0xf7, .type=IO_READ},
         {.addr=0x4576, .value=0x33, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0133, .value=0x5b, .type=IO_READ},
         {.addr=0x0134, .value=0xbe, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbf59, .value=0x3e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1807,12 +1885,13 @@ UTEST(SingleStepTests_F7, _F7_0051) {
         {.addr=0x0016, .value=0x48}, {.addr=0x0017, .value=0x26}, {.addr=0x2650, .value=0x78},
         {.addr=0xd5f9, .value=0xf7}, {.addr=0xd5fa, .value=0x16},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd5f9, .value=0xf7, .type=IO_READ},
         {.addr=0xd5fa, .value=0x16, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0016, .value=0x48, .type=IO_READ},
         {.addr=0x0017, .value=0x26, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2650, .value=0x78, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1830,12 +1909,13 @@ UTEST(SingleStepTests_F7, _F7_0052) {
         {.addr=0x01b0, .value=0x19}, {.addr=0x01b1, .value=0x57}, {.addr=0x5761, .value=0x23},
         {.addr=0xa6c2, .value=0xf7}, {.addr=0xa6c3, .value=0xb0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa6c2, .value=0xf7, .type=IO_READ},
         {.addr=0xa6c3, .value=0xb0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b0, .value=0x19, .type=IO_READ},
         {.addr=0x01b1, .value=0x57, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5761, .value=0x23, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1853,12 +1933,13 @@ UTEST(SingleStepTests_F7, _F7_0053) {
         {.addr=0x00c1, .value=0xe9}, {.addr=0x00c2, .value=0x45}, {.addr=0x461c, .value=0x39},
         {.addr=0x4c45, .value=0xf7}, {.addr=0x4c46, .value=0xc1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4c45, .value=0xf7, .type=IO_READ},
         {.addr=0x4c46, .value=0xc1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c1, .value=0xe9, .type=IO_READ},
         {.addr=0x00c2, .value=0x45, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x461c, .value=0x39, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1876,12 +1957,13 @@ UTEST(SingleStepTests_F7, _F7_0054) {
         {.addr=0x0170, .value=0x8d}, {.addr=0x0171, .value=0xf3}, {.addr=0x93c4, .value=0xf7},
         {.addr=0x93c5, .value=0x70}, {.addr=0xf442, .value=0xda},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x93c4, .value=0xf7, .type=IO_READ},
         {.addr=0x93c5, .value=0x70, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0170, .value=0x8d, .type=IO_READ},
         {.addr=0x0171, .value=0xf3, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf442, .value=0xda, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1899,12 +1981,13 @@ UTEST(SingleStepTests_F7, _F7_0055) {
         {.addr=0x01e4, .value=0xc7}, {.addr=0x01e5, .value=0xec}, {.addr=0xd344, .value=0xf7},
         {.addr=0xd345, .value=0xe4}, {.addr=0xed4c, .value=0x36},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd344, .value=0xf7, .type=IO_READ},
         {.addr=0xd345, .value=0xe4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e4, .value=0xc7, .type=IO_READ},
         {.addr=0x01e5, .value=0xec, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xed4c, .value=0x36, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1922,12 +2005,13 @@ UTEST(SingleStepTests_F7, _F7_0056) {
         {.addr=0x01e2, .value=0xf7}, {.addr=0x01e3, .value=0x74}, {.addr=0x7576, .value=0x67},
         {.addr=0xfa8e, .value=0xf7}, {.addr=0xfa8f, .value=0xe2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfa8e, .value=0xf7, .type=IO_READ},
         {.addr=0xfa8f, .value=0xe2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e2, .value=0xf7, .type=IO_READ},
         {.addr=0x01e3, .value=0x74, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7576, .value=0x67, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1945,12 +2029,13 @@ UTEST(SingleStepTests_F7, _F7_0057) {
         {.addr=0x004f, .value=0xc5}, {.addr=0x0050, .value=0xbb}, {.addr=0x8e46, .value=0xf7},
         {.addr=0x8e47, .value=0x4f}, {.addr=0xbbf4, .value=0x68},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8e46, .value=0xf7, .type=IO_READ},
         {.addr=0x8e47, .value=0x4f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x004f, .value=0xc5, .type=IO_READ},
         {.addr=0x0050, .value=0xbb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbbf4, .value=0x68, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1968,12 +2053,13 @@ UTEST(SingleStepTests_F7, _F7_0058) {
         {.addr=0x0172, .value=0xf0}, {.addr=0x0173, .value=0x2e}, {.addr=0x1c86, .value=0xf7},
         {.addr=0x1c87, .value=0x72}, {.addr=0x2efe, .value=0x58},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1c86, .value=0xf7, .type=IO_READ},
         {.addr=0x1c87, .value=0x72, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0172, .value=0xf0, .type=IO_READ},
         {.addr=0x0173, .value=0x2e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2efe, .value=0x58, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -1991,12 +2077,13 @@ UTEST(SingleStepTests_F7, _F7_0059) {
         {.addr=0x0030, .value=0xf7}, {.addr=0x0031, .value=0x71}, {.addr=0x0071, .value=0xa9},
         {.addr=0x0072, .value=0xa7}, {.addr=0xa83d, .value=0x27},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0030, .value=0xf7, .type=IO_READ},
         {.addr=0x0031, .value=0x71, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0071, .value=0xa9, .type=IO_READ},
         {.addr=0x0072, .value=0xa7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa83d, .value=0x27, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2014,12 +2101,13 @@ UTEST(SingleStepTests_F7, _F7_005A) {
         {.addr=0x00a9, .value=0xd1}, {.addr=0x00aa, .value=0x8d}, {.addr=0x6593, .value=0xf7},
         {.addr=0x6594, .value=0xa9}, {.addr=0x8e67, .value=0xa4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6593, .value=0xf7, .type=IO_READ},
         {.addr=0x6594, .value=0xa9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a9, .value=0xd1, .type=IO_READ},
         {.addr=0x00aa, .value=0x8d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8e67, .value=0xa4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2037,12 +2125,13 @@ UTEST(SingleStepTests_F7, _F7_005B) {
         {.addr=0x0060, .value=0x24}, {.addr=0x0061, .value=0x23}, {.addr=0x23ab, .value=0x9c},
         {.addr=0x7f0f, .value=0xf7}, {.addr=0x7f10, .value=0x60},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7f0f, .value=0xf7, .type=IO_READ},
         {.addr=0x7f10, .value=0x60, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0060, .value=0x24, .type=IO_READ},
         {.addr=0x0061, .value=0x23, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x23ab, .value=0x9c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2060,12 +2149,13 @@ UTEST(SingleStepTests_F7, _F7_005C) {
         {.addr=0x0058, .value=0xaf}, {.addr=0x0059, .value=0xb0}, {.addr=0xb0f5, .value=0x89},
         {.addr=0xfcef, .value=0xf7}, {.addr=0xfcf0, .value=0x58},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfcef, .value=0xf7, .type=IO_READ},
         {.addr=0xfcf0, .value=0x58, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0058, .value=0xaf, .type=IO_READ},
         {.addr=0x0059, .value=0xb0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb0f5, .value=0x89, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2083,12 +2173,13 @@ UTEST(SingleStepTests_F7, _F7_005D) {
         {.addr=0x011b, .value=0xda}, {.addr=0x011c, .value=0x6b}, {.addr=0x671b, .value=0xf7},
         {.addr=0x671c, .value=0x1b}, {.addr=0x6c7b, .value=0xfd},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x671b, .value=0xf7, .type=IO_READ},
         {.addr=0x671c, .value=0x1b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x011b, .value=0xda, .type=IO_READ},
         {.addr=0x011c, .value=0x6b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6c7b, .value=0xfd, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2106,12 +2197,13 @@ UTEST(SingleStepTests_F7, _F7_005E) {
         {.addr=0x016f, .value=0x4d}, {.addr=0x0170, .value=0x0e}, {.addr=0x0e98, .value=0x1d},
         {.addr=0xe79b, .value=0xf7}, {.addr=0xe79c, .value=0x6f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe79b, .value=0xf7, .type=IO_READ},
         {.addr=0xe79c, .value=0x6f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016f, .value=0x4d, .type=IO_READ},
         {.addr=0x0170, .value=0x0e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0e98, .value=0x1d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2129,12 +2221,13 @@ UTEST(SingleStepTests_F7, _F7_005F) {
         {.addr=0x01dd, .value=0x07}, {.addr=0x01de, .value=0xa0}, {.addr=0x985b, .value=0xf7},
         {.addr=0x985c, .value=0xdd}, {.addr=0xa031, .value=0xac},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x985b, .value=0xf7, .type=IO_READ},
         {.addr=0x985c, .value=0xdd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01dd, .value=0x07, .type=IO_READ},
         {.addr=0x01de, .value=0xa0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa031, .value=0xac, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2152,12 +2245,13 @@ UTEST(SingleStepTests_F7, _F7_0060) {
         {.addr=0x011f, .value=0x59}, {.addr=0x0120, .value=0x7d}, {.addr=0x7e4c, .value=0x9a},
         {.addr=0xd738, .value=0xf7}, {.addr=0xd739, .value=0x1f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd738, .value=0xf7, .type=IO_READ},
         {.addr=0xd739, .value=0x1f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x011f, .value=0x59, .type=IO_READ},
         {.addr=0x0120, .value=0x7d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7e4c, .value=0x9a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2175,12 +2269,13 @@ UTEST(SingleStepTests_F7, _F7_0061) {
         {.addr=0x00bc, .value=0x24}, {.addr=0x00bd, .value=0x57}, {.addr=0x5789, .value=0x09},
         {.addr=0xeb10, .value=0xf7}, {.addr=0xeb11, .value=0xbc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xeb10, .value=0xf7, .type=IO_READ},
         {.addr=0xeb11, .value=0xbc, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00bc, .value=0x24, .type=IO_READ},
         {.addr=0x00bd, .value=0x57, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5789, .value=0x09, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2198,12 +2293,13 @@ UTEST(SingleStepTests_F7, _F7_0062) {
         {.addr=0x00b4, .value=0x3e}, {.addr=0x00b5, .value=0xd8}, {.addr=0xb869, .value=0xf7},
         {.addr=0xb86a, .value=0xb4}, {.addr=0xd90b, .value=0x9b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb869, .value=0xf7, .type=IO_READ},
         {.addr=0xb86a, .value=0xb4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b4, .value=0x3e, .type=IO_READ},
         {.addr=0x00b5, .value=0xd8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd90b, .value=0x9b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2221,12 +2317,13 @@ UTEST(SingleStepTests_F7, _F7_0063) {
         {.addr=0x00b8, .value=0x6f}, {.addr=0x00b9, .value=0xb8}, {.addr=0xb8f8, .value=0x9a},
         {.addr=0xf415, .value=0xf7}, {.addr=0xf416, .value=0xb8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf415, .value=0xf7, .type=IO_READ},
         {.addr=0xf416, .value=0xb8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b8, .value=0x6f, .type=IO_READ},
         {.addr=0x00b9, .value=0xb8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb8f8, .value=0x9a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2244,12 +2341,13 @@ UTEST(SingleStepTests_F7, _F7_0064) {
         {.addr=0x00c6, .value=0x4f}, {.addr=0x00c7, .value=0xf2}, {.addr=0x45d4, .value=0xf7},
         {.addr=0x45d5, .value=0xc6}, {.addr=0xf32e, .value=0x27},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x45d4, .value=0xf7, .type=IO_READ},
         {.addr=0x45d5, .value=0xc6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c6, .value=0x4f, .type=IO_READ},
         {.addr=0x00c7, .value=0xf2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf32e, .value=0x27, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2267,12 +2365,13 @@ UTEST(SingleStepTests_F7, _F7_0065) {
         {.addr=0x0064, .value=0x15}, {.addr=0x0065, .value=0x00}, {.addr=0x006b, .value=0xe7},
         {.addr=0x81b4, .value=0xf7}, {.addr=0x81b5, .value=0x64},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x81b4, .value=0xf7, .type=IO_READ},
         {.addr=0x81b5, .value=0x64, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0064, .value=0x15, .type=IO_READ},
         {.addr=0x0065, .value=0x00, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006b, .value=0xe7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2290,12 +2389,13 @@ UTEST(SingleStepTests_F7, _F7_0066) {
         {.addr=0x001d, .value=0x0e}, {.addr=0x001e, .value=0xae}, {.addr=0xaef7, .value=0x27},
         {.addr=0xe998, .value=0xf7}, {.addr=0xe999, .value=0x1d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe998, .value=0xf7, .type=IO_READ},
         {.addr=0xe999, .value=0x1d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x001d, .value=0x0e, .type=IO_READ},
         {.addr=0x001e, .value=0xae, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xaef7, .value=0x27, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2313,12 +2413,13 @@ UTEST(SingleStepTests_F7, _F7_0067) {
         {.addr=0x0007, .value=0xb6}, {.addr=0x0008, .value=0x6f}, {.addr=0x6fdc, .value=0x9d},
         {.addr=0x791d, .value=0xf7}, {.addr=0x791e, .value=0x07},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x791d, .value=0xf7, .type=IO_READ},
         {.addr=0x791e, .value=0x07, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0007, .value=0xb6, .type=IO_READ},
         {.addr=0x0008, .value=0x6f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6fdc, .value=0x9d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2336,12 +2437,13 @@ UTEST(SingleStepTests_F7, _F7_0068) {
         {.addr=0x0126, .value=0xf7}, {.addr=0x0127, .value=0x1e}, {.addr=0x088b, .value=0xf7},
         {.addr=0x088c, .value=0x26}, {.addr=0x1efd, .value=0x59},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x088b, .value=0xf7, .type=IO_READ},
         {.addr=0x088c, .value=0x26, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0126, .value=0xf7, .type=IO_READ},
         {.addr=0x0127, .value=0x1e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1efd, .value=0x59, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2359,12 +2461,13 @@ UTEST(SingleStepTests_F7, _F7_0069) {
         {.addr=0x01ec, .value=0xf6}, {.addr=0x01ed, .value=0x10}, {.addr=0x1197, .value=0xec},
         {.addr=0x92ba, .value=0xf7}, {.addr=0x92bb, .value=0xec},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x92ba, .value=0xf7, .type=IO_READ},
         {.addr=0x92bb, .value=0xec, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ec, .value=0xf6, .type=IO_READ},
         {.addr=0x01ed, .value=0x10, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1197, .value=0xec, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2382,12 +2485,13 @@ UTEST(SingleStepTests_F7, _F7_006A) {
         {.addr=0x009a, .value=0x8c}, {.addr=0x009b, .value=0xe4}, {.addr=0x6ee9, .value=0xf7},
         {.addr=0x6eea, .value=0x9a}, {.addr=0xe4c3, .value=0x58},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6ee9, .value=0xf7, .type=IO_READ},
         {.addr=0x6eea, .value=0x9a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009a, .value=0x8c, .type=IO_READ},
         {.addr=0x009b, .value=0xe4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe4c3, .value=0x58, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2405,12 +2509,13 @@ UTEST(SingleStepTests_F7, _F7_006B) {
         {.addr=0x019b, .value=0xa4}, {.addr=0x019c, .value=0x4b}, {.addr=0x4c63, .value=0x9f},
         {.addr=0xe3e2, .value=0xf7}, {.addr=0xe3e3, .value=0x9b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe3e2, .value=0xf7, .type=IO_READ},
         {.addr=0xe3e3, .value=0x9b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019b, .value=0xa4, .type=IO_READ},
         {.addr=0x019c, .value=0x4b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4c63, .value=0x9f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2428,12 +2533,13 @@ UTEST(SingleStepTests_F7, _F7_006C) {
         {.addr=0x0098, .value=0x30}, {.addr=0x0099, .value=0x9f}, {.addr=0xa006, .value=0x24},
         {.addr=0xf661, .value=0xf7}, {.addr=0xf662, .value=0x98},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf661, .value=0xf7, .type=IO_READ},
         {.addr=0xf662, .value=0x98, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0098, .value=0x30, .type=IO_READ},
         {.addr=0x0099, .value=0x9f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa006, .value=0x24, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2451,12 +2557,13 @@ UTEST(SingleStepTests_F7, _F7_006D) {
         {.addr=0x01cf, .value=0x68}, {.addr=0x01d0, .value=0x65}, {.addr=0x65c0, .value=0x30},
         {.addr=0xf3ed, .value=0xf7}, {.addr=0xf3ee, .value=0xcf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf3ed, .value=0xf7, .type=IO_READ},
         {.addr=0xf3ee, .value=0xcf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01cf, .value=0x68, .type=IO_READ},
         {.addr=0x01d0, .value=0x65, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x65c0, .value=0x30, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2474,12 +2581,13 @@ UTEST(SingleStepTests_F7, _F7_006E) {
         {.addr=0x0042, .value=0x46}, {.addr=0x0043, .value=0xfe}, {.addr=0x0316, .value=0xf7},
         {.addr=0x0317, .value=0x42}, {.addr=0xfea6, .value=0x02},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0316, .value=0xf7, .type=IO_READ},
         {.addr=0x0317, .value=0x42, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0042, .value=0x46, .type=IO_READ},
         {.addr=0x0043, .value=0xfe, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfea6, .value=0x02, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2497,12 +2605,13 @@ UTEST(SingleStepTests_F7, _F7_006F) {
         {.addr=0x0088, .value=0xb6}, {.addr=0x0089, .value=0x3d}, {.addr=0x3eab, .value=0x28},
         {.addr=0xcf8b, .value=0xf7}, {.addr=0xcf8c, .value=0x88},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcf8b, .value=0xf7, .type=IO_READ},
         {.addr=0xcf8c, .value=0x88, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0088, .value=0xb6, .type=IO_READ},
         {.addr=0x0089, .value=0x3d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3eab, .value=0x28, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2520,12 +2629,13 @@ UTEST(SingleStepTests_F7, _F7_0070) {
         {.addr=0x002f, .value=0xc4}, {.addr=0x0030, .value=0x83}, {.addr=0x8415, .value=0x5a},
         {.addr=0x888c, .value=0xf7}, {.addr=0x888d, .value=0x2f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x888c, .value=0xf7, .type=IO_READ},
         {.addr=0x888d, .value=0x2f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002f, .value=0xc4, .type=IO_READ},
         {.addr=0x0030, .value=0x83, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8415, .value=0x5a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2543,12 +2653,13 @@ UTEST(SingleStepTests_F7, _F7_0071) {
         {.addr=0x003a, .value=0x36}, {.addr=0x003b, .value=0x55}, {.addr=0x5613, .value=0xf9},
         {.addr=0xe50d, .value=0xf7}, {.addr=0xe50e, .value=0x3a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe50d, .value=0xf7, .type=IO_READ},
         {.addr=0xe50e, .value=0x3a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x003a, .value=0x36, .type=IO_READ},
         {.addr=0x003b, .value=0x55, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5613, .value=0xf9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2566,12 +2677,13 @@ UTEST(SingleStepTests_F7, _F7_0072) {
         {.addr=0x0159, .value=0xcf}, {.addr=0x015a, .value=0x75}, {.addr=0x767b, .value=0xec},
         {.addr=0xc7a8, .value=0xf7}, {.addr=0xc7a9, .value=0x59},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc7a8, .value=0xf7, .type=IO_READ},
         {.addr=0xc7a9, .value=0x59, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0159, .value=0xcf, .type=IO_READ},
         {.addr=0x015a, .value=0x75, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x767b, .value=0xec, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2589,12 +2701,13 @@ UTEST(SingleStepTests_F7, _F7_0073) {
         {.addr=0x0145, .value=0x23}, {.addr=0x0146, .value=0xd7}, {.addr=0xd792, .value=0x81},
         {.addr=0xf488, .value=0xf7}, {.addr=0xf489, .value=0x45},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf488, .value=0xf7, .type=IO_READ},
         {.addr=0xf489, .value=0x45, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0145, .value=0x23, .type=IO_READ},
         {.addr=0x0146, .value=0xd7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd792, .value=0x81, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2612,12 +2725,13 @@ UTEST(SingleStepTests_F7, _F7_0074) {
         {.addr=0x019d, .value=0xdb}, {.addr=0x019e, .value=0x1b}, {.addr=0x1c32, .value=0xa8},
         {.addr=0x8085, .value=0xf7}, {.addr=0x8086, .value=0x9d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8085, .value=0xf7, .type=IO_READ},
         {.addr=0x8086, .value=0x9d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019d, .value=0xdb, .type=IO_READ},
         {.addr=0x019e, .value=0x1b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1c32, .value=0xa8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2635,12 +2749,13 @@ UTEST(SingleStepTests_F7, _F7_0075) {
         {.addr=0x000c, .value=0x12}, {.addr=0x000d, .value=0x52}, {.addr=0x5255, .value=0x39},
         {.addr=0xa05b, .value=0xf7}, {.addr=0xa05c, .value=0x0c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa05b, .value=0xf7, .type=IO_READ},
         {.addr=0xa05c, .value=0x0c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000c, .value=0x12, .type=IO_READ},
         {.addr=0x000d, .value=0x52, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5255, .value=0x39, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2658,12 +2773,13 @@ UTEST(SingleStepTests_F7, _F7_0076) {
         {.addr=0x0170, .value=0x58}, {.addr=0x0171, .value=0x37}, {.addr=0x3809, .value=0x1a},
         {.addr=0x4b62, .value=0xf7}, {.addr=0x4b63, .value=0x70},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4b62, .value=0xf7, .type=IO_READ},
         {.addr=0x4b63, .value=0x70, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0170, .value=0x58, .type=IO_READ},
         {.addr=0x0171, .value=0x37, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3809, .value=0x1a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2681,12 +2797,13 @@ UTEST(SingleStepTests_F7, _F7_0078) {
         {.addr=0x0048, .value=0xd9}, {.addr=0x0049, .value=0x8f}, {.addr=0x093c, .value=0xf7},
         {.addr=0x093d, .value=0x48}, {.addr=0x906c, .value=0x83},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x093c, .value=0xf7, .type=IO_READ},
         {.addr=0x093d, .value=0x48, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0048, .value=0xd9, .type=IO_READ},
         {.addr=0x0049, .value=0x8f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x906c, .value=0x83, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2704,12 +2821,13 @@ UTEST(SingleStepTests_F7, _F7_0079) {
         {.addr=0x0126, .value=0x82}, {.addr=0x0127, .value=0x06}, {.addr=0x071c, .value=0x19},
         {.addr=0xf049, .value=0xf7}, {.addr=0xf04a, .value=0x26},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf049, .value=0xf7, .type=IO_READ},
         {.addr=0xf04a, .value=0x26, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0126, .value=0x82, .type=IO_READ},
         {.addr=0x0127, .value=0x06, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x071c, .value=0x19, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2727,12 +2845,13 @@ UTEST(SingleStepTests_F7, _F7_007A) {
         {.addr=0x0148, .value=0xa7}, {.addr=0x0149, .value=0x21}, {.addr=0x2263, .value=0xc4},
         {.addr=0x882f, .value=0xf7}, {.addr=0x8830, .value=0x48},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x882f, .value=0xf7, .type=IO_READ},
         {.addr=0x8830, .value=0x48, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0148, .value=0xa7, .type=IO_READ},
         {.addr=0x0149, .value=0x21, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2263, .value=0xc4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2750,12 +2869,13 @@ UTEST(SingleStepTests_F7, _F7_007B) {
         {.addr=0x007f, .value=0x41}, {.addr=0x0080, .value=0x4c}, {.addr=0x4c8a, .value=0xaa},
         {.addr=0xfb4a, .value=0xf7}, {.addr=0xfb4b, .value=0x7f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfb4a, .value=0xf7, .type=IO_READ},
         {.addr=0xfb4b, .value=0x7f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x007f, .value=0x41, .type=IO_READ},
         {.addr=0x0080, .value=0x4c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4c8a, .value=0xaa, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2773,12 +2893,13 @@ UTEST(SingleStepTests_F7, _F7_007C) {
         {.addr=0x0038, .value=0x4e}, {.addr=0x0039, .value=0x72}, {.addr=0x72b8, .value=0x61},
         {.addr=0xd08b, .value=0xf7}, {.addr=0xd08c, .value=0x38},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd08b, .value=0xf7, .type=IO_READ},
         {.addr=0xd08c, .value=0x38, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0038, .value=0x4e, .type=IO_READ},
         {.addr=0x0039, .value=0x72, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x72b8, .value=0x61, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2796,12 +2917,13 @@ UTEST(SingleStepTests_F7, _F7_007D) {
         {.addr=0x0082, .value=0xc2}, {.addr=0x0083, .value=0x4b}, {.addr=0x4c41, .value=0x9f},
         {.addr=0xb787, .value=0xf7}, {.addr=0xb788, .value=0x82},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb787, .value=0xf7, .type=IO_READ},
         {.addr=0xb788, .value=0x82, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0082, .value=0xc2, .type=IO_READ},
         {.addr=0x0083, .value=0x4b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4c41, .value=0x9f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2819,12 +2941,13 @@ UTEST(SingleStepTests_F7, _F7_007E) {
         {.addr=0x01f7, .value=0x87}, {.addr=0x01f8, .value=0x39}, {.addr=0x39f3, .value=0x2f},
         {.addr=0x7733, .value=0xf7}, {.addr=0x7734, .value=0xf7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7733, .value=0xf7, .type=IO_READ},
         {.addr=0x7734, .value=0xf7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f7, .value=0x87, .type=IO_READ},
         {.addr=0x01f8, .value=0x39, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x39f3, .value=0x2f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2842,12 +2965,13 @@ UTEST(SingleStepTests_F7, _F7_0080) {
         {.addr=0x00c2, .value=0x58}, {.addr=0x00c3, .value=0xd2}, {.addr=0x0fe7, .value=0xf7},
         {.addr=0x0fe8, .value=0xc2}, {.addr=0xd288, .value=0x03},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0fe7, .value=0xf7, .type=IO_READ},
         {.addr=0x0fe8, .value=0xc2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c2, .value=0x58, .type=IO_READ},
         {.addr=0x00c3, .value=0xd2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd288, .value=0x03, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2865,12 +2989,13 @@ UTEST(SingleStepTests_F7, _F7_0081) {
         {.addr=0x00c9, .value=0xbd}, {.addr=0x00ca, .value=0x7d}, {.addr=0x7e08, .value=0x16},
         {.addr=0xc6df, .value=0xf7}, {.addr=0xc6e0, .value=0xc9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc6df, .value=0xf7, .type=IO_READ},
         {.addr=0xc6e0, .value=0xc9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c9, .value=0xbd, .type=IO_READ},
         {.addr=0x00ca, .value=0x7d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7e08, .value=0x16, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2888,12 +3013,13 @@ UTEST(SingleStepTests_F7, _F7_0082) {
         {.addr=0x002d, .value=0x38}, {.addr=0x002e, .value=0xbf}, {.addr=0x0936, .value=0xf7},
         {.addr=0x0937, .value=0x2d}, {.addr=0xbff3, .value=0xd1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0936, .value=0xf7, .type=IO_READ},
         {.addr=0x0937, .value=0x2d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002d, .value=0x38, .type=IO_READ},
         {.addr=0x002e, .value=0xbf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbff3, .value=0xd1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2911,12 +3037,13 @@ UTEST(SingleStepTests_F7, _F7_0083) {
         {.addr=0x018a, .value=0x23}, {.addr=0x018b, .value=0x41}, {.addr=0x3260, .value=0xf7},
         {.addr=0x3261, .value=0x8a}, {.addr=0x41c6, .value=0x28},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3260, .value=0xf7, .type=IO_READ},
         {.addr=0x3261, .value=0x8a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x018a, .value=0x23, .type=IO_READ},
         {.addr=0x018b, .value=0x41, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x41c6, .value=0x28, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2934,12 +3061,13 @@ UTEST(SingleStepTests_F7, _F7_0084) {
         {.addr=0x0069, .value=0x70}, {.addr=0x006a, .value=0x8f}, {.addr=0x1dd2, .value=0xf7},
         {.addr=0x1dd3, .value=0x69}, {.addr=0x9050, .value=0x14},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1dd2, .value=0xf7, .type=IO_READ},
         {.addr=0x1dd3, .value=0x69, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0069, .value=0x70, .type=IO_READ},
         {.addr=0x006a, .value=0x8f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9050, .value=0x14, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2957,12 +3085,13 @@ UTEST(SingleStepTests_F7, _F7_0085) {
         {.addr=0x008c, .value=0xed}, {.addr=0x008d, .value=0x4a}, {.addr=0x05b1, .value=0xf7},
         {.addr=0x05b2, .value=0x8c}, {.addr=0x4af9, .value=0xa6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x05b1, .value=0xf7, .type=IO_READ},
         {.addr=0x05b2, .value=0x8c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x008c, .value=0xed, .type=IO_READ},
         {.addr=0x008d, .value=0x4a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4af9, .value=0xa6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -2980,12 +3109,13 @@ UTEST(SingleStepTests_F7, _F7_0086) {
         {.addr=0x01e9, .value=0x03}, {.addr=0x01ea, .value=0x23}, {.addr=0x2308, .value=0x9c},
         {.addr=0x5ac1, .value=0xf7}, {.addr=0x5ac2, .value=0xe9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5ac1, .value=0xf7, .type=IO_READ},
         {.addr=0x5ac2, .value=0xe9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e9, .value=0x03, .type=IO_READ},
         {.addr=0x01ea, .value=0x23, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2308, .value=0x9c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3003,12 +3133,13 @@ UTEST(SingleStepTests_F7, _F7_0087) {
         {.addr=0x0043, .value=0x17}, {.addr=0x0044, .value=0x72}, {.addr=0x4052, .value=0xf7},
         {.addr=0x4053, .value=0x43}, {.addr=0x7241, .value=0x76},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4052, .value=0xf7, .type=IO_READ},
         {.addr=0x4053, .value=0x43, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0043, .value=0x17, .type=IO_READ},
         {.addr=0x0044, .value=0x72, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7241, .value=0x76, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3026,12 +3157,13 @@ UTEST(SingleStepTests_F7, _F7_0088) {
         {.addr=0x000d, .value=0x5a}, {.addr=0x000e, .value=0x22}, {.addr=0x22c9, .value=0x51},
         {.addr=0x9c53, .value=0xf7}, {.addr=0x9c54, .value=0x0d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9c53, .value=0xf7, .type=IO_READ},
         {.addr=0x9c54, .value=0x0d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000d, .value=0x5a, .type=IO_READ},
         {.addr=0x000e, .value=0x22, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x22c9, .value=0x51, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3049,12 +3181,13 @@ UTEST(SingleStepTests_F7, _F7_0089) {
         {.addr=0x0178, .value=0x81}, {.addr=0x0179, .value=0x70}, {.addr=0x70dc, .value=0x62},
         {.addr=0x951d, .value=0xf7}, {.addr=0x951e, .value=0x78},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x951d, .value=0xf7, .type=IO_READ},
         {.addr=0x951e, .value=0x78, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0178, .value=0x81, .type=IO_READ},
         {.addr=0x0179, .value=0x70, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x70dc, .value=0x62, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3072,12 +3205,13 @@ UTEST(SingleStepTests_F7, _F7_008A) {
         {.addr=0x01dd, .value=0x8d}, {.addr=0x01de, .value=0xea}, {.addr=0x5bfd, .value=0xf7},
         {.addr=0x5bfe, .value=0xdd}, {.addr=0xeb43, .value=0xef},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5bfd, .value=0xf7, .type=IO_READ},
         {.addr=0x5bfe, .value=0xdd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01dd, .value=0x8d, .type=IO_READ},
         {.addr=0x01de, .value=0xea, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xeb43, .value=0xef, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3095,12 +3229,13 @@ UTEST(SingleStepTests_F7, _F7_008B) {
         {.addr=0x01fa, .value=0xbb}, {.addr=0x01fb, .value=0x84}, {.addr=0x134f, .value=0xf7},
         {.addr=0x1350, .value=0xfa}, {.addr=0x85b9, .value=0x1c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x134f, .value=0xf7, .type=IO_READ},
         {.addr=0x1350, .value=0xfa, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01fa, .value=0xbb, .type=IO_READ},
         {.addr=0x01fb, .value=0x84, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x85b9, .value=0x1c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3118,12 +3253,13 @@ UTEST(SingleStepTests_F7, _F7_008C) {
         {.addr=0x0052, .value=0x84}, {.addr=0x0053, .value=0x68}, {.addr=0x6948, .value=0x9a},
         {.addr=0xde0b, .value=0xf7}, {.addr=0xde0c, .value=0x52},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xde0b, .value=0xf7, .type=IO_READ},
         {.addr=0xde0c, .value=0x52, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0052, .value=0x84, .type=IO_READ},
         {.addr=0x0053, .value=0x68, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6948, .value=0x9a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3141,12 +3277,13 @@ UTEST(SingleStepTests_F7, _F7_008D) {
         {.addr=0x00b9, .value=0xb6}, {.addr=0x00ba, .value=0xb4}, {.addr=0xb53a, .value=0x66},
         {.addr=0xe80c, .value=0xf7}, {.addr=0xe80d, .value=0xb9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe80c, .value=0xf7, .type=IO_READ},
         {.addr=0xe80d, .value=0xb9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b9, .value=0xb6, .type=IO_READ},
         {.addr=0x00ba, .value=0xb4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb53a, .value=0x66, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3164,12 +3301,13 @@ UTEST(SingleStepTests_F7, _F7_008E) {
         {.addr=0x004c, .value=0x5f}, {.addr=0x004d, .value=0x5c}, {.addr=0x28d0, .value=0xf7},
         {.addr=0x28d1, .value=0x4c}, {.addr=0x5d1c, .value=0xa0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x28d0, .value=0xf7, .type=IO_READ},
         {.addr=0x28d1, .value=0x4c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x004c, .value=0x5f, .type=IO_READ},
         {.addr=0x004d, .value=0x5c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5d1c, .value=0xa0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3187,12 +3325,13 @@ UTEST(SingleStepTests_F7, _F7_008F) {
         {.addr=0x0121, .value=0x68}, {.addr=0x0122, .value=0xea}, {.addr=0x8934, .value=0xf7},
         {.addr=0x8935, .value=0x21}, {.addr=0xeaa9, .value=0x24},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8934, .value=0xf7, .type=IO_READ},
         {.addr=0x8935, .value=0x21, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0121, .value=0x68, .type=IO_READ},
         {.addr=0x0122, .value=0xea, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xeaa9, .value=0x24, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3210,12 +3349,13 @@ UTEST(SingleStepTests_F7, _F7_0090) {
         {.addr=0x00c3, .value=0x9f}, {.addr=0x00c4, .value=0x09}, {.addr=0x0a77, .value=0x86},
         {.addr=0x1579, .value=0xf7}, {.addr=0x157a, .value=0xc3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1579, .value=0xf7, .type=IO_READ},
         {.addr=0x157a, .value=0xc3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c3, .value=0x9f, .type=IO_READ},
         {.addr=0x00c4, .value=0x09, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0a77, .value=0x86, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3233,12 +3373,13 @@ UTEST(SingleStepTests_F7, _F7_0091) {
         {.addr=0x00e2, .value=0x32}, {.addr=0x00e3, .value=0x98}, {.addr=0x9897, .value=0x92},
         {.addr=0xa98d, .value=0xf7}, {.addr=0xa98e, .value=0xe2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa98d, .value=0xf7, .type=IO_READ},
         {.addr=0xa98e, .value=0xe2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e2, .value=0x32, .type=IO_READ},
         {.addr=0x00e3, .value=0x98, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9897, .value=0x92, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3256,12 +3397,13 @@ UTEST(SingleStepTests_F7, _F7_0092) {
         {.addr=0x0133, .value=0x38}, {.addr=0x0134, .value=0xa7}, {.addr=0x56b6, .value=0xf7},
         {.addr=0x56b7, .value=0x33}, {.addr=0xa786, .value=0xb1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x56b6, .value=0xf7, .type=IO_READ},
         {.addr=0x56b7, .value=0x33, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0133, .value=0x38, .type=IO_READ},
         {.addr=0x0134, .value=0xa7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa786, .value=0xb1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3279,12 +3421,13 @@ UTEST(SingleStepTests_F7, _F7_0093) {
         {.addr=0x00eb, .value=0x13}, {.addr=0x00ec, .value=0xf2}, {.addr=0xa5b7, .value=0xf7},
         {.addr=0xa5b8, .value=0xeb}, {.addr=0xf2fe, .value=0x6d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa5b7, .value=0xf7, .type=IO_READ},
         {.addr=0xa5b8, .value=0xeb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00eb, .value=0x13, .type=IO_READ},
         {.addr=0x00ec, .value=0xf2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf2fe, .value=0x6d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3302,12 +3445,13 @@ UTEST(SingleStepTests_F7, _F7_0094) {
         {.addr=0x004f, .value=0x70}, {.addr=0x0050, .value=0x52}, {.addr=0x5368, .value=0x8d},
         {.addr=0xf036, .value=0xf7}, {.addr=0xf037, .value=0x4f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf036, .value=0xf7, .type=IO_READ},
         {.addr=0xf037, .value=0x4f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x004f, .value=0x70, .type=IO_READ},
         {.addr=0x0050, .value=0x52, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5368, .value=0x8d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3325,12 +3469,13 @@ UTEST(SingleStepTests_F7, _F7_0095) {
         {.addr=0x0040, .value=0x16}, {.addr=0x0041, .value=0x1a}, {.addr=0x1afa, .value=0x3f},
         {.addr=0xa2f3, .value=0xf7}, {.addr=0xa2f4, .value=0x40},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa2f3, .value=0xf7, .type=IO_READ},
         {.addr=0xa2f4, .value=0x40, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0040, .value=0x16, .type=IO_READ},
         {.addr=0x0041, .value=0x1a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1afa, .value=0x3f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3348,12 +3493,13 @@ UTEST(SingleStepTests_F7, _F7_0096) {
         {.addr=0x01e4, .value=0x97}, {.addr=0x01e5, .value=0xb3}, {.addr=0xb43e, .value=0x59},
         {.addr=0xb468, .value=0xf7}, {.addr=0xb469, .value=0xe4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb468, .value=0xf7, .type=IO_READ},
         {.addr=0xb469, .value=0xe4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e4, .value=0x97, .type=IO_READ},
         {.addr=0x01e5, .value=0xb3, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb43e, .value=0x59, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3371,12 +3517,13 @@ UTEST(SingleStepTests_F7, _F7_0097) {
         {.addr=0x0108, .value=0xa1}, {.addr=0x0109, .value=0x49}, {.addr=0x42c0, .value=0xf7},
         {.addr=0x42c1, .value=0x08}, {.addr=0x4a1e, .value=0xca},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x42c0, .value=0xf7, .type=IO_READ},
         {.addr=0x42c1, .value=0x08, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0108, .value=0xa1, .type=IO_READ},
         {.addr=0x0109, .value=0x49, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4a1e, .value=0xca, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3394,12 +3541,13 @@ UTEST(SingleStepTests_F7, _F7_0098) {
         {.addr=0x00c0, .value=0xa0}, {.addr=0x00c1, .value=0xc9}, {.addr=0x564a, .value=0xf7},
         {.addr=0x564b, .value=0xc0}, {.addr=0xca38, .value=0xa6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x564a, .value=0xf7, .type=IO_READ},
         {.addr=0x564b, .value=0xc0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c0, .value=0xa0, .type=IO_READ},
         {.addr=0x00c1, .value=0xc9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xca38, .value=0xa6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3417,12 +3565,13 @@ UTEST(SingleStepTests_F7, _F7_0099) {
         {.addr=0x0010, .value=0x41}, {.addr=0x0011, .value=0xb5}, {.addr=0x3ccd, .value=0xf7},
         {.addr=0x3cce, .value=0x10}, {.addr=0xb5ce, .value=0x23},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3ccd, .value=0xf7, .type=IO_READ},
         {.addr=0x3cce, .value=0x10, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0010, .value=0x41, .type=IO_READ},
         {.addr=0x0011, .value=0xb5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb5ce, .value=0x23, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3440,12 +3589,13 @@ UTEST(SingleStepTests_F7, _F7_009A) {
         {.addr=0x0092, .value=0x25}, {.addr=0x0093, .value=0x48}, {.addr=0x2298, .value=0xf7},
         {.addr=0x2299, .value=0x92}, {.addr=0x4845, .value=0x31},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2298, .value=0xf7, .type=IO_READ},
         {.addr=0x2299, .value=0x92, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0092, .value=0x25, .type=IO_READ},
         {.addr=0x0093, .value=0x48, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4845, .value=0x31, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3463,12 +3613,13 @@ UTEST(SingleStepTests_F7, _F7_009B) {
         {.addr=0x0022, .value=0xa3}, {.addr=0x0023, .value=0xa6}, {.addr=0x9061, .value=0xf7},
         {.addr=0x9062, .value=0x22}, {.addr=0xa760, .value=0x50},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9061, .value=0xf7, .type=IO_READ},
         {.addr=0x9062, .value=0x22, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0022, .value=0xa3, .type=IO_READ},
         {.addr=0x0023, .value=0xa6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa760, .value=0x50, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3486,12 +3637,13 @@ UTEST(SingleStepTests_F7, _F7_009C) {
         {.addr=0x01a4, .value=0x2f}, {.addr=0x01a5, .value=0xc1}, {.addr=0x9ad0, .value=0xf7},
         {.addr=0x9ad1, .value=0xa4}, {.addr=0xc219, .value=0x1e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9ad0, .value=0xf7, .type=IO_READ},
         {.addr=0x9ad1, .value=0xa4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a4, .value=0x2f, .type=IO_READ},
         {.addr=0x01a5, .value=0xc1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc219, .value=0x1e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3509,12 +3661,13 @@ UTEST(SingleStepTests_F7, _F7_009D) {
         {.addr=0x00a8, .value=0xfc}, {.addr=0x00a9, .value=0x68}, {.addr=0x24a9, .value=0xf7},
         {.addr=0x24aa, .value=0xa8}, {.addr=0x68fe, .value=0x9a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x24a9, .value=0xf7, .type=IO_READ},
         {.addr=0x24aa, .value=0xa8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a8, .value=0xfc, .type=IO_READ},
         {.addr=0x00a9, .value=0x68, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x68fe, .value=0x9a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3532,12 +3685,13 @@ UTEST(SingleStepTests_F7, _F7_009F) {
         {.addr=0x01d9, .value=0xd5}, {.addr=0x01da, .value=0x16}, {.addr=0x16e9, .value=0xb4},
         {.addr=0xf5fc, .value=0xf7}, {.addr=0xf5fd, .value=0xd9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf5fc, .value=0xf7, .type=IO_READ},
         {.addr=0xf5fd, .value=0xd9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d9, .value=0xd5, .type=IO_READ},
         {.addr=0x01da, .value=0x16, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x16e9, .value=0xb4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3555,12 +3709,13 @@ UTEST(SingleStepTests_F7, _F7_00A0) {
         {.addr=0x019d, .value=0x92}, {.addr=0x019e, .value=0xd9}, {.addr=0xd9bc, .value=0x98},
         {.addr=0xdaa3, .value=0xf7}, {.addr=0xdaa4, .value=0x9d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdaa3, .value=0xf7, .type=IO_READ},
         {.addr=0xdaa4, .value=0x9d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019d, .value=0x92, .type=IO_READ},
         {.addr=0x019e, .value=0xd9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd9bc, .value=0x98, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3578,12 +3733,13 @@ UTEST(SingleStepTests_F7, _F7_00A1) {
         {.addr=0x00ad, .value=0xb2}, {.addr=0x00ae, .value=0xa8}, {.addr=0xa8c3, .value=0x45},
         {.addr=0xd2c5, .value=0xf7}, {.addr=0xd2c6, .value=0xad},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd2c5, .value=0xf7, .type=IO_READ},
         {.addr=0xd2c6, .value=0xad, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ad, .value=0xb2, .type=IO_READ},
         {.addr=0x00ae, .value=0xa8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa8c3, .value=0x45, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3601,12 +3757,13 @@ UTEST(SingleStepTests_F7, _F7_00A2) {
         {.addr=0x00a3, .value=0x07}, {.addr=0x00a4, .value=0x4c}, {.addr=0x31a3, .value=0xf7},
         {.addr=0x31a4, .value=0xa3}, {.addr=0x4c37, .value=0x0c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x31a3, .value=0xf7, .type=IO_READ},
         {.addr=0x31a4, .value=0xa3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a3, .value=0x07, .type=IO_READ},
         {.addr=0x00a4, .value=0x4c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4c37, .value=0x0c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3624,12 +3781,13 @@ UTEST(SingleStepTests_F7, _F7_00A3) {
         {.addr=0x01c9, .value=0x10}, {.addr=0x01ca, .value=0xc7}, {.addr=0xa063, .value=0xf7},
         {.addr=0xa064, .value=0xc9}, {.addr=0xc7a0, .value=0x32},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa063, .value=0xf7, .type=IO_READ},
         {.addr=0xa064, .value=0xc9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c9, .value=0x10, .type=IO_READ},
         {.addr=0x01ca, .value=0xc7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc7a0, .value=0x32, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3647,12 +3805,13 @@ UTEST(SingleStepTests_F7, _F7_00A4) {
         {.addr=0x004d, .value=0x39}, {.addr=0x004e, .value=0x7f}, {.addr=0x03be, .value=0xf7},
         {.addr=0x03bf, .value=0x4d}, {.addr=0x7fd2, .value=0x67},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x03be, .value=0xf7, .type=IO_READ},
         {.addr=0x03bf, .value=0x4d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x004d, .value=0x39, .type=IO_READ},
         {.addr=0x004e, .value=0x7f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7fd2, .value=0x67, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3670,12 +3829,13 @@ UTEST(SingleStepTests_F7, _F7_00A5) {
         {.addr=0x01d1, .value=0x72}, {.addr=0x01d2, .value=0x12}, {.addr=0x1283, .value=0x14},
         {.addr=0xe63b, .value=0xf7}, {.addr=0xe63c, .value=0xd1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe63b, .value=0xf7, .type=IO_READ},
         {.addr=0xe63c, .value=0xd1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d1, .value=0x72, .type=IO_READ},
         {.addr=0x01d2, .value=0x12, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1283, .value=0x14, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3693,12 +3853,13 @@ UTEST(SingleStepTests_F7, _F7_00A6) {
         {.addr=0x009b, .value=0xb1}, {.addr=0x009c, .value=0xc5}, {.addr=0x8243, .value=0xf7},
         {.addr=0x8244, .value=0x9b}, {.addr=0xc69a, .value=0xce},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8243, .value=0xf7, .type=IO_READ},
         {.addr=0x8244, .value=0x9b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009b, .value=0xb1, .type=IO_READ},
         {.addr=0x009c, .value=0xc5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc69a, .value=0xce, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3716,12 +3877,13 @@ UTEST(SingleStepTests_F7, _F7_00A7) {
         {.addr=0x0095, .value=0xce}, {.addr=0x0096, .value=0x95}, {.addr=0x65b1, .value=0xf7},
         {.addr=0x65b2, .value=0x95}, {.addr=0x961c, .value=0xf4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x65b1, .value=0xf7, .type=IO_READ},
         {.addr=0x65b2, .value=0x95, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0095, .value=0xce, .type=IO_READ},
         {.addr=0x0096, .value=0x95, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x961c, .value=0xf4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3739,12 +3901,13 @@ UTEST(SingleStepTests_F7, _F7_00A8) {
         {.addr=0x0115, .value=0xad}, {.addr=0x0116, .value=0x28}, {.addr=0x292a, .value=0x67},
         {.addr=0x7f48, .value=0xf7}, {.addr=0x7f49, .value=0x15},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7f48, .value=0xf7, .type=IO_READ},
         {.addr=0x7f49, .value=0x15, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0115, .value=0xad, .type=IO_READ},
         {.addr=0x0116, .value=0x28, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x292a, .value=0x67, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3762,12 +3925,13 @@ UTEST(SingleStepTests_F7, _F7_00A9) {
         {.addr=0x017b, .value=0xb9}, {.addr=0x017c, .value=0x54}, {.addr=0x3ecf, .value=0xf7},
         {.addr=0x3ed0, .value=0x7b}, {.addr=0x550a, .value=0xe3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3ecf, .value=0xf7, .type=IO_READ},
         {.addr=0x3ed0, .value=0x7b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x017b, .value=0xb9, .type=IO_READ},
         {.addr=0x017c, .value=0x54, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x550a, .value=0xe3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3785,12 +3949,13 @@ UTEST(SingleStepTests_F7, _F7_00AA) {
         {.addr=0x018e, .value=0x83}, {.addr=0x018f, .value=0xf9}, {.addr=0x9c5d, .value=0xf7},
         {.addr=0x9c5e, .value=0x8e}, {.addr=0xfa2a, .value=0xbf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9c5d, .value=0xf7, .type=IO_READ},
         {.addr=0x9c5e, .value=0x8e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x018e, .value=0x83, .type=IO_READ},
         {.addr=0x018f, .value=0xf9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfa2a, .value=0xbf, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3808,12 +3973,13 @@ UTEST(SingleStepTests_F7, _F7_00AB) {
         {.addr=0x0080, .value=0x8e}, {.addr=0x0081, .value=0x73}, {.addr=0x5abb, .value=0xf7},
         {.addr=0x5abc, .value=0x80}, {.addr=0x740b, .value=0x98},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5abb, .value=0xf7, .type=IO_READ},
         {.addr=0x5abc, .value=0x80, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0080, .value=0x8e, .type=IO_READ},
         {.addr=0x0081, .value=0x73, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x740b, .value=0x98, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3831,12 +3997,13 @@ UTEST(SingleStepTests_F7, _F7_00AC) {
         {.addr=0x00cd, .value=0xed}, {.addr=0x00ce, .value=0xb9}, {.addr=0x08b8, .value=0xf7},
         {.addr=0x08b9, .value=0xcd}, {.addr=0xba23, .value=0x7d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x08b8, .value=0xf7, .type=IO_READ},
         {.addr=0x08b9, .value=0xcd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00cd, .value=0xed, .type=IO_READ},
         {.addr=0x00ce, .value=0xb9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xba23, .value=0x7d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3854,12 +4021,13 @@ UTEST(SingleStepTests_F7, _F7_00AD) {
         {.addr=0x01ab, .value=0xdf}, {.addr=0x01ac, .value=0xed}, {.addr=0x4731, .value=0xf7},
         {.addr=0x4732, .value=0xab}, {.addr=0xeed9, .value=0x2f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4731, .value=0xf7, .type=IO_READ},
         {.addr=0x4732, .value=0xab, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ab, .value=0xdf, .type=IO_READ},
         {.addr=0x01ac, .value=0xed, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xeed9, .value=0x2f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3877,12 +4045,13 @@ UTEST(SingleStepTests_F7, _F7_00AE) {
         {.addr=0x00b0, .value=0x69}, {.addr=0x00b1, .value=0x05}, {.addr=0x058d, .value=0x5c},
         {.addr=0xe897, .value=0xf7}, {.addr=0xe898, .value=0xb0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe897, .value=0xf7, .type=IO_READ},
         {.addr=0xe898, .value=0xb0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b0, .value=0x69, .type=IO_READ},
         {.addr=0x00b1, .value=0x05, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x058d, .value=0x5c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3900,12 +4069,13 @@ UTEST(SingleStepTests_F7, _F7_00AF) {
         {.addr=0x013b, .value=0x7c}, {.addr=0x013c, .value=0x6b}, {.addr=0x1717, .value=0xf7},
         {.addr=0x1718, .value=0x3b}, {.addr=0x6bab, .value=0xe9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1717, .value=0xf7, .type=IO_READ},
         {.addr=0x1718, .value=0x3b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013b, .value=0x7c, .type=IO_READ},
         {.addr=0x013c, .value=0x6b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6bab, .value=0xe9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3923,12 +4093,13 @@ UTEST(SingleStepTests_F7, _F7_00B0) {
         {.addr=0x0038, .value=0xe9}, {.addr=0x0039, .value=0xdb}, {.addr=0xa708, .value=0xf7},
         {.addr=0xa709, .value=0x38}, {.addr=0xdc3f, .value=0xdb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa708, .value=0xf7, .type=IO_READ},
         {.addr=0xa709, .value=0x38, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0038, .value=0xe9, .type=IO_READ},
         {.addr=0x0039, .value=0xdb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdc3f, .value=0xdb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3946,12 +4117,13 @@ UTEST(SingleStepTests_F7, _F7_00B1) {
         {.addr=0x0044, .value=0x02}, {.addr=0x0045, .value=0x19}, {.addr=0x19c9, .value=0x33},
         {.addr=0xde64, .value=0xf7}, {.addr=0xde65, .value=0x44},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xde64, .value=0xf7, .type=IO_READ},
         {.addr=0xde65, .value=0x44, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0044, .value=0x02, .type=IO_READ},
         {.addr=0x0045, .value=0x19, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x19c9, .value=0x33, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3969,12 +4141,13 @@ UTEST(SingleStepTests_F7, _F7_00B2) {
         {.addr=0x004d, .value=0x75}, {.addr=0x004e, .value=0x0e}, {.addr=0x0ede, .value=0xa7},
         {.addr=0x8975, .value=0xf7}, {.addr=0x8976, .value=0x4d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8975, .value=0xf7, .type=IO_READ},
         {.addr=0x8976, .value=0x4d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x004d, .value=0x75, .type=IO_READ},
         {.addr=0x004e, .value=0x0e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0ede, .value=0xa7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -3992,12 +4165,13 @@ UTEST(SingleStepTests_F7, _F7_00B4) {
         {.addr=0x0012, .value=0x39}, {.addr=0x0013, .value=0x69}, {.addr=0x6a17, .value=0x8c},
         {.addr=0xb3ad, .value=0xf7}, {.addr=0xb3ae, .value=0x12},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb3ad, .value=0xf7, .type=IO_READ},
         {.addr=0xb3ae, .value=0x12, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0012, .value=0x39, .type=IO_READ},
         {.addr=0x0013, .value=0x69, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6a17, .value=0x8c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4015,12 +4189,13 @@ UTEST(SingleStepTests_F7, _F7_00B5) {
         {.addr=0x0174, .value=0xcc}, {.addr=0x0175, .value=0x58}, {.addr=0x5945, .value=0x0c},
         {.addr=0x8595, .value=0xf7}, {.addr=0x8596, .value=0x74},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8595, .value=0xf7, .type=IO_READ},
         {.addr=0x8596, .value=0x74, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0174, .value=0xcc, .type=IO_READ},
         {.addr=0x0175, .value=0x58, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5945, .value=0x0c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4038,12 +4213,13 @@ UTEST(SingleStepTests_F7, _F7_00B6) {
         {.addr=0x0176, .value=0x67}, {.addr=0x0177, .value=0xd5}, {.addr=0x3634, .value=0xf7},
         {.addr=0x3635, .value=0x76}, {.addr=0xd5b2, .value=0x03},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3634, .value=0xf7, .type=IO_READ},
         {.addr=0x3635, .value=0x76, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0176, .value=0x67, .type=IO_READ},
         {.addr=0x0177, .value=0xd5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd5b2, .value=0x03, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4061,12 +4237,13 @@ UTEST(SingleStepTests_F7, _F7_00B7) {
         {.addr=0x01ab, .value=0xe6}, {.addr=0x01ac, .value=0xb4}, {.addr=0x618d, .value=0xf7},
         {.addr=0x618e, .value=0xab}, {.addr=0xb571, .value=0x10},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x618d, .value=0xf7, .type=IO_READ},
         {.addr=0x618e, .value=0xab, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ab, .value=0xe6, .type=IO_READ},
         {.addr=0x01ac, .value=0xb4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb571, .value=0x10, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4084,12 +4261,13 @@ UTEST(SingleStepTests_F7, _F7_00B8) {
         {.addr=0x000c, .value=0xc9}, {.addr=0x000d, .value=0xe7}, {.addr=0x5ef9, .value=0xf7},
         {.addr=0x5efa, .value=0x0c}, {.addr=0xe82d, .value=0xad},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5ef9, .value=0xf7, .type=IO_READ},
         {.addr=0x5efa, .value=0x0c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000c, .value=0xc9, .type=IO_READ},
         {.addr=0x000d, .value=0xe7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe82d, .value=0xad, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4107,12 +4285,13 @@ UTEST(SingleStepTests_F7, _F7_00B9) {
         {.addr=0x0061, .value=0xfd}, {.addr=0x0062, .value=0x9a}, {.addr=0x47c3, .value=0xf7},
         {.addr=0x47c4, .value=0x61}, {.addr=0x9b15, .value=0x11},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x47c3, .value=0xf7, .type=IO_READ},
         {.addr=0x47c4, .value=0x61, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0061, .value=0xfd, .type=IO_READ},
         {.addr=0x0062, .value=0x9a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9b15, .value=0x11, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4130,12 +4309,13 @@ UTEST(SingleStepTests_F7, _F7_00BA) {
         {.addr=0x00e1, .value=0x89}, {.addr=0x00e2, .value=0x84}, {.addr=0x84fc, .value=0x06},
         {.addr=0xf7d3, .value=0xf7}, {.addr=0xf7d4, .value=0xe1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf7d3, .value=0xf7, .type=IO_READ},
         {.addr=0xf7d4, .value=0xe1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e1, .value=0x89, .type=IO_READ},
         {.addr=0x00e2, .value=0x84, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x84fc, .value=0x06, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4153,12 +4333,13 @@ UTEST(SingleStepTests_F7, _F7_00BB) {
         {.addr=0x00e4, .value=0xef}, {.addr=0x00e5, .value=0x24}, {.addr=0x0800, .value=0xf7},
         {.addr=0x0801, .value=0xe4}, {.addr=0x24fd, .value=0xa9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0800, .value=0xf7, .type=IO_READ},
         {.addr=0x0801, .value=0xe4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e4, .value=0xef, .type=IO_READ},
         {.addr=0x00e5, .value=0x24, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x24fd, .value=0xa9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4176,12 +4357,13 @@ UTEST(SingleStepTests_F7, _F7_00BC) {
         {.addr=0x00de, .value=0x82}, {.addr=0x00df, .value=0xf8}, {.addr=0x77e3, .value=0xf7},
         {.addr=0x77e4, .value=0xde}, {.addr=0xf92a, .value=0xd7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x77e3, .value=0xf7, .type=IO_READ},
         {.addr=0x77e4, .value=0xde, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00de, .value=0x82, .type=IO_READ},
         {.addr=0x00df, .value=0xf8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf92a, .value=0xd7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4199,12 +4381,13 @@ UTEST(SingleStepTests_F7, _F7_00BD) {
         {.addr=0x0076, .value=0xf5}, {.addr=0x0077, .value=0xe3}, {.addr=0x65ce, .value=0xf7},
         {.addr=0x65cf, .value=0x76}, {.addr=0xe413, .value=0x8b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x65ce, .value=0xf7, .type=IO_READ},
         {.addr=0x65cf, .value=0x76, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0076, .value=0xf5, .type=IO_READ},
         {.addr=0x0077, .value=0xe3, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe413, .value=0x8b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4222,12 +4405,13 @@ UTEST(SingleStepTests_F7, _F7_00BE) {
         {.addr=0x003b, .value=0x5d}, {.addr=0x003c, .value=0x88}, {.addr=0x180d, .value=0xf7},
         {.addr=0x180e, .value=0x3b}, {.addr=0x88c0, .value=0x63},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x180d, .value=0xf7, .type=IO_READ},
         {.addr=0x180e, .value=0x3b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x003b, .value=0x5d, .type=IO_READ},
         {.addr=0x003c, .value=0x88, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x88c0, .value=0x63, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4245,12 +4429,13 @@ UTEST(SingleStepTests_F7, _F7_00BF) {
         {.addr=0x0091, .value=0x07}, {.addr=0x0092, .value=0x7b}, {.addr=0x6be9, .value=0xf7},
         {.addr=0x6bea, .value=0x91}, {.addr=0x7bf3, .value=0xc7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6be9, .value=0xf7, .type=IO_READ},
         {.addr=0x6bea, .value=0x91, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0091, .value=0x07, .type=IO_READ},
         {.addr=0x0092, .value=0x7b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7bf3, .value=0xc7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4268,12 +4453,13 @@ UTEST(SingleStepTests_F7, _F7_00C0) {
         {.addr=0x0127, .value=0x07}, {.addr=0x0128, .value=0x3c}, {.addr=0x3c1f, .value=0x4a},
         {.addr=0x4238, .value=0xf7}, {.addr=0x4239, .value=0x27},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4238, .value=0xf7, .type=IO_READ},
         {.addr=0x4239, .value=0x27, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0127, .value=0x07, .type=IO_READ},
         {.addr=0x0128, .value=0x3c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3c1f, .value=0x4a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4291,12 +4477,13 @@ UTEST(SingleStepTests_F7, _F7_00C1) {
         {.addr=0x008f, .value=0x5b}, {.addr=0x0090, .value=0xc0}, {.addr=0xc0b0, .value=0x63},
         {.addr=0xd34d, .value=0xf7}, {.addr=0xd34e, .value=0x8f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd34d, .value=0xf7, .type=IO_READ},
         {.addr=0xd34e, .value=0x8f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x008f, .value=0x5b, .type=IO_READ},
         {.addr=0x0090, .value=0xc0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc0b0, .value=0x63, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4314,12 +4501,13 @@ UTEST(SingleStepTests_F7, _F7_00C2) {
         {.addr=0x01b1, .value=0xa2}, {.addr=0x01b2, .value=0xd2}, {.addr=0x04b0, .value=0xf7},
         {.addr=0x04b1, .value=0xb1}, {.addr=0xd39a, .value=0x41},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x04b0, .value=0xf7, .type=IO_READ},
         {.addr=0x04b1, .value=0xb1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b1, .value=0xa2, .type=IO_READ},
         {.addr=0x01b2, .value=0xd2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd39a, .value=0x41, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4337,12 +4525,13 @@ UTEST(SingleStepTests_F7, _F7_00C3) {
         {.addr=0x003d, .value=0x83}, {.addr=0x003e, .value=0x6e}, {.addr=0x6f0c, .value=0xb0},
         {.addr=0xc767, .value=0xf7}, {.addr=0xc768, .value=0x3d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc767, .value=0xf7, .type=IO_READ},
         {.addr=0xc768, .value=0x3d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x003d, .value=0x83, .type=IO_READ},
         {.addr=0x003e, .value=0x6e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6f0c, .value=0xb0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4360,12 +4549,13 @@ UTEST(SingleStepTests_F7, _F7_00C4) {
         {.addr=0x0126, .value=0xe8}, {.addr=0x0127, .value=0x7e}, {.addr=0x642a, .value=0xf7},
         {.addr=0x642b, .value=0x26}, {.addr=0x7f18, .value=0x65},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x642a, .value=0xf7, .type=IO_READ},
         {.addr=0x642b, .value=0x26, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0126, .value=0xe8, .type=IO_READ},
         {.addr=0x0127, .value=0x7e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7f18, .value=0x65, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4383,12 +4573,13 @@ UTEST(SingleStepTests_F7, _F7_00C5) {
         {.addr=0x013a, .value=0xda}, {.addr=0x013b, .value=0xcd}, {.addr=0x5779, .value=0xf7},
         {.addr=0x577a, .value=0x3a}, {.addr=0xce75, .value=0xf7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5779, .value=0xf7, .type=IO_READ},
         {.addr=0x577a, .value=0x3a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013a, .value=0xda, .type=IO_READ},
         {.addr=0x013b, .value=0xcd, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xce75, .value=0xf7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4406,12 +4597,13 @@ UTEST(SingleStepTests_F7, _F7_00C6) {
         {.addr=0x00d3, .value=0xf2}, {.addr=0x00d4, .value=0xdc}, {.addr=0x2f41, .value=0xf7},
         {.addr=0x2f42, .value=0xd3}, {.addr=0xdd85, .value=0x01},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2f41, .value=0xf7, .type=IO_READ},
         {.addr=0x2f42, .value=0xd3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d3, .value=0xf2, .type=IO_READ},
         {.addr=0x00d4, .value=0xdc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdd85, .value=0x01, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4429,12 +4621,13 @@ UTEST(SingleStepTests_F7, _F7_00C7) {
         {.addr=0x0164, .value=0x8f}, {.addr=0x0165, .value=0x92}, {.addr=0x7121, .value=0xf7},
         {.addr=0x7122, .value=0x64}, {.addr=0x930b, .value=0xea},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7121, .value=0xf7, .type=IO_READ},
         {.addr=0x7122, .value=0x64, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0164, .value=0x8f, .type=IO_READ},
         {.addr=0x0165, .value=0x92, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x930b, .value=0xea, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4452,12 +4645,13 @@ UTEST(SingleStepTests_F7, _F7_00C8) {
         {.addr=0x01d4, .value=0xaf}, {.addr=0x01d5, .value=0xca}, {.addr=0x4a0c, .value=0xf7},
         {.addr=0x4a0d, .value=0xd4}, {.addr=0xcafe, .value=0x5f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4a0c, .value=0xf7, .type=IO_READ},
         {.addr=0x4a0d, .value=0xd4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d4, .value=0xaf, .type=IO_READ},
         {.addr=0x01d5, .value=0xca, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xcafe, .value=0x5f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4475,12 +4669,13 @@ UTEST(SingleStepTests_F7, _F7_00C9) {
         {.addr=0x00ad, .value=0xf7}, {.addr=0x00ae, .value=0xb7}, {.addr=0x00b7, .value=0x1e},
         {.addr=0x00b8, .value=0xeb}, {.addr=0xec15, .value=0x26},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x00ad, .value=0xf7, .type=IO_READ},
         {.addr=0x00ae, .value=0xb7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b7, .value=0x1e, .type=IO_READ},
         {.addr=0x00b8, .value=0xeb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xec15, .value=0x26, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4498,12 +4693,13 @@ UTEST(SingleStepTests_F7, _F7_00CA) {
         {.addr=0x0092, .value=0x53}, {.addr=0x0093, .value=0x08}, {.addr=0x08fa, .value=0xfc},
         {.addr=0x5300, .value=0xf7}, {.addr=0x5301, .value=0x92},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5300, .value=0xf7, .type=IO_READ},
         {.addr=0x5301, .value=0x92, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0092, .value=0x53, .type=IO_READ},
         {.addr=0x0093, .value=0x08, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x08fa, .value=0xfc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4521,12 +4717,13 @@ UTEST(SingleStepTests_F7, _F7_00CC) {
         {.addr=0x0122, .value=0x04}, {.addr=0x0123, .value=0xee}, {.addr=0x24bd, .value=0xf7},
         {.addr=0x24be, .value=0x22}, {.addr=0xeef6, .value=0x85},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x24bd, .value=0xf7, .type=IO_READ},
         {.addr=0x24be, .value=0x22, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0122, .value=0x04, .type=IO_READ},
         {.addr=0x0123, .value=0xee, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xeef6, .value=0x85, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4544,12 +4741,13 @@ UTEST(SingleStepTests_F7, _F7_00CD) {
         {.addr=0x0136, .value=0x9d}, {.addr=0x0137, .value=0xaa}, {.addr=0x11be, .value=0xf7},
         {.addr=0x11bf, .value=0x36}, {.addr=0xab35, .value=0x28},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x11be, .value=0xf7, .type=IO_READ},
         {.addr=0x11bf, .value=0x36, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0136, .value=0x9d, .type=IO_READ},
         {.addr=0x0137, .value=0xaa, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xab35, .value=0x28, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4567,12 +4765,13 @@ UTEST(SingleStepTests_F7, _F7_00CE) {
         {.addr=0x013f, .value=0x51}, {.addr=0x0140, .value=0xd0}, {.addr=0xd061, .value=0xd1},
         {.addr=0xe69d, .value=0xf7}, {.addr=0xe69e, .value=0x3f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe69d, .value=0xf7, .type=IO_READ},
         {.addr=0xe69e, .value=0x3f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013f, .value=0x51, .type=IO_READ},
         {.addr=0x0140, .value=0xd0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd061, .value=0xd1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4590,12 +4789,13 @@ UTEST(SingleStepTests_F7, _F7_00CF) {
         {.addr=0x0152, .value=0x9e}, {.addr=0x0153, .value=0xad}, {.addr=0x0578, .value=0xf7},
         {.addr=0x0579, .value=0x52}, {.addr=0xada5, .value=0x7f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0578, .value=0xf7, .type=IO_READ},
         {.addr=0x0579, .value=0x52, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0152, .value=0x9e, .type=IO_READ},
         {.addr=0x0153, .value=0xad, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xada5, .value=0x7f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4613,12 +4813,13 @@ UTEST(SingleStepTests_F7, _F7_00D0) {
         {.addr=0x001a, .value=0x07}, {.addr=0x001b, .value=0x76}, {.addr=0x6a98, .value=0xf7},
         {.addr=0x6a99, .value=0x1a}, {.addr=0x7697, .value=0x03},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6a98, .value=0xf7, .type=IO_READ},
         {.addr=0x6a99, .value=0x1a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x001a, .value=0x07, .type=IO_READ},
         {.addr=0x001b, .value=0x76, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7697, .value=0x03, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4636,12 +4837,13 @@ UTEST(SingleStepTests_F7, _F7_00D1) {
         {.addr=0x0171, .value=0xac}, {.addr=0x0172, .value=0xb7}, {.addr=0xa8b8, .value=0xf7},
         {.addr=0xa8b9, .value=0x71}, {.addr=0xb7cd, .value=0x9d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa8b8, .value=0xf7, .type=IO_READ},
         {.addr=0xa8b9, .value=0x71, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0171, .value=0xac, .type=IO_READ},
         {.addr=0x0172, .value=0xb7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb7cd, .value=0x9d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4659,12 +4861,13 @@ UTEST(SingleStepTests_F7, _F7_00D2) {
         {.addr=0x002e, .value=0x3e}, {.addr=0x002f, .value=0x38}, {.addr=0x38cb, .value=0x48},
         {.addr=0xfda1, .value=0xf7}, {.addr=0xfda2, .value=0x2e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfda1, .value=0xf7, .type=IO_READ},
         {.addr=0xfda2, .value=0x2e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002e, .value=0x3e, .type=IO_READ},
         {.addr=0x002f, .value=0x38, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x38cb, .value=0x48, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4682,12 +4885,13 @@ UTEST(SingleStepTests_F7, _F7_00D3) {
         {.addr=0x004c, .value=0xc6}, {.addr=0x004d, .value=0xe6}, {.addr=0x0da7, .value=0xf7},
         {.addr=0x0da8, .value=0x4c}, {.addr=0xe74c, .value=0x2f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0da7, .value=0xf7, .type=IO_READ},
         {.addr=0x0da8, .value=0x4c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x004c, .value=0xc6, .type=IO_READ},
         {.addr=0x004d, .value=0xe6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe74c, .value=0x2f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4705,12 +4909,13 @@ UTEST(SingleStepTests_F7, _F7_00D4) {
         {.addr=0x00e7, .value=0x8a}, {.addr=0x00e8, .value=0x7b}, {.addr=0x7c42, .value=0x96},
         {.addr=0xe7ea, .value=0xf7}, {.addr=0xe7eb, .value=0xe7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe7ea, .value=0xf7, .type=IO_READ},
         {.addr=0xe7eb, .value=0xe7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e7, .value=0x8a, .type=IO_READ},
         {.addr=0x00e8, .value=0x7b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7c42, .value=0x96, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4728,12 +4933,13 @@ UTEST(SingleStepTests_F7, _F7_00D5) {
         {.addr=0x0192, .value=0x74}, {.addr=0x0193, .value=0xa6}, {.addr=0x450c, .value=0xf7},
         {.addr=0x450d, .value=0x92}, {.addr=0xa768, .value=0xe0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x450c, .value=0xf7, .type=IO_READ},
         {.addr=0x450d, .value=0x92, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0192, .value=0x74, .type=IO_READ},
         {.addr=0x0193, .value=0xa6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa768, .value=0xe0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4751,12 +4957,13 @@ UTEST(SingleStepTests_F7, _F7_00D6) {
         {.addr=0x0182, .value=0x8e}, {.addr=0x0183, .value=0x7e}, {.addr=0x7ea4, .value=0x7c},
         {.addr=0x8eea, .value=0xf7}, {.addr=0x8eeb, .value=0x82},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8eea, .value=0xf7, .type=IO_READ},
         {.addr=0x8eeb, .value=0x82, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0182, .value=0x8e, .type=IO_READ},
         {.addr=0x0183, .value=0x7e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7ea4, .value=0x7c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4774,12 +4981,13 @@ UTEST(SingleStepTests_F7, _F7_00D7) {
         {.addr=0x005f, .value=0x6d}, {.addr=0x0060, .value=0xc4}, {.addr=0xa710, .value=0xf7},
         {.addr=0xa711, .value=0x5f}, {.addr=0xc48a, .value=0x57},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa710, .value=0xf7, .type=IO_READ},
         {.addr=0xa711, .value=0x5f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005f, .value=0x6d, .type=IO_READ},
         {.addr=0x0060, .value=0xc4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc48a, .value=0x57, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4797,12 +5005,13 @@ UTEST(SingleStepTests_F7, _F7_00D8) {
         {.addr=0x00d4, .value=0x03}, {.addr=0x00d5, .value=0x19}, {.addr=0x190c, .value=0x3d},
         {.addr=0x1d82, .value=0xf7}, {.addr=0x1d83, .value=0xd4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1d82, .value=0xf7, .type=IO_READ},
         {.addr=0x1d83, .value=0xd4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d4, .value=0x03, .type=IO_READ},
         {.addr=0x00d5, .value=0x19, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x190c, .value=0x3d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4820,12 +5029,13 @@ UTEST(SingleStepTests_F7, _F7_00D9) {
         {.addr=0x00d6, .value=0x54}, {.addr=0x00d7, .value=0xcd}, {.addr=0xb658, .value=0xf7},
         {.addr=0xb659, .value=0xd6}, {.addr=0xcdba, .value=0x21},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb658, .value=0xf7, .type=IO_READ},
         {.addr=0xb659, .value=0xd6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d6, .value=0x54, .type=IO_READ},
         {.addr=0x00d7, .value=0xcd, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xcdba, .value=0x21, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4843,12 +5053,13 @@ UTEST(SingleStepTests_F7, _F7_00DA) {
         {.addr=0x0106, .value=0x34}, {.addr=0x0107, .value=0x7c}, {.addr=0x7c83, .value=0x8e},
         {.addr=0xefc2, .value=0xf7}, {.addr=0xefc3, .value=0x06},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xefc2, .value=0xf7, .type=IO_READ},
         {.addr=0xefc3, .value=0x06, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0106, .value=0x34, .type=IO_READ},
         {.addr=0x0107, .value=0x7c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7c83, .value=0x8e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4866,12 +5077,13 @@ UTEST(SingleStepTests_F7, _F7_00DB) {
         {.addr=0x0063, .value=0xc2}, {.addr=0x0064, .value=0xb0}, {.addr=0x48d3, .value=0xf7},
         {.addr=0x48d4, .value=0x63}, {.addr=0xb119, .value=0x07},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x48d3, .value=0xf7, .type=IO_READ},
         {.addr=0x48d4, .value=0x63, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0063, .value=0xc2, .type=IO_READ},
         {.addr=0x0064, .value=0xb0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb119, .value=0x07, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4889,12 +5101,13 @@ UTEST(SingleStepTests_F7, _F7_00DC) {
         {.addr=0x0020, .value=0x4a}, {.addr=0x0021, .value=0x87}, {.addr=0x8797, .value=0x5d},
         {.addr=0xc30a, .value=0xf7}, {.addr=0xc30b, .value=0x20},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc30a, .value=0xf7, .type=IO_READ},
         {.addr=0xc30b, .value=0x20, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0020, .value=0x4a, .type=IO_READ},
         {.addr=0x0021, .value=0x87, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8797, .value=0x5d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4912,12 +5125,13 @@ UTEST(SingleStepTests_F7, _F7_00DD) {
         {.addr=0x010b, .value=0x46}, {.addr=0x010c, .value=0xa0}, {.addr=0x8c36, .value=0xf7},
         {.addr=0x8c37, .value=0x0b}, {.addr=0xa0d9, .value=0x95},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8c36, .value=0xf7, .type=IO_READ},
         {.addr=0x8c37, .value=0x0b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x010b, .value=0x46, .type=IO_READ},
         {.addr=0x010c, .value=0xa0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa0d9, .value=0x95, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4935,12 +5149,13 @@ UTEST(SingleStepTests_F7, _F7_00DE) {
         {.addr=0x0084, .value=0x5d}, {.addr=0x0085, .value=0x31}, {.addr=0x30a8, .value=0xf7},
         {.addr=0x30a9, .value=0x84}, {.addr=0x324e, .value=0x78},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x30a8, .value=0xf7, .type=IO_READ},
         {.addr=0x30a9, .value=0x84, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0084, .value=0x5d, .type=IO_READ},
         {.addr=0x0085, .value=0x31, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x324e, .value=0x78, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4958,12 +5173,13 @@ UTEST(SingleStepTests_F7, _F7_00DF) {
         {.addr=0x01b8, .value=0x5a}, {.addr=0x01b9, .value=0xf0}, {.addr=0x98b1, .value=0xf7},
         {.addr=0x98b2, .value=0xb8}, {.addr=0xf122, .value=0xd0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x98b1, .value=0xf7, .type=IO_READ},
         {.addr=0x98b2, .value=0xb8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b8, .value=0x5a, .type=IO_READ},
         {.addr=0x01b9, .value=0xf0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf122, .value=0xd0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -4981,12 +5197,13 @@ UTEST(SingleStepTests_F7, _F7_00E0) {
         {.addr=0x0019, .value=0x45}, {.addr=0x001a, .value=0xd6}, {.addr=0x1d8e, .value=0xf7},
         {.addr=0x1d8f, .value=0x19}, {.addr=0xd6df, .value=0xf8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1d8e, .value=0xf7, .type=IO_READ},
         {.addr=0x1d8f, .value=0x19, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0019, .value=0x45, .type=IO_READ},
         {.addr=0x001a, .value=0xd6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd6df, .value=0xf8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5004,12 +5221,13 @@ UTEST(SingleStepTests_F7, _F7_00E1) {
         {.addr=0x0071, .value=0xe3}, {.addr=0x0072, .value=0x1f}, {.addr=0x2077, .value=0xef},
         {.addr=0x3786, .value=0xf7}, {.addr=0x3787, .value=0x71},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3786, .value=0xf7, .type=IO_READ},
         {.addr=0x3787, .value=0x71, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0071, .value=0xe3, .type=IO_READ},
         {.addr=0x0072, .value=0x1f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2077, .value=0xef, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5027,12 +5245,13 @@ UTEST(SingleStepTests_F7, _F7_00E2) {
         {.addr=0x0132, .value=0x36}, {.addr=0x0133, .value=0x54}, {.addr=0x5503, .value=0x04},
         {.addr=0x9c1c, .value=0xf7}, {.addr=0x9c1d, .value=0x32},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9c1c, .value=0xf7, .type=IO_READ},
         {.addr=0x9c1d, .value=0x32, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0132, .value=0x36, .type=IO_READ},
         {.addr=0x0133, .value=0x54, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5503, .value=0x04, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5050,12 +5269,13 @@ UTEST(SingleStepTests_F7, _F7_00E3) {
         {.addr=0x0120, .value=0x7c}, {.addr=0x0121, .value=0xbb}, {.addr=0x2e9d, .value=0xf7},
         {.addr=0x2e9e, .value=0x20}, {.addr=0xbbcd, .value=0x82},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2e9d, .value=0xf7, .type=IO_READ},
         {.addr=0x2e9e, .value=0x20, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0120, .value=0x7c, .type=IO_READ},
         {.addr=0x0121, .value=0xbb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbbcd, .value=0x82, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5073,12 +5293,13 @@ UTEST(SingleStepTests_F7, _F7_00E4) {
         {.addr=0x00ca, .value=0xbf}, {.addr=0x00cb, .value=0x95}, {.addr=0x90ed, .value=0xf7},
         {.addr=0x90ee, .value=0xca}, {.addr=0x968f, .value=0x13},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x90ed, .value=0xf7, .type=IO_READ},
         {.addr=0x90ee, .value=0xca, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ca, .value=0xbf, .type=IO_READ},
         {.addr=0x00cb, .value=0x95, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x968f, .value=0x13, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5096,12 +5317,13 @@ UTEST(SingleStepTests_F7, _F7_00E5) {
         {.addr=0x0001, .value=0xb9}, {.addr=0x0002, .value=0x01}, {.addr=0x0210, .value=0x72},
         {.addr=0x591f, .value=0xf7}, {.addr=0x5920, .value=0x01},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x591f, .value=0xf7, .type=IO_READ},
         {.addr=0x5920, .value=0x01, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0001, .value=0xb9, .type=IO_READ},
         {.addr=0x0002, .value=0x01, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0210, .value=0x72, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5119,12 +5341,13 @@ UTEST(SingleStepTests_F7, _F7_00E6) {
         {.addr=0x00e9, .value=0x74}, {.addr=0x00ea, .value=0xe4}, {.addr=0x1ebc, .value=0xf7},
         {.addr=0x1ebd, .value=0xe9}, {.addr=0xe573, .value=0x43},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1ebc, .value=0xf7, .type=IO_READ},
         {.addr=0x1ebd, .value=0xe9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e9, .value=0x74, .type=IO_READ},
         {.addr=0x00ea, .value=0xe4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe573, .value=0x43, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5142,12 +5365,13 @@ UTEST(SingleStepTests_F7, _F7_00E7) {
         {.addr=0x015a, .value=0x03}, {.addr=0x015b, .value=0x0c}, {.addr=0x0cad, .value=0x93},
         {.addr=0x8f0c, .value=0xf7}, {.addr=0x8f0d, .value=0x5a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8f0c, .value=0xf7, .type=IO_READ},
         {.addr=0x8f0d, .value=0x5a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x015a, .value=0x03, .type=IO_READ},
         {.addr=0x015b, .value=0x0c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0cad, .value=0x93, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5165,12 +5389,13 @@ UTEST(SingleStepTests_F7, _F7_00E8) {
         {.addr=0x0129, .value=0x87}, {.addr=0x012a, .value=0x7c}, {.addr=0x49b3, .value=0xf7},
         {.addr=0x49b4, .value=0x29}, {.addr=0x7d2c, .value=0xa5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x49b3, .value=0xf7, .type=IO_READ},
         {.addr=0x49b4, .value=0x29, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0129, .value=0x87, .type=IO_READ},
         {.addr=0x012a, .value=0x7c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7d2c, .value=0xa5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5188,12 +5413,13 @@ UTEST(SingleStepTests_F7, _F7_00E9) {
         {.addr=0x00db, .value=0xfd}, {.addr=0x00dc, .value=0x09}, {.addr=0x0a6a, .value=0x28},
         {.addr=0xc631, .value=0xf7}, {.addr=0xc632, .value=0xdb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc631, .value=0xf7, .type=IO_READ},
         {.addr=0xc632, .value=0xdb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00db, .value=0xfd, .type=IO_READ},
         {.addr=0x00dc, .value=0x09, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0a6a, .value=0x28, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5211,12 +5437,13 @@ UTEST(SingleStepTests_F7, _F7_00EA) {
         {.addr=0x01f7, .value=0xa3}, {.addr=0x01f8, .value=0x4e}, {.addr=0x4f55, .value=0x62},
         {.addr=0xa3ee, .value=0xf7}, {.addr=0xa3ef, .value=0xf7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa3ee, .value=0xf7, .type=IO_READ},
         {.addr=0xa3ef, .value=0xf7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f7, .value=0xa3, .type=IO_READ},
         {.addr=0x01f8, .value=0x4e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4f55, .value=0x62, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5234,12 +5461,13 @@ UTEST(SingleStepTests_F7, _F7_00EB) {
         {.addr=0x0115, .value=0x5e}, {.addr=0x0116, .value=0x01}, {.addr=0x0203, .value=0xfe},
         {.addr=0xd5af, .value=0xf7}, {.addr=0xd5b0, .value=0x15},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd5af, .value=0xf7, .type=IO_READ},
         {.addr=0xd5b0, .value=0x15, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0115, .value=0x5e, .type=IO_READ},
         {.addr=0x0116, .value=0x01, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0203, .value=0xfe, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5257,12 +5485,13 @@ UTEST(SingleStepTests_F7, _F7_00EC) {
         {.addr=0x0109, .value=0x38}, {.addr=0x010a, .value=0x82}, {.addr=0x82b3, .value=0x13},
         {.addr=0xcae4, .value=0xf7}, {.addr=0xcae5, .value=0x09},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcae4, .value=0xf7, .type=IO_READ},
         {.addr=0xcae5, .value=0x09, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0109, .value=0x38, .type=IO_READ},
         {.addr=0x010a, .value=0x82, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x82b3, .value=0x13, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5280,12 +5509,13 @@ UTEST(SingleStepTests_F7, _F7_00ED) {
         {.addr=0x00cf, .value=0xe4}, {.addr=0x00d0, .value=0x21}, {.addr=0x2202, .value=0x05},
         {.addr=0xd20c, .value=0xf7}, {.addr=0xd20d, .value=0xcf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd20c, .value=0xf7, .type=IO_READ},
         {.addr=0xd20d, .value=0xcf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00cf, .value=0xe4, .type=IO_READ},
         {.addr=0x00d0, .value=0x21, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2202, .value=0x05, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5303,12 +5533,13 @@ UTEST(SingleStepTests_F7, _F7_00EF) {
         {.addr=0x01db, .value=0xcd}, {.addr=0x01dc, .value=0xf2}, {.addr=0xaa18, .value=0xf7},
         {.addr=0xaa19, .value=0xdb}, {.addr=0xf3a2, .value=0x2d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xaa18, .value=0xf7, .type=IO_READ},
         {.addr=0xaa19, .value=0xdb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01db, .value=0xcd, .type=IO_READ},
         {.addr=0x01dc, .value=0xf2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf3a2, .value=0x2d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5326,12 +5557,13 @@ UTEST(SingleStepTests_F7, _F7_00F0) {
         {.addr=0x0132, .value=0xe2}, {.addr=0x0133, .value=0x72}, {.addr=0x72e4, .value=0xb0},
         {.addr=0xfd11, .value=0xf7}, {.addr=0xfd12, .value=0x32},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfd11, .value=0xf7, .type=IO_READ},
         {.addr=0xfd12, .value=0x32, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0132, .value=0xe2, .type=IO_READ},
         {.addr=0x0133, .value=0x72, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x72e4, .value=0xb0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5349,12 +5581,13 @@ UTEST(SingleStepTests_F7, _F7_00F1) {
         {.addr=0x01ec, .value=0xa0}, {.addr=0x01ed, .value=0x57}, {.addr=0x57a8, .value=0xa2},
         {.addr=0x81a9, .value=0xf7}, {.addr=0x81aa, .value=0xec},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x81a9, .value=0xf7, .type=IO_READ},
         {.addr=0x81aa, .value=0xec, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ec, .value=0xa0, .type=IO_READ},
         {.addr=0x01ed, .value=0x57, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x57a8, .value=0xa2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5372,12 +5605,13 @@ UTEST(SingleStepTests_F7, _F7_00F2) {
         {.addr=0x01ae, .value=0xf6}, {.addr=0x01af, .value=0xf7}, {.addr=0x63aa, .value=0xf7},
         {.addr=0x63ab, .value=0xae}, {.addr=0xf846, .value=0x6c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x63aa, .value=0xf7, .type=IO_READ},
         {.addr=0x63ab, .value=0xae, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ae, .value=0xf6, .type=IO_READ},
         {.addr=0x01af, .value=0xf7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf846, .value=0x6c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5395,12 +5629,13 @@ UTEST(SingleStepTests_F7, _F7_00F3) {
         {.addr=0x0191, .value=0xd7}, {.addr=0x0192, .value=0x09}, {.addr=0x0a07, .value=0x69},
         {.addr=0xe569, .value=0xf7}, {.addr=0xe56a, .value=0x91},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe569, .value=0xf7, .type=IO_READ},
         {.addr=0xe56a, .value=0x91, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0191, .value=0xd7, .type=IO_READ},
         {.addr=0x0192, .value=0x09, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0a07, .value=0x69, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5418,12 +5653,13 @@ UTEST(SingleStepTests_F7, _F7_00F4) {
         {.addr=0x010f, .value=0xce}, {.addr=0x0110, .value=0x3f}, {.addr=0x39f9, .value=0xf7},
         {.addr=0x39fa, .value=0x0f}, {.addr=0x4004, .value=0x69},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x39f9, .value=0xf7, .type=IO_READ},
         {.addr=0x39fa, .value=0x0f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x010f, .value=0xce, .type=IO_READ},
         {.addr=0x0110, .value=0x3f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4004, .value=0x69, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5441,12 +5677,13 @@ UTEST(SingleStepTests_F7, _F7_00F5) {
         {.addr=0x0049, .value=0x14}, {.addr=0x004a, .value=0x45}, {.addr=0x4578, .value=0x56},
         {.addr=0xd1f6, .value=0xf7}, {.addr=0xd1f7, .value=0x49},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd1f6, .value=0xf7, .type=IO_READ},
         {.addr=0xd1f7, .value=0x49, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0049, .value=0x14, .type=IO_READ},
         {.addr=0x004a, .value=0x45, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4578, .value=0x56, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5464,12 +5701,13 @@ UTEST(SingleStepTests_F7, _F7_00F6) {
         {.addr=0x00d9, .value=0xcb}, {.addr=0x00da, .value=0x51}, {.addr=0x529f, .value=0x88},
         {.addr=0xed6b, .value=0xf7}, {.addr=0xed6c, .value=0xd9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xed6b, .value=0xf7, .type=IO_READ},
         {.addr=0xed6c, .value=0xd9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d9, .value=0xcb, .type=IO_READ},
         {.addr=0x00da, .value=0x51, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x529f, .value=0x88, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5487,12 +5725,13 @@ UTEST(SingleStepTests_F7, _F7_00F7) {
         {.addr=0x01a7, .value=0xaf}, {.addr=0x01a8, .value=0x7e}, {.addr=0x7f5a, .value=0x58},
         {.addr=0x7fa6, .value=0xf7}, {.addr=0x7fa7, .value=0xa7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7fa6, .value=0xf7, .type=IO_READ},
         {.addr=0x7fa7, .value=0xa7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a7, .value=0xaf, .type=IO_READ},
         {.addr=0x01a8, .value=0x7e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7f5a, .value=0x58, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5510,12 +5749,13 @@ UTEST(SingleStepTests_F7, _F7_00F8) {
         {.addr=0x0052, .value=0x18}, {.addr=0x0053, .value=0x2c}, {.addr=0x2cda, .value=0xfb},
         {.addr=0x732a, .value=0xf7}, {.addr=0x732b, .value=0x52},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x732a, .value=0xf7, .type=IO_READ},
         {.addr=0x732b, .value=0x52, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0052, .value=0x18, .type=IO_READ},
         {.addr=0x0053, .value=0x2c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2cda, .value=0xfb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5533,12 +5773,13 @@ UTEST(SingleStepTests_F7, _F7_00F9) {
         {.addr=0x005c, .value=0xde}, {.addr=0x005d, .value=0x70}, {.addr=0x70ff, .value=0x31},
         {.addr=0xbfd7, .value=0xf7}, {.addr=0xbfd8, .value=0x5c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbfd7, .value=0xf7, .type=IO_READ},
         {.addr=0xbfd8, .value=0x5c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005c, .value=0xde, .type=IO_READ},
         {.addr=0x005d, .value=0x70, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x70ff, .value=0x31, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5556,12 +5797,13 @@ UTEST(SingleStepTests_F7, _F7_00FA) {
         {.addr=0x00c1, .value=0xdd}, {.addr=0x00c2, .value=0x60}, {.addr=0x567d, .value=0xf7},
         {.addr=0x567e, .value=0xc1}, {.addr=0x6165, .value=0x1c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x567d, .value=0xf7, .type=IO_READ},
         {.addr=0x567e, .value=0xc1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c1, .value=0xdd, .type=IO_READ},
         {.addr=0x00c2, .value=0x60, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6165, .value=0x1c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5579,12 +5821,13 @@ UTEST(SingleStepTests_F7, _F7_00FB) {
         {.addr=0x0153, .value=0x3f}, {.addr=0x0154, .value=0xc4}, {.addr=0x2bbf, .value=0xf7},
         {.addr=0x2bc0, .value=0x53}, {.addr=0xc4db, .value=0x90},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2bbf, .value=0xf7, .type=IO_READ},
         {.addr=0x2bc0, .value=0x53, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0153, .value=0x3f, .type=IO_READ},
         {.addr=0x0154, .value=0xc4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc4db, .value=0x90, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5602,12 +5845,13 @@ UTEST(SingleStepTests_F7, _F7_00FC) {
         {.addr=0x013b, .value=0xf7}, {.addr=0x013c, .value=0x83}, {.addr=0x74c2, .value=0xf7},
         {.addr=0x74c3, .value=0x3b}, {.addr=0x8415, .value=0x13},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x74c2, .value=0xf7, .type=IO_READ},
         {.addr=0x74c3, .value=0x3b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013b, .value=0xf7, .type=IO_READ},
         {.addr=0x013c, .value=0x83, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8415, .value=0x13, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5625,12 +5869,13 @@ UTEST(SingleStepTests_F7, _F7_00FD) {
         {.addr=0x01f3, .value=0xd5}, {.addr=0x01f4, .value=0x3a}, {.addr=0x3b80, .value=0xa0},
         {.addr=0x721b, .value=0xf7}, {.addr=0x721c, .value=0xf3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x721b, .value=0xf7, .type=IO_READ},
         {.addr=0x721c, .value=0xf3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f3, .value=0xd5, .type=IO_READ},
         {.addr=0x01f4, .value=0x3a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3b80, .value=0xa0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5648,12 +5893,13 @@ UTEST(SingleStepTests_F7, _F7_00FE) {
         {.addr=0x00c4, .value=0x9e}, {.addr=0x00c5, .value=0x45}, {.addr=0x4625, .value=0xd1},
         {.addr=0xf50c, .value=0xf7}, {.addr=0xf50d, .value=0xc4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf50c, .value=0xf7, .type=IO_READ},
         {.addr=0xf50d, .value=0xc4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c4, .value=0x9e, .type=IO_READ},
         {.addr=0x00c5, .value=0x45, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4625, .value=0xd1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5671,12 +5917,13 @@ UTEST(SingleStepTests_F7, _F7_00FF) {
         {.addr=0x01d2, .value=0x84}, {.addr=0x01d3, .value=0xb9}, {.addr=0xba03, .value=0x4e},
         {.addr=0xc2e6, .value=0xf7}, {.addr=0xc2e7, .value=0xd2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc2e6, .value=0xf7, .type=IO_READ},
         {.addr=0xc2e7, .value=0xd2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d2, .value=0x84, .type=IO_READ},
         {.addr=0x01d3, .value=0xb9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xba03, .value=0x4e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5694,12 +5941,13 @@ UTEST(SingleStepTests_F7, _F7_0100) {
         {.addr=0x0008, .value=0x9d}, {.addr=0x0009, .value=0xe2}, {.addr=0x139e, .value=0xf7},
         {.addr=0x139f, .value=0x08}, {.addr=0xe31a, .value=0x75},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x139e, .value=0xf7, .type=IO_READ},
         {.addr=0x139f, .value=0x08, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0008, .value=0x9d, .type=IO_READ},
         {.addr=0x0009, .value=0xe2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe31a, .value=0x75, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5717,12 +5965,13 @@ UTEST(SingleStepTests_F7, _F7_0101) {
         {.addr=0x008a, .value=0x57}, {.addr=0x008b, .value=0x85}, {.addr=0x6152, .value=0xf7},
         {.addr=0x6153, .value=0x8a}, {.addr=0x85bf, .value=0x2e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6152, .value=0xf7, .type=IO_READ},
         {.addr=0x6153, .value=0x8a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x008a, .value=0x57, .type=IO_READ},
         {.addr=0x008b, .value=0x85, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x85bf, .value=0x2e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5740,12 +5989,13 @@ UTEST(SingleStepTests_F7, _F7_0102) {
         {.addr=0x01e6, .value=0x05}, {.addr=0x01e7, .value=0xd0}, {.addr=0x5ab4, .value=0xf7},
         {.addr=0x5ab5, .value=0xe6}, {.addr=0xd0a8, .value=0xfd},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5ab4, .value=0xf7, .type=IO_READ},
         {.addr=0x5ab5, .value=0xe6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e6, .value=0x05, .type=IO_READ},
         {.addr=0x01e7, .value=0xd0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd0a8, .value=0xfd, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5763,12 +6013,13 @@ UTEST(SingleStepTests_F7, _F7_0103) {
         {.addr=0x00df, .value=0xa0}, {.addr=0x00e0, .value=0xc8}, {.addr=0x254f, .value=0xf7},
         {.addr=0x2550, .value=0xdf}, {.addr=0xc94f, .value=0x98},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x254f, .value=0xf7, .type=IO_READ},
         {.addr=0x2550, .value=0xdf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00df, .value=0xa0, .type=IO_READ},
         {.addr=0x00e0, .value=0xc8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc94f, .value=0x98, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5786,12 +6037,13 @@ UTEST(SingleStepTests_F7, _F7_0104) {
         {.addr=0x0096, .value=0x26}, {.addr=0x0097, .value=0x75}, {.addr=0x75e1, .value=0xc1},
         {.addr=0xce93, .value=0xf7}, {.addr=0xce94, .value=0x96},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xce93, .value=0xf7, .type=IO_READ},
         {.addr=0xce94, .value=0x96, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0096, .value=0x26, .type=IO_READ},
         {.addr=0x0097, .value=0x75, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x75e1, .value=0xc1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5809,12 +6061,13 @@ UTEST(SingleStepTests_F7, _F7_0105) {
         {.addr=0x016b, .value=0xc2}, {.addr=0x016c, .value=0xbb}, {.addr=0xb6c7, .value=0xf7},
         {.addr=0xb6c8, .value=0x6b}, {.addr=0xbc60, .value=0x54},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb6c7, .value=0xf7, .type=IO_READ},
         {.addr=0xb6c8, .value=0x6b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016b, .value=0xc2, .type=IO_READ},
         {.addr=0x016c, .value=0xbb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbc60, .value=0x54, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5832,12 +6085,13 @@ UTEST(SingleStepTests_F7, _F7_0106) {
         {.addr=0x0089, .value=0xb5}, {.addr=0x008a, .value=0x3f}, {.addr=0x3fc5, .value=0x47},
         {.addr=0x9be7, .value=0xf7}, {.addr=0x9be8, .value=0x89},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9be7, .value=0xf7, .type=IO_READ},
         {.addr=0x9be8, .value=0x89, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0089, .value=0xb5, .type=IO_READ},
         {.addr=0x008a, .value=0x3f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3fc5, .value=0x47, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5855,12 +6109,13 @@ UTEST(SingleStepTests_F7, _F7_0107) {
         {.addr=0x0139, .value=0x15}, {.addr=0x013a, .value=0xb1}, {.addr=0xb1c9, .value=0x53},
         {.addr=0xe9ba, .value=0xf7}, {.addr=0xe9bb, .value=0x39},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe9ba, .value=0xf7, .type=IO_READ},
         {.addr=0xe9bb, .value=0x39, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0139, .value=0x15, .type=IO_READ},
         {.addr=0x013a, .value=0xb1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb1c9, .value=0x53, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5878,12 +6133,13 @@ UTEST(SingleStepTests_F7, _F7_0108) {
         {.addr=0x005c, .value=0xf7}, {.addr=0x005d, .value=0x10}, {.addr=0x1100, .value=0x66},
         {.addr=0x1495, .value=0xf7}, {.addr=0x1496, .value=0x5c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1495, .value=0xf7, .type=IO_READ},
         {.addr=0x1496, .value=0x5c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005c, .value=0xf7, .type=IO_READ},
         {.addr=0x005d, .value=0x10, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1100, .value=0x66, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5901,12 +6157,13 @@ UTEST(SingleStepTests_F7, _F7_0109) {
         {.addr=0x014e, .value=0xe0}, {.addr=0x014f, .value=0x2e}, {.addr=0x2eef, .value=0xda},
         {.addr=0x5676, .value=0xf7}, {.addr=0x5677, .value=0x4e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5676, .value=0xf7, .type=IO_READ},
         {.addr=0x5677, .value=0x4e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x014e, .value=0xe0, .type=IO_READ},
         {.addr=0x014f, .value=0x2e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2eef, .value=0xda, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5924,12 +6181,13 @@ UTEST(SingleStepTests_F7, _F7_010A) {
         {.addr=0x01c5, .value=0xfe}, {.addr=0x01c6, .value=0x77}, {.addr=0x5629, .value=0xf7},
         {.addr=0x562a, .value=0xc5}, {.addr=0x78da, .value=0x74},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5629, .value=0xf7, .type=IO_READ},
         {.addr=0x562a, .value=0xc5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c5, .value=0xfe, .type=IO_READ},
         {.addr=0x01c6, .value=0x77, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x78da, .value=0x74, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5947,12 +6205,13 @@ UTEST(SingleStepTests_F7, _F7_010B) {
         {.addr=0x016c, .value=0xd7}, {.addr=0x016d, .value=0x6a}, {.addr=0x6b4a, .value=0x72},
         {.addr=0xfba4, .value=0xf7}, {.addr=0xfba5, .value=0x6c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfba4, .value=0xf7, .type=IO_READ},
         {.addr=0xfba5, .value=0x6c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016c, .value=0xd7, .type=IO_READ},
         {.addr=0x016d, .value=0x6a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6b4a, .value=0x72, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5970,12 +6229,13 @@ UTEST(SingleStepTests_F7, _F7_010C) {
         {.addr=0x009b, .value=0x25}, {.addr=0x009c, .value=0x18}, {.addr=0x18bb, .value=0x5b},
         {.addr=0x99d0, .value=0xf7}, {.addr=0x99d1, .value=0x9b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x99d0, .value=0xf7, .type=IO_READ},
         {.addr=0x99d1, .value=0x9b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009b, .value=0x25, .type=IO_READ},
         {.addr=0x009c, .value=0x18, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x18bb, .value=0x5b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -5993,12 +6253,13 @@ UTEST(SingleStepTests_F7, _F7_010D) {
         {.addr=0x0036, .value=0x89}, {.addr=0x0037, .value=0xed}, {.addr=0x48a6, .value=0xf7},
         {.addr=0x48a7, .value=0x36}, {.addr=0xedc2, .value=0xb1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x48a6, .value=0xf7, .type=IO_READ},
         {.addr=0x48a7, .value=0x36, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0036, .value=0x89, .type=IO_READ},
         {.addr=0x0037, .value=0xed, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xedc2, .value=0xb1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6016,12 +6277,13 @@ UTEST(SingleStepTests_F7, _F7_010E) {
         {.addr=0x01ad, .value=0xe0}, {.addr=0x01ae, .value=0x28}, {.addr=0x29c5, .value=0x45},
         {.addr=0x48bc, .value=0xf7}, {.addr=0x48bd, .value=0xad},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x48bc, .value=0xf7, .type=IO_READ},
         {.addr=0x48bd, .value=0xad, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ad, .value=0xe0, .type=IO_READ},
         {.addr=0x01ae, .value=0x28, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x29c5, .value=0x45, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6039,12 +6301,13 @@ UTEST(SingleStepTests_F7, _F7_010F) {
         {.addr=0x01eb, .value=0x77}, {.addr=0x01ec, .value=0x7c}, {.addr=0x5f9b, .value=0xf7},
         {.addr=0x5f9c, .value=0xeb}, {.addr=0x7cb1, .value=0x6a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5f9b, .value=0xf7, .type=IO_READ},
         {.addr=0x5f9c, .value=0xeb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01eb, .value=0x77, .type=IO_READ},
         {.addr=0x01ec, .value=0x7c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7cb1, .value=0x6a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6062,12 +6325,13 @@ UTEST(SingleStepTests_F7, _F7_0110) {
         {.addr=0x0128, .value=0xa5}, {.addr=0x0129, .value=0x17}, {.addr=0x1804, .value=0x61},
         {.addr=0xf5d7, .value=0xf7}, {.addr=0xf5d8, .value=0x28},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf5d7, .value=0xf7, .type=IO_READ},
         {.addr=0xf5d8, .value=0x28, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0128, .value=0xa5, .type=IO_READ},
         {.addr=0x0129, .value=0x17, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1804, .value=0x61, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6085,12 +6349,13 @@ UTEST(SingleStepTests_F7, _F7_0111) {
         {.addr=0x0152, .value=0xae}, {.addr=0x0153, .value=0xe2}, {.addr=0xd818, .value=0xf7},
         {.addr=0xd819, .value=0x52}, {.addr=0xe2c6, .value=0x41},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd818, .value=0xf7, .type=IO_READ},
         {.addr=0xd819, .value=0x52, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0152, .value=0xae, .type=IO_READ},
         {.addr=0x0153, .value=0xe2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe2c6, .value=0x41, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6108,12 +6373,13 @@ UTEST(SingleStepTests_F7, _F7_0112) {
         {.addr=0x0112, .value=0x49}, {.addr=0x0113, .value=0xe1}, {.addr=0x3531, .value=0xf7},
         {.addr=0x3532, .value=0x12}, {.addr=0xe1e0, .value=0x62},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3531, .value=0xf7, .type=IO_READ},
         {.addr=0x3532, .value=0x12, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0112, .value=0x49, .type=IO_READ},
         {.addr=0x0113, .value=0xe1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe1e0, .value=0x62, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6131,12 +6397,13 @@ UTEST(SingleStepTests_F7, _F7_0113) {
         {.addr=0x004d, .value=0x54}, {.addr=0x004e, .value=0xe9}, {.addr=0x914f, .value=0xf7},
         {.addr=0x9150, .value=0x4d}, {.addr=0xe9a3, .value=0x08},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x914f, .value=0xf7, .type=IO_READ},
         {.addr=0x9150, .value=0x4d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x004d, .value=0x54, .type=IO_READ},
         {.addr=0x004e, .value=0xe9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe9a3, .value=0x08, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6154,12 +6421,13 @@ UTEST(SingleStepTests_F7, _F7_0114) {
         {.addr=0x0058, .value=0x17}, {.addr=0x0059, .value=0xaa}, {.addr=0x13af, .value=0xf7},
         {.addr=0x13b0, .value=0x58}, {.addr=0xaaaf, .value=0x69},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x13af, .value=0xf7, .type=IO_READ},
         {.addr=0x13b0, .value=0x58, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0058, .value=0x17, .type=IO_READ},
         {.addr=0x0059, .value=0xaa, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xaaaf, .value=0x69, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6177,12 +6445,13 @@ UTEST(SingleStepTests_F7, _F7_0115) {
         {.addr=0x00b7, .value=0x6d}, {.addr=0x00b8, .value=0xdc}, {.addr=0x3832, .value=0xf7},
         {.addr=0x3833, .value=0xb7}, {.addr=0xdd26, .value=0x12},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3832, .value=0xf7, .type=IO_READ},
         {.addr=0x3833, .value=0xb7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b7, .value=0x6d, .type=IO_READ},
         {.addr=0x00b8, .value=0xdc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdd26, .value=0x12, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6200,12 +6469,13 @@ UTEST(SingleStepTests_F7, _F7_0116) {
         {.addr=0x0139, .value=0x7e}, {.addr=0x013a, .value=0x04}, {.addr=0x048d, .value=0x84},
         {.addr=0xc349, .value=0xf7}, {.addr=0xc34a, .value=0x39},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc349, .value=0xf7, .type=IO_READ},
         {.addr=0xc34a, .value=0x39, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0139, .value=0x7e, .type=IO_READ},
         {.addr=0x013a, .value=0x04, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x048d, .value=0x84, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6223,12 +6493,13 @@ UTEST(SingleStepTests_F7, _F7_0117) {
         {.addr=0x01f0, .value=0xe1}, {.addr=0x01f1, .value=0x07}, {.addr=0x085c, .value=0x9b},
         {.addr=0x7451, .value=0xf7}, {.addr=0x7452, .value=0xf0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7451, .value=0xf7, .type=IO_READ},
         {.addr=0x7452, .value=0xf0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f0, .value=0xe1, .type=IO_READ},
         {.addr=0x01f1, .value=0x07, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x085c, .value=0x9b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6246,12 +6517,13 @@ UTEST(SingleStepTests_F7, _F7_0118) {
         {.addr=0x01b2, .value=0x18}, {.addr=0x01b3, .value=0x0c}, {.addr=0x0c2a, .value=0x83},
         {.addr=0xb719, .value=0xf7}, {.addr=0xb71a, .value=0xb2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb719, .value=0xf7, .type=IO_READ},
         {.addr=0xb71a, .value=0xb2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b2, .value=0x18, .type=IO_READ},
         {.addr=0x01b3, .value=0x0c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0c2a, .value=0x83, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6269,12 +6541,13 @@ UTEST(SingleStepTests_F7, _F7_0119) {
         {.addr=0x0143, .value=0xe5}, {.addr=0x0144, .value=0x2e}, {.addr=0x2f1c, .value=0x28},
         {.addr=0x93b4, .value=0xf7}, {.addr=0x93b5, .value=0x43},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x93b4, .value=0xf7, .type=IO_READ},
         {.addr=0x93b5, .value=0x43, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0143, .value=0xe5, .type=IO_READ},
         {.addr=0x0144, .value=0x2e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2f1c, .value=0x28, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6292,12 +6565,13 @@ UTEST(SingleStepTests_F7, _F7_011A) {
         {.addr=0x007a, .value=0xec}, {.addr=0x007b, .value=0xfa}, {.addr=0x0471, .value=0xf7},
         {.addr=0x0472, .value=0x7a}, {.addr=0xfb1c, .value=0xbf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0471, .value=0xf7, .type=IO_READ},
         {.addr=0x0472, .value=0x7a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x007a, .value=0xec, .type=IO_READ},
         {.addr=0x007b, .value=0xfa, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfb1c, .value=0xbf, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6315,12 +6589,13 @@ UTEST(SingleStepTests_F7, _F7_011B) {
         {.addr=0x00bd, .value=0x46}, {.addr=0x00be, .value=0x9b}, {.addr=0x5a15, .value=0xf7},
         {.addr=0x5a16, .value=0xbd}, {.addr=0x9bd5, .value=0xd6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5a15, .value=0xf7, .type=IO_READ},
         {.addr=0x5a16, .value=0xbd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00bd, .value=0x46, .type=IO_READ},
         {.addr=0x00be, .value=0x9b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9bd5, .value=0xd6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6338,12 +6613,13 @@ UTEST(SingleStepTests_F7, _F7_011C) {
         {.addr=0x0088, .value=0x7d}, {.addr=0x0089, .value=0x9e}, {.addr=0x9f58, .value=0xad},
         {.addr=0xa190, .value=0xf7}, {.addr=0xa191, .value=0x88},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa190, .value=0xf7, .type=IO_READ},
         {.addr=0xa191, .value=0x88, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0088, .value=0x7d, .type=IO_READ},
         {.addr=0x0089, .value=0x9e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9f58, .value=0xad, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6361,12 +6637,13 @@ UTEST(SingleStepTests_F7, _F7_011D) {
         {.addr=0x0068, .value=0xbd}, {.addr=0x0069, .value=0x3d}, {.addr=0x0bbb, .value=0xf7},
         {.addr=0x0bbc, .value=0x68}, {.addr=0x3e01, .value=0x06},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0bbb, .value=0xf7, .type=IO_READ},
         {.addr=0x0bbc, .value=0x68, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0068, .value=0xbd, .type=IO_READ},
         {.addr=0x0069, .value=0x3d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3e01, .value=0x06, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6384,12 +6661,13 @@ UTEST(SingleStepTests_F7, _F7_011E) {
         {.addr=0x0179, .value=0x50}, {.addr=0x017a, .value=0x6a}, {.addr=0x6a8d, .value=0x61},
         {.addr=0xe993, .value=0xf7}, {.addr=0xe994, .value=0x79},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe993, .value=0xf7, .type=IO_READ},
         {.addr=0xe994, .value=0x79, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0179, .value=0x50, .type=IO_READ},
         {.addr=0x017a, .value=0x6a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6a8d, .value=0x61, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6407,12 +6685,13 @@ UTEST(SingleStepTests_F7, _F7_011F) {
         {.addr=0x012d, .value=0x1f}, {.addr=0x012e, .value=0xc8}, {.addr=0xb920, .value=0xf7},
         {.addr=0xb921, .value=0x2d}, {.addr=0xc833, .value=0xf4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb920, .value=0xf7, .type=IO_READ},
         {.addr=0xb921, .value=0x2d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x012d, .value=0x1f, .type=IO_READ},
         {.addr=0x012e, .value=0xc8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc833, .value=0xf4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6430,12 +6709,13 @@ UTEST(SingleStepTests_F7, _F7_0120) {
         {.addr=0x00a4, .value=0x1d}, {.addr=0x00a5, .value=0xe1}, {.addr=0xc81e, .value=0xf7},
         {.addr=0xc81f, .value=0xa4}, {.addr=0xe1e8, .value=0xad},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc81e, .value=0xf7, .type=IO_READ},
         {.addr=0xc81f, .value=0xa4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a4, .value=0x1d, .type=IO_READ},
         {.addr=0x00a5, .value=0xe1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe1e8, .value=0xad, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6453,12 +6733,13 @@ UTEST(SingleStepTests_F7, _F7_0121) {
         {.addr=0x0064, .value=0x23}, {.addr=0x0065, .value=0x18}, {.addr=0x18ae, .value=0x38},
         {.addr=0xaead, .value=0xf7}, {.addr=0xaeae, .value=0x64},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xaead, .value=0xf7, .type=IO_READ},
         {.addr=0xaeae, .value=0x64, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0064, .value=0x23, .type=IO_READ},
         {.addr=0x0065, .value=0x18, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x18ae, .value=0x38, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6476,12 +6757,13 @@ UTEST(SingleStepTests_F7, _F7_0122) {
         {.addr=0x01a3, .value=0xa2}, {.addr=0x01a4, .value=0x44}, {.addr=0x4559, .value=0x10},
         {.addr=0x6dee, .value=0xf7}, {.addr=0x6def, .value=0xa3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6dee, .value=0xf7, .type=IO_READ},
         {.addr=0x6def, .value=0xa3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a3, .value=0xa2, .type=IO_READ},
         {.addr=0x01a4, .value=0x44, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4559, .value=0x10, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6499,12 +6781,13 @@ UTEST(SingleStepTests_F7, _F7_0123) {
         {.addr=0x017d, .value=0x8c}, {.addr=0x017e, .value=0x16}, {.addr=0x1714, .value=0x7e},
         {.addr=0x94c5, .value=0xf7}, {.addr=0x94c6, .value=0x7d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x94c5, .value=0xf7, .type=IO_READ},
         {.addr=0x94c6, .value=0x7d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x017d, .value=0x8c, .type=IO_READ},
         {.addr=0x017e, .value=0x16, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1714, .value=0x7e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6522,12 +6805,13 @@ UTEST(SingleStepTests_F7, _F7_0124) {
         {.addr=0x0079, .value=0x87}, {.addr=0x007a, .value=0x5d}, {.addr=0x5e36, .value=0xf0},
         {.addr=0xedaa, .value=0xf7}, {.addr=0xedab, .value=0x79},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xedaa, .value=0xf7, .type=IO_READ},
         {.addr=0xedab, .value=0x79, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0079, .value=0x87, .type=IO_READ},
         {.addr=0x007a, .value=0x5d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5e36, .value=0xf0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6545,12 +6829,13 @@ UTEST(SingleStepTests_F7, _F7_0125) {
         {.addr=0x0060, .value=0x9b}, {.addr=0x0061, .value=0xd6}, {.addr=0x7977, .value=0xf7},
         {.addr=0x7978, .value=0x60}, {.addr=0xd752, .value=0xed},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7977, .value=0xf7, .type=IO_READ},
         {.addr=0x7978, .value=0x60, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0060, .value=0x9b, .type=IO_READ},
         {.addr=0x0061, .value=0xd6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd752, .value=0xed, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6568,12 +6853,13 @@ UTEST(SingleStepTests_F7, _F7_0126) {
         {.addr=0x016c, .value=0x72}, {.addr=0x016d, .value=0xef}, {.addr=0x13e2, .value=0xf7},
         {.addr=0x13e3, .value=0x6c}, {.addr=0xef7a, .value=0x98},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x13e2, .value=0xf7, .type=IO_READ},
         {.addr=0x13e3, .value=0x6c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016c, .value=0x72, .type=IO_READ},
         {.addr=0x016d, .value=0xef, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xef7a, .value=0x98, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6591,12 +6877,13 @@ UTEST(SingleStepTests_F7, _F7_0127) {
         {.addr=0x016f, .value=0x25}, {.addr=0x0170, .value=0x72}, {.addr=0x344e, .value=0xf7},
         {.addr=0x344f, .value=0x6f}, {.addr=0x7289, .value=0xdc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x344e, .value=0xf7, .type=IO_READ},
         {.addr=0x344f, .value=0x6f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016f, .value=0x25, .type=IO_READ},
         {.addr=0x0170, .value=0x72, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7289, .value=0xdc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6614,12 +6901,13 @@ UTEST(SingleStepTests_F7, _F7_0128) {
         {.addr=0x0106, .value=0x23}, {.addr=0x0107, .value=0x1d}, {.addr=0x1851, .value=0xf7},
         {.addr=0x1852, .value=0x06}, {.addr=0x1db4, .value=0x7b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1851, .value=0xf7, .type=IO_READ},
         {.addr=0x1852, .value=0x06, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0106, .value=0x23, .type=IO_READ},
         {.addr=0x0107, .value=0x1d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1db4, .value=0x7b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6637,12 +6925,13 @@ UTEST(SingleStepTests_F7, _F7_0129) {
         {.addr=0x00ab, .value=0x1b}, {.addr=0x00ac, .value=0x69}, {.addr=0x693f, .value=0x01},
         {.addr=0xee05, .value=0xf7}, {.addr=0xee06, .value=0xab},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xee05, .value=0xf7, .type=IO_READ},
         {.addr=0xee06, .value=0xab, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ab, .value=0x1b, .type=IO_READ},
         {.addr=0x00ac, .value=0x69, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x693f, .value=0x01, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6660,12 +6949,13 @@ UTEST(SingleStepTests_F7, _F7_012A) {
         {.addr=0x0041, .value=0x9e}, {.addr=0x0042, .value=0x46}, {.addr=0x46e4, .value=0x95},
         {.addr=0x5841, .value=0xf7}, {.addr=0x5842, .value=0x41},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5841, .value=0xf7, .type=IO_READ},
         {.addr=0x5842, .value=0x41, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0041, .value=0x9e, .type=IO_READ},
         {.addr=0x0042, .value=0x46, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x46e4, .value=0x95, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6683,12 +6973,13 @@ UTEST(SingleStepTests_F7, _F7_012B) {
         {.addr=0x01e3, .value=0x75}, {.addr=0x01e4, .value=0x6a}, {.addr=0x6b13, .value=0xd6},
         {.addr=0xc6cf, .value=0xf7}, {.addr=0xc6d0, .value=0xe3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc6cf, .value=0xf7, .type=IO_READ},
         {.addr=0xc6d0, .value=0xe3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e3, .value=0x75, .type=IO_READ},
         {.addr=0x01e4, .value=0x6a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6b13, .value=0xd6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6706,12 +6997,13 @@ UTEST(SingleStepTests_F7, _F7_012C) {
         {.addr=0x00d4, .value=0x8c}, {.addr=0x00d5, .value=0xd5}, {.addr=0x9ce9, .value=0xf7},
         {.addr=0x9cea, .value=0xd4}, {.addr=0xd60d, .value=0x0c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9ce9, .value=0xf7, .type=IO_READ},
         {.addr=0x9cea, .value=0xd4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d4, .value=0x8c, .type=IO_READ},
         {.addr=0x00d5, .value=0xd5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd60d, .value=0x0c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6729,12 +7021,13 @@ UTEST(SingleStepTests_F7, _F7_012D) {
         {.addr=0x00c2, .value=0x0b}, {.addr=0x00c3, .value=0xfc}, {.addr=0xfc2d, .value=0x0f},
         {.addr=0xff1f, .value=0xf7}, {.addr=0xff20, .value=0xc2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xff1f, .value=0xf7, .type=IO_READ},
         {.addr=0xff20, .value=0xc2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c2, .value=0x0b, .type=IO_READ},
         {.addr=0x00c3, .value=0xfc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfc2d, .value=0x0f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6752,12 +7045,13 @@ UTEST(SingleStepTests_F7, _F7_012E) {
         {.addr=0x0179, .value=0x60}, {.addr=0x017a, .value=0xdf}, {.addr=0x151f, .value=0xf7},
         {.addr=0x1520, .value=0x79}, {.addr=0xdfd3, .value=0xba},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x151f, .value=0xf7, .type=IO_READ},
         {.addr=0x1520, .value=0x79, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0179, .value=0x60, .type=IO_READ},
         {.addr=0x017a, .value=0xdf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdfd3, .value=0xba, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6775,12 +7069,13 @@ UTEST(SingleStepTests_F7, _F7_012F) {
         {.addr=0x017a, .value=0xec}, {.addr=0x017b, .value=0x66}, {.addr=0x67a0, .value=0xb6},
         {.addr=0xc37e, .value=0xf7}, {.addr=0xc37f, .value=0x7a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc37e, .value=0xf7, .type=IO_READ},
         {.addr=0xc37f, .value=0x7a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x017a, .value=0xec, .type=IO_READ},
         {.addr=0x017b, .value=0x66, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x67a0, .value=0xb6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6798,12 +7093,13 @@ UTEST(SingleStepTests_F7, _F7_0130) {
         {.addr=0x01e9, .value=0x4b}, {.addr=0x01ea, .value=0xae}, {.addr=0x96a4, .value=0xf7},
         {.addr=0x96a5, .value=0xe9}, {.addr=0xaed0, .value=0xbc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x96a4, .value=0xf7, .type=IO_READ},
         {.addr=0x96a5, .value=0xe9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e9, .value=0x4b, .type=IO_READ},
         {.addr=0x01ea, .value=0xae, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xaed0, .value=0xbc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6821,12 +7117,13 @@ UTEST(SingleStepTests_F7, _F7_0131) {
         {.addr=0x005e, .value=0x66}, {.addr=0x005f, .value=0x90}, {.addr=0x5c7d, .value=0xf7},
         {.addr=0x5c7e, .value=0x5e}, {.addr=0x90a1, .value=0x4e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5c7d, .value=0xf7, .type=IO_READ},
         {.addr=0x5c7e, .value=0x5e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005e, .value=0x66, .type=IO_READ},
         {.addr=0x005f, .value=0x90, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x90a1, .value=0x4e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6844,12 +7141,13 @@ UTEST(SingleStepTests_F7, _F7_0132) {
         {.addr=0x016e, .value=0x57}, {.addr=0x016f, .value=0xf9}, {.addr=0xf33c, .value=0xf7},
         {.addr=0xf33d, .value=0x6e}, {.addr=0xf976, .value=0x0f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf33c, .value=0xf7, .type=IO_READ},
         {.addr=0xf33d, .value=0x6e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016e, .value=0x57, .type=IO_READ},
         {.addr=0x016f, .value=0xf9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf976, .value=0x0f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6867,12 +7165,13 @@ UTEST(SingleStepTests_F7, _F7_0133) {
         {.addr=0x00c1, .value=0xf7}, {.addr=0x00c2, .value=0xe8}, {.addr=0x00e8, .value=0x6f},
         {.addr=0x00e9, .value=0x56}, {.addr=0x56fb, .value=0xd7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x00c1, .value=0xf7, .type=IO_READ},
         {.addr=0x00c2, .value=0xe8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e8, .value=0x6f, .type=IO_READ},
         {.addr=0x00e9, .value=0x56, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x56fb, .value=0xd7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6890,12 +7189,13 @@ UTEST(SingleStepTests_F7, _F7_0134) {
         {.addr=0x00b1, .value=0xf4}, {.addr=0x00b2, .value=0x81}, {.addr=0x374d, .value=0xf7},
         {.addr=0x374e, .value=0xb1}, {.addr=0x825b, .value=0x17},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x374d, .value=0xf7, .type=IO_READ},
         {.addr=0x374e, .value=0xb1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b1, .value=0xf4, .type=IO_READ},
         {.addr=0x00b2, .value=0x81, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x825b, .value=0x17, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6913,12 +7213,13 @@ UTEST(SingleStepTests_F7, _F7_0135) {
         {.addr=0x0192, .value=0x26}, {.addr=0x0193, .value=0xea}, {.addr=0xd6c5, .value=0xf7},
         {.addr=0xd6c6, .value=0x92}, {.addr=0xeae1, .value=0xa9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd6c5, .value=0xf7, .type=IO_READ},
         {.addr=0xd6c6, .value=0x92, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0192, .value=0x26, .type=IO_READ},
         {.addr=0x0193, .value=0xea, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xeae1, .value=0xa9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6936,12 +7237,13 @@ UTEST(SingleStepTests_F7, _F7_0136) {
         {.addr=0x00c9, .value=0xa7}, {.addr=0x00ca, .value=0x57}, {.addr=0x5861, .value=0xdb},
         {.addr=0xe20c, .value=0xf7}, {.addr=0xe20d, .value=0xc9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe20c, .value=0xf7, .type=IO_READ},
         {.addr=0xe20d, .value=0xc9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c9, .value=0xa7, .type=IO_READ},
         {.addr=0x00ca, .value=0x57, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5861, .value=0xdb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6959,12 +7261,13 @@ UTEST(SingleStepTests_F7, _F7_0137) {
         {.addr=0x0132, .value=0xe4}, {.addr=0x0133, .value=0x80}, {.addr=0x7e9b, .value=0xf7},
         {.addr=0x7e9c, .value=0x32}, {.addr=0x8103, .value=0xf3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7e9b, .value=0xf7, .type=IO_READ},
         {.addr=0x7e9c, .value=0x32, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0132, .value=0xe4, .type=IO_READ},
         {.addr=0x0133, .value=0x80, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8103, .value=0xf3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -6982,12 +7285,13 @@ UTEST(SingleStepTests_F7, _F7_0139) {
         {.addr=0x0179, .value=0x66}, {.addr=0x017a, .value=0x1c}, {.addr=0x1d0f, .value=0x0f},
         {.addr=0x4197, .value=0xf7}, {.addr=0x4198, .value=0x79},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4197, .value=0xf7, .type=IO_READ},
         {.addr=0x4198, .value=0x79, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0179, .value=0x66, .type=IO_READ},
         {.addr=0x017a, .value=0x1c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1d0f, .value=0x0f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7005,12 +7309,13 @@ UTEST(SingleStepTests_F7, _F7_013A) {
         {.addr=0x00e5, .value=0x48}, {.addr=0x00e6, .value=0x04}, {.addr=0x050e, .value=0xe3},
         {.addr=0x5e80, .value=0xf7}, {.addr=0x5e81, .value=0xe5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5e80, .value=0xf7, .type=IO_READ},
         {.addr=0x5e81, .value=0xe5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e5, .value=0x48, .type=IO_READ},
         {.addr=0x00e6, .value=0x04, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x050e, .value=0xe3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7028,12 +7333,13 @@ UTEST(SingleStepTests_F7, _F7_013B) {
         {.addr=0x01f6, .value=0xf1}, {.addr=0x01f7, .value=0xed}, {.addr=0x869b, .value=0xf7},
         {.addr=0x869c, .value=0xf6}, {.addr=0xeecc, .value=0x3a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x869b, .value=0xf7, .type=IO_READ},
         {.addr=0x869c, .value=0xf6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f6, .value=0xf1, .type=IO_READ},
         {.addr=0x01f7, .value=0xed, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xeecc, .value=0x3a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7051,12 +7357,13 @@ UTEST(SingleStepTests_F7, _F7_013C) {
         {.addr=0x0094, .value=0xc0}, {.addr=0x0095, .value=0x1b}, {.addr=0x14d2, .value=0xf7},
         {.addr=0x14d3, .value=0x94}, {.addr=0x1c09, .value=0x8a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x14d2, .value=0xf7, .type=IO_READ},
         {.addr=0x14d3, .value=0x94, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0094, .value=0xc0, .type=IO_READ},
         {.addr=0x0095, .value=0x1b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1c09, .value=0x8a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7074,12 +7381,13 @@ UTEST(SingleStepTests_F7, _F7_013D) {
         {.addr=0x000c, .value=0x88}, {.addr=0x000d, .value=0xa2}, {.addr=0x84d9, .value=0xf7},
         {.addr=0x84da, .value=0x0c}, {.addr=0xa36a, .value=0xf3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x84d9, .value=0xf7, .type=IO_READ},
         {.addr=0x84da, .value=0x0c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000c, .value=0x88, .type=IO_READ},
         {.addr=0x000d, .value=0xa2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa36a, .value=0xf3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7097,12 +7405,13 @@ UTEST(SingleStepTests_F7, _F7_013E) {
         {.addr=0x0152, .value=0x56}, {.addr=0x0153, .value=0xb2}, {.addr=0xb2aa, .value=0xe1},
         {.addr=0xb2f1, .value=0xf7}, {.addr=0xb2f2, .value=0x52},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb2f1, .value=0xf7, .type=IO_READ},
         {.addr=0xb2f2, .value=0x52, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0152, .value=0x56, .type=IO_READ},
         {.addr=0x0153, .value=0xb2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb2aa, .value=0xe1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7120,12 +7429,13 @@ UTEST(SingleStepTests_F7, _F7_013F) {
         {.addr=0x00c7, .value=0xd9}, {.addr=0x00c8, .value=0xdf}, {.addr=0xa6aa, .value=0xf7},
         {.addr=0xa6ab, .value=0xc7}, {.addr=0xe0cf, .value=0x40},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa6aa, .value=0xf7, .type=IO_READ},
         {.addr=0xa6ab, .value=0xc7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c7, .value=0xd9, .type=IO_READ},
         {.addr=0x00c8, .value=0xdf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe0cf, .value=0x40, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7143,12 +7453,13 @@ UTEST(SingleStepTests_F7, _F7_0140) {
         {.addr=0x008a, .value=0x44}, {.addr=0x008b, .value=0x46}, {.addr=0x2f4a, .value=0xf7},
         {.addr=0x2f4b, .value=0x8a}, {.addr=0x46f2, .value=0xe8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2f4a, .value=0xf7, .type=IO_READ},
         {.addr=0x2f4b, .value=0x8a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x008a, .value=0x44, .type=IO_READ},
         {.addr=0x008b, .value=0x46, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x46f2, .value=0xe8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7166,12 +7477,13 @@ UTEST(SingleStepTests_F7, _F7_0141) {
         {.addr=0x0118, .value=0xb4}, {.addr=0x0119, .value=0x85}, {.addr=0x8192, .value=0xf7},
         {.addr=0x8193, .value=0x18}, {.addr=0x868a, .value=0x8e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8192, .value=0xf7, .type=IO_READ},
         {.addr=0x8193, .value=0x18, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0118, .value=0xb4, .type=IO_READ},
         {.addr=0x0119, .value=0x85, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x868a, .value=0x8e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7189,12 +7501,13 @@ UTEST(SingleStepTests_F7, _F7_0142) {
         {.addr=0x003d, .value=0x42}, {.addr=0x003e, .value=0xdb}, {.addr=0x286a, .value=0xf7},
         {.addr=0x286b, .value=0x3d}, {.addr=0xdc17, .value=0xb1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x286a, .value=0xf7, .type=IO_READ},
         {.addr=0x286b, .value=0x3d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x003d, .value=0x42, .type=IO_READ},
         {.addr=0x003e, .value=0xdb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdc17, .value=0xb1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7212,12 +7525,13 @@ UTEST(SingleStepTests_F7, _F7_0143) {
         {.addr=0x0184, .value=0x1d}, {.addr=0x0185, .value=0x57}, {.addr=0x5773, .value=0x66},
         {.addr=0x82c2, .value=0xf7}, {.addr=0x82c3, .value=0x84},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x82c2, .value=0xf7, .type=IO_READ},
         {.addr=0x82c3, .value=0x84, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0184, .value=0x1d, .type=IO_READ},
         {.addr=0x0185, .value=0x57, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5773, .value=0x66, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7235,12 +7549,13 @@ UTEST(SingleStepTests_F7, _F7_0144) {
         {.addr=0x0111, .value=0xfc}, {.addr=0x0112, .value=0xf4}, {.addr=0x199b, .value=0xf7},
         {.addr=0x199c, .value=0x11}, {.addr=0xf5d6, .value=0x0e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x199b, .value=0xf7, .type=IO_READ},
         {.addr=0x199c, .value=0x11, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0111, .value=0xfc, .type=IO_READ},
         {.addr=0x0112, .value=0xf4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf5d6, .value=0x0e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7258,12 +7573,13 @@ UTEST(SingleStepTests_F7, _F7_0145) {
         {.addr=0x01ed, .value=0xf0}, {.addr=0x01ee, .value=0x83}, {.addr=0x84e8, .value=0x94},
         {.addr=0xb42d, .value=0xf7}, {.addr=0xb42e, .value=0xed},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb42d, .value=0xf7, .type=IO_READ},
         {.addr=0xb42e, .value=0xed, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ed, .value=0xf0, .type=IO_READ},
         {.addr=0x01ee, .value=0x83, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x84e8, .value=0x94, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7281,12 +7597,13 @@ UTEST(SingleStepTests_F7, _F7_0146) {
         {.addr=0x0035, .value=0x67}, {.addr=0x0036, .value=0xc6}, {.addr=0xc6ae, .value=0xd5},
         {.addr=0xd0c3, .value=0xf7}, {.addr=0xd0c4, .value=0x35},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd0c3, .value=0xf7, .type=IO_READ},
         {.addr=0xd0c4, .value=0x35, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0035, .value=0x67, .type=IO_READ},
         {.addr=0x0036, .value=0xc6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc6ae, .value=0xd5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7304,12 +7621,13 @@ UTEST(SingleStepTests_F7, _F7_0148) {
         {.addr=0x00da, .value=0xac}, {.addr=0x00db, .value=0x64}, {.addr=0x64c7, .value=0x2f},
         {.addr=0xe39f, .value=0xf7}, {.addr=0xe3a0, .value=0xda},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe39f, .value=0xf7, .type=IO_READ},
         {.addr=0xe3a0, .value=0xda, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00da, .value=0xac, .type=IO_READ},
         {.addr=0x00db, .value=0x64, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x64c7, .value=0x2f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7327,12 +7645,13 @@ UTEST(SingleStepTests_F7, _F7_0149) {
         {.addr=0x0193, .value=0x91}, {.addr=0x0194, .value=0x53}, {.addr=0x5471, .value=0xb4},
         {.addr=0xaa1c, .value=0xf7}, {.addr=0xaa1d, .value=0x93},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xaa1c, .value=0xf7, .type=IO_READ},
         {.addr=0xaa1d, .value=0x93, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0193, .value=0x91, .type=IO_READ},
         {.addr=0x0194, .value=0x53, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5471, .value=0xb4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7350,12 +7669,13 @@ UTEST(SingleStepTests_F7, _F7_014A) {
         {.addr=0x018b, .value=0x2c}, {.addr=0x018c, .value=0x9f}, {.addr=0x7e19, .value=0xf7},
         {.addr=0x7e1a, .value=0x8b}, {.addr=0x9ff4, .value=0x90},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7e19, .value=0xf7, .type=IO_READ},
         {.addr=0x7e1a, .value=0x8b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x018b, .value=0x2c, .type=IO_READ},
         {.addr=0x018c, .value=0x9f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9ff4, .value=0x90, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7373,12 +7693,13 @@ UTEST(SingleStepTests_F7, _F7_014B) {
         {.addr=0x00c0, .value=0x53}, {.addr=0x00c1, .value=0xf7}, {.addr=0xc85a, .value=0xf7},
         {.addr=0xc85b, .value=0xc0}, {.addr=0xf7c0, .value=0x30},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc85a, .value=0xf7, .type=IO_READ},
         {.addr=0xc85b, .value=0xc0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c0, .value=0x53, .type=IO_READ},
         {.addr=0x00c1, .value=0xf7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf7c0, .value=0x30, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7396,12 +7717,13 @@ UTEST(SingleStepTests_F7, _F7_014C) {
         {.addr=0x002c, .value=0x45}, {.addr=0x002d, .value=0xbc}, {.addr=0xbc52, .value=0x49},
         {.addr=0xd55e, .value=0xf7}, {.addr=0xd55f, .value=0x2c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd55e, .value=0xf7, .type=IO_READ},
         {.addr=0xd55f, .value=0x2c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002c, .value=0x45, .type=IO_READ},
         {.addr=0x002d, .value=0xbc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbc52, .value=0x49, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7419,12 +7741,13 @@ UTEST(SingleStepTests_F7, _F7_014D) {
         {.addr=0x0002, .value=0x6b}, {.addr=0x0003, .value=0xea}, {.addr=0xdc52, .value=0xf7},
         {.addr=0xdc53, .value=0x02}, {.addr=0xeb45, .value=0xc9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdc52, .value=0xf7, .type=IO_READ},
         {.addr=0xdc53, .value=0x02, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0002, .value=0x6b, .type=IO_READ},
         {.addr=0x0003, .value=0xea, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xeb45, .value=0xc9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7442,12 +7765,13 @@ UTEST(SingleStepTests_F7, _F7_014E) {
         {.addr=0x0074, .value=0xa5}, {.addr=0x0075, .value=0x25}, {.addr=0x2681, .value=0x22},
         {.addr=0x9b3d, .value=0xf7}, {.addr=0x9b3e, .value=0x74},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9b3d, .value=0xf7, .type=IO_READ},
         {.addr=0x9b3e, .value=0x74, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0074, .value=0xa5, .type=IO_READ},
         {.addr=0x0075, .value=0x25, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2681, .value=0x22, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7465,12 +7789,13 @@ UTEST(SingleStepTests_F7, _F7_014F) {
         {.addr=0x0001, .value=0x80}, {.addr=0x0002, .value=0x52}, {.addr=0x1cc5, .value=0xf7},
         {.addr=0x1cc6, .value=0x01}, {.addr=0x52a1, .value=0x0f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1cc5, .value=0xf7, .type=IO_READ},
         {.addr=0x1cc6, .value=0x01, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0001, .value=0x80, .type=IO_READ},
         {.addr=0x0002, .value=0x52, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x52a1, .value=0x0f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7488,12 +7813,13 @@ UTEST(SingleStepTests_F7, _F7_0150) {
         {.addr=0x00b3, .value=0xca}, {.addr=0x00b4, .value=0x9f}, {.addr=0x414c, .value=0xf7},
         {.addr=0x414d, .value=0xb3}, {.addr=0x9ffe, .value=0x3c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x414c, .value=0xf7, .type=IO_READ},
         {.addr=0x414d, .value=0xb3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b3, .value=0xca, .type=IO_READ},
         {.addr=0x00b4, .value=0x9f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9ffe, .value=0x3c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7511,12 +7837,13 @@ UTEST(SingleStepTests_F7, _F7_0151) {
         {.addr=0x01f4, .value=0x82}, {.addr=0x01f5, .value=0xfc}, {.addr=0xe0b6, .value=0xf7},
         {.addr=0xe0b7, .value=0xf4}, {.addr=0xfc97, .value=0x1b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe0b6, .value=0xf7, .type=IO_READ},
         {.addr=0xe0b7, .value=0xf4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f4, .value=0x82, .type=IO_READ},
         {.addr=0x01f5, .value=0xfc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfc97, .value=0x1b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7534,12 +7861,13 @@ UTEST(SingleStepTests_F7, _F7_0152) {
         {.addr=0x006a, .value=0x88}, {.addr=0x006b, .value=0x5f}, {.addr=0x6032, .value=0x14},
         {.addr=0xf863, .value=0xf7}, {.addr=0xf864, .value=0x6a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf863, .value=0xf7, .type=IO_READ},
         {.addr=0xf864, .value=0x6a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006a, .value=0x88, .type=IO_READ},
         {.addr=0x006b, .value=0x5f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6032, .value=0x14, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7557,12 +7885,13 @@ UTEST(SingleStepTests_F7, _F7_0153) {
         {.addr=0x00e1, .value=0xb0}, {.addr=0x00e2, .value=0x3a}, {.addr=0x36c8, .value=0xf7},
         {.addr=0x36c9, .value=0xe1}, {.addr=0x3b2e, .value=0x36},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x36c8, .value=0xf7, .type=IO_READ},
         {.addr=0x36c9, .value=0xe1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e1, .value=0xb0, .type=IO_READ},
         {.addr=0x00e2, .value=0x3a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3b2e, .value=0x36, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7580,12 +7909,13 @@ UTEST(SingleStepTests_F7, _F7_0154) {
         {.addr=0x0030, .value=0x26}, {.addr=0x0031, .value=0xe0}, {.addr=0xaa72, .value=0xf7},
         {.addr=0xaa73, .value=0x30}, {.addr=0xe0b8, .value=0x57},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xaa72, .value=0xf7, .type=IO_READ},
         {.addr=0xaa73, .value=0x30, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0030, .value=0x26, .type=IO_READ},
         {.addr=0x0031, .value=0xe0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe0b8, .value=0x57, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7603,12 +7933,13 @@ UTEST(SingleStepTests_F7, _F7_0155) {
         {.addr=0x01c8, .value=0x1c}, {.addr=0x01c9, .value=0x5c}, {.addr=0x5ccf, .value=0x53},
         {.addr=0xb626, .value=0xf7}, {.addr=0xb627, .value=0xc8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb626, .value=0xf7, .type=IO_READ},
         {.addr=0xb627, .value=0xc8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c8, .value=0x1c, .type=IO_READ},
         {.addr=0x01c9, .value=0x5c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5ccf, .value=0x53, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7626,12 +7957,13 @@ UTEST(SingleStepTests_F7, _F7_0156) {
         {.addr=0x00a7, .value=0x71}, {.addr=0x00a8, .value=0xee}, {.addr=0xeec3, .value=0x9b},
         {.addr=0xf687, .value=0xf7}, {.addr=0xf688, .value=0xa7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf687, .value=0xf7, .type=IO_READ},
         {.addr=0xf688, .value=0xa7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a7, .value=0x71, .type=IO_READ},
         {.addr=0x00a8, .value=0xee, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xeec3, .value=0x9b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7649,12 +7981,13 @@ UTEST(SingleStepTests_F7, _F7_0157) {
         {.addr=0x0036, .value=0xd2}, {.addr=0x0037, .value=0x03}, {.addr=0x0479, .value=0xe0},
         {.addr=0x0739, .value=0xf7}, {.addr=0x073a, .value=0x36},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0739, .value=0xf7, .type=IO_READ},
         {.addr=0x073a, .value=0x36, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0036, .value=0xd2, .type=IO_READ},
         {.addr=0x0037, .value=0x03, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0479, .value=0xe0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7672,12 +8005,13 @@ UTEST(SingleStepTests_F7, _F7_0158) {
         {.addr=0x0029, .value=0x9d}, {.addr=0x002a, .value=0x03}, {.addr=0x03d7, .value=0x1e},
         {.addr=0x7feb, .value=0xf7}, {.addr=0x7fec, .value=0x29},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7feb, .value=0xf7, .type=IO_READ},
         {.addr=0x7fec, .value=0x29, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0029, .value=0x9d, .type=IO_READ},
         {.addr=0x002a, .value=0x03, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x03d7, .value=0x1e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7695,12 +8029,13 @@ UTEST(SingleStepTests_F7, _F7_0159) {
         {.addr=0x015a, .value=0x4e}, {.addr=0x015b, .value=0xd2}, {.addr=0x9b68, .value=0xf7},
         {.addr=0x9b69, .value=0x5a}, {.addr=0xd302, .value=0xc9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9b68, .value=0xf7, .type=IO_READ},
         {.addr=0x9b69, .value=0x5a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x015a, .value=0x4e, .type=IO_READ},
         {.addr=0x015b, .value=0xd2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd302, .value=0xc9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7718,12 +8053,13 @@ UTEST(SingleStepTests_F7, _F7_015A) {
         {.addr=0x00a8, .value=0xc8}, {.addr=0x00a9, .value=0x34}, {.addr=0x351b, .value=0x01},
         {.addr=0x6a7d, .value=0xf7}, {.addr=0x6a7e, .value=0xa8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6a7d, .value=0xf7, .type=IO_READ},
         {.addr=0x6a7e, .value=0xa8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a8, .value=0xc8, .type=IO_READ},
         {.addr=0x00a9, .value=0x34, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x351b, .value=0x01, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7741,12 +8077,13 @@ UTEST(SingleStepTests_F7, _F7_015B) {
         {.addr=0x0118, .value=0x9f}, {.addr=0x0119, .value=0x33}, {.addr=0x33ca, .value=0xe2},
         {.addr=0xe099, .value=0xf7}, {.addr=0xe09a, .value=0x18},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe099, .value=0xf7, .type=IO_READ},
         {.addr=0xe09a, .value=0x18, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0118, .value=0x9f, .type=IO_READ},
         {.addr=0x0119, .value=0x33, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x33ca, .value=0xe2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7764,12 +8101,13 @@ UTEST(SingleStepTests_F7, _F7_015C) {
         {.addr=0x0173, .value=0xc6}, {.addr=0x0174, .value=0xf8}, {.addr=0xc253, .value=0xf7},
         {.addr=0xc254, .value=0x73}, {.addr=0xf8e2, .value=0x96},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc253, .value=0xf7, .type=IO_READ},
         {.addr=0xc254, .value=0x73, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0173, .value=0xc6, .type=IO_READ},
         {.addr=0x0174, .value=0xf8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf8e2, .value=0x96, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7787,12 +8125,13 @@ UTEST(SingleStepTests_F7, _F7_015D) {
         {.addr=0x01dc, .value=0x93}, {.addr=0x01dd, .value=0x13}, {.addr=0x13bf, .value=0x0b},
         {.addr=0xfc08, .value=0xf7}, {.addr=0xfc09, .value=0xdc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfc08, .value=0xf7, .type=IO_READ},
         {.addr=0xfc09, .value=0xdc, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01dc, .value=0x93, .type=IO_READ},
         {.addr=0x01dd, .value=0x13, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x13bf, .value=0x0b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7810,12 +8149,13 @@ UTEST(SingleStepTests_F7, _F7_015E) {
         {.addr=0x0132, .value=0x7e}, {.addr=0x0133, .value=0x38}, {.addr=0x38b7, .value=0x4a},
         {.addr=0x8e51, .value=0xf7}, {.addr=0x8e52, .value=0x32},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8e51, .value=0xf7, .type=IO_READ},
         {.addr=0x8e52, .value=0x32, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0132, .value=0x7e, .type=IO_READ},
         {.addr=0x0133, .value=0x38, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x38b7, .value=0x4a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7833,12 +8173,13 @@ UTEST(SingleStepTests_F7, _F7_015F) {
         {.addr=0x007e, .value=0xe7}, {.addr=0x007f, .value=0x45}, {.addr=0x4649, .value=0x78},
         {.addr=0xa5a7, .value=0xf7}, {.addr=0xa5a8, .value=0x7e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa5a7, .value=0xf7, .type=IO_READ},
         {.addr=0xa5a8, .value=0x7e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x007e, .value=0xe7, .type=IO_READ},
         {.addr=0x007f, .value=0x45, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4649, .value=0x78, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7856,12 +8197,13 @@ UTEST(SingleStepTests_F7, _F7_0160) {
         {.addr=0x018d, .value=0x44}, {.addr=0x018e, .value=0x26}, {.addr=0x26cc, .value=0x29},
         {.addr=0x5733, .value=0xf7}, {.addr=0x5734, .value=0x8d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5733, .value=0xf7, .type=IO_READ},
         {.addr=0x5734, .value=0x8d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x018d, .value=0x44, .type=IO_READ},
         {.addr=0x018e, .value=0x26, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x26cc, .value=0x29, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7879,12 +8221,13 @@ UTEST(SingleStepTests_F7, _F7_0161) {
         {.addr=0x0048, .value=0x99}, {.addr=0x0049, .value=0xcf}, {.addr=0x276f, .value=0xf7},
         {.addr=0x2770, .value=0x48}, {.addr=0xd07b, .value=0x43},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x276f, .value=0xf7, .type=IO_READ},
         {.addr=0x2770, .value=0x48, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0048, .value=0x99, .type=IO_READ},
         {.addr=0x0049, .value=0xcf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd07b, .value=0x43, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7902,12 +8245,13 @@ UTEST(SingleStepTests_F7, _F7_0162) {
         {.addr=0x01d2, .value=0x4d}, {.addr=0x01d3, .value=0x13}, {.addr=0x1037, .value=0xf7},
         {.addr=0x1038, .value=0xd2}, {.addr=0x1358, .value=0xf5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1037, .value=0xf7, .type=IO_READ},
         {.addr=0x1038, .value=0xd2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d2, .value=0x4d, .type=IO_READ},
         {.addr=0x01d3, .value=0x13, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1358, .value=0xf5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7925,12 +8269,13 @@ UTEST(SingleStepTests_F7, _F7_0164) {
         {.addr=0x0116, .value=0xfd}, {.addr=0x0117, .value=0x3d}, {.addr=0x3e74, .value=0x77},
         {.addr=0xc6bf, .value=0xf7}, {.addr=0xc6c0, .value=0x16},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc6bf, .value=0xf7, .type=IO_READ},
         {.addr=0xc6c0, .value=0x16, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0116, .value=0xfd, .type=IO_READ},
         {.addr=0x0117, .value=0x3d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3e74, .value=0x77, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7948,12 +8293,13 @@ UTEST(SingleStepTests_F7, _F7_0165) {
         {.addr=0x016c, .value=0x79}, {.addr=0x016d, .value=0xaf}, {.addr=0xb025, .value=0xc2},
         {.addr=0xba9c, .value=0xf7}, {.addr=0xba9d, .value=0x6c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xba9c, .value=0xf7, .type=IO_READ},
         {.addr=0xba9d, .value=0x6c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016c, .value=0x79, .type=IO_READ},
         {.addr=0x016d, .value=0xaf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb025, .value=0xc2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7971,12 +8317,13 @@ UTEST(SingleStepTests_F7, _F7_0166) {
         {.addr=0x002d, .value=0xf0}, {.addr=0x002e, .value=0xb6}, {.addr=0xb773, .value=0xc3},
         {.addr=0xf8dc, .value=0xf7}, {.addr=0xf8dd, .value=0x2d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf8dc, .value=0xf7, .type=IO_READ},
         {.addr=0xf8dd, .value=0x2d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002d, .value=0xf0, .type=IO_READ},
         {.addr=0x002e, .value=0xb6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb773, .value=0xc3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -7994,12 +8341,13 @@ UTEST(SingleStepTests_F7, _F7_0167) {
         {.addr=0x01a2, .value=0x26}, {.addr=0x01a3, .value=0x54}, {.addr=0x54c6, .value=0x16},
         {.addr=0xf977, .value=0xf7}, {.addr=0xf978, .value=0xa2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf977, .value=0xf7, .type=IO_READ},
         {.addr=0xf978, .value=0xa2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a2, .value=0x26, .type=IO_READ},
         {.addr=0x01a3, .value=0x54, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x54c6, .value=0x16, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8017,12 +8365,13 @@ UTEST(SingleStepTests_F7, _F7_0168) {
         {.addr=0x01ed, .value=0x9a}, {.addr=0x01ee, .value=0xb6}, {.addr=0x1843, .value=0xf7},
         {.addr=0x1844, .value=0xed}, {.addr=0xb708, .value=0x91},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1843, .value=0xf7, .type=IO_READ},
         {.addr=0x1844, .value=0xed, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ed, .value=0x9a, .type=IO_READ},
         {.addr=0x01ee, .value=0xb6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb708, .value=0x91, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8040,12 +8389,13 @@ UTEST(SingleStepTests_F7, _F7_0169) {
         {.addr=0x009a, .value=0x87}, {.addr=0x009b, .value=0x96}, {.addr=0x9722, .value=0x4a},
         {.addr=0xa914, .value=0xf7}, {.addr=0xa915, .value=0x9a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa914, .value=0xf7, .type=IO_READ},
         {.addr=0xa915, .value=0x9a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009a, .value=0x87, .type=IO_READ},
         {.addr=0x009b, .value=0x96, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9722, .value=0x4a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8063,12 +8413,13 @@ UTEST(SingleStepTests_F7, _F7_016A) {
         {.addr=0x0112, .value=0xed}, {.addr=0x0113, .value=0x4c}, {.addr=0x4d27, .value=0xd3},
         {.addr=0xace8, .value=0xf7}, {.addr=0xace9, .value=0x12},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xace8, .value=0xf7, .type=IO_READ},
         {.addr=0xace9, .value=0x12, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0112, .value=0xed, .type=IO_READ},
         {.addr=0x0113, .value=0x4c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4d27, .value=0xd3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8086,12 +8437,13 @@ UTEST(SingleStepTests_F7, _F7_016B) {
         {.addr=0x005c, .value=0x79}, {.addr=0x005d, .value=0xd6}, {.addr=0x4b6d, .value=0xf7},
         {.addr=0x4b6e, .value=0x5c}, {.addr=0xd71f, .value=0x07},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4b6d, .value=0xf7, .type=IO_READ},
         {.addr=0x4b6e, .value=0x5c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005c, .value=0x79, .type=IO_READ},
         {.addr=0x005d, .value=0xd6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd71f, .value=0x07, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8109,12 +8461,13 @@ UTEST(SingleStepTests_F7, _F7_016C) {
         {.addr=0x0191, .value=0x06}, {.addr=0x0192, .value=0x22}, {.addr=0x2236, .value=0x1f},
         {.addr=0x64ef, .value=0xf7}, {.addr=0x64f0, .value=0x91},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x64ef, .value=0xf7, .type=IO_READ},
         {.addr=0x64f0, .value=0x91, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0191, .value=0x06, .type=IO_READ},
         {.addr=0x0192, .value=0x22, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2236, .value=0x1f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8132,12 +8485,13 @@ UTEST(SingleStepTests_F7, _F7_016D) {
         {.addr=0x000f, .value=0x68}, {.addr=0x0010, .value=0xb9}, {.addr=0xb9cd, .value=0xd2},
         {.addr=0xc41c, .value=0xf7}, {.addr=0xc41d, .value=0x0f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc41c, .value=0xf7, .type=IO_READ},
         {.addr=0xc41d, .value=0x0f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000f, .value=0x68, .type=IO_READ},
         {.addr=0x0010, .value=0xb9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb9cd, .value=0xd2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8155,12 +8509,13 @@ UTEST(SingleStepTests_F7, _F7_016F) {
         {.addr=0x013b, .value=0x6b}, {.addr=0x013c, .value=0x80}, {.addr=0x7430, .value=0xf7},
         {.addr=0x7431, .value=0x3b}, {.addr=0x8154, .value=0x2b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7430, .value=0xf7, .type=IO_READ},
         {.addr=0x7431, .value=0x3b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013b, .value=0x6b, .type=IO_READ},
         {.addr=0x013c, .value=0x80, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8154, .value=0x2b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8178,12 +8533,13 @@ UTEST(SingleStepTests_F7, _F7_0170) {
         {.addr=0x01a0, .value=0x8c}, {.addr=0x01a1, .value=0x20}, {.addr=0x2107, .value=0xb7},
         {.addr=0x42c1, .value=0xf7}, {.addr=0x42c2, .value=0xa0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x42c1, .value=0xf7, .type=IO_READ},
         {.addr=0x42c2, .value=0xa0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a0, .value=0x8c, .type=IO_READ},
         {.addr=0x01a1, .value=0x20, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2107, .value=0xb7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8201,12 +8557,13 @@ UTEST(SingleStepTests_F7, _F7_0171) {
         {.addr=0x00de, .value=0x14}, {.addr=0x00df, .value=0xd6}, {.addr=0x71df, .value=0xf7},
         {.addr=0x71e0, .value=0xde}, {.addr=0xd62c, .value=0x9f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x71df, .value=0xf7, .type=IO_READ},
         {.addr=0x71e0, .value=0xde, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00de, .value=0x14, .type=IO_READ},
         {.addr=0x00df, .value=0xd6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd62c, .value=0x9f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8224,12 +8581,13 @@ UTEST(SingleStepTests_F7, _F7_0172) {
         {.addr=0x0046, .value=0x72}, {.addr=0x0047, .value=0x4e}, {.addr=0x4f4a, .value=0xe7},
         {.addr=0x539f, .value=0xf7}, {.addr=0x53a0, .value=0x46},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x539f, .value=0xf7, .type=IO_READ},
         {.addr=0x53a0, .value=0x46, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0046, .value=0x72, .type=IO_READ},
         {.addr=0x0047, .value=0x4e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4f4a, .value=0xe7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8247,12 +8605,13 @@ UTEST(SingleStepTests_F7, _F7_0173) {
         {.addr=0x000d, .value=0xfc}, {.addr=0x000e, .value=0x94}, {.addr=0x95b4, .value=0x98},
         {.addr=0x9cee, .value=0xf7}, {.addr=0x9cef, .value=0x0d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9cee, .value=0xf7, .type=IO_READ},
         {.addr=0x9cef, .value=0x0d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000d, .value=0xfc, .type=IO_READ},
         {.addr=0x000e, .value=0x94, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x95b4, .value=0x98, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8270,12 +8629,13 @@ UTEST(SingleStepTests_F7, _F7_0174) {
         {.addr=0x0028, .value=0x5b}, {.addr=0x0029, .value=0x8c}, {.addr=0x32cf, .value=0xf7},
         {.addr=0x32d0, .value=0x28}, {.addr=0x8cf9, .value=0x88},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x32cf, .value=0xf7, .type=IO_READ},
         {.addr=0x32d0, .value=0x28, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0028, .value=0x5b, .type=IO_READ},
         {.addr=0x0029, .value=0x8c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8cf9, .value=0x88, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8293,12 +8653,13 @@ UTEST(SingleStepTests_F7, _F7_0175) {
         {.addr=0x0056, .value=0xf8}, {.addr=0x0057, .value=0xf1}, {.addr=0xf2b2, .value=0x5d},
         {.addr=0xfd21, .value=0xf7}, {.addr=0xfd22, .value=0x56},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfd21, .value=0xf7, .type=IO_READ},
         {.addr=0xfd22, .value=0x56, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0056, .value=0xf8, .type=IO_READ},
         {.addr=0x0057, .value=0xf1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf2b2, .value=0x5d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8316,12 +8677,13 @@ UTEST(SingleStepTests_F7, _F7_0176) {
         {.addr=0x01ee, .value=0x47}, {.addr=0x01ef, .value=0x9b}, {.addr=0x9c3c, .value=0xa9},
         {.addr=0xac4b, .value=0xf7}, {.addr=0xac4c, .value=0xee},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xac4b, .value=0xf7, .type=IO_READ},
         {.addr=0xac4c, .value=0xee, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ee, .value=0x47, .type=IO_READ},
         {.addr=0x01ef, .value=0x9b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9c3c, .value=0xa9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8339,12 +8701,13 @@ UTEST(SingleStepTests_F7, _F7_0177) {
         {.addr=0x013a, .value=0x55}, {.addr=0x013b, .value=0x1c}, {.addr=0x1c75, .value=0x6f},
         {.addr=0x802e, .value=0xf7}, {.addr=0x802f, .value=0x3a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x802e, .value=0xf7, .type=IO_READ},
         {.addr=0x802f, .value=0x3a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013a, .value=0x55, .type=IO_READ},
         {.addr=0x013b, .value=0x1c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1c75, .value=0x6f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8362,12 +8725,13 @@ UTEST(SingleStepTests_F7, _F7_0178) {
         {.addr=0x0196, .value=0x0e}, {.addr=0x0197, .value=0x49}, {.addr=0x4951, .value=0x08},
         {.addr=0x5802, .value=0xf7}, {.addr=0x5803, .value=0x96},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5802, .value=0xf7, .type=IO_READ},
         {.addr=0x5803, .value=0x96, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0196, .value=0x0e, .type=IO_READ},
         {.addr=0x0197, .value=0x49, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4951, .value=0x08, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8385,12 +8749,13 @@ UTEST(SingleStepTests_F7, _F7_0179) {
         {.addr=0x005f, .value=0x27}, {.addr=0x0060, .value=0xea}, {.addr=0x4e1a, .value=0xf7},
         {.addr=0x4e1b, .value=0x5f}, {.addr=0xeac5, .value=0xd5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4e1a, .value=0xf7, .type=IO_READ},
         {.addr=0x4e1b, .value=0x5f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005f, .value=0x27, .type=IO_READ},
         {.addr=0x0060, .value=0xea, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xeac5, .value=0xd5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8408,12 +8773,13 @@ UTEST(SingleStepTests_F7, _F7_017A) {
         {.addr=0x01e1, .value=0x1f}, {.addr=0x01e2, .value=0x3a}, {.addr=0x3a4f, .value=0x5f},
         {.addr=0xfd70, .value=0xf7}, {.addr=0xfd71, .value=0xe1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfd70, .value=0xf7, .type=IO_READ},
         {.addr=0xfd71, .value=0xe1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e1, .value=0x1f, .type=IO_READ},
         {.addr=0x01e2, .value=0x3a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3a4f, .value=0x5f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8431,12 +8797,13 @@ UTEST(SingleStepTests_F7, _F7_017B) {
         {.addr=0x0171, .value=0x43}, {.addr=0x0172, .value=0xa4}, {.addr=0xa476, .value=0x36},
         {.addr=0xb965, .value=0xf7}, {.addr=0xb966, .value=0x71},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb965, .value=0xf7, .type=IO_READ},
         {.addr=0xb966, .value=0x71, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0171, .value=0x43, .type=IO_READ},
         {.addr=0x0172, .value=0xa4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa476, .value=0x36, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8454,12 +8821,13 @@ UTEST(SingleStepTests_F7, _F7_017C) {
         {.addr=0x0081, .value=0xfa}, {.addr=0x0082, .value=0xca}, {.addr=0xcb40, .value=0xce},
         {.addr=0xf623, .value=0xf7}, {.addr=0xf624, .value=0x81},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf623, .value=0xf7, .type=IO_READ},
         {.addr=0xf624, .value=0x81, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0081, .value=0xfa, .type=IO_READ},
         {.addr=0x0082, .value=0xca, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xcb40, .value=0xce, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8477,12 +8845,13 @@ UTEST(SingleStepTests_F7, _F7_017D) {
         {.addr=0x01aa, .value=0x82}, {.addr=0x01ab, .value=0xc7}, {.addr=0x95b7, .value=0xf7},
         {.addr=0x95b8, .value=0xaa}, {.addr=0xc78c, .value=0x5c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x95b7, .value=0xf7, .type=IO_READ},
         {.addr=0x95b8, .value=0xaa, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01aa, .value=0x82, .type=IO_READ},
         {.addr=0x01ab, .value=0xc7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc78c, .value=0x5c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8500,12 +8869,13 @@ UTEST(SingleStepTests_F7, _F7_017E) {
         {.addr=0x00aa, .value=0xcc}, {.addr=0x00ab, .value=0x40}, {.addr=0x415a, .value=0xad},
         {.addr=0xba84, .value=0xf7}, {.addr=0xba85, .value=0xaa},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xba84, .value=0xf7, .type=IO_READ},
         {.addr=0xba85, .value=0xaa, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00aa, .value=0xcc, .type=IO_READ},
         {.addr=0x00ab, .value=0x40, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x415a, .value=0xad, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8523,12 +8893,13 @@ UTEST(SingleStepTests_F7, _F7_017F) {
         {.addr=0x0185, .value=0x1b}, {.addr=0x0186, .value=0x96}, {.addr=0x2f71, .value=0xf7},
         {.addr=0x2f72, .value=0x85}, {.addr=0x96af, .value=0xc3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2f71, .value=0xf7, .type=IO_READ},
         {.addr=0x2f72, .value=0x85, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0185, .value=0x1b, .type=IO_READ},
         {.addr=0x0186, .value=0x96, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x96af, .value=0xc3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8546,12 +8917,13 @@ UTEST(SingleStepTests_F7, _F7_0180) {
         {.addr=0x0075, .value=0x63}, {.addr=0x0076, .value=0x8d}, {.addr=0x30a5, .value=0xf7},
         {.addr=0x30a6, .value=0x75}, {.addr=0x8dd0, .value=0xa7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x30a5, .value=0xf7, .type=IO_READ},
         {.addr=0x30a6, .value=0x75, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0075, .value=0x63, .type=IO_READ},
         {.addr=0x0076, .value=0x8d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8dd0, .value=0xa7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8569,12 +8941,13 @@ UTEST(SingleStepTests_F7, _F7_0181) {
         {.addr=0x00cf, .value=0xa9}, {.addr=0x00d0, .value=0x50}, {.addr=0x07aa, .value=0xf7},
         {.addr=0x07ab, .value=0xcf}, {.addr=0x50e1, .value=0x8b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x07aa, .value=0xf7, .type=IO_READ},
         {.addr=0x07ab, .value=0xcf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00cf, .value=0xa9, .type=IO_READ},
         {.addr=0x00d0, .value=0x50, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x50e1, .value=0x8b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8592,12 +8965,13 @@ UTEST(SingleStepTests_F7, _F7_0182) {
         {.addr=0x005c, .value=0xb3}, {.addr=0x005d, .value=0x12}, {.addr=0x1397, .value=0xd4},
         {.addr=0xf035, .value=0xf7}, {.addr=0xf036, .value=0x5c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf035, .value=0xf7, .type=IO_READ},
         {.addr=0xf036, .value=0x5c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005c, .value=0xb3, .type=IO_READ},
         {.addr=0x005d, .value=0x12, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1397, .value=0xd4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8615,12 +8989,13 @@ UTEST(SingleStepTests_F7, _F7_0183) {
         {.addr=0x0176, .value=0x2f}, {.addr=0x0177, .value=0xb1}, {.addr=0xa61d, .value=0xf7},
         {.addr=0xa61e, .value=0x76}, {.addr=0xb17a, .value=0x6f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa61d, .value=0xf7, .type=IO_READ},
         {.addr=0xa61e, .value=0x76, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0176, .value=0x2f, .type=IO_READ},
         {.addr=0x0177, .value=0xb1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb17a, .value=0x6f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8638,12 +9013,13 @@ UTEST(SingleStepTests_F7, _F7_0184) {
         {.addr=0x0086, .value=0x41}, {.addr=0x0087, .value=0x7a}, {.addr=0x6af4, .value=0xf7},
         {.addr=0x6af5, .value=0x86}, {.addr=0x7a52, .value=0xe5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6af4, .value=0xf7, .type=IO_READ},
         {.addr=0x6af5, .value=0x86, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0086, .value=0x41, .type=IO_READ},
         {.addr=0x0087, .value=0x7a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7a52, .value=0xe5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8661,12 +9037,13 @@ UTEST(SingleStepTests_F7, _F7_0185) {
         {.addr=0x01cd, .value=0xf1}, {.addr=0x01ce, .value=0xa2}, {.addr=0xa31e, .value=0xa2},
         {.addr=0xf5ba, .value=0xf7}, {.addr=0xf5bb, .value=0xcd},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf5ba, .value=0xf7, .type=IO_READ},
         {.addr=0xf5bb, .value=0xcd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01cd, .value=0xf1, .type=IO_READ},
         {.addr=0x01ce, .value=0xa2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa31e, .value=0xa2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8684,12 +9061,13 @@ UTEST(SingleStepTests_F7, _F7_0186) {
         {.addr=0x01f4, .value=0x5d}, {.addr=0x01f5, .value=0x10}, {.addr=0x1066, .value=0x3d},
         {.addr=0x99ee, .value=0xf7}, {.addr=0x99ef, .value=0xf4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x99ee, .value=0xf7, .type=IO_READ},
         {.addr=0x99ef, .value=0xf4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f4, .value=0x5d, .type=IO_READ},
         {.addr=0x01f5, .value=0x10, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1066, .value=0x3d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8707,12 +9085,13 @@ UTEST(SingleStepTests_F7, _F7_0187) {
         {.addr=0x01e8, .value=0xae}, {.addr=0x01e9, .value=0xaf}, {.addr=0x206d, .value=0xf7},
         {.addr=0x206e, .value=0xe8}, {.addr=0xafe5, .value=0xa0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x206d, .value=0xf7, .type=IO_READ},
         {.addr=0x206e, .value=0xe8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e8, .value=0xae, .type=IO_READ},
         {.addr=0x01e9, .value=0xaf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xafe5, .value=0xa0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8730,12 +9109,13 @@ UTEST(SingleStepTests_F7, _F7_0188) {
         {.addr=0x01b8, .value=0x50}, {.addr=0x01b9, .value=0xb8}, {.addr=0x4b11, .value=0xf7},
         {.addr=0x4b12, .value=0xb8}, {.addr=0xb897, .value=0xbe},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4b11, .value=0xf7, .type=IO_READ},
         {.addr=0x4b12, .value=0xb8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b8, .value=0x50, .type=IO_READ},
         {.addr=0x01b9, .value=0xb8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb897, .value=0xbe, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8753,12 +9133,13 @@ UTEST(SingleStepTests_F7, _F7_0189) {
         {.addr=0x01c5, .value=0x65}, {.addr=0x01c6, .value=0x9c}, {.addr=0x3ca8, .value=0xf7},
         {.addr=0x3ca9, .value=0xc5}, {.addr=0x9c6b, .value=0xa8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3ca8, .value=0xf7, .type=IO_READ},
         {.addr=0x3ca9, .value=0xc5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c5, .value=0x65, .type=IO_READ},
         {.addr=0x01c6, .value=0x9c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9c6b, .value=0xa8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8776,12 +9157,13 @@ UTEST(SingleStepTests_F7, _F7_018A) {
         {.addr=0x0041, .value=0x62}, {.addr=0x0042, .value=0x90}, {.addr=0x53ba, .value=0xf7},
         {.addr=0x53bb, .value=0x41}, {.addr=0x90cb, .value=0x22},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x53ba, .value=0xf7, .type=IO_READ},
         {.addr=0x53bb, .value=0x41, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0041, .value=0x62, .type=IO_READ},
         {.addr=0x0042, .value=0x90, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x90cb, .value=0x22, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8799,12 +9181,13 @@ UTEST(SingleStepTests_F7, _F7_018B) {
         {.addr=0x01c8, .value=0xc1}, {.addr=0x01c9, .value=0x78}, {.addr=0x4591, .value=0xf7},
         {.addr=0x4592, .value=0xc8}, {.addr=0x791d, .value=0xeb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4591, .value=0xf7, .type=IO_READ},
         {.addr=0x4592, .value=0xc8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c8, .value=0xc1, .type=IO_READ},
         {.addr=0x01c9, .value=0x78, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x791d, .value=0xeb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8822,12 +9205,13 @@ UTEST(SingleStepTests_F7, _F7_018C) {
         {.addr=0x009f, .value=0x71}, {.addr=0x00a0, .value=0x07}, {.addr=0x077e, .value=0x19},
         {.addr=0x46e0, .value=0xf7}, {.addr=0x46e1, .value=0x9f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x46e0, .value=0xf7, .type=IO_READ},
         {.addr=0x46e1, .value=0x9f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009f, .value=0x71, .type=IO_READ},
         {.addr=0x00a0, .value=0x07, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x077e, .value=0x19, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8845,12 +9229,13 @@ UTEST(SingleStepTests_F7, _F7_018D) {
         {.addr=0x007f, .value=0x12}, {.addr=0x0080, .value=0xa8}, {.addr=0xa83a, .value=0xcd},
         {.addr=0xabf7, .value=0xf7}, {.addr=0xabf8, .value=0x7f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xabf7, .value=0xf7, .type=IO_READ},
         {.addr=0xabf8, .value=0x7f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x007f, .value=0x12, .type=IO_READ},
         {.addr=0x0080, .value=0xa8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa83a, .value=0xcd, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8868,12 +9253,13 @@ UTEST(SingleStepTests_F7, _F7_018E) {
         {.addr=0x0095, .value=0x4e}, {.addr=0x0096, .value=0xd7}, {.addr=0x8c5c, .value=0xf7},
         {.addr=0x8c5d, .value=0x95}, {.addr=0xd7ef, .value=0xf3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8c5c, .value=0xf7, .type=IO_READ},
         {.addr=0x8c5d, .value=0x95, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0095, .value=0x4e, .type=IO_READ},
         {.addr=0x0096, .value=0xd7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd7ef, .value=0xf3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8891,12 +9277,13 @@ UTEST(SingleStepTests_F7, _F7_018F) {
         {.addr=0x0085, .value=0xd5}, {.addr=0x0086, .value=0x9c}, {.addr=0x0806, .value=0xf7},
         {.addr=0x0807, .value=0x85}, {.addr=0x9d70, .value=0x24},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0806, .value=0xf7, .type=IO_READ},
         {.addr=0x0807, .value=0x85, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0085, .value=0xd5, .type=IO_READ},
         {.addr=0x0086, .value=0x9c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9d70, .value=0x24, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8914,12 +9301,13 @@ UTEST(SingleStepTests_F7, _F7_0190) {
         {.addr=0x00b3, .value=0x26}, {.addr=0x00b4, .value=0xa8}, {.addr=0xa853, .value=0x22},
         {.addr=0xcde6, .value=0xf7}, {.addr=0xcde7, .value=0xb3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcde6, .value=0xf7, .type=IO_READ},
         {.addr=0xcde7, .value=0xb3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b3, .value=0x26, .type=IO_READ},
         {.addr=0x00b4, .value=0xa8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa853, .value=0x22, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8937,12 +9325,13 @@ UTEST(SingleStepTests_F7, _F7_0191) {
         {.addr=0x008a, .value=0xd4}, {.addr=0x008b, .value=0x3d}, {.addr=0x3e94, .value=0x5f},
         {.addr=0xc91c, .value=0xf7}, {.addr=0xc91d, .value=0x8a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc91c, .value=0xf7, .type=IO_READ},
         {.addr=0xc91d, .value=0x8a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x008a, .value=0xd4, .type=IO_READ},
         {.addr=0x008b, .value=0x3d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3e94, .value=0x5f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8960,12 +9349,13 @@ UTEST(SingleStepTests_F7, _F7_0192) {
         {.addr=0x0116, .value=0x37}, {.addr=0x0117, .value=0x70}, {.addr=0x7071, .value=0x2b},
         {.addr=0xa6a5, .value=0xf7}, {.addr=0xa6a6, .value=0x16},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa6a5, .value=0xf7, .type=IO_READ},
         {.addr=0xa6a6, .value=0x16, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0116, .value=0x37, .type=IO_READ},
         {.addr=0x0117, .value=0x70, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7071, .value=0x2b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -8983,12 +9373,13 @@ UTEST(SingleStepTests_F7, _F7_0193) {
         {.addr=0x0154, .value=0x2f}, {.addr=0x0155, .value=0x7b}, {.addr=0x1118, .value=0xf7},
         {.addr=0x1119, .value=0x54}, {.addr=0x7bf7, .value=0x49},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1118, .value=0xf7, .type=IO_READ},
         {.addr=0x1119, .value=0x54, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0154, .value=0x2f, .type=IO_READ},
         {.addr=0x0155, .value=0x7b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7bf7, .value=0x49, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9006,12 +9397,13 @@ UTEST(SingleStepTests_F7, _F7_0194) {
         {.addr=0x00ea, .value=0xb0}, {.addr=0x00eb, .value=0xa1}, {.addr=0x4edb, .value=0xf7},
         {.addr=0x4edc, .value=0xea}, {.addr=0xa24c, .value=0x7d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4edb, .value=0xf7, .type=IO_READ},
         {.addr=0x4edc, .value=0xea, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ea, .value=0xb0, .type=IO_READ},
         {.addr=0x00eb, .value=0xa1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa24c, .value=0x7d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9029,12 +9421,13 @@ UTEST(SingleStepTests_F7, _F7_0195) {
         {.addr=0x00ae, .value=0x79}, {.addr=0x00af, .value=0x4f}, {.addr=0x5004, .value=0x3a},
         {.addr=0xcb8a, .value=0xf7}, {.addr=0xcb8b, .value=0xae},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcb8a, .value=0xf7, .type=IO_READ},
         {.addr=0xcb8b, .value=0xae, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ae, .value=0x79, .type=IO_READ},
         {.addr=0x00af, .value=0x4f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5004, .value=0x3a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9052,12 +9445,13 @@ UTEST(SingleStepTests_F7, _F7_0196) {
         {.addr=0x001b, .value=0xd0}, {.addr=0x001c, .value=0xf8}, {.addr=0x1ac5, .value=0xf7},
         {.addr=0x1ac6, .value=0x1b}, {.addr=0xf8e5, .value=0x7b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1ac5, .value=0xf7, .type=IO_READ},
         {.addr=0x1ac6, .value=0x1b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x001b, .value=0xd0, .type=IO_READ},
         {.addr=0x001c, .value=0xf8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf8e5, .value=0x7b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9075,12 +9469,13 @@ UTEST(SingleStepTests_F7, _F7_0197) {
         {.addr=0x0154, .value=0xf6}, {.addr=0x0155, .value=0x70}, {.addr=0x71b8, .value=0xfe},
         {.addr=0xf757, .value=0xf7}, {.addr=0xf758, .value=0x54},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf757, .value=0xf7, .type=IO_READ},
         {.addr=0xf758, .value=0x54, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0154, .value=0xf6, .type=IO_READ},
         {.addr=0x0155, .value=0x70, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x71b8, .value=0xfe, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9098,12 +9493,13 @@ UTEST(SingleStepTests_F7, _F7_0198) {
         {.addr=0x00e9, .value=0x75}, {.addr=0x00ea, .value=0x38}, {.addr=0x31d3, .value=0xf7},
         {.addr=0x31d4, .value=0xe9}, {.addr=0x38e2, .value=0xd9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x31d3, .value=0xf7, .type=IO_READ},
         {.addr=0x31d4, .value=0xe9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e9, .value=0x75, .type=IO_READ},
         {.addr=0x00ea, .value=0x38, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x38e2, .value=0xd9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9121,12 +9517,13 @@ UTEST(SingleStepTests_F7, _F7_0199) {
         {.addr=0x00d7, .value=0xe5}, {.addr=0x00d8, .value=0x1f}, {.addr=0x1fef, .value=0xf0},
         {.addr=0x30af, .value=0xf7}, {.addr=0x30b0, .value=0xd7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x30af, .value=0xf7, .type=IO_READ},
         {.addr=0x30b0, .value=0xd7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d7, .value=0xe5, .type=IO_READ},
         {.addr=0x00d8, .value=0x1f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1fef, .value=0xf0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9144,12 +9541,13 @@ UTEST(SingleStepTests_F7, _F7_019A) {
         {.addr=0x0046, .value=0xdf}, {.addr=0x0047, .value=0x6c}, {.addr=0x6dbb, .value=0xf2},
         {.addr=0xf6ef, .value=0xf7}, {.addr=0xf6f0, .value=0x46},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf6ef, .value=0xf7, .type=IO_READ},
         {.addr=0xf6f0, .value=0x46, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0046, .value=0xdf, .type=IO_READ},
         {.addr=0x0047, .value=0x6c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6dbb, .value=0xf2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9167,12 +9565,13 @@ UTEST(SingleStepTests_F7, _F7_019B) {
         {.addr=0x014d, .value=0x54}, {.addr=0x014e, .value=0xdc}, {.addr=0xdcd3, .value=0x59},
         {.addr=0xee6f, .value=0xf7}, {.addr=0xee70, .value=0x4d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xee6f, .value=0xf7, .type=IO_READ},
         {.addr=0xee70, .value=0x4d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x014d, .value=0x54, .type=IO_READ},
         {.addr=0x014e, .value=0xdc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdcd3, .value=0x59, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9190,12 +9589,13 @@ UTEST(SingleStepTests_F7, _F7_019C) {
         {.addr=0x01c3, .value=0xc8}, {.addr=0x01c4, .value=0xb8}, {.addr=0xa2e0, .value=0xf7},
         {.addr=0xa2e1, .value=0xc3}, {.addr=0xb983, .value=0xb0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa2e0, .value=0xf7, .type=IO_READ},
         {.addr=0xa2e1, .value=0xc3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c3, .value=0xc8, .type=IO_READ},
         {.addr=0x01c4, .value=0xb8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb983, .value=0xb0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9213,12 +9613,13 @@ UTEST(SingleStepTests_F7, _F7_019D) {
         {.addr=0x013e, .value=0x2a}, {.addr=0x013f, .value=0x28}, {.addr=0x284d, .value=0x0d},
         {.addr=0x8393, .value=0xf7}, {.addr=0x8394, .value=0x3e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8393, .value=0xf7, .type=IO_READ},
         {.addr=0x8394, .value=0x3e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013e, .value=0x2a, .type=IO_READ},
         {.addr=0x013f, .value=0x28, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x284d, .value=0x0d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9236,12 +9637,13 @@ UTEST(SingleStepTests_F7, _F7_019E) {
         {.addr=0x01c6, .value=0x94}, {.addr=0x01c7, .value=0x40}, {.addr=0x4123, .value=0x67},
         {.addr=0x885d, .value=0xf7}, {.addr=0x885e, .value=0xc6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x885d, .value=0xf7, .type=IO_READ},
         {.addr=0x885e, .value=0xc6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c6, .value=0x94, .type=IO_READ},
         {.addr=0x01c7, .value=0x40, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4123, .value=0x67, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9259,12 +9661,13 @@ UTEST(SingleStepTests_F7, _F7_019F) {
         {.addr=0x0142, .value=0x3b}, {.addr=0x0143, .value=0xe0}, {.addr=0xd2b6, .value=0xf7},
         {.addr=0xd2b7, .value=0x42}, {.addr=0xe0a8, .value=0xd3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd2b6, .value=0xf7, .type=IO_READ},
         {.addr=0xd2b7, .value=0x42, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0142, .value=0x3b, .type=IO_READ},
         {.addr=0x0143, .value=0xe0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe0a8, .value=0xd3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9282,12 +9685,13 @@ UTEST(SingleStepTests_F7, _F7_01A0) {
         {.addr=0x00c0, .value=0xb3}, {.addr=0x00c1, .value=0xf4}, {.addr=0xbf6f, .value=0xf7},
         {.addr=0xbf70, .value=0xc0}, {.addr=0xf5a2, .value=0xb9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbf6f, .value=0xf7, .type=IO_READ},
         {.addr=0xbf70, .value=0xc0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c0, .value=0xb3, .type=IO_READ},
         {.addr=0x00c1, .value=0xf4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf5a2, .value=0xb9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9305,12 +9709,13 @@ UTEST(SingleStepTests_F7, _F7_01A1) {
         {.addr=0x0073, .value=0x17}, {.addr=0x0074, .value=0x9d}, {.addr=0x646d, .value=0xf7},
         {.addr=0x646e, .value=0x73}, {.addr=0x9de8, .value=0xf7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x646d, .value=0xf7, .type=IO_READ},
         {.addr=0x646e, .value=0x73, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0073, .value=0x17, .type=IO_READ},
         {.addr=0x0074, .value=0x9d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9de8, .value=0xf7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9328,12 +9733,13 @@ UTEST(SingleStepTests_F7, _F7_01A2) {
         {.addr=0x0125, .value=0xc8}, {.addr=0x0126, .value=0x80}, {.addr=0x0499, .value=0xf7},
         {.addr=0x049a, .value=0x25}, {.addr=0x81c3, .value=0x42},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0499, .value=0xf7, .type=IO_READ},
         {.addr=0x049a, .value=0x25, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0125, .value=0xc8, .type=IO_READ},
         {.addr=0x0126, .value=0x80, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x81c3, .value=0x42, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9351,12 +9757,13 @@ UTEST(SingleStepTests_F7, _F7_01A3) {
         {.addr=0x01f6, .value=0xec}, {.addr=0x01f7, .value=0x93}, {.addr=0x94bb, .value=0x2a},
         {.addr=0xaf64, .value=0xf7}, {.addr=0xaf65, .value=0xf6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xaf64, .value=0xf7, .type=IO_READ},
         {.addr=0xaf65, .value=0xf6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f6, .value=0xec, .type=IO_READ},
         {.addr=0x01f7, .value=0x93, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x94bb, .value=0x2a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9374,12 +9781,13 @@ UTEST(SingleStepTests_F7, _F7_01A4) {
         {.addr=0x0092, .value=0x30}, {.addr=0x0093, .value=0x5b}, {.addr=0x1e04, .value=0xf7},
         {.addr=0x1e05, .value=0x92}, {.addr=0x5bf5, .value=0xa5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1e04, .value=0xf7, .type=IO_READ},
         {.addr=0x1e05, .value=0x92, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0092, .value=0x30, .type=IO_READ},
         {.addr=0x0093, .value=0x5b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5bf5, .value=0xa5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9397,12 +9805,13 @@ UTEST(SingleStepTests_F7, _F7_01A5) {
         {.addr=0x0170, .value=0x17}, {.addr=0x0171, .value=0x66}, {.addr=0x66a6, .value=0x2d},
         {.addr=0xa42e, .value=0xf7}, {.addr=0xa42f, .value=0x70},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa42e, .value=0xf7, .type=IO_READ},
         {.addr=0xa42f, .value=0x70, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0170, .value=0x17, .type=IO_READ},
         {.addr=0x0171, .value=0x66, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x66a6, .value=0x2d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9420,12 +9829,13 @@ UTEST(SingleStepTests_F7, _F7_01A6) {
         {.addr=0x005a, .value=0xc8}, {.addr=0x005b, .value=0x05}, {.addr=0x0603, .value=0x34},
         {.addr=0x7fe0, .value=0xf7}, {.addr=0x7fe1, .value=0x5a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7fe0, .value=0xf7, .type=IO_READ},
         {.addr=0x7fe1, .value=0x5a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005a, .value=0xc8, .type=IO_READ},
         {.addr=0x005b, .value=0x05, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0603, .value=0x34, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9443,12 +9853,13 @@ UTEST(SingleStepTests_F7, _F7_01A7) {
         {.addr=0x010b, .value=0x8f}, {.addr=0x010c, .value=0xc4}, {.addr=0xc49d, .value=0xda},
         {.addr=0xcd1b, .value=0xf7}, {.addr=0xcd1c, .value=0x0b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcd1b, .value=0xf7, .type=IO_READ},
         {.addr=0xcd1c, .value=0x0b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x010b, .value=0x8f, .type=IO_READ},
         {.addr=0x010c, .value=0xc4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc49d, .value=0xda, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9466,12 +9877,13 @@ UTEST(SingleStepTests_F7, _F7_01A8) {
         {.addr=0x01c1, .value=0x77}, {.addr=0x01c2, .value=0xff}, {.addr=0xc236, .value=0xf7},
         {.addr=0xc237, .value=0xc1}, {.addr=0xffaa, .value=0xdf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc236, .value=0xf7, .type=IO_READ},
         {.addr=0xc237, .value=0xc1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c1, .value=0x77, .type=IO_READ},
         {.addr=0x01c2, .value=0xff, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xffaa, .value=0xdf, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9489,12 +9901,13 @@ UTEST(SingleStepTests_F7, _F7_01A9) {
         {.addr=0x01cd, .value=0xa8}, {.addr=0x01ce, .value=0x3e}, {.addr=0x2a2e, .value=0xf7},
         {.addr=0x2a2f, .value=0xcd}, {.addr=0x3f16, .value=0xea},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2a2e, .value=0xf7, .type=IO_READ},
         {.addr=0x2a2f, .value=0xcd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01cd, .value=0xa8, .type=IO_READ},
         {.addr=0x01ce, .value=0x3e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3f16, .value=0xea, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9512,12 +9925,13 @@ UTEST(SingleStepTests_F7, _F7_01AA) {
         {.addr=0x0084, .value=0x85}, {.addr=0x0085, .value=0x81}, {.addr=0x81fd, .value=0x15},
         {.addr=0xe52e, .value=0xf7}, {.addr=0xe52f, .value=0x84},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe52e, .value=0xf7, .type=IO_READ},
         {.addr=0xe52f, .value=0x84, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0084, .value=0x85, .type=IO_READ},
         {.addr=0x0085, .value=0x81, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x81fd, .value=0x15, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9535,12 +9949,13 @@ UTEST(SingleStepTests_F7, _F7_01AB) {
         {.addr=0x01c3, .value=0x25}, {.addr=0x01c4, .value=0x58}, {.addr=0x0b13, .value=0xf7},
         {.addr=0x0b14, .value=0xc3}, {.addr=0x58b2, .value=0xb0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0b13, .value=0xf7, .type=IO_READ},
         {.addr=0x0b14, .value=0xc3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c3, .value=0x25, .type=IO_READ},
         {.addr=0x01c4, .value=0x58, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x58b2, .value=0xb0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9558,12 +9973,13 @@ UTEST(SingleStepTests_F7, _F7_01AC) {
         {.addr=0x0160, .value=0x05}, {.addr=0x0161, .value=0xbe}, {.addr=0x4793, .value=0xf7},
         {.addr=0x4794, .value=0x60}, {.addr=0xbeb5, .value=0xb3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4793, .value=0xf7, .type=IO_READ},
         {.addr=0x4794, .value=0x60, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0160, .value=0x05, .type=IO_READ},
         {.addr=0x0161, .value=0xbe, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbeb5, .value=0xb3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9581,12 +9997,13 @@ UTEST(SingleStepTests_F7, _F7_01AD) {
         {.addr=0x009d, .value=0xe6}, {.addr=0x009e, .value=0x25}, {.addr=0x2622, .value=0x91},
         {.addr=0x7e35, .value=0xf7}, {.addr=0x7e36, .value=0x9d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7e35, .value=0xf7, .type=IO_READ},
         {.addr=0x7e36, .value=0x9d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009d, .value=0xe6, .type=IO_READ},
         {.addr=0x009e, .value=0x25, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2622, .value=0x91, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9604,12 +10021,13 @@ UTEST(SingleStepTests_F7, _F7_01AE) {
         {.addr=0x00cd, .value=0x77}, {.addr=0x00ce, .value=0xa5}, {.addr=0xa610, .value=0x64},
         {.addr=0xbda8, .value=0xf7}, {.addr=0xbda9, .value=0xcd},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbda8, .value=0xf7, .type=IO_READ},
         {.addr=0xbda9, .value=0xcd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00cd, .value=0x77, .type=IO_READ},
         {.addr=0x00ce, .value=0xa5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa610, .value=0x64, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9627,12 +10045,13 @@ UTEST(SingleStepTests_F7, _F7_01AF) {
         {.addr=0x01f7, .value=0x74}, {.addr=0x01f8, .value=0xa9}, {.addr=0x0212, .value=0xf7},
         {.addr=0x0213, .value=0xf7}, {.addr=0xaa4a, .value=0x13},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0212, .value=0xf7, .type=IO_READ},
         {.addr=0x0213, .value=0xf7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f7, .value=0x74, .type=IO_READ},
         {.addr=0x01f8, .value=0xa9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xaa4a, .value=0x13, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9650,12 +10069,13 @@ UTEST(SingleStepTests_F7, _F7_01B0) {
         {.addr=0x002d, .value=0x62}, {.addr=0x002e, .value=0x83}, {.addr=0x0c56, .value=0xf7},
         {.addr=0x0c57, .value=0x2d}, {.addr=0x8458, .value=0x47},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0c56, .value=0xf7, .type=IO_READ},
         {.addr=0x0c57, .value=0x2d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002d, .value=0x62, .type=IO_READ},
         {.addr=0x002e, .value=0x83, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8458, .value=0x47, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9673,12 +10093,13 @@ UTEST(SingleStepTests_F7, _F7_01B1) {
         {.addr=0x0189, .value=0x47}, {.addr=0x018a, .value=0x9c}, {.addr=0x29f6, .value=0xf7},
         {.addr=0x29f7, .value=0x89}, {.addr=0x9c8d, .value=0xc9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x29f6, .value=0xf7, .type=IO_READ},
         {.addr=0x29f7, .value=0x89, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0189, .value=0x47, .type=IO_READ},
         {.addr=0x018a, .value=0x9c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9c8d, .value=0xc9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9696,12 +10117,13 @@ UTEST(SingleStepTests_F7, _F7_01B3) {
         {.addr=0x01a3, .value=0x68}, {.addr=0x01a4, .value=0x36}, {.addr=0x369b, .value=0x51},
         {.addr=0x9d50, .value=0xf7}, {.addr=0x9d51, .value=0xa3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9d50, .value=0xf7, .type=IO_READ},
         {.addr=0x9d51, .value=0xa3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a3, .value=0x68, .type=IO_READ},
         {.addr=0x01a4, .value=0x36, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x369b, .value=0x51, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9719,12 +10141,13 @@ UTEST(SingleStepTests_F7, _F7_01B4) {
         {.addr=0x002b, .value=0xda}, {.addr=0x002c, .value=0x6e}, {.addr=0x68b6, .value=0xf7},
         {.addr=0x68b7, .value=0x2b}, {.addr=0x6f9e, .value=0x7b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x68b6, .value=0xf7, .type=IO_READ},
         {.addr=0x68b7, .value=0x2b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002b, .value=0xda, .type=IO_READ},
         {.addr=0x002c, .value=0x6e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6f9e, .value=0x7b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9742,12 +10165,13 @@ UTEST(SingleStepTests_F7, _F7_01B5) {
         {.addr=0x0002, .value=0xe7}, {.addr=0x0003, .value=0xcf}, {.addr=0xd038, .value=0x5a},
         {.addr=0xea00, .value=0xf7}, {.addr=0xea01, .value=0x02},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xea00, .value=0xf7, .type=IO_READ},
         {.addr=0xea01, .value=0x02, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0002, .value=0xe7, .type=IO_READ},
         {.addr=0x0003, .value=0xcf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd038, .value=0x5a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9765,12 +10189,13 @@ UTEST(SingleStepTests_F7, _F7_01B6) {
         {.addr=0x006c, .value=0xf1}, {.addr=0x006d, .value=0x92}, {.addr=0x92f9, .value=0x7e},
         {.addr=0xa2ec, .value=0xf7}, {.addr=0xa2ed, .value=0x6c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa2ec, .value=0xf7, .type=IO_READ},
         {.addr=0xa2ed, .value=0x6c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006c, .value=0xf1, .type=IO_READ},
         {.addr=0x006d, .value=0x92, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x92f9, .value=0x7e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9788,12 +10213,13 @@ UTEST(SingleStepTests_F7, _F7_01B7) {
         {.addr=0x01b0, .value=0x9f}, {.addr=0x01b1, .value=0xeb}, {.addr=0x1296, .value=0xf7},
         {.addr=0x1297, .value=0xb0}, {.addr=0xec6f, .value=0x79},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1296, .value=0xf7, .type=IO_READ},
         {.addr=0x1297, .value=0xb0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b0, .value=0x9f, .type=IO_READ},
         {.addr=0x01b1, .value=0xeb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xec6f, .value=0x79, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9811,12 +10237,13 @@ UTEST(SingleStepTests_F7, _F7_01B8) {
         {.addr=0x01a1, .value=0x73}, {.addr=0x01a2, .value=0x7e}, {.addr=0x336a, .value=0xf7},
         {.addr=0x336b, .value=0xa1}, {.addr=0x7f03, .value=0x86},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x336a, .value=0xf7, .type=IO_READ},
         {.addr=0x336b, .value=0xa1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a1, .value=0x73, .type=IO_READ},
         {.addr=0x01a2, .value=0x7e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7f03, .value=0x86, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9834,12 +10261,13 @@ UTEST(SingleStepTests_F7, _F7_01B9) {
         {.addr=0x010e, .value=0x3a}, {.addr=0x010f, .value=0xa5}, {.addr=0xa5cd, .value=0x9f},
         {.addr=0xdcce, .value=0xf7}, {.addr=0xdccf, .value=0x0e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdcce, .value=0xf7, .type=IO_READ},
         {.addr=0xdccf, .value=0x0e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x010e, .value=0x3a, .type=IO_READ},
         {.addr=0x010f, .value=0xa5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa5cd, .value=0x9f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9857,12 +10285,13 @@ UTEST(SingleStepTests_F7, _F7_01BA) {
         {.addr=0x01ab, .value=0x65}, {.addr=0x01ac, .value=0x76}, {.addr=0x766c, .value=0x89},
         {.addr=0xcfec, .value=0xf7}, {.addr=0xcfed, .value=0xab},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcfec, .value=0xf7, .type=IO_READ},
         {.addr=0xcfed, .value=0xab, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ab, .value=0x65, .type=IO_READ},
         {.addr=0x01ac, .value=0x76, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x766c, .value=0x89, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9880,12 +10309,13 @@ UTEST(SingleStepTests_F7, _F7_01BB) {
         {.addr=0x008d, .value=0x79}, {.addr=0x008e, .value=0x95}, {.addr=0x1d2a, .value=0xf7},
         {.addr=0x1d2b, .value=0x8d}, {.addr=0x961e, .value=0x07},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1d2a, .value=0xf7, .type=IO_READ},
         {.addr=0x1d2b, .value=0x8d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x008d, .value=0x79, .type=IO_READ},
         {.addr=0x008e, .value=0x95, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x961e, .value=0x07, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9903,12 +10333,13 @@ UTEST(SingleStepTests_F7, _F7_01BC) {
         {.addr=0x01db, .value=0xef}, {.addr=0x01dc, .value=0xd9}, {.addr=0x5a30, .value=0xf7},
         {.addr=0x5a31, .value=0xdb}, {.addr=0xdac5, .value=0x6d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5a30, .value=0xf7, .type=IO_READ},
         {.addr=0x5a31, .value=0xdb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01db, .value=0xef, .type=IO_READ},
         {.addr=0x01dc, .value=0xd9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdac5, .value=0x6d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9926,12 +10357,13 @@ UTEST(SingleStepTests_F7, _F7_01BD) {
         {.addr=0x019a, .value=0xfd}, {.addr=0x019b, .value=0x15}, {.addr=0x161f, .value=0x96},
         {.addr=0x6f52, .value=0xf7}, {.addr=0x6f53, .value=0x9a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6f52, .value=0xf7, .type=IO_READ},
         {.addr=0x6f53, .value=0x9a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019a, .value=0xfd, .type=IO_READ},
         {.addr=0x019b, .value=0x15, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x161f, .value=0x96, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9949,12 +10381,13 @@ UTEST(SingleStepTests_F7, _F7_01BE) {
         {.addr=0x003c, .value=0xc1}, {.addr=0x003d, .value=0x68}, {.addr=0x04b4, .value=0xf7},
         {.addr=0x04b5, .value=0x3c}, {.addr=0x6928, .value=0xa9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x04b4, .value=0xf7, .type=IO_READ},
         {.addr=0x04b5, .value=0x3c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x003c, .value=0xc1, .type=IO_READ},
         {.addr=0x003d, .value=0x68, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6928, .value=0xa9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9972,12 +10405,13 @@ UTEST(SingleStepTests_F7, _F7_01BF) {
         {.addr=0x005f, .value=0xf9}, {.addr=0x0060, .value=0xef}, {.addr=0xe34f, .value=0xf7},
         {.addr=0xe350, .value=0x5f}, {.addr=0xf087, .value=0xd1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe34f, .value=0xf7, .type=IO_READ},
         {.addr=0xe350, .value=0x5f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005f, .value=0xf9, .type=IO_READ},
         {.addr=0x0060, .value=0xef, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf087, .value=0xd1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -9995,12 +10429,13 @@ UTEST(SingleStepTests_F7, _F7_01C0) {
         {.addr=0x0132, .value=0xe6}, {.addr=0x0133, .value=0x32}, {.addr=0x32f4, .value=0xff},
         {.addr=0x9bc8, .value=0xf7}, {.addr=0x9bc9, .value=0x32},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9bc8, .value=0xf7, .type=IO_READ},
         {.addr=0x9bc9, .value=0x32, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0132, .value=0xe6, .type=IO_READ},
         {.addr=0x0133, .value=0x32, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x32f4, .value=0xff, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10018,12 +10453,13 @@ UTEST(SingleStepTests_F7, _F7_01C1) {
         {.addr=0x00ac, .value=0x1b}, {.addr=0x00ad, .value=0x4f}, {.addr=0x4fb9, .value=0x41},
         {.addr=0xbe03, .value=0xf7}, {.addr=0xbe04, .value=0xac},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbe03, .value=0xf7, .type=IO_READ},
         {.addr=0xbe04, .value=0xac, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ac, .value=0x1b, .type=IO_READ},
         {.addr=0x00ad, .value=0x4f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4fb9, .value=0x41, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10041,12 +10477,13 @@ UTEST(SingleStepTests_F7, _F7_01C2) {
         {.addr=0x00aa, .value=0x3e}, {.addr=0x00ab, .value=0x55}, {.addr=0x5637, .value=0xd2},
         {.addr=0xae9b, .value=0xf7}, {.addr=0xae9c, .value=0xaa},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xae9b, .value=0xf7, .type=IO_READ},
         {.addr=0xae9c, .value=0xaa, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00aa, .value=0x3e, .type=IO_READ},
         {.addr=0x00ab, .value=0x55, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5637, .value=0xd2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10064,12 +10501,13 @@ UTEST(SingleStepTests_F7, _F7_01C3) {
         {.addr=0x0112, .value=0x2f}, {.addr=0x0113, .value=0xb9}, {.addr=0x2287, .value=0xf7},
         {.addr=0x2288, .value=0x12}, {.addr=0xb9be, .value=0x38},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2287, .value=0xf7, .type=IO_READ},
         {.addr=0x2288, .value=0x12, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0112, .value=0x2f, .type=IO_READ},
         {.addr=0x0113, .value=0xb9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb9be, .value=0x38, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10087,12 +10525,13 @@ UTEST(SingleStepTests_F7, _F7_01C4) {
         {.addr=0x0093, .value=0x25}, {.addr=0x0094, .value=0x97}, {.addr=0x9816, .value=0xa6},
         {.addr=0xa401, .value=0xf7}, {.addr=0xa402, .value=0x93},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa401, .value=0xf7, .type=IO_READ},
         {.addr=0xa402, .value=0x93, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0093, .value=0x25, .type=IO_READ},
         {.addr=0x0094, .value=0x97, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9816, .value=0xa6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10110,12 +10549,13 @@ UTEST(SingleStepTests_F7, _F7_01C5) {
         {.addr=0x0005, .value=0x00}, {.addr=0x0006, .value=0xff}, {.addr=0x25fe, .value=0xf7},
         {.addr=0x25ff, .value=0x05}, {.addr=0xff94, .value=0x13},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x25fe, .value=0xf7, .type=IO_READ},
         {.addr=0x25ff, .value=0x05, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0005, .value=0x00, .type=IO_READ},
         {.addr=0x0006, .value=0xff, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xff94, .value=0x13, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10133,12 +10573,13 @@ UTEST(SingleStepTests_F7, _F7_01C6) {
         {.addr=0x0106, .value=0x67}, {.addr=0x0107, .value=0x5e}, {.addr=0x5e9a, .value=0x4b},
         {.addr=0xe7dc, .value=0xf7}, {.addr=0xe7dd, .value=0x06},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe7dc, .value=0xf7, .type=IO_READ},
         {.addr=0xe7dd, .value=0x06, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0106, .value=0x67, .type=IO_READ},
         {.addr=0x0107, .value=0x5e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5e9a, .value=0x4b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10156,12 +10597,13 @@ UTEST(SingleStepTests_F7, _F7_01C7) {
         {.addr=0x0121, .value=0x74}, {.addr=0x0122, .value=0xab}, {.addr=0x9f66, .value=0xf7},
         {.addr=0x9f67, .value=0x21}, {.addr=0xab99, .value=0x58},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9f66, .value=0xf7, .type=IO_READ},
         {.addr=0x9f67, .value=0x21, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0121, .value=0x74, .type=IO_READ},
         {.addr=0x0122, .value=0xab, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xab99, .value=0x58, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10179,12 +10621,13 @@ UTEST(SingleStepTests_F7, _F7_01C8) {
         {.addr=0x017b, .value=0x60}, {.addr=0x017c, .value=0x1b}, {.addr=0x1b13, .value=0xf7},
         {.addr=0x1b14, .value=0x7b}, {.addr=0x1b79, .value=0xd4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1b13, .value=0xf7, .type=IO_READ},
         {.addr=0x1b14, .value=0x7b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x017b, .value=0x60, .type=IO_READ},
         {.addr=0x017c, .value=0x1b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1b79, .value=0xd4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10202,12 +10645,13 @@ UTEST(SingleStepTests_F7, _F7_01C9) {
         {.addr=0x0198, .value=0x6a}, {.addr=0x0199, .value=0x79}, {.addr=0x79f9, .value=0x9d},
         {.addr=0xc028, .value=0xf7}, {.addr=0xc029, .value=0x98},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc028, .value=0xf7, .type=IO_READ},
         {.addr=0xc029, .value=0x98, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0198, .value=0x6a, .type=IO_READ},
         {.addr=0x0199, .value=0x79, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x79f9, .value=0x9d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10225,12 +10669,13 @@ UTEST(SingleStepTests_F7, _F7_01CA) {
         {.addr=0x011f, .value=0x6b}, {.addr=0x0120, .value=0x97}, {.addr=0x623e, .value=0xf7},
         {.addr=0x623f, .value=0x1f}, {.addr=0x9838, .value=0x31},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x623e, .value=0xf7, .type=IO_READ},
         {.addr=0x623f, .value=0x1f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x011f, .value=0x6b, .type=IO_READ},
         {.addr=0x0120, .value=0x97, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9838, .value=0x31, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10248,12 +10693,13 @@ UTEST(SingleStepTests_F7, _F7_01CB) {
         {.addr=0x0197, .value=0x4d}, {.addr=0x0198, .value=0xcd}, {.addr=0x954e, .value=0xf7},
         {.addr=0x954f, .value=0x97}, {.addr=0xcdd9, .value=0x86},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x954e, .value=0xf7, .type=IO_READ},
         {.addr=0x954f, .value=0x97, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0197, .value=0x4d, .type=IO_READ},
         {.addr=0x0198, .value=0xcd, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xcdd9, .value=0x86, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10271,12 +10717,13 @@ UTEST(SingleStepTests_F7, _F7_01CC) {
         {.addr=0x00d6, .value=0x51}, {.addr=0x00d7, .value=0x17}, {.addr=0x1818, .value=0x25},
         {.addr=0x7242, .value=0xf7}, {.addr=0x7243, .value=0xd6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7242, .value=0xf7, .type=IO_READ},
         {.addr=0x7243, .value=0xd6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d6, .value=0x51, .type=IO_READ},
         {.addr=0x00d7, .value=0x17, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1818, .value=0x25, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10294,12 +10741,13 @@ UTEST(SingleStepTests_F7, _F7_01CD) {
         {.addr=0x009c, .value=0x12}, {.addr=0x009d, .value=0xd9}, {.addr=0x77e7, .value=0xf7},
         {.addr=0x77e8, .value=0x9c}, {.addr=0xd9d7, .value=0x65},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x77e7, .value=0xf7, .type=IO_READ},
         {.addr=0x77e8, .value=0x9c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009c, .value=0x12, .type=IO_READ},
         {.addr=0x009d, .value=0xd9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd9d7, .value=0x65, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10317,12 +10765,13 @@ UTEST(SingleStepTests_F7, _F7_01CE) {
         {.addr=0x0193, .value=0x11}, {.addr=0x0194, .value=0x41}, {.addr=0x412f, .value=0xec},
         {.addr=0x7427, .value=0xf7}, {.addr=0x7428, .value=0x93},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7427, .value=0xf7, .type=IO_READ},
         {.addr=0x7428, .value=0x93, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0193, .value=0x11, .type=IO_READ},
         {.addr=0x0194, .value=0x41, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x412f, .value=0xec, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10340,12 +10789,13 @@ UTEST(SingleStepTests_F7, _F7_01CF) {
         {.addr=0x0121, .value=0x3d}, {.addr=0x0122, .value=0xb5}, {.addr=0xb5c0, .value=0xe8},
         {.addr=0xcd7e, .value=0xf7}, {.addr=0xcd7f, .value=0x21},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcd7e, .value=0xf7, .type=IO_READ},
         {.addr=0xcd7f, .value=0x21, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0121, .value=0x3d, .type=IO_READ},
         {.addr=0x0122, .value=0xb5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb5c0, .value=0xe8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10363,12 +10813,13 @@ UTEST(SingleStepTests_F7, _F7_01D0) {
         {.addr=0x0091, .value=0xd1}, {.addr=0x0092, .value=0x7b}, {.addr=0x7be1, .value=0xba},
         {.addr=0xa03c, .value=0xf7}, {.addr=0xa03d, .value=0x91},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa03c, .value=0xf7, .type=IO_READ},
         {.addr=0xa03d, .value=0x91, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0091, .value=0xd1, .type=IO_READ},
         {.addr=0x0092, .value=0x7b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7be1, .value=0xba, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10386,12 +10837,13 @@ UTEST(SingleStepTests_F7, _F7_01D1) {
         {.addr=0x006a, .value=0x46}, {.addr=0x006b, .value=0xdc}, {.addr=0x0e44, .value=0xf7},
         {.addr=0x0e45, .value=0x6a}, {.addr=0xdc8c, .value=0xa8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0e44, .value=0xf7, .type=IO_READ},
         {.addr=0x0e45, .value=0x6a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006a, .value=0x46, .type=IO_READ},
         {.addr=0x006b, .value=0xdc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdc8c, .value=0xa8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10409,12 +10861,13 @@ UTEST(SingleStepTests_F7, _F7_01D2) {
         {.addr=0x014c, .value=0x51}, {.addr=0x014d, .value=0x9c}, {.addr=0x9d12, .value=0x21},
         {.addr=0xbb49, .value=0xf7}, {.addr=0xbb4a, .value=0x4c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbb49, .value=0xf7, .type=IO_READ},
         {.addr=0xbb4a, .value=0x4c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x014c, .value=0x51, .type=IO_READ},
         {.addr=0x014d, .value=0x9c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9d12, .value=0x21, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10432,12 +10885,13 @@ UTEST(SingleStepTests_F7, _F7_01D3) {
         {.addr=0x0082, .value=0xaa}, {.addr=0x0083, .value=0x74}, {.addr=0x754b, .value=0x4c},
         {.addr=0xcdd8, .value=0xf7}, {.addr=0xcdd9, .value=0x82},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcdd8, .value=0xf7, .type=IO_READ},
         {.addr=0xcdd9, .value=0x82, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0082, .value=0xaa, .type=IO_READ},
         {.addr=0x0083, .value=0x74, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x754b, .value=0x4c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10455,12 +10909,13 @@ UTEST(SingleStepTests_F7, _F7_01D4) {
         {.addr=0x01bc, .value=0x9b}, {.addr=0x01bd, .value=0x7c}, {.addr=0x134e, .value=0xf7},
         {.addr=0x134f, .value=0xbc}, {.addr=0x7d4d, .value=0x71},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x134e, .value=0xf7, .type=IO_READ},
         {.addr=0x134f, .value=0xbc, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01bc, .value=0x9b, .type=IO_READ},
         {.addr=0x01bd, .value=0x7c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7d4d, .value=0x71, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10478,12 +10933,13 @@ UTEST(SingleStepTests_F7, _F7_01D5) {
         {.addr=0x0089, .value=0x37}, {.addr=0x008a, .value=0x3e}, {.addr=0x3f22, .value=0x31},
         {.addr=0x7a21, .value=0xf7}, {.addr=0x7a22, .value=0x89},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7a21, .value=0xf7, .type=IO_READ},
         {.addr=0x7a22, .value=0x89, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0089, .value=0x37, .type=IO_READ},
         {.addr=0x008a, .value=0x3e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3f22, .value=0x31, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10501,12 +10957,13 @@ UTEST(SingleStepTests_F7, _F7_01D6) {
         {.addr=0x0044, .value=0x78}, {.addr=0x0045, .value=0xfc}, {.addr=0x61ca, .value=0xf7},
         {.addr=0x61cb, .value=0x44}, {.addr=0xfc7e, .value=0x02},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x61ca, .value=0xf7, .type=IO_READ},
         {.addr=0x61cb, .value=0x44, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0044, .value=0x78, .type=IO_READ},
         {.addr=0x0045, .value=0xfc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfc7e, .value=0x02, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10524,12 +10981,13 @@ UTEST(SingleStepTests_F7, _F7_01D7) {
         {.addr=0x0112, .value=0xe6}, {.addr=0x0113, .value=0x01}, {.addr=0x025d, .value=0xc9},
         {.addr=0x7093, .value=0xf7}, {.addr=0x7094, .value=0x12},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7093, .value=0xf7, .type=IO_READ},
         {.addr=0x7094, .value=0x12, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0112, .value=0xe6, .type=IO_READ},
         {.addr=0x0113, .value=0x01, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x025d, .value=0xc9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10547,12 +11005,13 @@ UTEST(SingleStepTests_F7, _F7_01D8) {
         {.addr=0x01a6, .value=0xc6}, {.addr=0x01a7, .value=0x8c}, {.addr=0x8d0d, .value=0x78},
         {.addr=0xe19a, .value=0xf7}, {.addr=0xe19b, .value=0xa6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe19a, .value=0xf7, .type=IO_READ},
         {.addr=0xe19b, .value=0xa6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a6, .value=0xc6, .type=IO_READ},
         {.addr=0x01a7, .value=0x8c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8d0d, .value=0x78, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10570,12 +11029,13 @@ UTEST(SingleStepTests_F7, _F7_01D9) {
         {.addr=0x0149, .value=0x22}, {.addr=0x014a, .value=0x9d}, {.addr=0x0d69, .value=0xf7},
         {.addr=0x0d6a, .value=0x49}, {.addr=0x9dde, .value=0x69},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0d69, .value=0xf7, .type=IO_READ},
         {.addr=0x0d6a, .value=0x49, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0149, .value=0x22, .type=IO_READ},
         {.addr=0x014a, .value=0x9d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9dde, .value=0x69, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10593,12 +11053,13 @@ UTEST(SingleStepTests_F7, _F7_01DA) {
         {.addr=0x01af, .value=0x1e}, {.addr=0x01b0, .value=0xf8}, {.addr=0x6748, .value=0xf7},
         {.addr=0x6749, .value=0xaf}, {.addr=0xf84a, .value=0xa8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6748, .value=0xf7, .type=IO_READ},
         {.addr=0x6749, .value=0xaf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01af, .value=0x1e, .type=IO_READ},
         {.addr=0x01b0, .value=0xf8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf84a, .value=0xa8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10616,12 +11077,13 @@ UTEST(SingleStepTests_F7, _F7_01DB) {
         {.addr=0x012c, .value=0x6c}, {.addr=0x012d, .value=0x14}, {.addr=0x1522, .value=0x9d},
         {.addr=0x1e9f, .value=0xf7}, {.addr=0x1ea0, .value=0x2c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1e9f, .value=0xf7, .type=IO_READ},
         {.addr=0x1ea0, .value=0x2c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x012c, .value=0x6c, .type=IO_READ},
         {.addr=0x012d, .value=0x14, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1522, .value=0x9d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10639,12 +11101,13 @@ UTEST(SingleStepTests_F7, _F7_01DC) {
         {.addr=0x0148, .value=0x6d}, {.addr=0x0149, .value=0xc2}, {.addr=0x314a, .value=0xf7},
         {.addr=0x314b, .value=0x48}, {.addr=0xc2e0, .value=0x52},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x314a, .value=0xf7, .type=IO_READ},
         {.addr=0x314b, .value=0x48, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0148, .value=0x6d, .type=IO_READ},
         {.addr=0x0149, .value=0xc2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc2e0, .value=0x52, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10662,12 +11125,13 @@ UTEST(SingleStepTests_F7, _F7_01DD) {
         {.addr=0x009f, .value=0x0d}, {.addr=0x00a0, .value=0x00}, {.addr=0x0109, .value=0x0d},
         {.addr=0x44ce, .value=0xf7}, {.addr=0x44cf, .value=0x9f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x44ce, .value=0xf7, .type=IO_READ},
         {.addr=0x44cf, .value=0x9f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009f, .value=0x0d, .type=IO_READ},
         {.addr=0x00a0, .value=0x00, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0109, .value=0x0d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10685,12 +11149,13 @@ UTEST(SingleStepTests_F7, _F7_01DE) {
         {.addr=0x018c, .value=0xda}, {.addr=0x018d, .value=0xf6}, {.addr=0xaf1f, .value=0xf7},
         {.addr=0xaf20, .value=0x8c}, {.addr=0xf798, .value=0x73},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xaf1f, .value=0xf7, .type=IO_READ},
         {.addr=0xaf20, .value=0x8c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x018c, .value=0xda, .type=IO_READ},
         {.addr=0x018d, .value=0xf6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf798, .value=0x73, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10708,12 +11173,13 @@ UTEST(SingleStepTests_F7, _F7_01DF) {
         {.addr=0x006e, .value=0xba}, {.addr=0x006f, .value=0xb1}, {.addr=0xb20a, .value=0xb0},
         {.addr=0xe020, .value=0xf7}, {.addr=0xe021, .value=0x6e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe020, .value=0xf7, .type=IO_READ},
         {.addr=0xe021, .value=0x6e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006e, .value=0xba, .type=IO_READ},
         {.addr=0x006f, .value=0xb1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb20a, .value=0xb0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10731,12 +11197,13 @@ UTEST(SingleStepTests_F7, _F7_01E0) {
         {.addr=0x003a, .value=0xe3}, {.addr=0x003b, .value=0x8e}, {.addr=0x5842, .value=0xf7},
         {.addr=0x5843, .value=0x3a}, {.addr=0x8fc6, .value=0xf2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5842, .value=0xf7, .type=IO_READ},
         {.addr=0x5843, .value=0x3a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x003a, .value=0xe3, .type=IO_READ},
         {.addr=0x003b, .value=0x8e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8fc6, .value=0xf2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10754,12 +11221,13 @@ UTEST(SingleStepTests_F7, _F7_01E1) {
         {.addr=0x012c, .value=0x2d}, {.addr=0x012d, .value=0xc4}, {.addr=0x06b9, .value=0xf7},
         {.addr=0x06ba, .value=0x2c}, {.addr=0xc50e, .value=0x2c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x06b9, .value=0xf7, .type=IO_READ},
         {.addr=0x06ba, .value=0x2c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x012c, .value=0x2d, .type=IO_READ},
         {.addr=0x012d, .value=0xc4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc50e, .value=0x2c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10777,12 +11245,13 @@ UTEST(SingleStepTests_F7, _F7_01E2) {
         {.addr=0x00d5, .value=0x9c}, {.addr=0x00d6, .value=0xc5}, {.addr=0x2626, .value=0xf7},
         {.addr=0x2627, .value=0xd5}, {.addr=0xc5a9, .value=0xbb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2626, .value=0xf7, .type=IO_READ},
         {.addr=0x2627, .value=0xd5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d5, .value=0x9c, .type=IO_READ},
         {.addr=0x00d6, .value=0xc5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc5a9, .value=0xbb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10800,12 +11269,13 @@ UTEST(SingleStepTests_F7, _F7_01E3) {
         {.addr=0x0000, .value=0x7e}, {.addr=0x0001, .value=0x6d}, {.addr=0x6daf, .value=0xb7},
         {.addr=0xafd7, .value=0xf7}, {.addr=0xafd8, .value=0x00},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xafd7, .value=0xf7, .type=IO_READ},
         {.addr=0xafd8, .value=0x00, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0000, .value=0x7e, .type=IO_READ},
         {.addr=0x0001, .value=0x6d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6daf, .value=0xb7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10823,12 +11293,13 @@ UTEST(SingleStepTests_F7, _F7_01E4) {
         {.addr=0x01c2, .value=0xfd}, {.addr=0x01c3, .value=0x71}, {.addr=0x7254, .value=0x30},
         {.addr=0x9a44, .value=0xf7}, {.addr=0x9a45, .value=0xc2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9a44, .value=0xf7, .type=IO_READ},
         {.addr=0x9a45, .value=0xc2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c2, .value=0xfd, .type=IO_READ},
         {.addr=0x01c3, .value=0x71, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7254, .value=0x30, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10846,12 +11317,13 @@ UTEST(SingleStepTests_F7, _F7_01E5) {
         {.addr=0x0015, .value=0x03}, {.addr=0x0016, .value=0x27}, {.addr=0x272d, .value=0xef},
         {.addr=0xd30f, .value=0xf7}, {.addr=0xd310, .value=0x15},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd30f, .value=0xf7, .type=IO_READ},
         {.addr=0xd310, .value=0x15, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0015, .value=0x03, .type=IO_READ},
         {.addr=0x0016, .value=0x27, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x272d, .value=0xef, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10869,12 +11341,13 @@ UTEST(SingleStepTests_F7, _F7_01E6) {
         {.addr=0x0122, .value=0x1f}, {.addr=0x0123, .value=0xc8}, {.addr=0xc855, .value=0x05},
         {.addr=0xd400, .value=0xf7}, {.addr=0xd401, .value=0x22},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd400, .value=0xf7, .type=IO_READ},
         {.addr=0xd401, .value=0x22, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0122, .value=0x1f, .type=IO_READ},
         {.addr=0x0123, .value=0xc8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc855, .value=0x05, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10892,12 +11365,13 @@ UTEST(SingleStepTests_F7, _F7_01E7) {
         {.addr=0x00a7, .value=0xe0}, {.addr=0x00a8, .value=0x9a}, {.addr=0x4ed0, .value=0xf7},
         {.addr=0x4ed1, .value=0xa7}, {.addr=0x9b69, .value=0x1b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4ed0, .value=0xf7, .type=IO_READ},
         {.addr=0x4ed1, .value=0xa7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a7, .value=0xe0, .type=IO_READ},
         {.addr=0x00a8, .value=0x9a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9b69, .value=0x1b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10915,12 +11389,13 @@ UTEST(SingleStepTests_F7, _F7_01E8) {
         {.addr=0x014f, .value=0xe4}, {.addr=0x0150, .value=0x9b}, {.addr=0x2579, .value=0xf7},
         {.addr=0x257a, .value=0x4f}, {.addr=0x9c5f, .value=0xee},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2579, .value=0xf7, .type=IO_READ},
         {.addr=0x257a, .value=0x4f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x014f, .value=0xe4, .type=IO_READ},
         {.addr=0x0150, .value=0x9b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9c5f, .value=0xee, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10938,12 +11413,13 @@ UTEST(SingleStepTests_F7, _F7_01E9) {
         {.addr=0x01fe, .value=0x76}, {.addr=0x01ff, .value=0x0e}, {.addr=0x0ec4, .value=0xa4},
         {.addr=0x5583, .value=0xf7}, {.addr=0x5584, .value=0xfe},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5583, .value=0xf7, .type=IO_READ},
         {.addr=0x5584, .value=0xfe, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01fe, .value=0x76, .type=IO_READ},
         {.addr=0x01ff, .value=0x0e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0ec4, .value=0xa4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10961,12 +11437,13 @@ UTEST(SingleStepTests_F7, _F7_01EA) {
         {.addr=0x0013, .value=0xa7}, {.addr=0x0014, .value=0x0c}, {.addr=0x0d55, .value=0xd8},
         {.addr=0xa6d6, .value=0xf7}, {.addr=0xa6d7, .value=0x13},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa6d6, .value=0xf7, .type=IO_READ},
         {.addr=0xa6d7, .value=0x13, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0013, .value=0xa7, .type=IO_READ},
         {.addr=0x0014, .value=0x0c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0d55, .value=0xd8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -10984,12 +11461,13 @@ UTEST(SingleStepTests_F7, _F7_01EB) {
         {.addr=0x003b, .value=0xc0}, {.addr=0x003c, .value=0x71}, {.addr=0x7209, .value=0xdf},
         {.addr=0x7967, .value=0xf7}, {.addr=0x7968, .value=0x3b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7967, .value=0xf7, .type=IO_READ},
         {.addr=0x7968, .value=0x3b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x003b, .value=0xc0, .type=IO_READ},
         {.addr=0x003c, .value=0x71, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7209, .value=0xdf, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11007,12 +11485,13 @@ UTEST(SingleStepTests_F7, _F7_01EC) {
         {.addr=0x0055, .value=0xd9}, {.addr=0x0056, .value=0xac}, {.addr=0x6918, .value=0xf7},
         {.addr=0x6919, .value=0x55}, {.addr=0xad9f, .value=0xaa},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6918, .value=0xf7, .type=IO_READ},
         {.addr=0x6919, .value=0x55, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0055, .value=0xd9, .type=IO_READ},
         {.addr=0x0056, .value=0xac, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xad9f, .value=0xaa, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11030,12 +11509,13 @@ UTEST(SingleStepTests_F7, _F7_01ED) {
         {.addr=0x0013, .value=0xde}, {.addr=0x0014, .value=0x30}, {.addr=0x31c3, .value=0x00},
         {.addr=0x4e3c, .value=0xf7}, {.addr=0x4e3d, .value=0x13},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4e3c, .value=0xf7, .type=IO_READ},
         {.addr=0x4e3d, .value=0x13, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0013, .value=0xde, .type=IO_READ},
         {.addr=0x0014, .value=0x30, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x31c3, .value=0x00, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11053,12 +11533,13 @@ UTEST(SingleStepTests_F7, _F7_01EE) {
         {.addr=0x0192, .value=0x77}, {.addr=0x0193, .value=0x52}, {.addr=0x5342, .value=0xd7},
         {.addr=0xc854, .value=0xf7}, {.addr=0xc855, .value=0x92},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc854, .value=0xf7, .type=IO_READ},
         {.addr=0xc855, .value=0x92, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0192, .value=0x77, .type=IO_READ},
         {.addr=0x0193, .value=0x52, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5342, .value=0xd7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11076,12 +11557,13 @@ UTEST(SingleStepTests_F7, _F7_01EF) {
         {.addr=0x01cb, .value=0x98}, {.addr=0x01cc, .value=0xc2}, {.addr=0xc35d, .value=0x0f},
         {.addr=0xd68a, .value=0xf7}, {.addr=0xd68b, .value=0xcb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd68a, .value=0xf7, .type=IO_READ},
         {.addr=0xd68b, .value=0xcb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01cb, .value=0x98, .type=IO_READ},
         {.addr=0x01cc, .value=0xc2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc35d, .value=0x0f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11099,12 +11581,13 @@ UTEST(SingleStepTests_F7, _F7_01F0) {
         {.addr=0x0050, .value=0xfe}, {.addr=0x0051, .value=0x96}, {.addr=0x5720, .value=0xf7},
         {.addr=0x5721, .value=0x50}, {.addr=0x9734, .value=0x70},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5720, .value=0xf7, .type=IO_READ},
         {.addr=0x5721, .value=0x50, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0050, .value=0xfe, .type=IO_READ},
         {.addr=0x0051, .value=0x96, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9734, .value=0x70, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11122,12 +11605,13 @@ UTEST(SingleStepTests_F7, _F7_01F1) {
         {.addr=0x01b6, .value=0xa2}, {.addr=0x01b7, .value=0xec}, {.addr=0x509a, .value=0xf7},
         {.addr=0x509b, .value=0xb6}, {.addr=0xed8c, .value=0x23},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x509a, .value=0xf7, .type=IO_READ},
         {.addr=0x509b, .value=0xb6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b6, .value=0xa2, .type=IO_READ},
         {.addr=0x01b7, .value=0xec, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xed8c, .value=0x23, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11145,12 +11629,13 @@ UTEST(SingleStepTests_F7, _F7_01F2) {
         {.addr=0x0090, .value=0xd0}, {.addr=0x0091, .value=0x9f}, {.addr=0x0151, .value=0xf7},
         {.addr=0x0152, .value=0x90}, {.addr=0xa027, .value=0xbf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0151, .value=0xf7, .type=IO_READ},
         {.addr=0x0152, .value=0x90, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0090, .value=0xd0, .type=IO_READ},
         {.addr=0x0091, .value=0x9f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa027, .value=0xbf, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11168,12 +11653,13 @@ UTEST(SingleStepTests_F7, _F7_01F3) {
         {.addr=0x0118, .value=0x4a}, {.addr=0x0119, .value=0x54}, {.addr=0x54ff, .value=0x73},
         {.addr=0xe520, .value=0xf7}, {.addr=0xe521, .value=0x18},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe520, .value=0xf7, .type=IO_READ},
         {.addr=0xe521, .value=0x18, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0118, .value=0x4a, .type=IO_READ},
         {.addr=0x0119, .value=0x54, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x54ff, .value=0x73, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11191,12 +11677,13 @@ UTEST(SingleStepTests_F7, _F7_01F4) {
         {.addr=0x01df, .value=0x21}, {.addr=0x01e0, .value=0x62}, {.addr=0x4fd3, .value=0xf7},
         {.addr=0x4fd4, .value=0xdf}, {.addr=0x627c, .value=0xb9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4fd3, .value=0xf7, .type=IO_READ},
         {.addr=0x4fd4, .value=0xdf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01df, .value=0x21, .type=IO_READ},
         {.addr=0x01e0, .value=0x62, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x627c, .value=0xb9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11214,12 +11701,13 @@ UTEST(SingleStepTests_F7, _F7_01F5) {
         {.addr=0x0002, .value=0x8a}, {.addr=0x0003, .value=0x27}, {.addr=0x285d, .value=0x87},
         {.addr=0xe7ea, .value=0xf7}, {.addr=0xe7eb, .value=0x02},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe7ea, .value=0xf7, .type=IO_READ},
         {.addr=0xe7eb, .value=0x02, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0002, .value=0x8a, .type=IO_READ},
         {.addr=0x0003, .value=0x27, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x285d, .value=0x87, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11237,12 +11725,13 @@ UTEST(SingleStepTests_F7, _F7_01F6) {
         {.addr=0x0049, .value=0x88}, {.addr=0x004a, .value=0xb7}, {.addr=0x41df, .value=0xf7},
         {.addr=0x41e0, .value=0x49}, {.addr=0xb878, .value=0x45},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x41df, .value=0xf7, .type=IO_READ},
         {.addr=0x41e0, .value=0x49, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0049, .value=0x88, .type=IO_READ},
         {.addr=0x004a, .value=0xb7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb878, .value=0x45, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11260,12 +11749,13 @@ UTEST(SingleStepTests_F7, _F7_01F7) {
         {.addr=0x00e3, .value=0x8a}, {.addr=0x00e4, .value=0x7b}, {.addr=0x7bc2, .value=0xa8},
         {.addr=0xaa18, .value=0xf7}, {.addr=0xaa19, .value=0xe3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xaa18, .value=0xf7, .type=IO_READ},
         {.addr=0xaa19, .value=0xe3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e3, .value=0x8a, .type=IO_READ},
         {.addr=0x00e4, .value=0x7b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7bc2, .value=0xa8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11283,12 +11773,13 @@ UTEST(SingleStepTests_F7, _F7_01F8) {
         {.addr=0x013b, .value=0xa1}, {.addr=0x013c, .value=0xe2}, {.addr=0xe31f, .value=0xb9},
         {.addr=0xfb03, .value=0xf7}, {.addr=0xfb04, .value=0x3b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfb03, .value=0xf7, .type=IO_READ},
         {.addr=0xfb04, .value=0x3b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013b, .value=0xa1, .type=IO_READ},
         {.addr=0x013c, .value=0xe2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe31f, .value=0xb9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11306,12 +11797,13 @@ UTEST(SingleStepTests_F7, _F7_01F9) {
         {.addr=0x002e, .value=0xe2}, {.addr=0x002f, .value=0x10}, {.addr=0x110c, .value=0x25},
         {.addr=0x415b, .value=0xf7}, {.addr=0x415c, .value=0x2e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x415b, .value=0xf7, .type=IO_READ},
         {.addr=0x415c, .value=0x2e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002e, .value=0xe2, .type=IO_READ},
         {.addr=0x002f, .value=0x10, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x110c, .value=0x25, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11329,12 +11821,13 @@ UTEST(SingleStepTests_F7, _F7_01FA) {
         {.addr=0x00ce, .value=0x6d}, {.addr=0x00cf, .value=0x5e}, {.addr=0x5f16, .value=0xa4},
         {.addr=0xe734, .value=0xf7}, {.addr=0xe735, .value=0xce},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe734, .value=0xf7, .type=IO_READ},
         {.addr=0xe735, .value=0xce, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ce, .value=0x6d, .type=IO_READ},
         {.addr=0x00cf, .value=0x5e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5f16, .value=0xa4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11352,12 +11845,13 @@ UTEST(SingleStepTests_F7, _F7_01FB) {
         {.addr=0x01e2, .value=0x3c}, {.addr=0x01e3, .value=0x0f}, {.addr=0x1016, .value=0x33},
         {.addr=0x86cd, .value=0xf7}, {.addr=0x86ce, .value=0xe2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x86cd, .value=0xf7, .type=IO_READ},
         {.addr=0x86ce, .value=0xe2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e2, .value=0x3c, .type=IO_READ},
         {.addr=0x01e3, .value=0x0f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1016, .value=0x33, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11375,12 +11869,13 @@ UTEST(SingleStepTests_F7, _F7_01FC) {
         {.addr=0x0065, .value=0xad}, {.addr=0x0066, .value=0x0b}, {.addr=0x0c53, .value=0x93},
         {.addr=0x0d2a, .value=0xf7}, {.addr=0x0d2b, .value=0x65},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0d2a, .value=0xf7, .type=IO_READ},
         {.addr=0x0d2b, .value=0x65, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0065, .value=0xad, .type=IO_READ},
         {.addr=0x0066, .value=0x0b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0c53, .value=0x93, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11398,12 +11893,13 @@ UTEST(SingleStepTests_F7, _F7_01FD) {
         {.addr=0x0016, .value=0xa8}, {.addr=0x0017, .value=0x52}, {.addr=0x532c, .value=0x50},
         {.addr=0x5e65, .value=0xf7}, {.addr=0x5e66, .value=0x16},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5e65, .value=0xf7, .type=IO_READ},
         {.addr=0x5e66, .value=0x16, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0016, .value=0xa8, .type=IO_READ},
         {.addr=0x0017, .value=0x52, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x532c, .value=0x50, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11421,12 +11917,13 @@ UTEST(SingleStepTests_F7, _F7_01FE) {
         {.addr=0x00e6, .value=0x45}, {.addr=0x00e7, .value=0x0f}, {.addr=0x101f, .value=0x6d},
         {.addr=0x753a, .value=0xf7}, {.addr=0x753b, .value=0xe6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x753a, .value=0xf7, .type=IO_READ},
         {.addr=0x753b, .value=0xe6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e6, .value=0x45, .type=IO_READ},
         {.addr=0x00e7, .value=0x0f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x101f, .value=0x6d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11444,12 +11941,13 @@ UTEST(SingleStepTests_F7, _F7_01FF) {
         {.addr=0x01fd, .value=0x33}, {.addr=0x01fe, .value=0x11}, {.addr=0x1174, .value=0x75},
         {.addr=0x3da9, .value=0xf7}, {.addr=0x3daa, .value=0xfd},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3da9, .value=0xf7, .type=IO_READ},
         {.addr=0x3daa, .value=0xfd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01fd, .value=0x33, .type=IO_READ},
         {.addr=0x01fe, .value=0x11, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1174, .value=0x75, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11467,12 +11965,13 @@ UTEST(SingleStepTests_F7, _F7_0200) {
         {.addr=0x012c, .value=0x6e}, {.addr=0x012d, .value=0x5a}, {.addr=0x5b53, .value=0xac},
         {.addr=0x861c, .value=0xf7}, {.addr=0x861d, .value=0x2c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x861c, .value=0xf7, .type=IO_READ},
         {.addr=0x861d, .value=0x2c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x012c, .value=0x6e, .type=IO_READ},
         {.addr=0x012d, .value=0x5a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5b53, .value=0xac, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11490,12 +11989,13 @@ UTEST(SingleStepTests_F7, _F7_0201) {
         {.addr=0x018c, .value=0x19}, {.addr=0x018d, .value=0x69}, {.addr=0x6965, .value=0xf4},
         {.addr=0x9d30, .value=0xf7}, {.addr=0x9d31, .value=0x8c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9d30, .value=0xf7, .type=IO_READ},
         {.addr=0x9d31, .value=0x8c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x018c, .value=0x19, .type=IO_READ},
         {.addr=0x018d, .value=0x69, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6965, .value=0xf4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11513,12 +12013,13 @@ UTEST(SingleStepTests_F7, _F7_0202) {
         {.addr=0x0152, .value=0xc8}, {.addr=0x0153, .value=0x9d}, {.addr=0x9e50, .value=0x43},
         {.addr=0xddb0, .value=0xf7}, {.addr=0xddb1, .value=0x52},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xddb0, .value=0xf7, .type=IO_READ},
         {.addr=0xddb1, .value=0x52, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0152, .value=0xc8, .type=IO_READ},
         {.addr=0x0153, .value=0x9d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9e50, .value=0x43, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11536,12 +12037,13 @@ UTEST(SingleStepTests_F7, _F7_0203) {
         {.addr=0x01ab, .value=0x9e}, {.addr=0x01ac, .value=0x8e}, {.addr=0x8f30, .value=0xa9},
         {.addr=0xab54, .value=0xf7}, {.addr=0xab55, .value=0xab},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xab54, .value=0xf7, .type=IO_READ},
         {.addr=0xab55, .value=0xab, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ab, .value=0x9e, .type=IO_READ},
         {.addr=0x01ac, .value=0x8e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8f30, .value=0xa9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11559,12 +12061,13 @@ UTEST(SingleStepTests_F7, _F7_0204) {
         {.addr=0x002c, .value=0x24}, {.addr=0x002d, .value=0x90}, {.addr=0x9043, .value=0xbc},
         {.addr=0xe818, .value=0xf7}, {.addr=0xe819, .value=0x2c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe818, .value=0xf7, .type=IO_READ},
         {.addr=0xe819, .value=0x2c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002c, .value=0x24, .type=IO_READ},
         {.addr=0x002d, .value=0x90, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9043, .value=0xbc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11582,12 +12085,13 @@ UTEST(SingleStepTests_F7, _F7_0205) {
         {.addr=0x0155, .value=0x3d}, {.addr=0x0156, .value=0x8b}, {.addr=0x8176, .value=0xf7},
         {.addr=0x8177, .value=0x55}, {.addr=0x8b93, .value=0xdb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8176, .value=0xf7, .type=IO_READ},
         {.addr=0x8177, .value=0x55, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0155, .value=0x3d, .type=IO_READ},
         {.addr=0x0156, .value=0x8b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8b93, .value=0xdb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11605,12 +12109,13 @@ UTEST(SingleStepTests_F7, _F7_0206) {
         {.addr=0x0133, .value=0xee}, {.addr=0x0134, .value=0x83}, {.addr=0x3410, .value=0xf7},
         {.addr=0x3411, .value=0x33}, {.addr=0x8481, .value=0x53},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3410, .value=0xf7, .type=IO_READ},
         {.addr=0x3411, .value=0x33, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0133, .value=0xee, .type=IO_READ},
         {.addr=0x0134, .value=0x83, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8481, .value=0x53, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11628,12 +12133,13 @@ UTEST(SingleStepTests_F7, _F7_0207) {
         {.addr=0x002d, .value=0x64}, {.addr=0x002e, .value=0x4f}, {.addr=0x5040, .value=0x1c},
         {.addr=0xc8b2, .value=0xf7}, {.addr=0xc8b3, .value=0x2d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc8b2, .value=0xf7, .type=IO_READ},
         {.addr=0xc8b3, .value=0x2d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002d, .value=0x64, .type=IO_READ},
         {.addr=0x002e, .value=0x4f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5040, .value=0x1c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11651,12 +12157,13 @@ UTEST(SingleStepTests_F7, _F7_0208) {
         {.addr=0x013a, .value=0x9e}, {.addr=0x013b, .value=0x90}, {.addr=0x913c, .value=0x4d},
         {.addr=0xbda1, .value=0xf7}, {.addr=0xbda2, .value=0x3a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbda1, .value=0xf7, .type=IO_READ},
         {.addr=0xbda2, .value=0x3a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013a, .value=0x9e, .type=IO_READ},
         {.addr=0x013b, .value=0x90, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x913c, .value=0x4d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11674,12 +12181,13 @@ UTEST(SingleStepTests_F7, _F7_0209) {
         {.addr=0x009b, .value=0x30}, {.addr=0x009c, .value=0xd4}, {.addr=0xb977, .value=0xf7},
         {.addr=0xb978, .value=0x9b}, {.addr=0xd458, .value=0x9f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb977, .value=0xf7, .type=IO_READ},
         {.addr=0xb978, .value=0x9b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009b, .value=0x30, .type=IO_READ},
         {.addr=0x009c, .value=0xd4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd458, .value=0x9f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11697,12 +12205,13 @@ UTEST(SingleStepTests_F7, _F7_020A) {
         {.addr=0x00e9, .value=0x00}, {.addr=0x00ea, .value=0x56}, {.addr=0x569d, .value=0x6d},
         {.addr=0xd1fe, .value=0xf7}, {.addr=0xd1ff, .value=0xe9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd1fe, .value=0xf7, .type=IO_READ},
         {.addr=0xd1ff, .value=0xe9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e9, .value=0x00, .type=IO_READ},
         {.addr=0x00ea, .value=0x56, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x569d, .value=0x6d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11720,12 +12229,13 @@ UTEST(SingleStepTests_F7, _F7_020B) {
         {.addr=0x00d6, .value=0x4f}, {.addr=0x00d7, .value=0x81}, {.addr=0x5b6f, .value=0xf7},
         {.addr=0x5b70, .value=0xd6}, {.addr=0x81ea, .value=0xe1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5b6f, .value=0xf7, .type=IO_READ},
         {.addr=0x5b70, .value=0xd6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d6, .value=0x4f, .type=IO_READ},
         {.addr=0x00d7, .value=0x81, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x81ea, .value=0xe1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11743,12 +12253,13 @@ UTEST(SingleStepTests_F7, _F7_020C) {
         {.addr=0x0147, .value=0xf0}, {.addr=0x0148, .value=0x2a}, {.addr=0x2afa, .value=0x10},
         {.addr=0x528a, .value=0xf7}, {.addr=0x528b, .value=0x47},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x528a, .value=0xf7, .type=IO_READ},
         {.addr=0x528b, .value=0x47, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0147, .value=0xf0, .type=IO_READ},
         {.addr=0x0148, .value=0x2a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2afa, .value=0x10, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11766,12 +12277,13 @@ UTEST(SingleStepTests_F7, _F7_020D) {
         {.addr=0x0094, .value=0x4f}, {.addr=0x0095, .value=0xff}, {.addr=0x3c4e, .value=0xf7},
         {.addr=0x3c4f, .value=0x94}, {.addr=0xff9a, .value=0xb6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3c4e, .value=0xf7, .type=IO_READ},
         {.addr=0x3c4f, .value=0x94, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0094, .value=0x4f, .type=IO_READ},
         {.addr=0x0095, .value=0xff, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xff9a, .value=0xb6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11789,12 +12301,13 @@ UTEST(SingleStepTests_F7, _F7_020E) {
         {.addr=0x0153, .value=0xd2}, {.addr=0x0154, .value=0xb4}, {.addr=0x7cd0, .value=0xf7},
         {.addr=0x7cd1, .value=0x53}, {.addr=0xb5c0, .value=0x9b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7cd0, .value=0xf7, .type=IO_READ},
         {.addr=0x7cd1, .value=0x53, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0153, .value=0xd2, .type=IO_READ},
         {.addr=0x0154, .value=0xb4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb5c0, .value=0x9b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11812,12 +12325,13 @@ UTEST(SingleStepTests_F7, _F7_020F) {
         {.addr=0x018a, .value=0x24}, {.addr=0x018b, .value=0x20}, {.addr=0x2060, .value=0xbb},
         {.addr=0x22bf, .value=0xf7}, {.addr=0x22c0, .value=0x8a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x22bf, .value=0xf7, .type=IO_READ},
         {.addr=0x22c0, .value=0x8a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x018a, .value=0x24, .type=IO_READ},
         {.addr=0x018b, .value=0x20, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2060, .value=0xbb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11835,12 +12349,13 @@ UTEST(SingleStepTests_F7, _F7_0210) {
         {.addr=0x019a, .value=0x00}, {.addr=0x019b, .value=0x35}, {.addr=0x3512, .value=0xe1},
         {.addr=0xb903, .value=0xf7}, {.addr=0xb904, .value=0x9a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb903, .value=0xf7, .type=IO_READ},
         {.addr=0xb904, .value=0x9a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019a, .value=0x00, .type=IO_READ},
         {.addr=0x019b, .value=0x35, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3512, .value=0xe1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11858,12 +12373,13 @@ UTEST(SingleStepTests_F7, _F7_0211) {
         {.addr=0x01a0, .value=0x26}, {.addr=0x01a1, .value=0x2c}, {.addr=0x2c86, .value=0x60},
         {.addr=0xea9f, .value=0xf7}, {.addr=0xeaa0, .value=0xa0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xea9f, .value=0xf7, .type=IO_READ},
         {.addr=0xeaa0, .value=0xa0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a0, .value=0x26, .type=IO_READ},
         {.addr=0x01a1, .value=0x2c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2c86, .value=0x60, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11881,12 +12397,13 @@ UTEST(SingleStepTests_F7, _F7_0212) {
         {.addr=0x00a9, .value=0x4a}, {.addr=0x00aa, .value=0xc2}, {.addr=0xc289, .value=0xc0},
         {.addr=0xe4ca, .value=0xf7}, {.addr=0xe4cb, .value=0xa9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe4ca, .value=0xf7, .type=IO_READ},
         {.addr=0xe4cb, .value=0xa9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a9, .value=0x4a, .type=IO_READ},
         {.addr=0x00aa, .value=0xc2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc289, .value=0xc0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11904,12 +12421,13 @@ UTEST(SingleStepTests_F7, _F7_0213) {
         {.addr=0x0116, .value=0xec}, {.addr=0x0117, .value=0xb3}, {.addr=0x6c55, .value=0xf7},
         {.addr=0x6c56, .value=0x16}, {.addr=0xb4e3, .value=0x3e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6c55, .value=0xf7, .type=IO_READ},
         {.addr=0x6c56, .value=0x16, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0116, .value=0xec, .type=IO_READ},
         {.addr=0x0117, .value=0xb3, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb4e3, .value=0x3e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11927,12 +12445,13 @@ UTEST(SingleStepTests_F7, _F7_0214) {
         {.addr=0x000b, .value=0x9d}, {.addr=0x000c, .value=0x28}, {.addr=0x2925, .value=0x17},
         {.addr=0x35ea, .value=0xf7}, {.addr=0x35eb, .value=0x0b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x35ea, .value=0xf7, .type=IO_READ},
         {.addr=0x35eb, .value=0x0b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000b, .value=0x9d, .type=IO_READ},
         {.addr=0x000c, .value=0x28, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2925, .value=0x17, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11950,12 +12469,13 @@ UTEST(SingleStepTests_F7, _F7_0215) {
         {.addr=0x001e, .value=0x83}, {.addr=0x001f, .value=0xbf}, {.addr=0xc049, .value=0x7b},
         {.addr=0xf852, .value=0xf7}, {.addr=0xf853, .value=0x1e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf852, .value=0xf7, .type=IO_READ},
         {.addr=0xf853, .value=0x1e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x001e, .value=0x83, .type=IO_READ},
         {.addr=0x001f, .value=0xbf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc049, .value=0x7b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11973,12 +12493,13 @@ UTEST(SingleStepTests_F7, _F7_0216) {
         {.addr=0x019e, .value=0x7c}, {.addr=0x019f, .value=0xe7}, {.addr=0xc689, .value=0xf7},
         {.addr=0xc68a, .value=0x9e}, {.addr=0xe825, .value=0x71},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc689, .value=0xf7, .type=IO_READ},
         {.addr=0xc68a, .value=0x9e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019e, .value=0x7c, .type=IO_READ},
         {.addr=0x019f, .value=0xe7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe825, .value=0x71, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -11996,12 +12517,13 @@ UTEST(SingleStepTests_F7, _F7_0217) {
         {.addr=0x015e, .value=0xd9}, {.addr=0x015f, .value=0x68}, {.addr=0x5329, .value=0xf7},
         {.addr=0x532a, .value=0x5e}, {.addr=0x6981, .value=0xed},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5329, .value=0xf7, .type=IO_READ},
         {.addr=0x532a, .value=0x5e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x015e, .value=0xd9, .type=IO_READ},
         {.addr=0x015f, .value=0x68, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6981, .value=0xed, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12019,12 +12541,13 @@ UTEST(SingleStepTests_F7, _F7_0218) {
         {.addr=0x00a3, .value=0x43}, {.addr=0x00a4, .value=0xf6}, {.addr=0x3b68, .value=0xf7},
         {.addr=0x3b69, .value=0xa3}, {.addr=0xf6f5, .value=0x8d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3b68, .value=0xf7, .type=IO_READ},
         {.addr=0x3b69, .value=0xa3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a3, .value=0x43, .type=IO_READ},
         {.addr=0x00a4, .value=0xf6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf6f5, .value=0x8d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12042,12 +12565,13 @@ UTEST(SingleStepTests_F7, _F7_0219) {
         {.addr=0x00b2, .value=0x07}, {.addr=0x00b3, .value=0x9a}, {.addr=0x55ac, .value=0xf7},
         {.addr=0x55ad, .value=0xb2}, {.addr=0x9aa6, .value=0xa2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x55ac, .value=0xf7, .type=IO_READ},
         {.addr=0x55ad, .value=0xb2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b2, .value=0x07, .type=IO_READ},
         {.addr=0x00b3, .value=0x9a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9aa6, .value=0xa2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12065,12 +12589,13 @@ UTEST(SingleStepTests_F7, _F7_021B) {
         {.addr=0x011d, .value=0x36}, {.addr=0x011e, .value=0x06}, {.addr=0x072b, .value=0xe2},
         {.addr=0x4c5e, .value=0xf7}, {.addr=0x4c5f, .value=0x1d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4c5e, .value=0xf7, .type=IO_READ},
         {.addr=0x4c5f, .value=0x1d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x011d, .value=0x36, .type=IO_READ},
         {.addr=0x011e, .value=0x06, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x072b, .value=0xe2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12088,12 +12613,13 @@ UTEST(SingleStepTests_F7, _F7_021C) {
         {.addr=0x000e, .value=0x21}, {.addr=0x000f, .value=0x83}, {.addr=0x29d6, .value=0xf7},
         {.addr=0x29d7, .value=0x0e}, {.addr=0x8374, .value=0x4e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x29d6, .value=0xf7, .type=IO_READ},
         {.addr=0x29d7, .value=0x0e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000e, .value=0x21, .type=IO_READ},
         {.addr=0x000f, .value=0x83, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8374, .value=0x4e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12111,12 +12637,13 @@ UTEST(SingleStepTests_F7, _F7_021D) {
         {.addr=0x004c, .value=0x75}, {.addr=0x004d, .value=0x80}, {.addr=0x18e3, .value=0xf7},
         {.addr=0x18e4, .value=0x4c}, {.addr=0x80d0, .value=0x30},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x18e3, .value=0xf7, .type=IO_READ},
         {.addr=0x18e4, .value=0x4c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x004c, .value=0x75, .type=IO_READ},
         {.addr=0x004d, .value=0x80, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x80d0, .value=0x30, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12134,12 +12661,13 @@ UTEST(SingleStepTests_F7, _F7_021E) {
         {.addr=0x002c, .value=0x91}, {.addr=0x002d, .value=0x9b}, {.addr=0x7842, .value=0xf7},
         {.addr=0x7843, .value=0x2c}, {.addr=0x9bf4, .value=0x8e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7842, .value=0xf7, .type=IO_READ},
         {.addr=0x7843, .value=0x2c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002c, .value=0x91, .type=IO_READ},
         {.addr=0x002d, .value=0x9b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9bf4, .value=0x8e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12157,12 +12685,13 @@ UTEST(SingleStepTests_F7, _F7_021F) {
         {.addr=0x004d, .value=0x6a}, {.addr=0x004e, .value=0xd8}, {.addr=0xa582, .value=0xf7},
         {.addr=0xa583, .value=0x4d}, {.addr=0xd8f0, .value=0xed},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa582, .value=0xf7, .type=IO_READ},
         {.addr=0xa583, .value=0x4d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x004d, .value=0x6a, .type=IO_READ},
         {.addr=0x004e, .value=0xd8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd8f0, .value=0xed, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12180,12 +12709,13 @@ UTEST(SingleStepTests_F7, _F7_0220) {
         {.addr=0x00b9, .value=0x94}, {.addr=0x00ba, .value=0xfa}, {.addr=0x413e, .value=0xf7},
         {.addr=0x413f, .value=0xb9}, {.addr=0xfaf2, .value=0xbb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x413e, .value=0xf7, .type=IO_READ},
         {.addr=0x413f, .value=0xb9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b9, .value=0x94, .type=IO_READ},
         {.addr=0x00ba, .value=0xfa, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfaf2, .value=0xbb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12203,12 +12733,13 @@ UTEST(SingleStepTests_F7, _F7_0221) {
         {.addr=0x007f, .value=0x10}, {.addr=0x0080, .value=0x4f}, {.addr=0x4fc2, .value=0x7d},
         {.addr=0xfaa3, .value=0xf7}, {.addr=0xfaa4, .value=0x7f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfaa3, .value=0xf7, .type=IO_READ},
         {.addr=0xfaa4, .value=0x7f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x007f, .value=0x10, .type=IO_READ},
         {.addr=0x0080, .value=0x4f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4fc2, .value=0x7d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12226,12 +12757,13 @@ UTEST(SingleStepTests_F7, _F7_0222) {
         {.addr=0x01c9, .value=0x29}, {.addr=0x01ca, .value=0x4c}, {.addr=0x4c6c, .value=0xe9},
         {.addr=0xfb22, .value=0xf7}, {.addr=0xfb23, .value=0xc9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfb22, .value=0xf7, .type=IO_READ},
         {.addr=0xfb23, .value=0xc9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c9, .value=0x29, .type=IO_READ},
         {.addr=0x01ca, .value=0x4c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4c6c, .value=0xe9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12249,12 +12781,13 @@ UTEST(SingleStepTests_F7, _F7_0223) {
         {.addr=0x019e, .value=0xf4}, {.addr=0x019f, .value=0x64}, {.addr=0x65af, .value=0x7b},
         {.addr=0xd19b, .value=0xf7}, {.addr=0xd19c, .value=0x9e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd19b, .value=0xf7, .type=IO_READ},
         {.addr=0xd19c, .value=0x9e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019e, .value=0xf4, .type=IO_READ},
         {.addr=0x019f, .value=0x64, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x65af, .value=0x7b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12272,12 +12805,13 @@ UTEST(SingleStepTests_F7, _F7_0224) {
         {.addr=0x0146, .value=0x42}, {.addr=0x0147, .value=0xb8}, {.addr=0xb875, .value=0x2c},
         {.addr=0xd711, .value=0xf7}, {.addr=0xd712, .value=0x46},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd711, .value=0xf7, .type=IO_READ},
         {.addr=0xd712, .value=0x46, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0146, .value=0x42, .type=IO_READ},
         {.addr=0x0147, .value=0xb8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb875, .value=0x2c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12295,12 +12829,13 @@ UTEST(SingleStepTests_F7, _F7_0225) {
         {.addr=0x0195, .value=0x99}, {.addr=0x0196, .value=0xae}, {.addr=0x7778, .value=0xf7},
         {.addr=0x7779, .value=0x95}, {.addr=0xaea2, .value=0xb0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7778, .value=0xf7, .type=IO_READ},
         {.addr=0x7779, .value=0x95, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0195, .value=0x99, .type=IO_READ},
         {.addr=0x0196, .value=0xae, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xaea2, .value=0xb0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12318,12 +12853,13 @@ UTEST(SingleStepTests_F7, _F7_0226) {
         {.addr=0x0187, .value=0x9d}, {.addr=0x0188, .value=0xc5}, {.addr=0x406e, .value=0xf7},
         {.addr=0x406f, .value=0x87}, {.addr=0xc626, .value=0xcb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x406e, .value=0xf7, .type=IO_READ},
         {.addr=0x406f, .value=0x87, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0187, .value=0x9d, .type=IO_READ},
         {.addr=0x0188, .value=0xc5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc626, .value=0xcb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12341,12 +12877,13 @@ UTEST(SingleStepTests_F7, _F7_0227) {
         {.addr=0x0117, .value=0x6d}, {.addr=0x0118, .value=0x05}, {.addr=0x063e, .value=0x09},
         {.addr=0xb952, .value=0xf7}, {.addr=0xb953, .value=0x17},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb952, .value=0xf7, .type=IO_READ},
         {.addr=0xb953, .value=0x17, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0117, .value=0x6d, .type=IO_READ},
         {.addr=0x0118, .value=0x05, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x063e, .value=0x09, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12364,12 +12901,13 @@ UTEST(SingleStepTests_F7, _F7_0228) {
         {.addr=0x00ba, .value=0x6b}, {.addr=0x00bb, .value=0x67}, {.addr=0x67ec, .value=0x56},
         {.addr=0xadd6, .value=0xf7}, {.addr=0xadd7, .value=0xba},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xadd6, .value=0xf7, .type=IO_READ},
         {.addr=0xadd7, .value=0xba, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ba, .value=0x6b, .type=IO_READ},
         {.addr=0x00bb, .value=0x67, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x67ec, .value=0x56, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12387,12 +12925,13 @@ UTEST(SingleStepTests_F7, _F7_0229) {
         {.addr=0x01a8, .value=0x28}, {.addr=0x01a9, .value=0x62}, {.addr=0x62d4, .value=0xeb},
         {.addr=0xdadf, .value=0xf7}, {.addr=0xdae0, .value=0xa8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdadf, .value=0xf7, .type=IO_READ},
         {.addr=0xdae0, .value=0xa8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a8, .value=0x28, .type=IO_READ},
         {.addr=0x01a9, .value=0x62, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x62d4, .value=0xeb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12410,12 +12949,13 @@ UTEST(SingleStepTests_F7, _F7_022A) {
         {.addr=0x00bd, .value=0x85}, {.addr=0x00be, .value=0x99}, {.addr=0x53f6, .value=0xf7},
         {.addr=0x53f7, .value=0xbd}, {.addr=0x9a40, .value=0x49},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x53f6, .value=0xf7, .type=IO_READ},
         {.addr=0x53f7, .value=0xbd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00bd, .value=0x85, .type=IO_READ},
         {.addr=0x00be, .value=0x99, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9a40, .value=0x49, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12433,12 +12973,13 @@ UTEST(SingleStepTests_F7, _F7_022B) {
         {.addr=0x01c7, .value=0x42}, {.addr=0x01c8, .value=0xc6}, {.addr=0x740d, .value=0xf7},
         {.addr=0x740e, .value=0xc7}, {.addr=0xc71d, .value=0xd0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x740d, .value=0xf7, .type=IO_READ},
         {.addr=0x740e, .value=0xc7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c7, .value=0x42, .type=IO_READ},
         {.addr=0x01c8, .value=0xc6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc71d, .value=0xd0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12456,12 +12997,13 @@ UTEST(SingleStepTests_F7, _F7_022C) {
         {.addr=0x0131, .value=0x98}, {.addr=0x0132, .value=0xb9}, {.addr=0xb9ef, .value=0xf7},
         {.addr=0xf342, .value=0xf7}, {.addr=0xf343, .value=0x31},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf342, .value=0xf7, .type=IO_READ},
         {.addr=0xf343, .value=0x31, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0131, .value=0x98, .type=IO_READ},
         {.addr=0x0132, .value=0xb9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb9ef, .value=0xf7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12479,12 +13021,13 @@ UTEST(SingleStepTests_F7, _F7_022D) {
         {.addr=0x01cf, .value=0xf7}, {.addr=0x01d0, .value=0x5b}, {.addr=0x5c7d, .value=0xf2},
         {.addr=0xfe6f, .value=0xf7}, {.addr=0xfe70, .value=0xcf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfe6f, .value=0xf7, .type=IO_READ},
         {.addr=0xfe70, .value=0xcf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01cf, .value=0xf7, .type=IO_READ},
         {.addr=0x01d0, .value=0x5b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5c7d, .value=0xf2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12502,12 +13045,13 @@ UTEST(SingleStepTests_F7, _F7_022E) {
         {.addr=0x00e2, .value=0x53}, {.addr=0x00e3, .value=0xd7}, {.addr=0xd849, .value=0x36},
         {.addr=0xeddb, .value=0xf7}, {.addr=0xeddc, .value=0xe2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xeddb, .value=0xf7, .type=IO_READ},
         {.addr=0xeddc, .value=0xe2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e2, .value=0x53, .type=IO_READ},
         {.addr=0x00e3, .value=0xd7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd849, .value=0x36, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12525,12 +13069,13 @@ UTEST(SingleStepTests_F7, _F7_022F) {
         {.addr=0x00bb, .value=0x6c}, {.addr=0x00bc, .value=0xa8}, {.addr=0x2df0, .value=0xf7},
         {.addr=0x2df1, .value=0xbb}, {.addr=0xa94a, .value=0xca},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2df0, .value=0xf7, .type=IO_READ},
         {.addr=0x2df1, .value=0xbb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00bb, .value=0x6c, .type=IO_READ},
         {.addr=0x00bc, .value=0xa8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa94a, .value=0xca, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12548,12 +13093,13 @@ UTEST(SingleStepTests_F7, _F7_0232) {
         {.addr=0x0082, .value=0xc6}, {.addr=0x0083, .value=0xb3}, {.addr=0x7f83, .value=0xf7},
         {.addr=0x7f84, .value=0x82}, {.addr=0xb4c0, .value=0xaa},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7f83, .value=0xf7, .type=IO_READ},
         {.addr=0x7f84, .value=0x82, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0082, .value=0xc6, .type=IO_READ},
         {.addr=0x0083, .value=0xb3, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb4c0, .value=0xaa, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12571,12 +13117,13 @@ UTEST(SingleStepTests_F7, _F7_0233) {
         {.addr=0x0031, .value=0x5e}, {.addr=0x0032, .value=0xbf}, {.addr=0x9fd7, .value=0xf7},
         {.addr=0x9fd8, .value=0x31}, {.addr=0xbfd5, .value=0xfc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9fd7, .value=0xf7, .type=IO_READ},
         {.addr=0x9fd8, .value=0x31, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0031, .value=0x5e, .type=IO_READ},
         {.addr=0x0032, .value=0xbf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbfd5, .value=0xfc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12594,12 +13141,13 @@ UTEST(SingleStepTests_F7, _F7_0234) {
         {.addr=0x01fd, .value=0x23}, {.addr=0x01fe, .value=0x3a}, {.addr=0x3abd, .value=0x45},
         {.addr=0x56bd, .value=0xf7}, {.addr=0x56be, .value=0xfd},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x56bd, .value=0xf7, .type=IO_READ},
         {.addr=0x56be, .value=0xfd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01fd, .value=0x23, .type=IO_READ},
         {.addr=0x01fe, .value=0x3a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3abd, .value=0x45, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12617,12 +13165,13 @@ UTEST(SingleStepTests_F7, _F7_0235) {
         {.addr=0x01d1, .value=0x60}, {.addr=0x01d2, .value=0x32}, {.addr=0x3310, .value=0x2f},
         {.addr=0xe172, .value=0xf7}, {.addr=0xe173, .value=0xd1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe172, .value=0xf7, .type=IO_READ},
         {.addr=0xe173, .value=0xd1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d1, .value=0x60, .type=IO_READ},
         {.addr=0x01d2, .value=0x32, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3310, .value=0x2f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12640,12 +13189,13 @@ UTEST(SingleStepTests_F7, _F7_0236) {
         {.addr=0x002d, .value=0xd1}, {.addr=0x002e, .value=0x6d}, {.addr=0x6ec1, .value=0xfd},
         {.addr=0xaeb8, .value=0xf7}, {.addr=0xaeb9, .value=0x2d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xaeb8, .value=0xf7, .type=IO_READ},
         {.addr=0xaeb9, .value=0x2d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002d, .value=0xd1, .type=IO_READ},
         {.addr=0x002e, .value=0x6d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6ec1, .value=0xfd, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12663,12 +13213,13 @@ UTEST(SingleStepTests_F7, _F7_0237) {
         {.addr=0x0191, .value=0x8a}, {.addr=0x0192, .value=0x88}, {.addr=0x7d21, .value=0xf7},
         {.addr=0x7d22, .value=0x91}, {.addr=0x896f, .value=0x09},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7d21, .value=0xf7, .type=IO_READ},
         {.addr=0x7d22, .value=0x91, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0191, .value=0x8a, .type=IO_READ},
         {.addr=0x0192, .value=0x88, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x896f, .value=0x09, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12686,12 +13237,13 @@ UTEST(SingleStepTests_F7, _F7_0238) {
         {.addr=0x01dd, .value=0x38}, {.addr=0x01de, .value=0x99}, {.addr=0x38d0, .value=0xf7},
         {.addr=0x38d1, .value=0xdd}, {.addr=0x99d1, .value=0xc2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x38d0, .value=0xf7, .type=IO_READ},
         {.addr=0x38d1, .value=0xdd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01dd, .value=0x38, .type=IO_READ},
         {.addr=0x01de, .value=0x99, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x99d1, .value=0xc2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12709,12 +13261,13 @@ UTEST(SingleStepTests_F7, _F7_0239) {
         {.addr=0x018e, .value=0x28}, {.addr=0x018f, .value=0x3d}, {.addr=0x3d4e, .value=0x72},
         {.addr=0x89d5, .value=0xf7}, {.addr=0x89d6, .value=0x8e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x89d5, .value=0xf7, .type=IO_READ},
         {.addr=0x89d6, .value=0x8e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x018e, .value=0x28, .type=IO_READ},
         {.addr=0x018f, .value=0x3d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3d4e, .value=0x72, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12732,12 +13285,13 @@ UTEST(SingleStepTests_F7, _F7_023A) {
         {.addr=0x016e, .value=0xe8}, {.addr=0x016f, .value=0x67}, {.addr=0x6808, .value=0xc9},
         {.addr=0x9627, .value=0xf7}, {.addr=0x9628, .value=0x6e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9627, .value=0xf7, .type=IO_READ},
         {.addr=0x9628, .value=0x6e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016e, .value=0xe8, .type=IO_READ},
         {.addr=0x016f, .value=0x67, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6808, .value=0xc9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12755,12 +13309,13 @@ UTEST(SingleStepTests_F7, _F7_023B) {
         {.addr=0x0158, .value=0x6a}, {.addr=0x0159, .value=0x35}, {.addr=0x3647, .value=0xc1},
         {.addr=0x70f1, .value=0xf7}, {.addr=0x70f2, .value=0x58},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x70f1, .value=0xf7, .type=IO_READ},
         {.addr=0x70f2, .value=0x58, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0158, .value=0x6a, .type=IO_READ},
         {.addr=0x0159, .value=0x35, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3647, .value=0xc1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12778,12 +13333,13 @@ UTEST(SingleStepTests_F7, _F7_023C) {
         {.addr=0x0117, .value=0x82}, {.addr=0x0118, .value=0x47}, {.addr=0x47b7, .value=0xb2},
         {.addr=0xb114, .value=0xf7}, {.addr=0xb115, .value=0x17},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb114, .value=0xf7, .type=IO_READ},
         {.addr=0xb115, .value=0x17, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0117, .value=0x82, .type=IO_READ},
         {.addr=0x0118, .value=0x47, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x47b7, .value=0xb2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12801,12 +13357,13 @@ UTEST(SingleStepTests_F7, _F7_023D) {
         {.addr=0x002e, .value=0xcb}, {.addr=0x002f, .value=0xd4}, {.addr=0x9825, .value=0xf7},
         {.addr=0x9826, .value=0x2e}, {.addr=0xd596, .value=0xa2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9825, .value=0xf7, .type=IO_READ},
         {.addr=0x9826, .value=0x2e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002e, .value=0xcb, .type=IO_READ},
         {.addr=0x002f, .value=0xd4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd596, .value=0xa2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12824,12 +13381,13 @@ UTEST(SingleStepTests_F7, _F7_023E) {
         {.addr=0x00a4, .value=0xd2}, {.addr=0x00a5, .value=0x95}, {.addr=0x2e28, .value=0xf7},
         {.addr=0x2e29, .value=0xa4}, {.addr=0x96a3, .value=0x6f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2e28, .value=0xf7, .type=IO_READ},
         {.addr=0x2e29, .value=0xa4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a4, .value=0xd2, .type=IO_READ},
         {.addr=0x00a5, .value=0x95, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x96a3, .value=0x6f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12847,12 +13405,13 @@ UTEST(SingleStepTests_F7, _F7_023F) {
         {.addr=0x01c6, .value=0xf6}, {.addr=0x01c7, .value=0x14}, {.addr=0x15a5, .value=0xfd},
         {.addr=0x19a3, .value=0xf7}, {.addr=0x19a4, .value=0xc6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x19a3, .value=0xf7, .type=IO_READ},
         {.addr=0x19a4, .value=0xc6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c6, .value=0xf6, .type=IO_READ},
         {.addr=0x01c7, .value=0x14, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x15a5, .value=0xfd, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12870,12 +13429,13 @@ UTEST(SingleStepTests_F7, _F7_0240) {
         {.addr=0x00e4, .value=0xf2}, {.addr=0x00e5, .value=0x4f}, {.addr=0x44f2, .value=0xf7},
         {.addr=0x44f3, .value=0xe4}, {.addr=0x50ed, .value=0x73},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x44f2, .value=0xf7, .type=IO_READ},
         {.addr=0x44f3, .value=0xe4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e4, .value=0xf2, .type=IO_READ},
         {.addr=0x00e5, .value=0x4f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x50ed, .value=0x73, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12893,12 +13453,13 @@ UTEST(SingleStepTests_F7, _F7_0241) {
         {.addr=0x0005, .value=0x4f}, {.addr=0x0006, .value=0x45}, {.addr=0x45ac, .value=0x51},
         {.addr=0xc9b9, .value=0xf7}, {.addr=0xc9ba, .value=0x05},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc9b9, .value=0xf7, .type=IO_READ},
         {.addr=0xc9ba, .value=0x05, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0005, .value=0x4f, .type=IO_READ},
         {.addr=0x0006, .value=0x45, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x45ac, .value=0x51, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12916,12 +13477,13 @@ UTEST(SingleStepTests_F7, _F7_0243) {
         {.addr=0x00c0, .value=0xf4}, {.addr=0x00c1, .value=0x7b}, {.addr=0x4001, .value=0xf7},
         {.addr=0x4002, .value=0xc0}, {.addr=0x7c41, .value=0xa8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4001, .value=0xf7, .type=IO_READ},
         {.addr=0x4002, .value=0xc0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c0, .value=0xf4, .type=IO_READ},
         {.addr=0x00c1, .value=0x7b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7c41, .value=0xa8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12939,12 +13501,13 @@ UTEST(SingleStepTests_F7, _F7_0244) {
         {.addr=0x00b6, .value=0x07}, {.addr=0x00b7, .value=0x5b}, {.addr=0x5b6a, .value=0x2f},
         {.addr=0x6cff, .value=0xf7}, {.addr=0x6d00, .value=0xb6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6cff, .value=0xf7, .type=IO_READ},
         {.addr=0x6d00, .value=0xb6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b6, .value=0x07, .type=IO_READ},
         {.addr=0x00b7, .value=0x5b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5b6a, .value=0x2f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12962,12 +13525,13 @@ UTEST(SingleStepTests_F7, _F7_0245) {
         {.addr=0x01c3, .value=0x94}, {.addr=0x01c4, .value=0xab}, {.addr=0x3fd4, .value=0xf7},
         {.addr=0x3fd5, .value=0xc3}, {.addr=0xab97, .value=0xc4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3fd4, .value=0xf7, .type=IO_READ},
         {.addr=0x3fd5, .value=0xc3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c3, .value=0x94, .type=IO_READ},
         {.addr=0x01c4, .value=0xab, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xab97, .value=0xc4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -12985,12 +13549,13 @@ UTEST(SingleStepTests_F7, _F7_0246) {
         {.addr=0x013a, .value=0x40}, {.addr=0x013b, .value=0x92}, {.addr=0x9251, .value=0x8d},
         {.addr=0xdc65, .value=0xf7}, {.addr=0xdc66, .value=0x3a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdc65, .value=0xf7, .type=IO_READ},
         {.addr=0xdc66, .value=0x3a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013a, .value=0x40, .type=IO_READ},
         {.addr=0x013b, .value=0x92, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9251, .value=0x8d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13008,12 +13573,13 @@ UTEST(SingleStepTests_F7, _F7_0247) {
         {.addr=0x00c3, .value=0xbe}, {.addr=0x00c4, .value=0x1c}, {.addr=0x06b6, .value=0xf7},
         {.addr=0x06b7, .value=0xc3}, {.addr=0x1d7d, .value=0xb5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x06b6, .value=0xf7, .type=IO_READ},
         {.addr=0x06b7, .value=0xc3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c3, .value=0xbe, .type=IO_READ},
         {.addr=0x00c4, .value=0x1c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1d7d, .value=0xb5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13031,12 +13597,13 @@ UTEST(SingleStepTests_F7, _F7_0248) {
         {.addr=0x01d7, .value=0x1d}, {.addr=0x01d8, .value=0xe7}, {.addr=0x3e20, .value=0xf7},
         {.addr=0x3e21, .value=0xd7}, {.addr=0xe7ac, .value=0x14},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3e20, .value=0xf7, .type=IO_READ},
         {.addr=0x3e21, .value=0xd7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d7, .value=0x1d, .type=IO_READ},
         {.addr=0x01d8, .value=0xe7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe7ac, .value=0x14, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13054,12 +13621,13 @@ UTEST(SingleStepTests_F7, _F7_0249) {
         {.addr=0x00a7, .value=0x10}, {.addr=0x00a8, .value=0x68}, {.addr=0x6851, .value=0x93},
         {.addr=0xb1e7, .value=0xf7}, {.addr=0xb1e8, .value=0xa7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb1e7, .value=0xf7, .type=IO_READ},
         {.addr=0xb1e8, .value=0xa7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a7, .value=0x10, .type=IO_READ},
         {.addr=0x00a8, .value=0x68, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6851, .value=0x93, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13077,12 +13645,13 @@ UTEST(SingleStepTests_F7, _F7_024A) {
         {.addr=0x00ec, .value=0x6c}, {.addr=0x00ed, .value=0x18}, {.addr=0x1918, .value=0x4e},
         {.addr=0x86f4, .value=0xf7}, {.addr=0x86f5, .value=0xec},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x86f4, .value=0xf7, .type=IO_READ},
         {.addr=0x86f5, .value=0xec, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ec, .value=0x6c, .type=IO_READ},
         {.addr=0x00ed, .value=0x18, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1918, .value=0x4e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13100,12 +13669,13 @@ UTEST(SingleStepTests_F7, _F7_024B) {
         {.addr=0x0130, .value=0x28}, {.addr=0x0131, .value=0x9f}, {.addr=0x8b3d, .value=0xf7},
         {.addr=0x8b3e, .value=0x30}, {.addr=0x9fcd, .value=0xa7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8b3d, .value=0xf7, .type=IO_READ},
         {.addr=0x8b3e, .value=0x30, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0130, .value=0x28, .type=IO_READ},
         {.addr=0x0131, .value=0x9f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9fcd, .value=0xa7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13123,12 +13693,13 @@ UTEST(SingleStepTests_F7, _F7_024C) {
         {.addr=0x0063, .value=0x5e}, {.addr=0x0064, .value=0x98}, {.addr=0x3af7, .value=0xf7},
         {.addr=0x3af8, .value=0x63}, {.addr=0x985e, .value=0x85},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3af7, .value=0xf7, .type=IO_READ},
         {.addr=0x3af8, .value=0x63, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0063, .value=0x5e, .type=IO_READ},
         {.addr=0x0064, .value=0x98, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x985e, .value=0x85, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13146,12 +13717,13 @@ UTEST(SingleStepTests_F7, _F7_024D) {
         {.addr=0x010e, .value=0xbd}, {.addr=0x010f, .value=0x4c}, {.addr=0x4d5e, .value=0x65},
         {.addr=0xae20, .value=0xf7}, {.addr=0xae21, .value=0x0e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xae20, .value=0xf7, .type=IO_READ},
         {.addr=0xae21, .value=0x0e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x010e, .value=0xbd, .type=IO_READ},
         {.addr=0x010f, .value=0x4c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4d5e, .value=0x65, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13169,12 +13741,13 @@ UTEST(SingleStepTests_F7, _F7_024E) {
         {.addr=0x019a, .value=0xa0}, {.addr=0x019b, .value=0xfc}, {.addr=0x8a50, .value=0xf7},
         {.addr=0x8a51, .value=0x9a}, {.addr=0xfd9c, .value=0xdd},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8a50, .value=0xf7, .type=IO_READ},
         {.addr=0x8a51, .value=0x9a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019a, .value=0xa0, .type=IO_READ},
         {.addr=0x019b, .value=0xfc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfd9c, .value=0xdd, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13192,12 +13765,13 @@ UTEST(SingleStepTests_F7, _F7_024F) {
         {.addr=0x01d4, .value=0xca}, {.addr=0x01d5, .value=0x97}, {.addr=0x4805, .value=0xf7},
         {.addr=0x4806, .value=0xd4}, {.addr=0x9872, .value=0xb0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4805, .value=0xf7, .type=IO_READ},
         {.addr=0x4806, .value=0xd4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d4, .value=0xca, .type=IO_READ},
         {.addr=0x01d5, .value=0x97, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9872, .value=0xb0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13215,12 +13789,13 @@ UTEST(SingleStepTests_F7, _F7_0250) {
         {.addr=0x0117, .value=0x43}, {.addr=0x0118, .value=0x5b}, {.addr=0x5b47, .value=0x72},
         {.addr=0x6c86, .value=0xf7}, {.addr=0x6c87, .value=0x17},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6c86, .value=0xf7, .type=IO_READ},
         {.addr=0x6c87, .value=0x17, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0117, .value=0x43, .type=IO_READ},
         {.addr=0x0118, .value=0x5b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5b47, .value=0x72, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13238,12 +13813,13 @@ UTEST(SingleStepTests_F7, _F7_0251) {
         {.addr=0x00da, .value=0x57}, {.addr=0x00db, .value=0xba}, {.addr=0xba9c, .value=0xbb},
         {.addr=0xe42a, .value=0xf7}, {.addr=0xe42b, .value=0xda},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe42a, .value=0xf7, .type=IO_READ},
         {.addr=0xe42b, .value=0xda, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00da, .value=0x57, .type=IO_READ},
         {.addr=0x00db, .value=0xba, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xba9c, .value=0xbb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13261,12 +13837,13 @@ UTEST(SingleStepTests_F7, _F7_0252) {
         {.addr=0x0175, .value=0x9e}, {.addr=0x0176, .value=0x03}, {.addr=0x048b, .value=0x9e},
         {.addr=0x9997, .value=0xf7}, {.addr=0x9998, .value=0x75},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9997, .value=0xf7, .type=IO_READ},
         {.addr=0x9998, .value=0x75, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0175, .value=0x9e, .type=IO_READ},
         {.addr=0x0176, .value=0x03, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x048b, .value=0x9e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13284,12 +13861,13 @@ UTEST(SingleStepTests_F7, _F7_0253) {
         {.addr=0x00c4, .value=0x4e}, {.addr=0x00c5, .value=0x9a}, {.addr=0x9a88, .value=0xd7},
         {.addr=0xf60c, .value=0xf7}, {.addr=0xf60d, .value=0xc4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf60c, .value=0xf7, .type=IO_READ},
         {.addr=0xf60d, .value=0xc4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c4, .value=0x4e, .type=IO_READ},
         {.addr=0x00c5, .value=0x9a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9a88, .value=0xd7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13307,12 +13885,13 @@ UTEST(SingleStepTests_F7, _F7_0254) {
         {.addr=0x0052, .value=0x1d}, {.addr=0x0053, .value=0xec}, {.addr=0xa462, .value=0xf7},
         {.addr=0xa463, .value=0x52}, {.addr=0xed01, .value=0x76},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa462, .value=0xf7, .type=IO_READ},
         {.addr=0xa463, .value=0x52, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0052, .value=0x1d, .type=IO_READ},
         {.addr=0x0053, .value=0xec, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xed01, .value=0x76, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13330,12 +13909,13 @@ UTEST(SingleStepTests_F7, _F7_0255) {
         {.addr=0x015f, .value=0x86}, {.addr=0x0160, .value=0xd6}, {.addr=0xcdd8, .value=0xf7},
         {.addr=0xcdd9, .value=0x5f}, {.addr=0xd77c, .value=0xb3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcdd8, .value=0xf7, .type=IO_READ},
         {.addr=0xcdd9, .value=0x5f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x015f, .value=0x86, .type=IO_READ},
         {.addr=0x0160, .value=0xd6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd77c, .value=0xb3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13353,12 +13933,13 @@ UTEST(SingleStepTests_F7, _F7_0256) {
         {.addr=0x0172, .value=0x72}, {.addr=0x0173, .value=0x1e}, {.addr=0x1eb0, .value=0xa3},
         {.addr=0x44e8, .value=0xf7}, {.addr=0x44e9, .value=0x72},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x44e8, .value=0xf7, .type=IO_READ},
         {.addr=0x44e9, .value=0x72, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0172, .value=0x72, .type=IO_READ},
         {.addr=0x0173, .value=0x1e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1eb0, .value=0xa3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13376,12 +13957,13 @@ UTEST(SingleStepTests_F7, _F7_0257) {
         {.addr=0x019b, .value=0x09}, {.addr=0x019c, .value=0xc5}, {.addr=0x8307, .value=0xf7},
         {.addr=0x8308, .value=0x9b}, {.addr=0xc606, .value=0x76},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8307, .value=0xf7, .type=IO_READ},
         {.addr=0x8308, .value=0x9b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019b, .value=0x09, .type=IO_READ},
         {.addr=0x019c, .value=0xc5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc606, .value=0x76, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13399,12 +13981,13 @@ UTEST(SingleStepTests_F7, _F7_0258) {
         {.addr=0x0110, .value=0x17}, {.addr=0x0111, .value=0xb7}, {.addr=0xa312, .value=0xf7},
         {.addr=0xa313, .value=0x10}, {.addr=0xb7e7, .value=0x00},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa312, .value=0xf7, .type=IO_READ},
         {.addr=0xa313, .value=0x10, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0110, .value=0x17, .type=IO_READ},
         {.addr=0x0111, .value=0xb7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb7e7, .value=0x00, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13422,12 +14005,13 @@ UTEST(SingleStepTests_F7, _F7_0259) {
         {.addr=0x0013, .value=0x13}, {.addr=0x0014, .value=0xd2}, {.addr=0xcff5, .value=0xf7},
         {.addr=0xcff6, .value=0x13}, {.addr=0xd247, .value=0x29},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcff5, .value=0xf7, .type=IO_READ},
         {.addr=0xcff6, .value=0x13, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0013, .value=0x13, .type=IO_READ},
         {.addr=0x0014, .value=0xd2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd247, .value=0x29, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13445,12 +14029,13 @@ UTEST(SingleStepTests_F7, _F7_025A) {
         {.addr=0x014b, .value=0x24}, {.addr=0x014c, .value=0xe9}, {.addr=0xad3a, .value=0xf7},
         {.addr=0xad3b, .value=0x4b}, {.addr=0xe9c6, .value=0x14},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xad3a, .value=0xf7, .type=IO_READ},
         {.addr=0xad3b, .value=0x4b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x014b, .value=0x24, .type=IO_READ},
         {.addr=0x014c, .value=0xe9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe9c6, .value=0x14, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13468,12 +14053,13 @@ UTEST(SingleStepTests_F7, _F7_025B) {
         {.addr=0x00e6, .value=0xfc}, {.addr=0x00e7, .value=0xd7}, {.addr=0x36c7, .value=0xf7},
         {.addr=0x36c8, .value=0xe6}, {.addr=0xd8cd, .value=0x8c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x36c7, .value=0xf7, .type=IO_READ},
         {.addr=0x36c8, .value=0xe6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e6, .value=0xfc, .type=IO_READ},
         {.addr=0x00e7, .value=0xd7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd8cd, .value=0x8c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13491,12 +14077,13 @@ UTEST(SingleStepTests_F7, _F7_025C) {
         {.addr=0x000b, .value=0xad}, {.addr=0x000c, .value=0x1f}, {.addr=0x2076, .value=0x88},
         {.addr=0xe14a, .value=0xf7}, {.addr=0xe14b, .value=0x0b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe14a, .value=0xf7, .type=IO_READ},
         {.addr=0xe14b, .value=0x0b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000b, .value=0xad, .type=IO_READ},
         {.addr=0x000c, .value=0x1f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2076, .value=0x88, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13514,12 +14101,13 @@ UTEST(SingleStepTests_F7, _F7_025D) {
         {.addr=0x011f, .value=0x6f}, {.addr=0x0120, .value=0xb8}, {.addr=0xb8b4, .value=0xf3},
         {.addr=0xdb92, .value=0xf7}, {.addr=0xdb93, .value=0x1f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdb92, .value=0xf7, .type=IO_READ},
         {.addr=0xdb93, .value=0x1f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x011f, .value=0x6f, .type=IO_READ},
         {.addr=0x0120, .value=0xb8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb8b4, .value=0xf3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13537,12 +14125,13 @@ UTEST(SingleStepTests_F7, _F7_025F) {
         {.addr=0x0108, .value=0x44}, {.addr=0x0109, .value=0x4c}, {.addr=0x4d41, .value=0xc4},
         {.addr=0x9fcc, .value=0xf7}, {.addr=0x9fcd, .value=0x08},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9fcc, .value=0xf7, .type=IO_READ},
         {.addr=0x9fcd, .value=0x08, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0108, .value=0x44, .type=IO_READ},
         {.addr=0x0109, .value=0x4c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4d41, .value=0xc4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13560,12 +14149,13 @@ UTEST(SingleStepTests_F7, _F7_0260) {
         {.addr=0x002d, .value=0x11}, {.addr=0x002e, .value=0x38}, {.addr=0x3867, .value=0x1c},
         {.addr=0x56fe, .value=0xf7}, {.addr=0x56ff, .value=0x2d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x56fe, .value=0xf7, .type=IO_READ},
         {.addr=0x56ff, .value=0x2d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002d, .value=0x11, .type=IO_READ},
         {.addr=0x002e, .value=0x38, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3867, .value=0x1c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13583,12 +14173,13 @@ UTEST(SingleStepTests_F7, _F7_0261) {
         {.addr=0x01d7, .value=0x91}, {.addr=0x01d8, .value=0xbe}, {.addr=0xa78e, .value=0xf7},
         {.addr=0xa78f, .value=0xd7}, {.addr=0xbf60, .value=0xb7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa78e, .value=0xf7, .type=IO_READ},
         {.addr=0xa78f, .value=0xd7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d7, .value=0x91, .type=IO_READ},
         {.addr=0x01d8, .value=0xbe, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbf60, .value=0xb7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13606,12 +14197,13 @@ UTEST(SingleStepTests_F7, _F7_0262) {
         {.addr=0x005b, .value=0xa8}, {.addr=0x005c, .value=0x64}, {.addr=0x6545, .value=0x4c},
         {.addr=0xdb7f, .value=0xf7}, {.addr=0xdb80, .value=0x5b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdb7f, .value=0xf7, .type=IO_READ},
         {.addr=0xdb80, .value=0x5b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005b, .value=0xa8, .type=IO_READ},
         {.addr=0x005c, .value=0x64, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6545, .value=0x4c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13629,12 +14221,13 @@ UTEST(SingleStepTests_F7, _F7_0263) {
         {.addr=0x0170, .value=0x4d}, {.addr=0x0171, .value=0xa5}, {.addr=0x438e, .value=0xf7},
         {.addr=0x438f, .value=0x70}, {.addr=0xa5de, .value=0x13},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x438e, .value=0xf7, .type=IO_READ},
         {.addr=0x438f, .value=0x70, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0170, .value=0x4d, .type=IO_READ},
         {.addr=0x0171, .value=0xa5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa5de, .value=0x13, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13652,12 +14245,13 @@ UTEST(SingleStepTests_F7, _F7_0264) {
         {.addr=0x019c, .value=0xa2}, {.addr=0x019d, .value=0xfa}, {.addr=0x6962, .value=0xf7},
         {.addr=0x6963, .value=0x9c}, {.addr=0xfae5, .value=0x18},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6962, .value=0xf7, .type=IO_READ},
         {.addr=0x6963, .value=0x9c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019c, .value=0xa2, .type=IO_READ},
         {.addr=0x019d, .value=0xfa, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfae5, .value=0x18, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13675,12 +14269,13 @@ UTEST(SingleStepTests_F7, _F7_0265) {
         {.addr=0x00a2, .value=0x11}, {.addr=0x00a3, .value=0xea}, {.addr=0x6c9d, .value=0xf7},
         {.addr=0x6c9e, .value=0xa2}, {.addr=0xeaec, .value=0xa9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6c9d, .value=0xf7, .type=IO_READ},
         {.addr=0x6c9e, .value=0xa2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a2, .value=0x11, .type=IO_READ},
         {.addr=0x00a3, .value=0xea, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xeaec, .value=0xa9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13698,12 +14293,13 @@ UTEST(SingleStepTests_F7, _F7_0266) {
         {.addr=0x0144, .value=0x82}, {.addr=0x0145, .value=0xda}, {.addr=0xdb13, .value=0x4c},
         {.addr=0xe203, .value=0xf7}, {.addr=0xe204, .value=0x44},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe203, .value=0xf7, .type=IO_READ},
         {.addr=0xe204, .value=0x44, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0144, .value=0x82, .type=IO_READ},
         {.addr=0x0145, .value=0xda, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdb13, .value=0x4c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13721,12 +14317,13 @@ UTEST(SingleStepTests_F7, _F7_0267) {
         {.addr=0x0198, .value=0xfa}, {.addr=0x0199, .value=0x83}, {.addr=0x4592, .value=0xf7},
         {.addr=0x4593, .value=0x98}, {.addr=0x8409, .value=0x4a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4592, .value=0xf7, .type=IO_READ},
         {.addr=0x4593, .value=0x98, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0198, .value=0xfa, .type=IO_READ},
         {.addr=0x0199, .value=0x83, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8409, .value=0x4a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13744,12 +14341,13 @@ UTEST(SingleStepTests_F7, _F7_0268) {
         {.addr=0x01bb, .value=0x35}, {.addr=0x01bc, .value=0x1d}, {.addr=0x1cd0, .value=0xf7},
         {.addr=0x1cd1, .value=0xbb}, {.addr=0x1d37, .value=0x48},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1cd0, .value=0xf7, .type=IO_READ},
         {.addr=0x1cd1, .value=0xbb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01bb, .value=0x35, .type=IO_READ},
         {.addr=0x01bc, .value=0x1d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1d37, .value=0x48, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13767,12 +14365,13 @@ UTEST(SingleStepTests_F7, _F7_0269) {
         {.addr=0x01c9, .value=0x34}, {.addr=0x01ca, .value=0x93}, {.addr=0x055f, .value=0xf7},
         {.addr=0x0560, .value=0xc9}, {.addr=0x9336, .value=0x3d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x055f, .value=0xf7, .type=IO_READ},
         {.addr=0x0560, .value=0xc9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c9, .value=0x34, .type=IO_READ},
         {.addr=0x01ca, .value=0x93, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9336, .value=0x3d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13790,12 +14389,13 @@ UTEST(SingleStepTests_F7, _F7_026A) {
         {.addr=0x01c4, .value=0x24}, {.addr=0x01c5, .value=0x83}, {.addr=0x83b2, .value=0x02},
         {.addr=0xf122, .value=0xf7}, {.addr=0xf123, .value=0xc4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf122, .value=0xf7, .type=IO_READ},
         {.addr=0xf123, .value=0xc4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c4, .value=0x24, .type=IO_READ},
         {.addr=0x01c5, .value=0x83, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x83b2, .value=0x02, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13813,12 +14413,13 @@ UTEST(SingleStepTests_F7, _F7_026B) {
         {.addr=0x0013, .value=0xdd}, {.addr=0x0014, .value=0xbf}, {.addr=0x44b3, .value=0xf7},
         {.addr=0x44b4, .value=0x13}, {.addr=0xc050, .value=0x28},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x44b3, .value=0xf7, .type=IO_READ},
         {.addr=0x44b4, .value=0x13, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0013, .value=0xdd, .type=IO_READ},
         {.addr=0x0014, .value=0xbf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc050, .value=0x28, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13836,12 +14437,13 @@ UTEST(SingleStepTests_F7, _F7_026C) {
         {.addr=0x00bb, .value=0x62}, {.addr=0x00bc, .value=0xb9}, {.addr=0x9f55, .value=0xf7},
         {.addr=0x9f56, .value=0xbb}, {.addr=0xba56, .value=0xfd},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9f55, .value=0xf7, .type=IO_READ},
         {.addr=0x9f56, .value=0xbb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00bb, .value=0x62, .type=IO_READ},
         {.addr=0x00bc, .value=0xb9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xba56, .value=0xfd, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13859,12 +14461,13 @@ UTEST(SingleStepTests_F7, _F7_026D) {
         {.addr=0x01c0, .value=0xac}, {.addr=0x01c1, .value=0x1d}, {.addr=0x1deb, .value=0x9f},
         {.addr=0x5a5b, .value=0xf7}, {.addr=0x5a5c, .value=0xc0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5a5b, .value=0xf7, .type=IO_READ},
         {.addr=0x5a5c, .value=0xc0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c0, .value=0xac, .type=IO_READ},
         {.addr=0x01c1, .value=0x1d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1deb, .value=0x9f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13882,12 +14485,13 @@ UTEST(SingleStepTests_F7, _F7_026E) {
         {.addr=0x01e7, .value=0x7f}, {.addr=0x01e8, .value=0x91}, {.addr=0x0f0f, .value=0xf7},
         {.addr=0x0f10, .value=0xe7}, {.addr=0x9212, .value=0x10},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0f0f, .value=0xf7, .type=IO_READ},
         {.addr=0x0f10, .value=0xe7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e7, .value=0x7f, .type=IO_READ},
         {.addr=0x01e8, .value=0x91, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9212, .value=0x10, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13905,12 +14509,13 @@ UTEST(SingleStepTests_F7, _F7_026F) {
         {.addr=0x006e, .value=0xf3}, {.addr=0x006f, .value=0x35}, {.addr=0x0b74, .value=0xf7},
         {.addr=0x0b75, .value=0x6e}, {.addr=0x36ee, .value=0x6a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0b74, .value=0xf7, .type=IO_READ},
         {.addr=0x0b75, .value=0x6e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006e, .value=0xf3, .type=IO_READ},
         {.addr=0x006f, .value=0x35, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x36ee, .value=0x6a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13928,12 +14533,13 @@ UTEST(SingleStepTests_F7, _F7_0270) {
         {.addr=0x0132, .value=0x8f}, {.addr=0x0133, .value=0x4d}, {.addr=0x46a9, .value=0xf7},
         {.addr=0x46aa, .value=0x32}, {.addr=0x4e0d, .value=0x59},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x46a9, .value=0xf7, .type=IO_READ},
         {.addr=0x46aa, .value=0x32, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0132, .value=0x8f, .type=IO_READ},
         {.addr=0x0133, .value=0x4d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4e0d, .value=0x59, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13951,12 +14557,13 @@ UTEST(SingleStepTests_F7, _F7_0271) {
         {.addr=0x0103, .value=0xea}, {.addr=0x0104, .value=0xe9}, {.addr=0x5c4c, .value=0xf7},
         {.addr=0x5c4d, .value=0x03}, {.addr=0xe9f6, .value=0x7a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5c4c, .value=0xf7, .type=IO_READ},
         {.addr=0x5c4d, .value=0x03, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0103, .value=0xea, .type=IO_READ},
         {.addr=0x0104, .value=0xe9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe9f6, .value=0x7a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13974,12 +14581,13 @@ UTEST(SingleStepTests_F7, _F7_0272) {
         {.addr=0x0014, .value=0x43}, {.addr=0x0015, .value=0x9f}, {.addr=0x9fd3, .value=0x0c},
         {.addr=0xf555, .value=0xf7}, {.addr=0xf556, .value=0x14},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf555, .value=0xf7, .type=IO_READ},
         {.addr=0xf556, .value=0x14, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0014, .value=0x43, .type=IO_READ},
         {.addr=0x0015, .value=0x9f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9fd3, .value=0x0c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -13997,12 +14605,13 @@ UTEST(SingleStepTests_F7, _F7_0274) {
         {.addr=0x01fa, .value=0x35}, {.addr=0x01fb, .value=0xd5}, {.addr=0xd5f1, .value=0x2e},
         {.addr=0xf458, .value=0xf7}, {.addr=0xf459, .value=0xfa},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf458, .value=0xf7, .type=IO_READ},
         {.addr=0xf459, .value=0xfa, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01fa, .value=0x35, .type=IO_READ},
         {.addr=0x01fb, .value=0xd5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd5f1, .value=0x2e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14020,12 +14629,13 @@ UTEST(SingleStepTests_F7, _F7_0275) {
         {.addr=0x0104, .value=0xbe}, {.addr=0x0105, .value=0xcc}, {.addr=0x86e6, .value=0xf7},
         {.addr=0x86e7, .value=0x04}, {.addr=0xcdbd, .value=0xa1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x86e6, .value=0xf7, .type=IO_READ},
         {.addr=0x86e7, .value=0x04, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0104, .value=0xbe, .type=IO_READ},
         {.addr=0x0105, .value=0xcc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xcdbd, .value=0xa1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14043,12 +14653,13 @@ UTEST(SingleStepTests_F7, _F7_0276) {
         {.addr=0x0021, .value=0x1c}, {.addr=0x0022, .value=0x75}, {.addr=0x753c, .value=0xe3},
         {.addr=0xec51, .value=0xf7}, {.addr=0xec52, .value=0x21},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xec51, .value=0xf7, .type=IO_READ},
         {.addr=0xec52, .value=0x21, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0021, .value=0x1c, .type=IO_READ},
         {.addr=0x0022, .value=0x75, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x753c, .value=0xe3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14066,12 +14677,13 @@ UTEST(SingleStepTests_F7, _F7_0277) {
         {.addr=0x003e, .value=0x95}, {.addr=0x003f, .value=0x82}, {.addr=0x41cb, .value=0xf7},
         {.addr=0x41cc, .value=0x3e}, {.addr=0x82a9, .value=0x8e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x41cb, .value=0xf7, .type=IO_READ},
         {.addr=0x41cc, .value=0x3e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x003e, .value=0x95, .type=IO_READ},
         {.addr=0x003f, .value=0x82, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x82a9, .value=0x8e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14089,12 +14701,13 @@ UTEST(SingleStepTests_F7, _F7_0278) {
         {.addr=0x007c, .value=0x78}, {.addr=0x007d, .value=0xe9}, {.addr=0xaf48, .value=0xf7},
         {.addr=0xaf49, .value=0x7c}, {.addr=0xea03, .value=0x30},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xaf48, .value=0xf7, .type=IO_READ},
         {.addr=0xaf49, .value=0x7c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x007c, .value=0x78, .type=IO_READ},
         {.addr=0x007d, .value=0xe9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xea03, .value=0x30, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14112,12 +14725,13 @@ UTEST(SingleStepTests_F7, _F7_0279) {
         {.addr=0x0038, .value=0xf4}, {.addr=0x0039, .value=0x0c}, {.addr=0x0d1f, .value=0x03},
         {.addr=0xcc21, .value=0xf7}, {.addr=0xcc22, .value=0x38},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcc21, .value=0xf7, .type=IO_READ},
         {.addr=0xcc22, .value=0x38, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0038, .value=0xf4, .type=IO_READ},
         {.addr=0x0039, .value=0x0c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0d1f, .value=0x03, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14135,12 +14749,13 @@ UTEST(SingleStepTests_F7, _F7_027A) {
         {.addr=0x01f5, .value=0x80}, {.addr=0x01f6, .value=0xf0}, {.addr=0xd76d, .value=0xf7},
         {.addr=0xd76e, .value=0xf5}, {.addr=0xf166, .value=0xa9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd76d, .value=0xf7, .type=IO_READ},
         {.addr=0xd76e, .value=0xf5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f5, .value=0x80, .type=IO_READ},
         {.addr=0x01f6, .value=0xf0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf166, .value=0xa9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14158,12 +14773,13 @@ UTEST(SingleStepTests_F7, _F7_027B) {
         {.addr=0x0167, .value=0x2c}, {.addr=0x0168, .value=0xa5}, {.addr=0x89bf, .value=0xf7},
         {.addr=0x89c0, .value=0x67}, {.addr=0xa5fc, .value=0x87},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x89bf, .value=0xf7, .type=IO_READ},
         {.addr=0x89c0, .value=0x67, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0167, .value=0x2c, .type=IO_READ},
         {.addr=0x0168, .value=0xa5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa5fc, .value=0x87, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14181,12 +14797,13 @@ UTEST(SingleStepTests_F7, _F7_027C) {
         {.addr=0x006b, .value=0x69}, {.addr=0x006c, .value=0x59}, {.addr=0x4cfe, .value=0xf7},
         {.addr=0x4cff, .value=0x6b}, {.addr=0x59f1, .value=0x53},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4cfe, .value=0xf7, .type=IO_READ},
         {.addr=0x4cff, .value=0x6b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006b, .value=0x69, .type=IO_READ},
         {.addr=0x006c, .value=0x59, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x59f1, .value=0x53, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14204,12 +14821,13 @@ UTEST(SingleStepTests_F7, _F7_027D) {
         {.addr=0x0062, .value=0x4f}, {.addr=0x0063, .value=0xdb}, {.addr=0x7566, .value=0xf7},
         {.addr=0x7567, .value=0x62}, {.addr=0xdbfc, .value=0x29},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7566, .value=0xf7, .type=IO_READ},
         {.addr=0x7567, .value=0x62, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0062, .value=0x4f, .type=IO_READ},
         {.addr=0x0063, .value=0xdb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdbfc, .value=0x29, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14227,12 +14845,13 @@ UTEST(SingleStepTests_F7, _F7_027E) {
         {.addr=0x01f3, .value=0xfd}, {.addr=0x01f4, .value=0x26}, {.addr=0x180c, .value=0xf7},
         {.addr=0x180d, .value=0xf3}, {.addr=0x2753, .value=0x29},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x180c, .value=0xf7, .type=IO_READ},
         {.addr=0x180d, .value=0xf3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f3, .value=0xfd, .type=IO_READ},
         {.addr=0x01f4, .value=0x26, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2753, .value=0x29, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14250,12 +14869,13 @@ UTEST(SingleStepTests_F7, _F7_027F) {
         {.addr=0x0074, .value=0x6d}, {.addr=0x0075, .value=0x44}, {.addr=0x44d9, .value=0x3b},
         {.addr=0x9463, .value=0xf7}, {.addr=0x9464, .value=0x74},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9463, .value=0xf7, .type=IO_READ},
         {.addr=0x9464, .value=0x74, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0074, .value=0x6d, .type=IO_READ},
         {.addr=0x0075, .value=0x44, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x44d9, .value=0x3b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14273,12 +14893,13 @@ UTEST(SingleStepTests_F7, _F7_0280) {
         {.addr=0x0014, .value=0xd8}, {.addr=0x0015, .value=0x7a}, {.addr=0x7b96, .value=0x85},
         {.addr=0x9fb4, .value=0xf7}, {.addr=0x9fb5, .value=0x14},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9fb4, .value=0xf7, .type=IO_READ},
         {.addr=0x9fb5, .value=0x14, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0014, .value=0xd8, .type=IO_READ},
         {.addr=0x0015, .value=0x7a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7b96, .value=0x85, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14296,12 +14917,13 @@ UTEST(SingleStepTests_F7, _F7_0281) {
         {.addr=0x0187, .value=0xaf}, {.addr=0x0188, .value=0x04}, {.addr=0x058f, .value=0x0b},
         {.addr=0x0903, .value=0xf7}, {.addr=0x0904, .value=0x87},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0903, .value=0xf7, .type=IO_READ},
         {.addr=0x0904, .value=0x87, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0187, .value=0xaf, .type=IO_READ},
         {.addr=0x0188, .value=0x04, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x058f, .value=0x0b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14319,12 +14941,13 @@ UTEST(SingleStepTests_F7, _F7_0282) {
         {.addr=0x0126, .value=0x0e}, {.addr=0x0127, .value=0x08}, {.addr=0x0866, .value=0x00},
         {.addr=0x463d, .value=0xf7}, {.addr=0x463e, .value=0x26},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x463d, .value=0xf7, .type=IO_READ},
         {.addr=0x463e, .value=0x26, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0126, .value=0x0e, .type=IO_READ},
         {.addr=0x0127, .value=0x08, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0866, .value=0x00, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14342,12 +14965,13 @@ UTEST(SingleStepTests_F7, _F7_0284) {
         {.addr=0x003c, .value=0xd3}, {.addr=0x003d, .value=0x92}, {.addr=0x5521, .value=0xf7},
         {.addr=0x5522, .value=0x3c}, {.addr=0x937a, .value=0x5e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5521, .value=0xf7, .type=IO_READ},
         {.addr=0x5522, .value=0x3c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x003c, .value=0xd3, .type=IO_READ},
         {.addr=0x003d, .value=0x92, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x937a, .value=0x5e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14365,12 +14989,13 @@ UTEST(SingleStepTests_F7, _F7_0285) {
         {.addr=0x00d8, .value=0x71}, {.addr=0x00d9, .value=0x6b}, {.addr=0x6c3e, .value=0x2f},
         {.addr=0x9d31, .value=0xf7}, {.addr=0x9d32, .value=0xd8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9d31, .value=0xf7, .type=IO_READ},
         {.addr=0x9d32, .value=0xd8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d8, .value=0x71, .type=IO_READ},
         {.addr=0x00d9, .value=0x6b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6c3e, .value=0x2f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14388,12 +15013,13 @@ UTEST(SingleStepTests_F7, _F7_0286) {
         {.addr=0x0156, .value=0x0d}, {.addr=0x0157, .value=0x9d}, {.addr=0x39e2, .value=0xf7},
         {.addr=0x39e3, .value=0x56}, {.addr=0x9d28, .value=0xa3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x39e2, .value=0xf7, .type=IO_READ},
         {.addr=0x39e3, .value=0x56, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0156, .value=0x0d, .type=IO_READ},
         {.addr=0x0157, .value=0x9d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9d28, .value=0xa3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14411,12 +15037,13 @@ UTEST(SingleStepTests_F7, _F7_0287) {
         {.addr=0x0004, .value=0x82}, {.addr=0x0005, .value=0x2b}, {.addr=0x1896, .value=0xf7},
         {.addr=0x1897, .value=0x04}, {.addr=0x2c43, .value=0xa5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1896, .value=0xf7, .type=IO_READ},
         {.addr=0x1897, .value=0x04, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0004, .value=0x82, .type=IO_READ},
         {.addr=0x0005, .value=0x2b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2c43, .value=0xa5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14434,12 +15061,13 @@ UTEST(SingleStepTests_F7, _F7_0288) {
         {.addr=0x0167, .value=0x32}, {.addr=0x0168, .value=0x7d}, {.addr=0x7d40, .value=0x89},
         {.addr=0xb4a8, .value=0xf7}, {.addr=0xb4a9, .value=0x67},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb4a8, .value=0xf7, .type=IO_READ},
         {.addr=0xb4a9, .value=0x67, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0167, .value=0x32, .type=IO_READ},
         {.addr=0x0168, .value=0x7d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7d40, .value=0x89, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14457,12 +15085,13 @@ UTEST(SingleStepTests_F7, _F7_0289) {
         {.addr=0x01b4, .value=0x59}, {.addr=0x01b5, .value=0xd7}, {.addr=0x78a0, .value=0xf7},
         {.addr=0x78a1, .value=0xb4}, {.addr=0xd858, .value=0x30},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x78a0, .value=0xf7, .type=IO_READ},
         {.addr=0x78a1, .value=0xb4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b4, .value=0x59, .type=IO_READ},
         {.addr=0x01b5, .value=0xd7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd858, .value=0x30, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14480,12 +15109,13 @@ UTEST(SingleStepTests_F7, _F7_028A) {
         {.addr=0x0088, .value=0x0b}, {.addr=0x0089, .value=0x12}, {.addr=0x1280, .value=0xca},
         {.addr=0xe089, .value=0xf7}, {.addr=0xe08a, .value=0x88},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe089, .value=0xf7, .type=IO_READ},
         {.addr=0xe08a, .value=0x88, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0088, .value=0x0b, .type=IO_READ},
         {.addr=0x0089, .value=0x12, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1280, .value=0xca, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14503,12 +15133,13 @@ UTEST(SingleStepTests_F7, _F7_028B) {
         {.addr=0x015c, .value=0xdb}, {.addr=0x015d, .value=0xa0}, {.addr=0xa149, .value=0x78},
         {.addr=0xaadb, .value=0xf7}, {.addr=0xaadc, .value=0x5c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xaadb, .value=0xf7, .type=IO_READ},
         {.addr=0xaadc, .value=0x5c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x015c, .value=0xdb, .type=IO_READ},
         {.addr=0x015d, .value=0xa0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa149, .value=0x78, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14526,12 +15157,13 @@ UTEST(SingleStepTests_F7, _F7_028C) {
         {.addr=0x006c, .value=0x5c}, {.addr=0x006d, .value=0xa5}, {.addr=0x553c, .value=0xf7},
         {.addr=0x553d, .value=0x6c}, {.addr=0xa5c7, .value=0x74},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x553c, .value=0xf7, .type=IO_READ},
         {.addr=0x553d, .value=0x6c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006c, .value=0x5c, .type=IO_READ},
         {.addr=0x006d, .value=0xa5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa5c7, .value=0x74, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14549,12 +15181,13 @@ UTEST(SingleStepTests_F7, _F7_028D) {
         {.addr=0x00a8, .value=0x8b}, {.addr=0x00a9, .value=0xf6}, {.addr=0x124a, .value=0xf7},
         {.addr=0x124b, .value=0xa8}, {.addr=0xf71c, .value=0x78},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x124a, .value=0xf7, .type=IO_READ},
         {.addr=0x124b, .value=0xa8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a8, .value=0x8b, .type=IO_READ},
         {.addr=0x00a9, .value=0xf6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf71c, .value=0x78, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14572,12 +15205,13 @@ UTEST(SingleStepTests_F7, _F7_028E) {
         {.addr=0x011e, .value=0x0a}, {.addr=0x011f, .value=0x91}, {.addr=0x91f9, .value=0x9e},
         {.addr=0x9809, .value=0xf7}, {.addr=0x980a, .value=0x1e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9809, .value=0xf7, .type=IO_READ},
         {.addr=0x980a, .value=0x1e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x011e, .value=0x0a, .type=IO_READ},
         {.addr=0x011f, .value=0x91, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x91f9, .value=0x9e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14595,12 +15229,13 @@ UTEST(SingleStepTests_F7, _F7_028F) {
         {.addr=0x00e9, .value=0xb0}, {.addr=0x00ea, .value=0x6f}, {.addr=0x5fc2, .value=0xf7},
         {.addr=0x5fc3, .value=0xe9}, {.addr=0x6fb2, .value=0xd3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5fc2, .value=0xf7, .type=IO_READ},
         {.addr=0x5fc3, .value=0xe9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e9, .value=0xb0, .type=IO_READ},
         {.addr=0x00ea, .value=0x6f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6fb2, .value=0xd3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14618,12 +15253,13 @@ UTEST(SingleStepTests_F7, _F7_0290) {
         {.addr=0x0114, .value=0x99}, {.addr=0x0115, .value=0xa3}, {.addr=0x34dc, .value=0xf7},
         {.addr=0x34dd, .value=0x14}, {.addr=0xa498, .value=0x27},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x34dc, .value=0xf7, .type=IO_READ},
         {.addr=0x34dd, .value=0x14, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0114, .value=0x99, .type=IO_READ},
         {.addr=0x0115, .value=0xa3, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa498, .value=0x27, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14641,12 +15277,13 @@ UTEST(SingleStepTests_F7, _F7_0291) {
         {.addr=0x0174, .value=0x9a}, {.addr=0x0175, .value=0xb9}, {.addr=0x7a89, .value=0xf7},
         {.addr=0x7a8a, .value=0x74}, {.addr=0xba15, .value=0x65},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7a89, .value=0xf7, .type=IO_READ},
         {.addr=0x7a8a, .value=0x74, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0174, .value=0x9a, .type=IO_READ},
         {.addr=0x0175, .value=0xb9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xba15, .value=0x65, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14664,12 +15301,13 @@ UTEST(SingleStepTests_F7, _F7_0292) {
         {.addr=0x01df, .value=0xf4}, {.addr=0x01e0, .value=0x0a}, {.addr=0x0be9, .value=0xfe},
         {.addr=0xea17, .value=0xf7}, {.addr=0xea18, .value=0xdf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xea17, .value=0xf7, .type=IO_READ},
         {.addr=0xea18, .value=0xdf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01df, .value=0xf4, .type=IO_READ},
         {.addr=0x01e0, .value=0x0a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0be9, .value=0xfe, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14687,12 +15325,13 @@ UTEST(SingleStepTests_F7, _F7_0293) {
         {.addr=0x0193, .value=0xda}, {.addr=0x0194, .value=0x42}, {.addr=0x42fa, .value=0x76},
         {.addr=0xe849, .value=0xf7}, {.addr=0xe84a, .value=0x93},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe849, .value=0xf7, .type=IO_READ},
         {.addr=0xe84a, .value=0x93, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0193, .value=0xda, .type=IO_READ},
         {.addr=0x0194, .value=0x42, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x42fa, .value=0x76, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14710,12 +15349,13 @@ UTEST(SingleStepTests_F7, _F7_0294) {
         {.addr=0x0095, .value=0xfb}, {.addr=0x0096, .value=0x63}, {.addr=0x175b, .value=0xf7},
         {.addr=0x175c, .value=0x95}, {.addr=0x6427, .value=0x2e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x175b, .value=0xf7, .type=IO_READ},
         {.addr=0x175c, .value=0x95, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0095, .value=0xfb, .type=IO_READ},
         {.addr=0x0096, .value=0x63, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6427, .value=0x2e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14733,12 +15373,13 @@ UTEST(SingleStepTests_F7, _F7_0295) {
         {.addr=0x0044, .value=0x6c}, {.addr=0x0045, .value=0xa2}, {.addr=0x9f6d, .value=0xf7},
         {.addr=0x9f6e, .value=0x44}, {.addr=0xa35d, .value=0x56},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9f6d, .value=0xf7, .type=IO_READ},
         {.addr=0x9f6e, .value=0x44, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0044, .value=0x6c, .type=IO_READ},
         {.addr=0x0045, .value=0xa2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa35d, .value=0x56, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14756,12 +15397,13 @@ UTEST(SingleStepTests_F7, _F7_0296) {
         {.addr=0x0100, .value=0x60}, {.addr=0x0101, .value=0xa7}, {.addr=0x45e5, .value=0xf7},
         {.addr=0x45e6, .value=0x00}, {.addr=0xa7f4, .value=0xfb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x45e5, .value=0xf7, .type=IO_READ},
         {.addr=0x45e6, .value=0x00, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0100, .value=0x60, .type=IO_READ},
         {.addr=0x0101, .value=0xa7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa7f4, .value=0xfb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14779,12 +15421,13 @@ UTEST(SingleStepTests_F7, _F7_0297) {
         {.addr=0x001a, .value=0x9b}, {.addr=0x001b, .value=0x29}, {.addr=0x29c8, .value=0x66},
         {.addr=0x3156, .value=0xf7}, {.addr=0x3157, .value=0x1a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3156, .value=0xf7, .type=IO_READ},
         {.addr=0x3157, .value=0x1a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x001a, .value=0x9b, .type=IO_READ},
         {.addr=0x001b, .value=0x29, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x29c8, .value=0x66, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14802,12 +15445,13 @@ UTEST(SingleStepTests_F7, _F7_0298) {
         {.addr=0x0074, .value=0xc8}, {.addr=0x0075, .value=0xbe}, {.addr=0x172c, .value=0xf7},
         {.addr=0x172d, .value=0x74}, {.addr=0xbed4, .value=0xa7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x172c, .value=0xf7, .type=IO_READ},
         {.addr=0x172d, .value=0x74, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0074, .value=0xc8, .type=IO_READ},
         {.addr=0x0075, .value=0xbe, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbed4, .value=0xa7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14825,12 +15469,13 @@ UTEST(SingleStepTests_F7, _F7_0299) {
         {.addr=0x01f2, .value=0xe2}, {.addr=0x01f3, .value=0xe0}, {.addr=0xe1d0, .value=0x17},
         {.addr=0xf4c4, .value=0xf7}, {.addr=0xf4c5, .value=0xf2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf4c4, .value=0xf7, .type=IO_READ},
         {.addr=0xf4c5, .value=0xf2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f2, .value=0xe2, .type=IO_READ},
         {.addr=0x01f3, .value=0xe0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe1d0, .value=0x17, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14848,12 +15493,13 @@ UTEST(SingleStepTests_F7, _F7_029A) {
         {.addr=0x01cb, .value=0x0d}, {.addr=0x01cc, .value=0xc5}, {.addr=0x8072, .value=0xf7},
         {.addr=0x8073, .value=0xcb}, {.addr=0xc538, .value=0xca},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8072, .value=0xf7, .type=IO_READ},
         {.addr=0x8073, .value=0xcb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01cb, .value=0x0d, .type=IO_READ},
         {.addr=0x01cc, .value=0xc5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc538, .value=0xca, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14871,12 +15517,13 @@ UTEST(SingleStepTests_F7, _F7_029B) {
         {.addr=0x005f, .value=0x1d}, {.addr=0x0060, .value=0xfd}, {.addr=0x739e, .value=0xf7},
         {.addr=0x739f, .value=0x5f}, {.addr=0xfd31, .value=0xee},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x739e, .value=0xf7, .type=IO_READ},
         {.addr=0x739f, .value=0x5f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005f, .value=0x1d, .type=IO_READ},
         {.addr=0x0060, .value=0xfd, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfd31, .value=0xee, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14894,12 +15541,13 @@ UTEST(SingleStepTests_F7, _F7_029C) {
         {.addr=0x00e5, .value=0xb2}, {.addr=0x00e6, .value=0xeb}, {.addr=0xec2a, .value=0xa2},
         {.addr=0xf178, .value=0xf7}, {.addr=0xf179, .value=0xe5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf178, .value=0xf7, .type=IO_READ},
         {.addr=0xf179, .value=0xe5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e5, .value=0xb2, .type=IO_READ},
         {.addr=0x00e6, .value=0xeb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xec2a, .value=0xa2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14917,12 +15565,13 @@ UTEST(SingleStepTests_F7, _F7_029D) {
         {.addr=0x00c5, .value=0x5f}, {.addr=0x00c6, .value=0xa3}, {.addr=0xa3bd, .value=0xaa},
         {.addr=0xa706, .value=0xf7}, {.addr=0xa707, .value=0xc5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa706, .value=0xf7, .type=IO_READ},
         {.addr=0xa707, .value=0xc5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c5, .value=0x5f, .type=IO_READ},
         {.addr=0x00c6, .value=0xa3, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa3bd, .value=0xaa, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14940,12 +15589,13 @@ UTEST(SingleStepTests_F7, _F7_029E) {
         {.addr=0x0020, .value=0x70}, {.addr=0x0021, .value=0x6d}, {.addr=0x6d93, .value=0x45},
         {.addr=0xf131, .value=0xf7}, {.addr=0xf132, .value=0x20},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf131, .value=0xf7, .type=IO_READ},
         {.addr=0xf132, .value=0x20, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0020, .value=0x70, .type=IO_READ},
         {.addr=0x0021, .value=0x6d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6d93, .value=0x45, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14963,12 +15613,13 @@ UTEST(SingleStepTests_F7, _F7_029F) {
         {.addr=0x0195, .value=0xf5}, {.addr=0x0196, .value=0xbc}, {.addr=0x93b1, .value=0xf7},
         {.addr=0x93b2, .value=0x95}, {.addr=0xbd4b, .value=0x78},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x93b1, .value=0xf7, .type=IO_READ},
         {.addr=0x93b2, .value=0x95, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0195, .value=0xf5, .type=IO_READ},
         {.addr=0x0196, .value=0xbc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbd4b, .value=0x78, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -14986,12 +15637,13 @@ UTEST(SingleStepTests_F7, _F7_02A0) {
         {.addr=0x0195, .value=0x52}, {.addr=0x0196, .value=0x9e}, {.addr=0x802e, .value=0xf7},
         {.addr=0x802f, .value=0x95}, {.addr=0x9eb6, .value=0x8c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x802e, .value=0xf7, .type=IO_READ},
         {.addr=0x802f, .value=0x95, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0195, .value=0x52, .type=IO_READ},
         {.addr=0x0196, .value=0x9e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9eb6, .value=0x8c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15009,12 +15661,13 @@ UTEST(SingleStepTests_F7, _F7_02A1) {
         {.addr=0x00b3, .value=0xac}, {.addr=0x00b4, .value=0x7a}, {.addr=0x77d6, .value=0xf7},
         {.addr=0x77d7, .value=0xb3}, {.addr=0x7b6f, .value=0x02},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x77d6, .value=0xf7, .type=IO_READ},
         {.addr=0x77d7, .value=0xb3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b3, .value=0xac, .type=IO_READ},
         {.addr=0x00b4, .value=0x7a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7b6f, .value=0x02, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15032,12 +15685,13 @@ UTEST(SingleStepTests_F7, _F7_02A2) {
         {.addr=0x0102, .value=0x72}, {.addr=0x0103, .value=0xf7}, {.addr=0xd80f, .value=0xf7},
         {.addr=0xd810, .value=0x02}, {.addr=0xf845, .value=0x18},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd80f, .value=0xf7, .type=IO_READ},
         {.addr=0xd810, .value=0x02, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0102, .value=0x72, .type=IO_READ},
         {.addr=0x0103, .value=0xf7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf845, .value=0x18, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15055,12 +15709,13 @@ UTEST(SingleStepTests_F7, _F7_02A3) {
         {.addr=0x0084, .value=0x51}, {.addr=0x0085, .value=0xdb}, {.addr=0xdc29, .value=0x73},
         {.addr=0xfb29, .value=0xf7}, {.addr=0xfb2a, .value=0x84},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfb29, .value=0xf7, .type=IO_READ},
         {.addr=0xfb2a, .value=0x84, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0084, .value=0x51, .type=IO_READ},
         {.addr=0x0085, .value=0xdb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdc29, .value=0x73, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15078,12 +15733,13 @@ UTEST(SingleStepTests_F7, _F7_02A4) {
         {.addr=0x0189, .value=0xab}, {.addr=0x018a, .value=0x59}, {.addr=0x5a92, .value=0x68},
         {.addr=0xf28d, .value=0xf7}, {.addr=0xf28e, .value=0x89},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf28d, .value=0xf7, .type=IO_READ},
         {.addr=0xf28e, .value=0x89, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0189, .value=0xab, .type=IO_READ},
         {.addr=0x018a, .value=0x59, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5a92, .value=0x68, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15101,12 +15757,13 @@ UTEST(SingleStepTests_F7, _F7_02A5) {
         {.addr=0x019a, .value=0x3a}, {.addr=0x019b, .value=0xcd}, {.addr=0x2f58, .value=0xf7},
         {.addr=0x2f59, .value=0x9a}, {.addr=0xcd5c, .value=0x9c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2f58, .value=0xf7, .type=IO_READ},
         {.addr=0x2f59, .value=0x9a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019a, .value=0x3a, .type=IO_READ},
         {.addr=0x019b, .value=0xcd, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xcd5c, .value=0x9c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15124,12 +15781,13 @@ UTEST(SingleStepTests_F7, _F7_02A6) {
         {.addr=0x0014, .value=0xc6}, {.addr=0x0015, .value=0x37}, {.addr=0x1547, .value=0xf7},
         {.addr=0x1548, .value=0x14}, {.addr=0x38a5, .value=0x5e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1547, .value=0xf7, .type=IO_READ},
         {.addr=0x1548, .value=0x14, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0014, .value=0xc6, .type=IO_READ},
         {.addr=0x0015, .value=0x37, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x38a5, .value=0x5e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15147,12 +15805,13 @@ UTEST(SingleStepTests_F7, _F7_02A7) {
         {.addr=0x00ea, .value=0xba}, {.addr=0x00eb, .value=0x52}, {.addr=0x5389, .value=0xe3},
         {.addr=0x7189, .value=0xf7}, {.addr=0x718a, .value=0xea},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7189, .value=0xf7, .type=IO_READ},
         {.addr=0x718a, .value=0xea, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ea, .value=0xba, .type=IO_READ},
         {.addr=0x00eb, .value=0x52, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5389, .value=0xe3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15170,12 +15829,13 @@ UTEST(SingleStepTests_F7, _F7_02A8) {
         {.addr=0x0199, .value=0xbe}, {.addr=0x019a, .value=0x40}, {.addr=0x40ee, .value=0x2e},
         {.addr=0xe907, .value=0xf7}, {.addr=0xe908, .value=0x99},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe907, .value=0xf7, .type=IO_READ},
         {.addr=0xe908, .value=0x99, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0199, .value=0xbe, .type=IO_READ},
         {.addr=0x019a, .value=0x40, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x40ee, .value=0x2e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15193,12 +15853,13 @@ UTEST(SingleStepTests_F7, _F7_02A9) {
         {.addr=0x002f, .value=0x28}, {.addr=0x0030, .value=0x3e}, {.addr=0x2450, .value=0xf7},
         {.addr=0x2451, .value=0x2f}, {.addr=0x3f03, .value=0x02},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2450, .value=0xf7, .type=IO_READ},
         {.addr=0x2451, .value=0x2f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002f, .value=0x28, .type=IO_READ},
         {.addr=0x0030, .value=0x3e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3f03, .value=0x02, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15216,12 +15877,13 @@ UTEST(SingleStepTests_F7, _F7_02AA) {
         {.addr=0x0139, .value=0x08}, {.addr=0x013a, .value=0xa9}, {.addr=0xa9a5, .value=0xc6},
         {.addr=0xb472, .value=0xf7}, {.addr=0xb473, .value=0x39},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb472, .value=0xf7, .type=IO_READ},
         {.addr=0xb473, .value=0x39, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0139, .value=0x08, .type=IO_READ},
         {.addr=0x013a, .value=0xa9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa9a5, .value=0xc6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15239,12 +15901,13 @@ UTEST(SingleStepTests_F7, _F7_02AB) {
         {.addr=0x008a, .value=0x33}, {.addr=0x008b, .value=0xbb}, {.addr=0x7bdd, .value=0xf7},
         {.addr=0x7bde, .value=0x8a}, {.addr=0xbbff, .value=0x70},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7bdd, .value=0xf7, .type=IO_READ},
         {.addr=0x7bde, .value=0x8a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x008a, .value=0x33, .type=IO_READ},
         {.addr=0x008b, .value=0xbb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbbff, .value=0x70, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15262,12 +15925,13 @@ UTEST(SingleStepTests_F7, _F7_02AC) {
         {.addr=0x00e7, .value=0x13}, {.addr=0x00e8, .value=0x56}, {.addr=0x5618, .value=0xda},
         {.addr=0x5ca2, .value=0xf7}, {.addr=0x5ca3, .value=0xe7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5ca2, .value=0xf7, .type=IO_READ},
         {.addr=0x5ca3, .value=0xe7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e7, .value=0x13, .type=IO_READ},
         {.addr=0x00e8, .value=0x56, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5618, .value=0xda, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15285,12 +15949,13 @@ UTEST(SingleStepTests_F7, _F7_02AD) {
         {.addr=0x01af, .value=0x3c}, {.addr=0x01b0, .value=0x5b}, {.addr=0x09c3, .value=0xf7},
         {.addr=0x09c4, .value=0xaf}, {.addr=0x5be7, .value=0x52},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x09c3, .value=0xf7, .type=IO_READ},
         {.addr=0x09c4, .value=0xaf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01af, .value=0x3c, .type=IO_READ},
         {.addr=0x01b0, .value=0x5b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5be7, .value=0x52, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15308,12 +15973,13 @@ UTEST(SingleStepTests_F7, _F7_02AE) {
         {.addr=0x01a0, .value=0x53}, {.addr=0x01a1, .value=0xae}, {.addr=0x3188, .value=0xf7},
         {.addr=0x3189, .value=0xa0}, {.addr=0xaec8, .value=0xba},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3188, .value=0xf7, .type=IO_READ},
         {.addr=0x3189, .value=0xa0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a0, .value=0x53, .type=IO_READ},
         {.addr=0x01a1, .value=0xae, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xaec8, .value=0xba, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15331,12 +15997,13 @@ UTEST(SingleStepTests_F7, _F7_02AF) {
         {.addr=0x0081, .value=0xdb}, {.addr=0x0142, .value=0x4b}, {.addr=0x0143, .value=0x00},
         {.addr=0x406b, .value=0xf7}, {.addr=0x406c, .value=0x42},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x406b, .value=0xf7, .type=IO_READ},
         {.addr=0x406c, .value=0x42, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0142, .value=0x4b, .type=IO_READ},
         {.addr=0x0143, .value=0x00, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0081, .value=0xdb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15354,12 +16021,13 @@ UTEST(SingleStepTests_F7, _F7_02B0) {
         {.addr=0x0006, .value=0x64}, {.addr=0x0007, .value=0x2b}, {.addr=0x2bee, .value=0x75},
         {.addr=0x6a04, .value=0xf7}, {.addr=0x6a05, .value=0x06},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6a04, .value=0xf7, .type=IO_READ},
         {.addr=0x6a05, .value=0x06, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0006, .value=0x64, .type=IO_READ},
         {.addr=0x0007, .value=0x2b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2bee, .value=0x75, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15377,12 +16045,13 @@ UTEST(SingleStepTests_F7, _F7_02B1) {
         {.addr=0x0149, .value=0x6e}, {.addr=0x014a, .value=0x7a}, {.addr=0x2cb6, .value=0xf7},
         {.addr=0x2cb7, .value=0x49}, {.addr=0x7b18, .value=0xa6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2cb6, .value=0xf7, .type=IO_READ},
         {.addr=0x2cb7, .value=0x49, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0149, .value=0x6e, .type=IO_READ},
         {.addr=0x014a, .value=0x7a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7b18, .value=0xa6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15400,12 +16069,13 @@ UTEST(SingleStepTests_F7, _F7_02B2) {
         {.addr=0x0163, .value=0x20}, {.addr=0x0164, .value=0x32}, {.addr=0x327f, .value=0x7f},
         {.addr=0xe911, .value=0xf7}, {.addr=0xe912, .value=0x63},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe911, .value=0xf7, .type=IO_READ},
         {.addr=0xe912, .value=0x63, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0163, .value=0x20, .type=IO_READ},
         {.addr=0x0164, .value=0x32, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x327f, .value=0x7f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15423,12 +16093,13 @@ UTEST(SingleStepTests_F7, _F7_02B3) {
         {.addr=0x00dd, .value=0xce}, {.addr=0x00de, .value=0x25}, {.addr=0x2641, .value=0xa3},
         {.addr=0x9b71, .value=0xf7}, {.addr=0x9b72, .value=0xdd},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9b71, .value=0xf7, .type=IO_READ},
         {.addr=0x9b72, .value=0xdd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00dd, .value=0xce, .type=IO_READ},
         {.addr=0x00de, .value=0x25, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2641, .value=0xa3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15446,12 +16117,13 @@ UTEST(SingleStepTests_F7, _F7_02B4) {
         {.addr=0x0013, .value=0xe0}, {.addr=0x0014, .value=0x6a}, {.addr=0x6b8a, .value=0x5b},
         {.addr=0xd1b1, .value=0xf7}, {.addr=0xd1b2, .value=0x13},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd1b1, .value=0xf7, .type=IO_READ},
         {.addr=0xd1b2, .value=0x13, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0013, .value=0xe0, .type=IO_READ},
         {.addr=0x0014, .value=0x6a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6b8a, .value=0x5b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15469,12 +16141,13 @@ UTEST(SingleStepTests_F7, _F7_02B5) {
         {.addr=0x011c, .value=0x23}, {.addr=0x011d, .value=0x37}, {.addr=0x2284, .value=0xf7},
         {.addr=0x2285, .value=0x1c}, {.addr=0x3776, .value=0x6b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2284, .value=0xf7, .type=IO_READ},
         {.addr=0x2285, .value=0x1c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x011c, .value=0x23, .type=IO_READ},
         {.addr=0x011d, .value=0x37, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3776, .value=0x6b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15492,12 +16165,13 @@ UTEST(SingleStepTests_F7, _F7_02B6) {
         {.addr=0x00c0, .value=0xbf}, {.addr=0x00c1, .value=0x87}, {.addr=0x2ebe, .value=0xf7},
         {.addr=0x2ebf, .value=0xc0}, {.addr=0x8837, .value=0xf2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2ebe, .value=0xf7, .type=IO_READ},
         {.addr=0x2ebf, .value=0xc0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c0, .value=0xbf, .type=IO_READ},
         {.addr=0x00c1, .value=0x87, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8837, .value=0xf2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15515,12 +16189,13 @@ UTEST(SingleStepTests_F7, _F7_02B7) {
         {.addr=0x01af, .value=0x9e}, {.addr=0x01b0, .value=0x57}, {.addr=0x5860, .value=0x0d},
         {.addr=0x64d6, .value=0xf7}, {.addr=0x64d7, .value=0xaf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x64d6, .value=0xf7, .type=IO_READ},
         {.addr=0x64d7, .value=0xaf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01af, .value=0x9e, .type=IO_READ},
         {.addr=0x01b0, .value=0x57, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5860, .value=0x0d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15538,12 +16213,13 @@ UTEST(SingleStepTests_F7, _F7_02B8) {
         {.addr=0x0130, .value=0x8a}, {.addr=0x0131, .value=0xcc}, {.addr=0xccee, .value=0x38},
         {.addr=0xeff2, .value=0xf7}, {.addr=0xeff3, .value=0x30},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xeff2, .value=0xf7, .type=IO_READ},
         {.addr=0xeff3, .value=0x30, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0130, .value=0x8a, .type=IO_READ},
         {.addr=0x0131, .value=0xcc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xccee, .value=0x38, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15561,12 +16237,13 @@ UTEST(SingleStepTests_F7, _F7_02B9) {
         {.addr=0x016f, .value=0xcb}, {.addr=0x0170, .value=0x79}, {.addr=0x7aab, .value=0xd2},
         {.addr=0x7d4c, .value=0xf7}, {.addr=0x7d4d, .value=0x6f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7d4c, .value=0xf7, .type=IO_READ},
         {.addr=0x7d4d, .value=0x6f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016f, .value=0xcb, .type=IO_READ},
         {.addr=0x0170, .value=0x79, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7aab, .value=0xd2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15584,12 +16261,13 @@ UTEST(SingleStepTests_F7, _F7_02BA) {
         {.addr=0x0172, .value=0x9d}, {.addr=0x0173, .value=0x14}, {.addr=0x153a, .value=0xcf},
         {.addr=0x2104, .value=0xf7}, {.addr=0x2105, .value=0x72},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2104, .value=0xf7, .type=IO_READ},
         {.addr=0x2105, .value=0x72, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0172, .value=0x9d, .type=IO_READ},
         {.addr=0x0173, .value=0x14, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x153a, .value=0xcf, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15607,12 +16285,13 @@ UTEST(SingleStepTests_F7, _F7_02BB) {
         {.addr=0x0053, .value=0x58}, {.addr=0x0054, .value=0xf0}, {.addr=0xdeb6, .value=0xf7},
         {.addr=0xdeb7, .value=0x53}, {.addr=0xf07d, .value=0x3c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdeb6, .value=0xf7, .type=IO_READ},
         {.addr=0xdeb7, .value=0x53, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0053, .value=0x58, .type=IO_READ},
         {.addr=0x0054, .value=0xf0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf07d, .value=0x3c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15630,12 +16309,13 @@ UTEST(SingleStepTests_F7, _F7_02BC) {
         {.addr=0x0121, .value=0x84}, {.addr=0x0122, .value=0x1e}, {.addr=0x1edd, .value=0xc5},
         {.addr=0x428a, .value=0xf7}, {.addr=0x428b, .value=0x21},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x428a, .value=0xf7, .type=IO_READ},
         {.addr=0x428b, .value=0x21, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0121, .value=0x84, .type=IO_READ},
         {.addr=0x0122, .value=0x1e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1edd, .value=0xc5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15653,12 +16333,13 @@ UTEST(SingleStepTests_F7, _F7_02BD) {
         {.addr=0x0128, .value=0xff}, {.addr=0x0129, .value=0xd1}, {.addr=0x230d, .value=0xf7},
         {.addr=0x230e, .value=0x28}, {.addr=0xd262, .value=0x92},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x230d, .value=0xf7, .type=IO_READ},
         {.addr=0x230e, .value=0x28, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0128, .value=0xff, .type=IO_READ},
         {.addr=0x0129, .value=0xd1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd262, .value=0x92, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15676,12 +16357,13 @@ UTEST(SingleStepTests_F7, _F7_02BE) {
         {.addr=0x018d, .value=0x48}, {.addr=0x018e, .value=0x81}, {.addr=0x7606, .value=0xf7},
         {.addr=0x7607, .value=0x8d}, {.addr=0x814b, .value=0x8b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7606, .value=0xf7, .type=IO_READ},
         {.addr=0x7607, .value=0x8d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x018d, .value=0x48, .type=IO_READ},
         {.addr=0x018e, .value=0x81, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x814b, .value=0x8b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15699,12 +16381,13 @@ UTEST(SingleStepTests_F7, _F7_02BF) {
         {.addr=0x00a6, .value=0xc0}, {.addr=0x00a7, .value=0x1b}, {.addr=0x124f, .value=0xf7},
         {.addr=0x1250, .value=0xa6}, {.addr=0x1c01, .value=0xc3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x124f, .value=0xf7, .type=IO_READ},
         {.addr=0x1250, .value=0xa6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a6, .value=0xc0, .type=IO_READ},
         {.addr=0x00a7, .value=0x1b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1c01, .value=0xc3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15722,12 +16405,13 @@ UTEST(SingleStepTests_F7, _F7_02C0) {
         {.addr=0x005c, .value=0xe9}, {.addr=0x005d, .value=0xa0}, {.addr=0x163e, .value=0xf7},
         {.addr=0x163f, .value=0x5c}, {.addr=0xa1be, .value=0x33},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x163e, .value=0xf7, .type=IO_READ},
         {.addr=0x163f, .value=0x5c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005c, .value=0xe9, .type=IO_READ},
         {.addr=0x005d, .value=0xa0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa1be, .value=0x33, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15745,12 +16429,13 @@ UTEST(SingleStepTests_F7, _F7_02C1) {
         {.addr=0x0036, .value=0x59}, {.addr=0x0037, .value=0x63}, {.addr=0x5da8, .value=0xf7},
         {.addr=0x5da9, .value=0x36}, {.addr=0x6448, .value=0xd3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5da8, .value=0xf7, .type=IO_READ},
         {.addr=0x5da9, .value=0x36, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0036, .value=0x59, .type=IO_READ},
         {.addr=0x0037, .value=0x63, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6448, .value=0xd3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15768,12 +16453,13 @@ UTEST(SingleStepTests_F7, _F7_02C2) {
         {.addr=0x00ed, .value=0x51}, {.addr=0x00ee, .value=0xa0}, {.addr=0xa133, .value=0x97},
         {.addr=0xedfe, .value=0xf7}, {.addr=0xedff, .value=0xed},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xedfe, .value=0xf7, .type=IO_READ},
         {.addr=0xedff, .value=0xed, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ed, .value=0x51, .type=IO_READ},
         {.addr=0x00ee, .value=0xa0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa133, .value=0x97, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15791,12 +16477,13 @@ UTEST(SingleStepTests_F7, _F7_02C3) {
         {.addr=0x0171, .value=0x70}, {.addr=0x0172, .value=0x50}, {.addr=0x513a, .value=0x89},
         {.addr=0xe4b8, .value=0xf7}, {.addr=0xe4b9, .value=0x71},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe4b8, .value=0xf7, .type=IO_READ},
         {.addr=0xe4b9, .value=0x71, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0171, .value=0x70, .type=IO_READ},
         {.addr=0x0172, .value=0x50, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x513a, .value=0x89, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15814,12 +16501,13 @@ UTEST(SingleStepTests_F7, _F7_02C4) {
         {.addr=0x01e5, .value=0x63}, {.addr=0x01e6, .value=0x66}, {.addr=0x6700, .value=0xbc},
         {.addr=0xb2af, .value=0xf7}, {.addr=0xb2b0, .value=0xe5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb2af, .value=0xf7, .type=IO_READ},
         {.addr=0xb2b0, .value=0xe5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e5, .value=0x63, .type=IO_READ},
         {.addr=0x01e6, .value=0x66, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6700, .value=0xbc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15837,12 +16525,13 @@ UTEST(SingleStepTests_F7, _F7_02C5) {
         {.addr=0x0041, .value=0xd3}, {.addr=0x0042, .value=0xb2}, {.addr=0x9cb1, .value=0xf7},
         {.addr=0x9cb2, .value=0x41}, {.addr=0xb3a6, .value=0x96},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9cb1, .value=0xf7, .type=IO_READ},
         {.addr=0x9cb2, .value=0x41, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0041, .value=0xd3, .type=IO_READ},
         {.addr=0x0042, .value=0xb2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb3a6, .value=0x96, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15860,12 +16549,13 @@ UTEST(SingleStepTests_F7, _F7_02C6) {
         {.addr=0x0015, .value=0x7c}, {.addr=0x0016, .value=0x3e}, {.addr=0x3ed8, .value=0xda},
         {.addr=0xc95c, .value=0xf7}, {.addr=0xc95d, .value=0x15},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc95c, .value=0xf7, .type=IO_READ},
         {.addr=0xc95d, .value=0x15, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0015, .value=0x7c, .type=IO_READ},
         {.addr=0x0016, .value=0x3e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3ed8, .value=0xda, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15883,12 +16573,13 @@ UTEST(SingleStepTests_F7, _F7_02C7) {
         {.addr=0x01c0, .value=0x74}, {.addr=0x01c1, .value=0xfb}, {.addr=0xa2fd, .value=0xf7},
         {.addr=0xa2fe, .value=0xc0}, {.addr=0xfc41, .value=0x00},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa2fd, .value=0xf7, .type=IO_READ},
         {.addr=0xa2fe, .value=0xc0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c0, .value=0x74, .type=IO_READ},
         {.addr=0x01c1, .value=0xfb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfc41, .value=0x00, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15906,12 +16597,13 @@ UTEST(SingleStepTests_F7, _F7_02C8) {
         {.addr=0x0113, .value=0xea}, {.addr=0x0114, .value=0x85}, {.addr=0x861d, .value=0x04},
         {.addr=0xa3e7, .value=0xf7}, {.addr=0xa3e8, .value=0x13},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa3e7, .value=0xf7, .type=IO_READ},
         {.addr=0xa3e8, .value=0x13, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0113, .value=0xea, .type=IO_READ},
         {.addr=0x0114, .value=0x85, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x861d, .value=0x04, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15929,12 +16621,13 @@ UTEST(SingleStepTests_F7, _F7_02C9) {
         {.addr=0x0026, .value=0x84}, {.addr=0x0027, .value=0x53}, {.addr=0x53b9, .value=0xb6},
         {.addr=0x98f0, .value=0xf7}, {.addr=0x98f1, .value=0x26},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x98f0, .value=0xf7, .type=IO_READ},
         {.addr=0x98f1, .value=0x26, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0026, .value=0x84, .type=IO_READ},
         {.addr=0x0027, .value=0x53, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x53b9, .value=0xb6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15952,12 +16645,13 @@ UTEST(SingleStepTests_F7, _F7_02CA) {
         {.addr=0x01e8, .value=0x75}, {.addr=0x01e9, .value=0xc4}, {.addr=0xbbcc, .value=0xf7},
         {.addr=0xbbcd, .value=0xe8}, {.addr=0xc56d, .value=0xd0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbbcc, .value=0xf7, .type=IO_READ},
         {.addr=0xbbcd, .value=0xe8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e8, .value=0x75, .type=IO_READ},
         {.addr=0x01e9, .value=0xc4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc56d, .value=0xd0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15975,12 +16669,13 @@ UTEST(SingleStepTests_F7, _F7_02CB) {
         {.addr=0x0195, .value=0x95}, {.addr=0x0196, .value=0x2a}, {.addr=0x2b4c, .value=0xc5},
         {.addr=0x8292, .value=0xf7}, {.addr=0x8293, .value=0x95},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8292, .value=0xf7, .type=IO_READ},
         {.addr=0x8293, .value=0x95, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0195, .value=0x95, .type=IO_READ},
         {.addr=0x0196, .value=0x2a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2b4c, .value=0xc5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -15998,12 +16693,13 @@ UTEST(SingleStepTests_F7, _F7_02CC) {
         {.addr=0x010c, .value=0x3a}, {.addr=0x010d, .value=0x34}, {.addr=0x03ef, .value=0xf7},
         {.addr=0x03f0, .value=0x0c}, {.addr=0x343a, .value=0xe1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x03ef, .value=0xf7, .type=IO_READ},
         {.addr=0x03f0, .value=0x0c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x010c, .value=0x3a, .type=IO_READ},
         {.addr=0x010d, .value=0x34, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x343a, .value=0xe1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16021,12 +16717,13 @@ UTEST(SingleStepTests_F7, _F7_02CD) {
         {.addr=0x009d, .value=0x43}, {.addr=0x009e, .value=0x8d}, {.addr=0x8df4, .value=0xdd},
         {.addr=0xd446, .value=0xf7}, {.addr=0xd447, .value=0x9d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd446, .value=0xf7, .type=IO_READ},
         {.addr=0xd447, .value=0x9d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009d, .value=0x43, .type=IO_READ},
         {.addr=0x009e, .value=0x8d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8df4, .value=0xdd, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16044,12 +16741,13 @@ UTEST(SingleStepTests_F7, _F7_02CE) {
         {.addr=0x01cf, .value=0x10}, {.addr=0x01d0, .value=0x1f}, {.addr=0x1f34, .value=0xc8},
         {.addr=0x5b3d, .value=0xf7}, {.addr=0x5b3e, .value=0xcf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5b3d, .value=0xf7, .type=IO_READ},
         {.addr=0x5b3e, .value=0xcf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01cf, .value=0x10, .type=IO_READ},
         {.addr=0x01d0, .value=0x1f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1f34, .value=0xc8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16067,12 +16765,13 @@ UTEST(SingleStepTests_F7, _F7_02CF) {
         {.addr=0x0132, .value=0x2f}, {.addr=0x0133, .value=0xa7}, {.addr=0x61f8, .value=0xf7},
         {.addr=0x61f9, .value=0x32}, {.addr=0xa7c6, .value=0x18},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x61f8, .value=0xf7, .type=IO_READ},
         {.addr=0x61f9, .value=0x32, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0132, .value=0x2f, .type=IO_READ},
         {.addr=0x0133, .value=0xa7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa7c6, .value=0x18, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16090,12 +16789,13 @@ UTEST(SingleStepTests_F7, _F7_02D0) {
         {.addr=0x0101, .value=0x09}, {.addr=0x0102, .value=0x2f}, {.addr=0x2fb7, .value=0x96},
         {.addr=0xf65e, .value=0xf7}, {.addr=0xf65f, .value=0x01},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf65e, .value=0xf7, .type=IO_READ},
         {.addr=0xf65f, .value=0x01, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0101, .value=0x09, .type=IO_READ},
         {.addr=0x0102, .value=0x2f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2fb7, .value=0x96, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16113,12 +16813,13 @@ UTEST(SingleStepTests_F7, _F7_02D1) {
         {.addr=0x0079, .value=0xfb}, {.addr=0x007a, .value=0x98}, {.addr=0x0182, .value=0xf7},
         {.addr=0x0183, .value=0x79}, {.addr=0x9910, .value=0xe4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0182, .value=0xf7, .type=IO_READ},
         {.addr=0x0183, .value=0x79, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0079, .value=0xfb, .type=IO_READ},
         {.addr=0x007a, .value=0x98, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9910, .value=0xe4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16136,12 +16837,13 @@ UTEST(SingleStepTests_F7, _F7_02D2) {
         {.addr=0x0041, .value=0xf3}, {.addr=0x0042, .value=0x89}, {.addr=0x8a2d, .value=0xa3},
         {.addr=0xbff1, .value=0xf7}, {.addr=0xbff2, .value=0x41},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbff1, .value=0xf7, .type=IO_READ},
         {.addr=0xbff2, .value=0x41, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0041, .value=0xf3, .type=IO_READ},
         {.addr=0x0042, .value=0x89, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8a2d, .value=0xa3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16159,12 +16861,13 @@ UTEST(SingleStepTests_F7, _F7_02D3) {
         {.addr=0x0127, .value=0x79}, {.addr=0x0128, .value=0xf1}, {.addr=0x5342, .value=0xf7},
         {.addr=0x5343, .value=0x27}, {.addr=0xf199, .value=0x52},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5342, .value=0xf7, .type=IO_READ},
         {.addr=0x5343, .value=0x27, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0127, .value=0x79, .type=IO_READ},
         {.addr=0x0128, .value=0xf1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf199, .value=0x52, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16182,12 +16885,13 @@ UTEST(SingleStepTests_F7, _F7_02D4) {
         {.addr=0x0111, .value=0xdb}, {.addr=0x0112, .value=0x78}, {.addr=0x78eb, .value=0x78},
         {.addr=0x83c5, .value=0xf7}, {.addr=0x83c6, .value=0x11},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x83c5, .value=0xf7, .type=IO_READ},
         {.addr=0x83c6, .value=0x11, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0111, .value=0xdb, .type=IO_READ},
         {.addr=0x0112, .value=0x78, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x78eb, .value=0x78, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16205,12 +16909,13 @@ UTEST(SingleStepTests_F7, _F7_02D5) {
         {.addr=0x0089, .value=0xde}, {.addr=0x008a, .value=0x6b}, {.addr=0x6c30, .value=0x13},
         {.addr=0x9a53, .value=0xf7}, {.addr=0x9a54, .value=0x89},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9a53, .value=0xf7, .type=IO_READ},
         {.addr=0x9a54, .value=0x89, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0089, .value=0xde, .type=IO_READ},
         {.addr=0x008a, .value=0x6b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6c30, .value=0x13, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16228,12 +16933,13 @@ UTEST(SingleStepTests_F7, _F7_02D6) {
         {.addr=0x002e, .value=0x3f}, {.addr=0x002f, .value=0x18}, {.addr=0x184a, .value=0x38},
         {.addr=0x9e58, .value=0xf7}, {.addr=0x9e59, .value=0x2e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9e58, .value=0xf7, .type=IO_READ},
         {.addr=0x9e59, .value=0x2e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002e, .value=0x3f, .type=IO_READ},
         {.addr=0x002f, .value=0x18, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x184a, .value=0x38, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16251,12 +16957,13 @@ UTEST(SingleStepTests_F7, _F7_02D7) {
         {.addr=0x0068, .value=0x28}, {.addr=0x0069, .value=0x7c}, {.addr=0x0cf7, .value=0xf7},
         {.addr=0x0cf8, .value=0x68}, {.addr=0x7c57, .value=0xd3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0cf7, .value=0xf7, .type=IO_READ},
         {.addr=0x0cf8, .value=0x68, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0068, .value=0x28, .type=IO_READ},
         {.addr=0x0069, .value=0x7c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7c57, .value=0xd3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16274,12 +16981,13 @@ UTEST(SingleStepTests_F7, _F7_02D8) {
         {.addr=0x01a3, .value=0xe4}, {.addr=0x01a4, .value=0x6d}, {.addr=0x2657, .value=0xf7},
         {.addr=0x2658, .value=0xa3}, {.addr=0x6e69, .value=0x5e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2657, .value=0xf7, .type=IO_READ},
         {.addr=0x2658, .value=0xa3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a3, .value=0xe4, .type=IO_READ},
         {.addr=0x01a4, .value=0x6d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6e69, .value=0x5e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16297,12 +17005,13 @@ UTEST(SingleStepTests_F7, _F7_02D9) {
         {.addr=0x0170, .value=0x4d}, {.addr=0x0171, .value=0x37}, {.addr=0x382c, .value=0x4b},
         {.addr=0xda40, .value=0xf7}, {.addr=0xda41, .value=0x70},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xda40, .value=0xf7, .type=IO_READ},
         {.addr=0xda41, .value=0x70, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0170, .value=0x4d, .type=IO_READ},
         {.addr=0x0171, .value=0x37, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x382c, .value=0x4b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16320,12 +17029,13 @@ UTEST(SingleStepTests_F7, _F7_02DA) {
         {.addr=0x0089, .value=0x84}, {.addr=0x008a, .value=0x44}, {.addr=0x44f4, .value=0x8b},
         {.addr=0xa3a8, .value=0xf7}, {.addr=0xa3a9, .value=0x89},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa3a8, .value=0xf7, .type=IO_READ},
         {.addr=0xa3a9, .value=0x89, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0089, .value=0x84, .type=IO_READ},
         {.addr=0x008a, .value=0x44, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x44f4, .value=0x8b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16343,12 +17053,13 @@ UTEST(SingleStepTests_F7, _F7_02DB) {
         {.addr=0x011d, .value=0x20}, {.addr=0x011e, .value=0xfa}, {.addr=0x4185, .value=0xf7},
         {.addr=0x4186, .value=0x1d}, {.addr=0xfb00, .value=0x6e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4185, .value=0xf7, .type=IO_READ},
         {.addr=0x4186, .value=0x1d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x011d, .value=0x20, .type=IO_READ},
         {.addr=0x011e, .value=0xfa, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfb00, .value=0x6e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16366,12 +17077,13 @@ UTEST(SingleStepTests_F7, _F7_02DC) {
         {.addr=0x0088, .value=0x97}, {.addr=0x0089, .value=0x1a}, {.addr=0x1a97, .value=0x92},
         {.addr=0xcf32, .value=0xf7}, {.addr=0xcf33, .value=0x88},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcf32, .value=0xf7, .type=IO_READ},
         {.addr=0xcf33, .value=0x88, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0088, .value=0x97, .type=IO_READ},
         {.addr=0x0089, .value=0x1a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1a97, .value=0x92, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16389,12 +17101,13 @@ UTEST(SingleStepTests_F7, _F7_02DD) {
         {.addr=0x01fd, .value=0x25}, {.addr=0x01fe, .value=0xe5}, {.addr=0xc2c9, .value=0xf7},
         {.addr=0xc2ca, .value=0xfd}, {.addr=0xe5b5, .value=0x32},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc2c9, .value=0xf7, .type=IO_READ},
         {.addr=0xc2ca, .value=0xfd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01fd, .value=0x25, .type=IO_READ},
         {.addr=0x01fe, .value=0xe5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe5b5, .value=0x32, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16412,12 +17125,13 @@ UTEST(SingleStepTests_F7, _F7_02DE) {
         {.addr=0x0012, .value=0xd4}, {.addr=0x0013, .value=0xe0}, {.addr=0x5403, .value=0xf7},
         {.addr=0x5404, .value=0x12}, {.addr=0xe16a, .value=0x0f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5403, .value=0xf7, .type=IO_READ},
         {.addr=0x5404, .value=0x12, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0012, .value=0xd4, .type=IO_READ},
         {.addr=0x0013, .value=0xe0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe16a, .value=0x0f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16435,12 +17149,13 @@ UTEST(SingleStepTests_F7, _F7_02DF) {
         {.addr=0x01f0, .value=0x91}, {.addr=0x01f1, .value=0xf8}, {.addr=0x6316, .value=0xf7},
         {.addr=0x6317, .value=0xf0}, {.addr=0xf905, .value=0x21},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6316, .value=0xf7, .type=IO_READ},
         {.addr=0x6317, .value=0xf0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f0, .value=0x91, .type=IO_READ},
         {.addr=0x01f1, .value=0xf8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf905, .value=0x21, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16458,12 +17173,13 @@ UTEST(SingleStepTests_F7, _F7_02E0) {
         {.addr=0x006d, .value=0xe8}, {.addr=0x006e, .value=0xee}, {.addr=0xef70, .value=0x07},
         {.addr=0xfcf1, .value=0xf7}, {.addr=0xfcf2, .value=0x6d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfcf1, .value=0xf7, .type=IO_READ},
         {.addr=0xfcf2, .value=0x6d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006d, .value=0xe8, .type=IO_READ},
         {.addr=0x006e, .value=0xee, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xef70, .value=0x07, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16481,12 +17197,13 @@ UTEST(SingleStepTests_F7, _F7_02E1) {
         {.addr=0x0007, .value=0xf5}, {.addr=0x0008, .value=0x81}, {.addr=0x1035, .value=0xf7},
         {.addr=0x1036, .value=0x07}, {.addr=0x825c, .value=0x16},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1035, .value=0xf7, .type=IO_READ},
         {.addr=0x1036, .value=0x07, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0007, .value=0xf5, .type=IO_READ},
         {.addr=0x0008, .value=0x81, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x825c, .value=0x16, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16504,12 +17221,13 @@ UTEST(SingleStepTests_F7, _F7_02E2) {
         {.addr=0x0004, .value=0x75}, {.addr=0x0005, .value=0x16}, {.addr=0x16d5, .value=0x5a},
         {.addr=0x9713, .value=0xf7}, {.addr=0x9714, .value=0x04},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9713, .value=0xf7, .type=IO_READ},
         {.addr=0x9714, .value=0x04, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0004, .value=0x75, .type=IO_READ},
         {.addr=0x0005, .value=0x16, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x16d5, .value=0x5a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16527,12 +17245,13 @@ UTEST(SingleStepTests_F7, _F7_02E3) {
         {.addr=0x006a, .value=0x1d}, {.addr=0x006b, .value=0x28}, {.addr=0x19b4, .value=0xf7},
         {.addr=0x19b5, .value=0x6a}, {.addr=0x2896, .value=0xf9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x19b4, .value=0xf7, .type=IO_READ},
         {.addr=0x19b5, .value=0x6a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006a, .value=0x1d, .type=IO_READ},
         {.addr=0x006b, .value=0x28, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2896, .value=0xf9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16550,12 +17269,13 @@ UTEST(SingleStepTests_F7, _F7_02E4) {
         {.addr=0x01c1, .value=0xa1}, {.addr=0x01c2, .value=0x10}, {.addr=0x112c, .value=0xdd},
         {.addr=0xd8e9, .value=0xf7}, {.addr=0xd8ea, .value=0xc1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd8e9, .value=0xf7, .type=IO_READ},
         {.addr=0xd8ea, .value=0xc1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c1, .value=0xa1, .type=IO_READ},
         {.addr=0x01c2, .value=0x10, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x112c, .value=0xdd, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16573,12 +17293,13 @@ UTEST(SingleStepTests_F7, _F7_02E5) {
         {.addr=0x01bb, .value=0x81}, {.addr=0x01bc, .value=0x83}, {.addr=0x379a, .value=0xf7},
         {.addr=0x379b, .value=0xbb}, {.addr=0x8404, .value=0xb9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x379a, .value=0xf7, .type=IO_READ},
         {.addr=0x379b, .value=0xbb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01bb, .value=0x81, .type=IO_READ},
         {.addr=0x01bc, .value=0x83, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8404, .value=0xb9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16596,12 +17317,13 @@ UTEST(SingleStepTests_F7, _F7_02E6) {
         {.addr=0x0171, .value=0xdd}, {.addr=0x0172, .value=0x8d}, {.addr=0x8e06, .value=0x5e},
         {.addr=0xee73, .value=0xf7}, {.addr=0xee74, .value=0x71},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xee73, .value=0xf7, .type=IO_READ},
         {.addr=0xee74, .value=0x71, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0171, .value=0xdd, .type=IO_READ},
         {.addr=0x0172, .value=0x8d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8e06, .value=0x5e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16619,12 +17341,13 @@ UTEST(SingleStepTests_F7, _F7_02E7) {
         {.addr=0x015e, .value=0x9d}, {.addr=0x015f, .value=0x01}, {.addr=0x0213, .value=0x8d},
         {.addr=0xef0f, .value=0xf7}, {.addr=0xef10, .value=0x5e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xef0f, .value=0xf7, .type=IO_READ},
         {.addr=0xef10, .value=0x5e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x015e, .value=0x9d, .type=IO_READ},
         {.addr=0x015f, .value=0x01, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0213, .value=0x8d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16642,12 +17365,13 @@ UTEST(SingleStepTests_F7, _F7_02E8) {
         {.addr=0x00ca, .value=0xea}, {.addr=0x00cb, .value=0x63}, {.addr=0x6494, .value=0x1c},
         {.addr=0x7950, .value=0xf7}, {.addr=0x7951, .value=0xca},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7950, .value=0xf7, .type=IO_READ},
         {.addr=0x7951, .value=0xca, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ca, .value=0xea, .type=IO_READ},
         {.addr=0x00cb, .value=0x63, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6494, .value=0x1c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16665,12 +17389,13 @@ UTEST(SingleStepTests_F7, _F7_02E9) {
         {.addr=0x0000, .value=0xb2}, {.addr=0x0001, .value=0xef}, {.addr=0xb146, .value=0xf7},
         {.addr=0xb147, .value=0x00}, {.addr=0xf0ac, .value=0x29},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb146, .value=0xf7, .type=IO_READ},
         {.addr=0xb147, .value=0x00, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0000, .value=0xb2, .type=IO_READ},
         {.addr=0x0001, .value=0xef, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf0ac, .value=0x29, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16688,12 +17413,13 @@ UTEST(SingleStepTests_F7, _F7_02EA) {
         {.addr=0x01cc, .value=0xd6}, {.addr=0x01cd, .value=0xa3}, {.addr=0xa3da, .value=0x85},
         {.addr=0xe828, .value=0xf7}, {.addr=0xe829, .value=0xcc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe828, .value=0xf7, .type=IO_READ},
         {.addr=0xe829, .value=0xcc, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01cc, .value=0xd6, .type=IO_READ},
         {.addr=0x01cd, .value=0xa3, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa3da, .value=0x85, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16711,12 +17437,13 @@ UTEST(SingleStepTests_F7, _F7_02EB) {
         {.addr=0x01c8, .value=0xab}, {.addr=0x01c9, .value=0xb9}, {.addr=0x0800, .value=0xf7},
         {.addr=0x0801, .value=0xc8}, {.addr=0xba97, .value=0xce},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0800, .value=0xf7, .type=IO_READ},
         {.addr=0x0801, .value=0xc8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c8, .value=0xab, .type=IO_READ},
         {.addr=0x01c9, .value=0xb9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xba97, .value=0xce, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16734,12 +17461,13 @@ UTEST(SingleStepTests_F7, _F7_02EC) {
         {.addr=0x0138, .value=0x85}, {.addr=0x0139, .value=0x17}, {.addr=0x17e5, .value=0x37},
         {.addr=0x2d88, .value=0xf7}, {.addr=0x2d89, .value=0x38},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2d88, .value=0xf7, .type=IO_READ},
         {.addr=0x2d89, .value=0x38, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0138, .value=0x85, .type=IO_READ},
         {.addr=0x0139, .value=0x17, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x17e5, .value=0x37, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16757,12 +17485,13 @@ UTEST(SingleStepTests_F7, _F7_02ED) {
         {.addr=0x015f, .value=0x48}, {.addr=0x0160, .value=0xd8}, {.addr=0x165c, .value=0xf7},
         {.addr=0x165d, .value=0x5f}, {.addr=0xd8b6, .value=0xac},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x165c, .value=0xf7, .type=IO_READ},
         {.addr=0x165d, .value=0x5f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x015f, .value=0x48, .type=IO_READ},
         {.addr=0x0160, .value=0xd8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd8b6, .value=0xac, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16780,12 +17509,13 @@ UTEST(SingleStepTests_F7, _F7_02EE) {
         {.addr=0x0166, .value=0xba}, {.addr=0x0167, .value=0x05}, {.addr=0x0441, .value=0xf7},
         {.addr=0x0442, .value=0x66}, {.addr=0x06a2, .value=0xc3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0441, .value=0xf7, .type=IO_READ},
         {.addr=0x0442, .value=0x66, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0166, .value=0xba, .type=IO_READ},
         {.addr=0x0167, .value=0x05, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x06a2, .value=0xc3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16803,12 +17533,13 @@ UTEST(SingleStepTests_F7, _F7_02EF) {
         {.addr=0x00eb, .value=0xf6}, {.addr=0x00ec, .value=0x90}, {.addr=0x91a6, .value=0x73},
         {.addr=0xac6e, .value=0xf7}, {.addr=0xac6f, .value=0xeb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xac6e, .value=0xf7, .type=IO_READ},
         {.addr=0xac6f, .value=0xeb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00eb, .value=0xf6, .type=IO_READ},
         {.addr=0x00ec, .value=0x90, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x91a6, .value=0x73, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16826,12 +17557,13 @@ UTEST(SingleStepTests_F7, _F7_02F0) {
         {.addr=0x01cd, .value=0x7a}, {.addr=0x01ce, .value=0xf7}, {.addr=0xa368, .value=0xf7},
         {.addr=0xa369, .value=0xcd}, {.addr=0xf826, .value=0x7c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa368, .value=0xf7, .type=IO_READ},
         {.addr=0xa369, .value=0xcd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01cd, .value=0x7a, .type=IO_READ},
         {.addr=0x01ce, .value=0xf7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf826, .value=0x7c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16849,12 +17581,13 @@ UTEST(SingleStepTests_F7, _F7_02F1) {
         {.addr=0x0148, .value=0x9f}, {.addr=0x0149, .value=0xe1}, {.addr=0x3dd7, .value=0xf7},
         {.addr=0x3dd8, .value=0x48}, {.addr=0xe1ed, .value=0xe4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3dd7, .value=0xf7, .type=IO_READ},
         {.addr=0x3dd8, .value=0x48, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0148, .value=0x9f, .type=IO_READ},
         {.addr=0x0149, .value=0xe1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe1ed, .value=0xe4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16872,12 +17605,13 @@ UTEST(SingleStepTests_F7, _F7_02F2) {
         {.addr=0x01bd, .value=0x0a}, {.addr=0x01be, .value=0x16}, {.addr=0x16ad, .value=0xad},
         {.addr=0xe138, .value=0xf7}, {.addr=0xe139, .value=0xbd},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe138, .value=0xf7, .type=IO_READ},
         {.addr=0xe139, .value=0xbd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01bd, .value=0x0a, .type=IO_READ},
         {.addr=0x01be, .value=0x16, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x16ad, .value=0xad, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16895,12 +17629,13 @@ UTEST(SingleStepTests_F7, _F7_02F3) {
         {.addr=0x01db, .value=0xf7}, {.addr=0x01dc, .value=0xf3}, {.addr=0x01f3, .value=0xcb},
         {.addr=0x01f4, .value=0xdb}, {.addr=0xdc53, .value=0x67},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x01db, .value=0xf7, .type=IO_READ},
         {.addr=0x01dc, .value=0xf3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f3, .value=0xcb, .type=IO_READ},
         {.addr=0x01f4, .value=0xdb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdc53, .value=0x67, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16918,12 +17653,13 @@ UTEST(SingleStepTests_F7, _F7_02F4) {
         {.addr=0x01af, .value=0x68}, {.addr=0x01b0, .value=0xe2}, {.addr=0xe314, .value=0x21},
         {.addr=0xed8c, .value=0xf7}, {.addr=0xed8d, .value=0xaf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xed8c, .value=0xf7, .type=IO_READ},
         {.addr=0xed8d, .value=0xaf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01af, .value=0x68, .type=IO_READ},
         {.addr=0x01b0, .value=0xe2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe314, .value=0x21, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16941,12 +17677,13 @@ UTEST(SingleStepTests_F7, _F7_02F5) {
         {.addr=0x004b, .value=0x76}, {.addr=0x004c, .value=0x91}, {.addr=0x91fd, .value=0xb8},
         {.addr=0x9f75, .value=0xf7}, {.addr=0x9f76, .value=0x4b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9f75, .value=0xf7, .type=IO_READ},
         {.addr=0x9f76, .value=0x4b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x004b, .value=0x76, .type=IO_READ},
         {.addr=0x004c, .value=0x91, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x91fd, .value=0xb8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16964,12 +17701,13 @@ UTEST(SingleStepTests_F7, _F7_02F6) {
         {.addr=0x0193, .value=0xd1}, {.addr=0x0194, .value=0x46}, {.addr=0x47ab, .value=0x50},
         {.addr=0xa625, .value=0xf7}, {.addr=0xa626, .value=0x93},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa625, .value=0xf7, .type=IO_READ},
         {.addr=0xa626, .value=0x93, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0193, .value=0xd1, .type=IO_READ},
         {.addr=0x0194, .value=0x46, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x47ab, .value=0x50, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -16987,12 +17725,13 @@ UTEST(SingleStepTests_F7, _F7_02F7) {
         {.addr=0x011a, .value=0xf7}, {.addr=0x011b, .value=0xbc}, {.addr=0x49c3, .value=0xf7},
         {.addr=0x49c4, .value=0x1a}, {.addr=0xbd12, .value=0x72},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x49c3, .value=0xf7, .type=IO_READ},
         {.addr=0x49c4, .value=0x1a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x011a, .value=0xf7, .type=IO_READ},
         {.addr=0x011b, .value=0xbc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbd12, .value=0x72, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17010,12 +17749,13 @@ UTEST(SingleStepTests_F7, _F7_02F8) {
         {.addr=0x0022, .value=0x5d}, {.addr=0x0023, .value=0x7d}, {.addr=0x081d, .value=0xf7},
         {.addr=0x081e, .value=0x22}, {.addr=0x7d6b, .value=0xa1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x081d, .value=0xf7, .type=IO_READ},
         {.addr=0x081e, .value=0x22, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0022, .value=0x5d, .type=IO_READ},
         {.addr=0x0023, .value=0x7d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7d6b, .value=0xa1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17033,12 +17773,13 @@ UTEST(SingleStepTests_F7, _F7_02F9) {
         {.addr=0x0192, .value=0xe1}, {.addr=0x0193, .value=0x81}, {.addr=0x8227, .value=0x12},
         {.addr=0xdd25, .value=0xf7}, {.addr=0xdd26, .value=0x92},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdd25, .value=0xf7, .type=IO_READ},
         {.addr=0xdd26, .value=0x92, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0192, .value=0xe1, .type=IO_READ},
         {.addr=0x0193, .value=0x81, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8227, .value=0x12, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17056,12 +17797,13 @@ UTEST(SingleStepTests_F7, _F7_02FA) {
         {.addr=0x01bc, .value=0x1e}, {.addr=0x01bd, .value=0xe9}, {.addr=0x37e2, .value=0xf7},
         {.addr=0x37e3, .value=0xbc}, {.addr=0xe94a, .value=0x0e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x37e2, .value=0xf7, .type=IO_READ},
         {.addr=0x37e3, .value=0xbc, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01bc, .value=0x1e, .type=IO_READ},
         {.addr=0x01bd, .value=0xe9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe94a, .value=0x0e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17079,12 +17821,13 @@ UTEST(SingleStepTests_F7, _F7_02FB) {
         {.addr=0x013d, .value=0x07}, {.addr=0x013e, .value=0xb9}, {.addr=0x3505, .value=0xf7},
         {.addr=0x3506, .value=0x3d}, {.addr=0xb9a1, .value=0xc8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3505, .value=0xf7, .type=IO_READ},
         {.addr=0x3506, .value=0x3d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013d, .value=0x07, .type=IO_READ},
         {.addr=0x013e, .value=0xb9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb9a1, .value=0xc8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17102,12 +17845,13 @@ UTEST(SingleStepTests_F7, _F7_02FC) {
         {.addr=0x01d5, .value=0x7a}, {.addr=0x01d6, .value=0x68}, {.addr=0x5a45, .value=0xf7},
         {.addr=0x5a46, .value=0xd5}, {.addr=0x689c, .value=0xb3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5a45, .value=0xf7, .type=IO_READ},
         {.addr=0x5a46, .value=0xd5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d5, .value=0x7a, .type=IO_READ},
         {.addr=0x01d6, .value=0x68, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x689c, .value=0xb3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17125,12 +17869,13 @@ UTEST(SingleStepTests_F7, _F7_02FD) {
         {.addr=0x01d8, .value=0x35}, {.addr=0x01d9, .value=0xeb}, {.addr=0x87b6, .value=0xf7},
         {.addr=0x87b7, .value=0xd8}, {.addr=0xebe2, .value=0xa5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x87b6, .value=0xf7, .type=IO_READ},
         {.addr=0x87b7, .value=0xd8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d8, .value=0x35, .type=IO_READ},
         {.addr=0x01d9, .value=0xeb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xebe2, .value=0xa5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17148,12 +17893,13 @@ UTEST(SingleStepTests_F7, _F7_02FE) {
         {.addr=0x008a, .value=0xe8}, {.addr=0x008b, .value=0x6d}, {.addr=0x2954, .value=0xf7},
         {.addr=0x2955, .value=0x8a}, {.addr=0x6e02, .value=0x15},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2954, .value=0xf7, .type=IO_READ},
         {.addr=0x2955, .value=0x8a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x008a, .value=0xe8, .type=IO_READ},
         {.addr=0x008b, .value=0x6d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6e02, .value=0x15, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17171,12 +17917,13 @@ UTEST(SingleStepTests_F7, _F7_02FF) {
         {.addr=0x004f, .value=0x56}, {.addr=0x0050, .value=0x14}, {.addr=0x14e6, .value=0xae},
         {.addr=0x4cc6, .value=0xf7}, {.addr=0x4cc7, .value=0x4f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4cc6, .value=0xf7, .type=IO_READ},
         {.addr=0x4cc7, .value=0x4f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x004f, .value=0x56, .type=IO_READ},
         {.addr=0x0050, .value=0x14, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x14e6, .value=0xae, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17194,12 +17941,13 @@ UTEST(SingleStepTests_F7, _F7_0300) {
         {.addr=0x00e6, .value=0x7e}, {.addr=0x00e7, .value=0xd8}, {.addr=0x0115, .value=0xf7},
         {.addr=0x0116, .value=0xe6}, {.addr=0xd8e9, .value=0x5e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0115, .value=0xf7, .type=IO_READ},
         {.addr=0x0116, .value=0xe6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e6, .value=0x7e, .type=IO_READ},
         {.addr=0x00e7, .value=0xd8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd8e9, .value=0x5e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17217,12 +17965,13 @@ UTEST(SingleStepTests_F7, _F7_0301) {
         {.addr=0x009c, .value=0x64}, {.addr=0x009d, .value=0xf0}, {.addr=0x5f1f, .value=0xf7},
         {.addr=0x5f20, .value=0x9c}, {.addr=0xf0f0, .value=0xa6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5f1f, .value=0xf7, .type=IO_READ},
         {.addr=0x5f20, .value=0x9c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009c, .value=0x64, .type=IO_READ},
         {.addr=0x009d, .value=0xf0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf0f0, .value=0xa6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17240,12 +17989,13 @@ UTEST(SingleStepTests_F7, _F7_0302) {
         {.addr=0x0064, .value=0x57}, {.addr=0x0065, .value=0xd5}, {.addr=0xd568, .value=0x6a},
         {.addr=0xe93f, .value=0xf7}, {.addr=0xe940, .value=0x64},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe93f, .value=0xf7, .type=IO_READ},
         {.addr=0xe940, .value=0x64, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0064, .value=0x57, .type=IO_READ},
         {.addr=0x0065, .value=0xd5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd568, .value=0x6a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17263,12 +18013,13 @@ UTEST(SingleStepTests_F7, _F7_0303) {
         {.addr=0x0048, .value=0x88}, {.addr=0x0049, .value=0x2d}, {.addr=0x2e4f, .value=0x30},
         {.addr=0xee30, .value=0xf7}, {.addr=0xee31, .value=0x48},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xee30, .value=0xf7, .type=IO_READ},
         {.addr=0xee31, .value=0x48, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0048, .value=0x88, .type=IO_READ},
         {.addr=0x0049, .value=0x2d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2e4f, .value=0x30, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17286,12 +18037,13 @@ UTEST(SingleStepTests_F7, _F7_0304) {
         {.addr=0x01fa, .value=0xee}, {.addr=0x01fb, .value=0x5b}, {.addr=0x0ede, .value=0xf7},
         {.addr=0x0edf, .value=0xfa}, {.addr=0x5c4e, .value=0x99},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0ede, .value=0xf7, .type=IO_READ},
         {.addr=0x0edf, .value=0xfa, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01fa, .value=0xee, .type=IO_READ},
         {.addr=0x01fb, .value=0x5b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5c4e, .value=0x99, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17309,12 +18061,13 @@ UTEST(SingleStepTests_F7, _F7_0305) {
         {.addr=0x0175, .value=0x7d}, {.addr=0x0176, .value=0x27}, {.addr=0x27f5, .value=0x91},
         {.addr=0xbee3, .value=0xf7}, {.addr=0xbee4, .value=0x75},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbee3, .value=0xf7, .type=IO_READ},
         {.addr=0xbee4, .value=0x75, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0175, .value=0x7d, .type=IO_READ},
         {.addr=0x0176, .value=0x27, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x27f5, .value=0x91, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17332,12 +18085,13 @@ UTEST(SingleStepTests_F7, _F7_0306) {
         {.addr=0x0046, .value=0xbc}, {.addr=0x0047, .value=0xe2}, {.addr=0xcac7, .value=0xf7},
         {.addr=0xcac8, .value=0x46}, {.addr=0xe38c, .value=0x96},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcac7, .value=0xf7, .type=IO_READ},
         {.addr=0xcac8, .value=0x46, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0046, .value=0xbc, .type=IO_READ},
         {.addr=0x0047, .value=0xe2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe38c, .value=0x96, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17355,12 +18109,13 @@ UTEST(SingleStepTests_F7, _F7_0307) {
         {.addr=0x01f0, .value=0x8f}, {.addr=0x01f1, .value=0x10}, {.addr=0x1134, .value=0xd1},
         {.addr=0x4aa1, .value=0xf7}, {.addr=0x4aa2, .value=0xf0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4aa1, .value=0xf7, .type=IO_READ},
         {.addr=0x4aa2, .value=0xf0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f0, .value=0x8f, .type=IO_READ},
         {.addr=0x01f1, .value=0x10, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1134, .value=0xd1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17378,12 +18133,13 @@ UTEST(SingleStepTests_F7, _F7_0308) {
         {.addr=0x01c1, .value=0xe2}, {.addr=0x01c2, .value=0xbb}, {.addr=0x245c, .value=0xf7},
         {.addr=0x245d, .value=0xc1}, {.addr=0xbc5c, .value=0x99},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x245c, .value=0xf7, .type=IO_READ},
         {.addr=0x245d, .value=0xc1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c1, .value=0xe2, .type=IO_READ},
         {.addr=0x01c2, .value=0xbb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbc5c, .value=0x99, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17401,12 +18157,13 @@ UTEST(SingleStepTests_F7, _F7_0309) {
         {.addr=0x0116, .value=0x28}, {.addr=0x0117, .value=0x0f}, {.addr=0x0f7d, .value=0x5d},
         {.addr=0x6efd, .value=0xf7}, {.addr=0x6efe, .value=0x16},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6efd, .value=0xf7, .type=IO_READ},
         {.addr=0x6efe, .value=0x16, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0116, .value=0x28, .type=IO_READ},
         {.addr=0x0117, .value=0x0f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0f7d, .value=0x5d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17424,12 +18181,13 @@ UTEST(SingleStepTests_F7, _F7_030A) {
         {.addr=0x000c, .value=0x8c}, {.addr=0x000d, .value=0x58}, {.addr=0x58d4, .value=0x11},
         {.addr=0xd24d, .value=0xf7}, {.addr=0xd24e, .value=0x0c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd24d, .value=0xf7, .type=IO_READ},
         {.addr=0xd24e, .value=0x0c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000c, .value=0x8c, .type=IO_READ},
         {.addr=0x000d, .value=0x58, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x58d4, .value=0x11, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17447,12 +18205,13 @@ UTEST(SingleStepTests_F7, _F7_030B) {
         {.addr=0x0186, .value=0x08}, {.addr=0x0187, .value=0x99}, {.addr=0x1d98, .value=0xf7},
         {.addr=0x1d99, .value=0x86}, {.addr=0x996b, .value=0x46},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1d98, .value=0xf7, .type=IO_READ},
         {.addr=0x1d99, .value=0x86, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0186, .value=0x08, .type=IO_READ},
         {.addr=0x0187, .value=0x99, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x996b, .value=0x46, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17470,12 +18229,13 @@ UTEST(SingleStepTests_F7, _F7_030C) {
         {.addr=0x0010, .value=0xab}, {.addr=0x0011, .value=0xd6}, {.addr=0x3cf9, .value=0xf7},
         {.addr=0x3cfa, .value=0x10}, {.addr=0xd781, .value=0x89},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3cf9, .value=0xf7, .type=IO_READ},
         {.addr=0x3cfa, .value=0x10, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0010, .value=0xab, .type=IO_READ},
         {.addr=0x0011, .value=0xd6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd781, .value=0x89, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17493,12 +18253,13 @@ UTEST(SingleStepTests_F7, _F7_030D) {
         {.addr=0x0117, .value=0xe4}, {.addr=0x0118, .value=0x73}, {.addr=0x7493, .value=0xb7},
         {.addr=0x77ed, .value=0xf7}, {.addr=0x77ee, .value=0x17},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x77ed, .value=0xf7, .type=IO_READ},
         {.addr=0x77ee, .value=0x17, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0117, .value=0xe4, .type=IO_READ},
         {.addr=0x0118, .value=0x73, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7493, .value=0xb7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17516,12 +18277,13 @@ UTEST(SingleStepTests_F7, _F7_030E) {
         {.addr=0x000e, .value=0x7e}, {.addr=0x000f, .value=0x70}, {.addr=0x7141, .value=0x99},
         {.addr=0x7ab8, .value=0xf7}, {.addr=0x7ab9, .value=0x0e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7ab8, .value=0xf7, .type=IO_READ},
         {.addr=0x7ab9, .value=0x0e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000e, .value=0x7e, .type=IO_READ},
         {.addr=0x000f, .value=0x70, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7141, .value=0x99, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17539,12 +18301,13 @@ UTEST(SingleStepTests_F7, _F7_030F) {
         {.addr=0x0134, .value=0x81}, {.addr=0x0135, .value=0x46}, {.addr=0x1450, .value=0xf7},
         {.addr=0x1451, .value=0x34}, {.addr=0x46cc, .value=0x93},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1450, .value=0xf7, .type=IO_READ},
         {.addr=0x1451, .value=0x34, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0134, .value=0x81, .type=IO_READ},
         {.addr=0x0135, .value=0x46, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x46cc, .value=0x93, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17562,12 +18325,13 @@ UTEST(SingleStepTests_F7, _F7_0310) {
         {.addr=0x0092, .value=0xc6}, {.addr=0x0093, .value=0xf2}, {.addr=0x3b19, .value=0xf7},
         {.addr=0x3b1a, .value=0x92}, {.addr=0xf348, .value=0xd9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3b19, .value=0xf7, .type=IO_READ},
         {.addr=0x3b1a, .value=0x92, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0092, .value=0xc6, .type=IO_READ},
         {.addr=0x0093, .value=0xf2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf348, .value=0xd9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17585,12 +18349,13 @@ UTEST(SingleStepTests_F7, _F7_0311) {
         {.addr=0x006c, .value=0x49}, {.addr=0x006d, .value=0x45}, {.addr=0x4611, .value=0x98},
         {.addr=0x9c62, .value=0xf7}, {.addr=0x9c63, .value=0x6c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9c62, .value=0xf7, .type=IO_READ},
         {.addr=0x9c63, .value=0x6c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006c, .value=0x49, .type=IO_READ},
         {.addr=0x006d, .value=0x45, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4611, .value=0x98, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17608,12 +18373,13 @@ UTEST(SingleStepTests_F7, _F7_0312) {
         {.addr=0x00a8, .value=0xb4}, {.addr=0x00a9, .value=0x97}, {.addr=0x7e7e, .value=0xf7},
         {.addr=0x7e7f, .value=0xa8}, {.addr=0x97f0, .value=0x90},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7e7e, .value=0xf7, .type=IO_READ},
         {.addr=0x7e7f, .value=0xa8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a8, .value=0xb4, .type=IO_READ},
         {.addr=0x00a9, .value=0x97, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x97f0, .value=0x90, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17631,12 +18397,13 @@ UTEST(SingleStepTests_F7, _F7_0313) {
         {.addr=0x018b, .value=0xe3}, {.addr=0x018c, .value=0x6b}, {.addr=0x6c61, .value=0x58},
         {.addr=0xdd6f, .value=0xf7}, {.addr=0xdd70, .value=0x8b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdd6f, .value=0xf7, .type=IO_READ},
         {.addr=0xdd70, .value=0x8b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x018b, .value=0xe3, .type=IO_READ},
         {.addr=0x018c, .value=0x6b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6c61, .value=0x58, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17654,12 +18421,13 @@ UTEST(SingleStepTests_F7, _F7_0315) {
         {.addr=0x0126, .value=0xf8}, {.addr=0x0127, .value=0x5f}, {.addr=0x60cf, .value=0x3c},
         {.addr=0xb110, .value=0xf7}, {.addr=0xb111, .value=0x26},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb110, .value=0xf7, .type=IO_READ},
         {.addr=0xb111, .value=0x26, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0126, .value=0xf8, .type=IO_READ},
         {.addr=0x0127, .value=0x5f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x60cf, .value=0x3c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17677,12 +18445,13 @@ UTEST(SingleStepTests_F7, _F7_0316) {
         {.addr=0x0013, .value=0x16}, {.addr=0x0014, .value=0xef}, {.addr=0xba0d, .value=0xf7},
         {.addr=0xba0e, .value=0x13}, {.addr=0xefdf, .value=0x20},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xba0d, .value=0xf7, .type=IO_READ},
         {.addr=0xba0e, .value=0x13, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0013, .value=0x16, .type=IO_READ},
         {.addr=0x0014, .value=0xef, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xefdf, .value=0x20, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17700,12 +18469,13 @@ UTEST(SingleStepTests_F7, _F7_0317) {
         {.addr=0x0073, .value=0x3c}, {.addr=0x0074, .value=0xd7}, {.addr=0x93f5, .value=0xf7},
         {.addr=0x93f6, .value=0x73}, {.addr=0xd827, .value=0x61},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x93f5, .value=0xf7, .type=IO_READ},
         {.addr=0x93f6, .value=0x73, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0073, .value=0x3c, .type=IO_READ},
         {.addr=0x0074, .value=0xd7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd827, .value=0x61, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17723,12 +18493,13 @@ UTEST(SingleStepTests_F7, _F7_0318) {
         {.addr=0x0077, .value=0x38}, {.addr=0x0078, .value=0x90}, {.addr=0x90e6, .value=0xee},
         {.addr=0xc94d, .value=0xf7}, {.addr=0xc94e, .value=0x77},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc94d, .value=0xf7, .type=IO_READ},
         {.addr=0xc94e, .value=0x77, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0077, .value=0x38, .type=IO_READ},
         {.addr=0x0078, .value=0x90, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x90e6, .value=0xee, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17746,12 +18517,13 @@ UTEST(SingleStepTests_F7, _F7_031A) {
         {.addr=0x0037, .value=0x29}, {.addr=0x0038, .value=0x7e}, {.addr=0x40df, .value=0xf7},
         {.addr=0x40e0, .value=0x37}, {.addr=0x7e89, .value=0x8f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x40df, .value=0xf7, .type=IO_READ},
         {.addr=0x40e0, .value=0x37, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0037, .value=0x29, .type=IO_READ},
         {.addr=0x0038, .value=0x7e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7e89, .value=0x8f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17769,12 +18541,13 @@ UTEST(SingleStepTests_F7, _F7_031B) {
         {.addr=0x01ae, .value=0xbc}, {.addr=0x01af, .value=0x85}, {.addr=0x8674, .value=0xd3},
         {.addr=0x96e2, .value=0xf7}, {.addr=0x96e3, .value=0xae},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x96e2, .value=0xf7, .type=IO_READ},
         {.addr=0x96e3, .value=0xae, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ae, .value=0xbc, .type=IO_READ},
         {.addr=0x01af, .value=0x85, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8674, .value=0xd3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17792,12 +18565,13 @@ UTEST(SingleStepTests_F7, _F7_031C) {
         {.addr=0x0199, .value=0x71}, {.addr=0x019a, .value=0xbc}, {.addr=0x668e, .value=0xf7},
         {.addr=0x668f, .value=0x99}, {.addr=0xbc82, .value=0xaf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x668e, .value=0xf7, .type=IO_READ},
         {.addr=0x668f, .value=0x99, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0199, .value=0x71, .type=IO_READ},
         {.addr=0x019a, .value=0xbc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbc82, .value=0xaf, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17815,12 +18589,13 @@ UTEST(SingleStepTests_F7, _F7_031D) {
         {.addr=0x01c9, .value=0x30}, {.addr=0x01ca, .value=0x73}, {.addr=0x7382, .value=0xaa},
         {.addr=0xebdd, .value=0xf7}, {.addr=0xebde, .value=0xc9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xebdd, .value=0xf7, .type=IO_READ},
         {.addr=0xebde, .value=0xc9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c9, .value=0x30, .type=IO_READ},
         {.addr=0x01ca, .value=0x73, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7382, .value=0xaa, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17838,12 +18613,13 @@ UTEST(SingleStepTests_F7, _F7_031E) {
         {.addr=0x0099, .value=0xa6}, {.addr=0x009a, .value=0x5f}, {.addr=0x5fe6, .value=0x54},
         {.addr=0x785f, .value=0xf7}, {.addr=0x7860, .value=0x99},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x785f, .value=0xf7, .type=IO_READ},
         {.addr=0x7860, .value=0x99, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0099, .value=0xa6, .type=IO_READ},
         {.addr=0x009a, .value=0x5f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5fe6, .value=0x54, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17861,12 +18637,13 @@ UTEST(SingleStepTests_F7, _F7_031F) {
         {.addr=0x0078, .value=0xed}, {.addr=0x0079, .value=0x01}, {.addr=0x0281, .value=0xb9},
         {.addr=0x7497, .value=0xf7}, {.addr=0x7498, .value=0x78},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7497, .value=0xf7, .type=IO_READ},
         {.addr=0x7498, .value=0x78, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0078, .value=0xed, .type=IO_READ},
         {.addr=0x0079, .value=0x01, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0281, .value=0xb9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17884,12 +18661,13 @@ UTEST(SingleStepTests_F7, _F7_0320) {
         {.addr=0x00cc, .value=0x01}, {.addr=0x00cd, .value=0x8f}, {.addr=0x8f4e, .value=0xe6},
         {.addr=0xba13, .value=0xf7}, {.addr=0xba14, .value=0xcc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xba13, .value=0xf7, .type=IO_READ},
         {.addr=0xba14, .value=0xcc, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00cc, .value=0x01, .type=IO_READ},
         {.addr=0x00cd, .value=0x8f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8f4e, .value=0xe6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17907,12 +18685,13 @@ UTEST(SingleStepTests_F7, _F7_0321) {
         {.addr=0x00bf, .value=0x0d}, {.addr=0x00c0, .value=0xaf}, {.addr=0xafb5, .value=0xa8},
         {.addr=0xc685, .value=0xf7}, {.addr=0xc686, .value=0xbf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc685, .value=0xf7, .type=IO_READ},
         {.addr=0xc686, .value=0xbf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00bf, .value=0x0d, .type=IO_READ},
         {.addr=0x00c0, .value=0xaf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xafb5, .value=0xa8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17930,12 +18709,13 @@ UTEST(SingleStepTests_F7, _F7_0322) {
         {.addr=0x001d, .value=0xf9}, {.addr=0x001e, .value=0x8d}, {.addr=0x8e33, .value=0xc3},
         {.addr=0xe83f, .value=0xf7}, {.addr=0xe840, .value=0x1d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe83f, .value=0xf7, .type=IO_READ},
         {.addr=0xe840, .value=0x1d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x001d, .value=0xf9, .type=IO_READ},
         {.addr=0x001e, .value=0x8d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8e33, .value=0xc3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17953,12 +18733,13 @@ UTEST(SingleStepTests_F7, _F7_0323) {
         {.addr=0x00bc, .value=0x81}, {.addr=0x00bd, .value=0x12}, {.addr=0x1285, .value=0x18},
         {.addr=0x6c06, .value=0xf7}, {.addr=0x6c07, .value=0xbc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6c06, .value=0xf7, .type=IO_READ},
         {.addr=0x6c07, .value=0xbc, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00bc, .value=0x81, .type=IO_READ},
         {.addr=0x00bd, .value=0x12, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1285, .value=0x18, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17976,12 +18757,13 @@ UTEST(SingleStepTests_F7, _F7_0324) {
         {.addr=0x00e3, .value=0xe1}, {.addr=0x00e4, .value=0x8c}, {.addr=0x8da8, .value=0x1a},
         {.addr=0xe242, .value=0xf7}, {.addr=0xe243, .value=0xe3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe242, .value=0xf7, .type=IO_READ},
         {.addr=0xe243, .value=0xe3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e3, .value=0xe1, .type=IO_READ},
         {.addr=0x00e4, .value=0x8c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8da8, .value=0x1a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -17999,12 +18781,13 @@ UTEST(SingleStepTests_F7, _F7_0325) {
         {.addr=0x0182, .value=0x5a}, {.addr=0x0183, .value=0x5f}, {.addr=0x601b, .value=0x6d},
         {.addr=0xcf4b, .value=0xf7}, {.addr=0xcf4c, .value=0x82},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcf4b, .value=0xf7, .type=IO_READ},
         {.addr=0xcf4c, .value=0x82, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0182, .value=0x5a, .type=IO_READ},
         {.addr=0x0183, .value=0x5f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x601b, .value=0x6d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18022,12 +18805,13 @@ UTEST(SingleStepTests_F7, _F7_0326) {
         {.addr=0x009c, .value=0x7e}, {.addr=0x009d, .value=0xd6}, {.addr=0x71c8, .value=0xf7},
         {.addr=0x71c9, .value=0x9c}, {.addr=0xd6f1, .value=0xb7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x71c8, .value=0xf7, .type=IO_READ},
         {.addr=0x71c9, .value=0x9c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009c, .value=0x7e, .type=IO_READ},
         {.addr=0x009d, .value=0xd6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd6f1, .value=0xb7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18045,12 +18829,13 @@ UTEST(SingleStepTests_F7, _F7_0327) {
         {.addr=0x0135, .value=0x07}, {.addr=0x0136, .value=0xd5}, {.addr=0xd587, .value=0x77},
         {.addr=0xe433, .value=0xf7}, {.addr=0xe434, .value=0x35},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe433, .value=0xf7, .type=IO_READ},
         {.addr=0xe434, .value=0x35, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0135, .value=0x07, .type=IO_READ},
         {.addr=0x0136, .value=0xd5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd587, .value=0x77, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18068,12 +18853,13 @@ UTEST(SingleStepTests_F7, _F7_0329) {
         {.addr=0x0052, .value=0x9a}, {.addr=0x0053, .value=0x6a}, {.addr=0x6b16, .value=0xc0},
         {.addr=0xa342, .value=0xf7}, {.addr=0xa343, .value=0x52},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa342, .value=0xf7, .type=IO_READ},
         {.addr=0xa343, .value=0x52, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0052, .value=0x9a, .type=IO_READ},
         {.addr=0x0053, .value=0x6a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6b16, .value=0xc0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18091,12 +18877,13 @@ UTEST(SingleStepTests_F7, _F7_032A) {
         {.addr=0x0103, .value=0xe9}, {.addr=0x0104, .value=0x06}, {.addr=0x0795, .value=0x7d},
         {.addr=0x9c04, .value=0xf7}, {.addr=0x9c05, .value=0x03},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9c04, .value=0xf7, .type=IO_READ},
         {.addr=0x9c05, .value=0x03, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0103, .value=0xe9, .type=IO_READ},
         {.addr=0x0104, .value=0x06, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0795, .value=0x7d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18114,12 +18901,13 @@ UTEST(SingleStepTests_F7, _F7_032B) {
         {.addr=0x0185, .value=0x8e}, {.addr=0x0186, .value=0x4e}, {.addr=0x2f64, .value=0xf7},
         {.addr=0x2f65, .value=0x85}, {.addr=0x4eb9, .value=0x38},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2f64, .value=0xf7, .type=IO_READ},
         {.addr=0x2f65, .value=0x85, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0185, .value=0x8e, .type=IO_READ},
         {.addr=0x0186, .value=0x4e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4eb9, .value=0x38, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18137,12 +18925,13 @@ UTEST(SingleStepTests_F7, _F7_032C) {
         {.addr=0x0184, .value=0xcd}, {.addr=0x0185, .value=0x71}, {.addr=0x71a8, .value=0xf7},
         {.addr=0x71a9, .value=0x84}, {.addr=0x71d9, .value=0xeb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x71a8, .value=0xf7, .type=IO_READ},
         {.addr=0x71a9, .value=0x84, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0184, .value=0xcd, .type=IO_READ},
         {.addr=0x0185, .value=0x71, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x71d9, .value=0xeb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18160,12 +18949,13 @@ UTEST(SingleStepTests_F7, _F7_032D) {
         {.addr=0x0058, .value=0x3b}, {.addr=0x0059, .value=0x76}, {.addr=0x76da, .value=0xff},
         {.addr=0xc2a7, .value=0xf7}, {.addr=0xc2a8, .value=0x58},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc2a7, .value=0xf7, .type=IO_READ},
         {.addr=0xc2a8, .value=0x58, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0058, .value=0x3b, .type=IO_READ},
         {.addr=0x0059, .value=0x76, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x76da, .value=0xff, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18183,12 +18973,13 @@ UTEST(SingleStepTests_F7, _F7_032E) {
         {.addr=0x0125, .value=0x75}, {.addr=0x0126, .value=0xb4}, {.addr=0xb47e, .value=0xc5},
         {.addr=0xf54f, .value=0xf7}, {.addr=0xf550, .value=0x25},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf54f, .value=0xf7, .type=IO_READ},
         {.addr=0xf550, .value=0x25, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0125, .value=0x75, .type=IO_READ},
         {.addr=0x0126, .value=0xb4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb47e, .value=0xc5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18206,12 +18997,13 @@ UTEST(SingleStepTests_F7, _F7_032F) {
         {.addr=0x01bc, .value=0x00}, {.addr=0x01bd, .value=0x80}, {.addr=0x800d, .value=0xad},
         {.addr=0xe211, .value=0xf7}, {.addr=0xe212, .value=0xbc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe211, .value=0xf7, .type=IO_READ},
         {.addr=0xe212, .value=0xbc, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01bc, .value=0x00, .type=IO_READ},
         {.addr=0x01bd, .value=0x80, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x800d, .value=0xad, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18229,12 +19021,13 @@ UTEST(SingleStepTests_F7, _F7_0330) {
         {.addr=0x009f, .value=0xad}, {.addr=0x00a0, .value=0xbb}, {.addr=0x5608, .value=0xf7},
         {.addr=0x5609, .value=0x9f}, {.addr=0xbbe2, .value=0x37},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5608, .value=0xf7, .type=IO_READ},
         {.addr=0x5609, .value=0x9f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009f, .value=0xad, .type=IO_READ},
         {.addr=0x00a0, .value=0xbb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbbe2, .value=0x37, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18252,12 +19045,13 @@ UTEST(SingleStepTests_F7, _F7_0331) {
         {.addr=0x0006, .value=0x66}, {.addr=0x0007, .value=0x16}, {.addr=0x174f, .value=0x35},
         {.addr=0xc8a4, .value=0xf7}, {.addr=0xc8a5, .value=0x06},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc8a4, .value=0xf7, .type=IO_READ},
         {.addr=0xc8a5, .value=0x06, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0006, .value=0x66, .type=IO_READ},
         {.addr=0x0007, .value=0x16, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x174f, .value=0x35, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18275,12 +19069,13 @@ UTEST(SingleStepTests_F7, _F7_0332) {
         {.addr=0x01c3, .value=0xbd}, {.addr=0x01c4, .value=0xd7}, {.addr=0x2eb7, .value=0xf7},
         {.addr=0x2eb8, .value=0xc3}, {.addr=0xd861, .value=0xf3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2eb7, .value=0xf7, .type=IO_READ},
         {.addr=0x2eb8, .value=0xc3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c3, .value=0xbd, .type=IO_READ},
         {.addr=0x01c4, .value=0xd7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd861, .value=0xf3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18298,12 +19093,13 @@ UTEST(SingleStepTests_F7, _F7_0334) {
         {.addr=0x000a, .value=0x3b}, {.addr=0x000b, .value=0x2a}, {.addr=0x2a56, .value=0x08},
         {.addr=0xe86d, .value=0xf7}, {.addr=0xe86e, .value=0x0a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe86d, .value=0xf7, .type=IO_READ},
         {.addr=0xe86e, .value=0x0a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000a, .value=0x3b, .type=IO_READ},
         {.addr=0x000b, .value=0x2a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2a56, .value=0x08, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18321,12 +19117,13 @@ UTEST(SingleStepTests_F7, _F7_0335) {
         {.addr=0x0086, .value=0x4a}, {.addr=0x0087, .value=0x5a}, {.addr=0x5a4b, .value=0xfa},
         {.addr=0xebc4, .value=0xf7}, {.addr=0xebc5, .value=0x86},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xebc4, .value=0xf7, .type=IO_READ},
         {.addr=0xebc5, .value=0x86, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0086, .value=0x4a, .type=IO_READ},
         {.addr=0x0087, .value=0x5a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5a4b, .value=0xfa, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18344,12 +19141,13 @@ UTEST(SingleStepTests_F7, _F7_0336) {
         {.addr=0x0185, .value=0xb6}, {.addr=0x0186, .value=0x47}, {.addr=0x47f3, .value=0x2b},
         {.addr=0xaa91, .value=0xf7}, {.addr=0xaa92, .value=0x85},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xaa91, .value=0xf7, .type=IO_READ},
         {.addr=0xaa92, .value=0x85, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0185, .value=0xb6, .type=IO_READ},
         {.addr=0x0186, .value=0x47, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x47f3, .value=0x2b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18367,12 +19165,13 @@ UTEST(SingleStepTests_F7, _F7_0337) {
         {.addr=0x01a1, .value=0xbe}, {.addr=0x01a2, .value=0xb5}, {.addr=0x8d29, .value=0xf7},
         {.addr=0x8d2a, .value=0xa1}, {.addr=0xb681, .value=0xed},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8d29, .value=0xf7, .type=IO_READ},
         {.addr=0x8d2a, .value=0xa1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a1, .value=0xbe, .type=IO_READ},
         {.addr=0x01a2, .value=0xb5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb681, .value=0xed, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18390,12 +19189,13 @@ UTEST(SingleStepTests_F7, _F7_0338) {
         {.addr=0x0158, .value=0x2d}, {.addr=0x0159, .value=0x4a}, {.addr=0x4a83, .value=0x1a},
         {.addr=0xb621, .value=0xf7}, {.addr=0xb622, .value=0x58},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb621, .value=0xf7, .type=IO_READ},
         {.addr=0xb622, .value=0x58, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0158, .value=0x2d, .type=IO_READ},
         {.addr=0x0159, .value=0x4a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4a83, .value=0x1a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18413,12 +19213,13 @@ UTEST(SingleStepTests_F7, _F7_0339) {
         {.addr=0x0111, .value=0x66}, {.addr=0x0112, .value=0xd4}, {.addr=0x5440, .value=0xf7},
         {.addr=0x5441, .value=0x11}, {.addr=0xd4e0, .value=0xbc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5440, .value=0xf7, .type=IO_READ},
         {.addr=0x5441, .value=0x11, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0111, .value=0x66, .type=IO_READ},
         {.addr=0x0112, .value=0xd4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd4e0, .value=0xbc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18436,12 +19237,13 @@ UTEST(SingleStepTests_F7, _F7_033A) {
         {.addr=0x0082, .value=0x47}, {.addr=0x0083, .value=0x27}, {.addr=0x274f, .value=0x30},
         {.addr=0xdcdb, .value=0xf7}, {.addr=0xdcdc, .value=0x82},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdcdb, .value=0xf7, .type=IO_READ},
         {.addr=0xdcdc, .value=0x82, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0082, .value=0x47, .type=IO_READ},
         {.addr=0x0083, .value=0x27, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x274f, .value=0x30, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18459,12 +19261,13 @@ UTEST(SingleStepTests_F7, _F7_033B) {
         {.addr=0x0110, .value=0x95}, {.addr=0x0111, .value=0x75}, {.addr=0x1451, .value=0xf7},
         {.addr=0x1452, .value=0x10}, {.addr=0x7645, .value=0x4b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1451, .value=0xf7, .type=IO_READ},
         {.addr=0x1452, .value=0x10, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0110, .value=0x95, .type=IO_READ},
         {.addr=0x0111, .value=0x75, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7645, .value=0x4b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18482,12 +19285,13 @@ UTEST(SingleStepTests_F7, _F7_033C) {
         {.addr=0x01fb, .value=0xb9}, {.addr=0x01fc, .value=0xaa}, {.addr=0xaaf3, .value=0xff},
         {.addr=0xe3d1, .value=0xf7}, {.addr=0xe3d2, .value=0xfb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe3d1, .value=0xf7, .type=IO_READ},
         {.addr=0xe3d2, .value=0xfb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01fb, .value=0xb9, .type=IO_READ},
         {.addr=0x01fc, .value=0xaa, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xaaf3, .value=0xff, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18505,12 +19309,13 @@ UTEST(SingleStepTests_F7, _F7_033D) {
         {.addr=0x01d4, .value=0x6d}, {.addr=0x01d5, .value=0x4e}, {.addr=0x046c, .value=0xf7},
         {.addr=0x046d, .value=0xd4}, {.addr=0x4f1a, .value=0xbf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x046c, .value=0xf7, .type=IO_READ},
         {.addr=0x046d, .value=0xd4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d4, .value=0x6d, .type=IO_READ},
         {.addr=0x01d5, .value=0x4e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4f1a, .value=0xbf, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18528,12 +19333,13 @@ UTEST(SingleStepTests_F7, _F7_033E) {
         {.addr=0x0188, .value=0x7f}, {.addr=0x0189, .value=0x14}, {.addr=0x14a0, .value=0xa4},
         {.addr=0x54d2, .value=0xf7}, {.addr=0x54d3, .value=0x88},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x54d2, .value=0xf7, .type=IO_READ},
         {.addr=0x54d3, .value=0x88, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0188, .value=0x7f, .type=IO_READ},
         {.addr=0x0189, .value=0x14, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x14a0, .value=0xa4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18551,12 +19357,13 @@ UTEST(SingleStepTests_F7, _F7_033F) {
         {.addr=0x0001, .value=0xd1}, {.addr=0x0002, .value=0x0e}, {.addr=0x0faa, .value=0x6d},
         {.addr=0xa320, .value=0xf7}, {.addr=0xa321, .value=0x01},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa320, .value=0xf7, .type=IO_READ},
         {.addr=0xa321, .value=0x01, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0001, .value=0xd1, .type=IO_READ},
         {.addr=0x0002, .value=0x0e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0faa, .value=0x6d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18574,12 +19381,13 @@ UTEST(SingleStepTests_F7, _F7_0340) {
         {.addr=0x0174, .value=0x2a}, {.addr=0x0175, .value=0x01}, {.addr=0x01d6, .value=0xd5},
         {.addr=0x501b, .value=0xf7}, {.addr=0x501c, .value=0x74},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x501b, .value=0xf7, .type=IO_READ},
         {.addr=0x501c, .value=0x74, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0174, .value=0x2a, .type=IO_READ},
         {.addr=0x0175, .value=0x01, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01d6, .value=0xd5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18597,12 +19405,13 @@ UTEST(SingleStepTests_F7, _F7_0341) {
         {.addr=0x0106, .value=0xc9}, {.addr=0x0107, .value=0xe9}, {.addr=0x8657, .value=0xf7},
         {.addr=0x8658, .value=0x06}, {.addr=0xe9ff, .value=0x8d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8657, .value=0xf7, .type=IO_READ},
         {.addr=0x8658, .value=0x06, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0106, .value=0xc9, .type=IO_READ},
         {.addr=0x0107, .value=0xe9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe9ff, .value=0x8d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18620,12 +19429,13 @@ UTEST(SingleStepTests_F7, _F7_0342) {
         {.addr=0x01b9, .value=0x7b}, {.addr=0x01ba, .value=0x44}, {.addr=0x35e1, .value=0xf7},
         {.addr=0x35e2, .value=0xb9}, {.addr=0x4483, .value=0x34},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x35e1, .value=0xf7, .type=IO_READ},
         {.addr=0x35e2, .value=0xb9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b9, .value=0x7b, .type=IO_READ},
         {.addr=0x01ba, .value=0x44, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4483, .value=0x34, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18643,12 +19453,13 @@ UTEST(SingleStepTests_F7, _F7_0343) {
         {.addr=0x011c, .value=0x8a}, {.addr=0x011d, .value=0xe9}, {.addr=0xb48d, .value=0xf7},
         {.addr=0xb48e, .value=0x1c}, {.addr=0xea2b, .value=0xbd},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb48d, .value=0xf7, .type=IO_READ},
         {.addr=0xb48e, .value=0x1c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x011c, .value=0x8a, .type=IO_READ},
         {.addr=0x011d, .value=0xe9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xea2b, .value=0xbd, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18666,12 +19477,13 @@ UTEST(SingleStepTests_F7, _F7_0344) {
         {.addr=0x008a, .value=0xb8}, {.addr=0x008b, .value=0x8e}, {.addr=0x8ee9, .value=0x09},
         {.addr=0xfd75, .value=0xf7}, {.addr=0xfd76, .value=0x8a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfd75, .value=0xf7, .type=IO_READ},
         {.addr=0xfd76, .value=0x8a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x008a, .value=0xb8, .type=IO_READ},
         {.addr=0x008b, .value=0x8e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8ee9, .value=0x09, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18689,12 +19501,13 @@ UTEST(SingleStepTests_F7, _F7_0345) {
         {.addr=0x0140, .value=0xce}, {.addr=0x0141, .value=0x62}, {.addr=0x62ee, .value=0x67},
         {.addr=0xa0ba, .value=0xf7}, {.addr=0xa0bb, .value=0x40},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa0ba, .value=0xf7, .type=IO_READ},
         {.addr=0xa0bb, .value=0x40, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0140, .value=0xce, .type=IO_READ},
         {.addr=0x0141, .value=0x62, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x62ee, .value=0x67, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18712,12 +19525,13 @@ UTEST(SingleStepTests_F7, _F7_0346) {
         {.addr=0x00cf, .value=0x6e}, {.addr=0x00d0, .value=0xb0}, {.addr=0xb0f8, .value=0xae},
         {.addr=0xc67d, .value=0xf7}, {.addr=0xc67e, .value=0xcf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc67d, .value=0xf7, .type=IO_READ},
         {.addr=0xc67e, .value=0xcf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00cf, .value=0x6e, .type=IO_READ},
         {.addr=0x00d0, .value=0xb0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb0f8, .value=0xae, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18735,12 +19549,13 @@ UTEST(SingleStepTests_F7, _F7_0347) {
         {.addr=0x01e2, .value=0xec}, {.addr=0x01e3, .value=0x2f}, {.addr=0x0260, .value=0xf7},
         {.addr=0x0261, .value=0xe2}, {.addr=0x30e4, .value=0xc3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0260, .value=0xf7, .type=IO_READ},
         {.addr=0x0261, .value=0xe2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e2, .value=0xec, .type=IO_READ},
         {.addr=0x01e3, .value=0x2f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x30e4, .value=0xc3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18758,12 +19573,13 @@ UTEST(SingleStepTests_F7, _F7_0348) {
         {.addr=0x016d, .value=0x43}, {.addr=0x016e, .value=0x67}, {.addr=0x53a5, .value=0xf7},
         {.addr=0x53a6, .value=0x6d}, {.addr=0x67d0, .value=0xd8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x53a5, .value=0xf7, .type=IO_READ},
         {.addr=0x53a6, .value=0x6d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016d, .value=0x43, .type=IO_READ},
         {.addr=0x016e, .value=0x67, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x67d0, .value=0xd8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18781,12 +19597,13 @@ UTEST(SingleStepTests_F7, _F7_0349) {
         {.addr=0x0065, .value=0x82}, {.addr=0x0066, .value=0xa4}, {.addr=0x899b, .value=0xf7},
         {.addr=0x899c, .value=0x65}, {.addr=0xa542, .value=0xe6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x899b, .value=0xf7, .type=IO_READ},
         {.addr=0x899c, .value=0x65, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0065, .value=0x82, .type=IO_READ},
         {.addr=0x0066, .value=0xa4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa542, .value=0xe6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18804,12 +19621,13 @@ UTEST(SingleStepTests_F7, _F7_034A) {
         {.addr=0x0089, .value=0x5c}, {.addr=0x008a, .value=0x34}, {.addr=0x3514, .value=0x0e},
         {.addr=0xda84, .value=0xf7}, {.addr=0xda85, .value=0x89},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xda84, .value=0xf7, .type=IO_READ},
         {.addr=0xda85, .value=0x89, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0089, .value=0x5c, .type=IO_READ},
         {.addr=0x008a, .value=0x34, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3514, .value=0x0e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18827,12 +19645,13 @@ UTEST(SingleStepTests_F7, _F7_034C) {
         {.addr=0x01ac, .value=0xfb}, {.addr=0x01ad, .value=0xe0}, {.addr=0x9ac3, .value=0xf7},
         {.addr=0x9ac4, .value=0xac}, {.addr=0xe1d1, .value=0x49},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9ac3, .value=0xf7, .type=IO_READ},
         {.addr=0x9ac4, .value=0xac, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ac, .value=0xfb, .type=IO_READ},
         {.addr=0x01ad, .value=0xe0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe1d1, .value=0x49, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18850,12 +19669,13 @@ UTEST(SingleStepTests_F7, _F7_034D) {
         {.addr=0x01da, .value=0x26}, {.addr=0x01db, .value=0x36}, {.addr=0x36b0, .value=0x00},
         {.addr=0xca2d, .value=0xf7}, {.addr=0xca2e, .value=0xda},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xca2d, .value=0xf7, .type=IO_READ},
         {.addr=0xca2e, .value=0xda, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01da, .value=0x26, .type=IO_READ},
         {.addr=0x01db, .value=0x36, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x36b0, .value=0x00, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18873,12 +19693,13 @@ UTEST(SingleStepTests_F7, _F7_034F) {
         {.addr=0x0146, .value=0x2d}, {.addr=0x0147, .value=0x5a}, {.addr=0x5a7b, .value=0x49},
         {.addr=0x9068, .value=0xf7}, {.addr=0x9069, .value=0x46},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9068, .value=0xf7, .type=IO_READ},
         {.addr=0x9069, .value=0x46, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0146, .value=0x2d, .type=IO_READ},
         {.addr=0x0147, .value=0x5a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5a7b, .value=0x49, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18896,12 +19717,13 @@ UTEST(SingleStepTests_F7, _F7_0350) {
         {.addr=0x00c7, .value=0x73}, {.addr=0x00c8, .value=0xf1}, {.addr=0x967a, .value=0xf7},
         {.addr=0x967b, .value=0xc7}, {.addr=0xf1b8, .value=0x24},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x967a, .value=0xf7, .type=IO_READ},
         {.addr=0x967b, .value=0xc7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c7, .value=0x73, .type=IO_READ},
         {.addr=0x00c8, .value=0xf1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf1b8, .value=0x24, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18919,12 +19741,13 @@ UTEST(SingleStepTests_F7, _F7_0351) {
         {.addr=0x0015, .value=0xbd}, {.addr=0x0016, .value=0xbf}, {.addr=0x19e4, .value=0xf7},
         {.addr=0x19e5, .value=0x15}, {.addr=0xc048, .value=0x8a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x19e4, .value=0xf7, .type=IO_READ},
         {.addr=0x19e5, .value=0x15, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0015, .value=0xbd, .type=IO_READ},
         {.addr=0x0016, .value=0xbf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc048, .value=0x8a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18942,12 +19765,13 @@ UTEST(SingleStepTests_F7, _F7_0352) {
         {.addr=0x002b, .value=0x35}, {.addr=0x002c, .value=0x2e}, {.addr=0x2e9c, .value=0x9f},
         {.addr=0xc3a9, .value=0xf7}, {.addr=0xc3aa, .value=0x2b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc3a9, .value=0xf7, .type=IO_READ},
         {.addr=0xc3aa, .value=0x2b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002b, .value=0x35, .type=IO_READ},
         {.addr=0x002c, .value=0x2e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2e9c, .value=0x9f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18965,12 +19789,13 @@ UTEST(SingleStepTests_F7, _F7_0353) {
         {.addr=0x0034, .value=0x08}, {.addr=0x0035, .value=0x2c}, {.addr=0x2299, .value=0xf7},
         {.addr=0x229a, .value=0x34}, {.addr=0x2c25, .value=0xa7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2299, .value=0xf7, .type=IO_READ},
         {.addr=0x229a, .value=0x34, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0034, .value=0x08, .type=IO_READ},
         {.addr=0x0035, .value=0x2c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2c25, .value=0xa7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -18988,12 +19813,13 @@ UTEST(SingleStepTests_F7, _F7_0354) {
         {.addr=0x0005, .value=0xc7}, {.addr=0x0006, .value=0x6f}, {.addr=0x1f1e, .value=0xf7},
         {.addr=0x1f1f, .value=0x05}, {.addr=0x7031, .value=0xd7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1f1e, .value=0xf7, .type=IO_READ},
         {.addr=0x1f1f, .value=0x05, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0005, .value=0xc7, .type=IO_READ},
         {.addr=0x0006, .value=0x6f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7031, .value=0xd7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19011,12 +19837,13 @@ UTEST(SingleStepTests_F7, _F7_0355) {
         {.addr=0x017e, .value=0xca}, {.addr=0x017f, .value=0x22}, {.addr=0x236e, .value=0xf7},
         {.addr=0xe2c0, .value=0xf7}, {.addr=0xe2c1, .value=0x7e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe2c0, .value=0xf7, .type=IO_READ},
         {.addr=0xe2c1, .value=0x7e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x017e, .value=0xca, .type=IO_READ},
         {.addr=0x017f, .value=0x22, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x236e, .value=0xf7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19034,12 +19861,13 @@ UTEST(SingleStepTests_F7, _F7_0356) {
         {.addr=0x0162, .value=0xcd}, {.addr=0x0163, .value=0xf6}, {.addr=0x7c3c, .value=0xf7},
         {.addr=0x7c3d, .value=0x62}, {.addr=0xf77d, .value=0x9e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7c3c, .value=0xf7, .type=IO_READ},
         {.addr=0x7c3d, .value=0x62, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0162, .value=0xcd, .type=IO_READ},
         {.addr=0x0163, .value=0xf6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf77d, .value=0x9e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19057,12 +19885,13 @@ UTEST(SingleStepTests_F7, _F7_0357) {
         {.addr=0x003e, .value=0xb7}, {.addr=0x003f, .value=0xb2}, {.addr=0x0c96, .value=0xf7},
         {.addr=0x0c97, .value=0x3e}, {.addr=0xb323, .value=0xa5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0c96, .value=0xf7, .type=IO_READ},
         {.addr=0x0c97, .value=0x3e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x003e, .value=0xb7, .type=IO_READ},
         {.addr=0x003f, .value=0xb2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb323, .value=0xa5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19080,12 +19909,13 @@ UTEST(SingleStepTests_F7, _F7_0358) {
         {.addr=0x01df, .value=0x4c}, {.addr=0x01e0, .value=0x2f}, {.addr=0x302d, .value=0xa6},
         {.addr=0xed64, .value=0xf7}, {.addr=0xed65, .value=0xdf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xed64, .value=0xf7, .type=IO_READ},
         {.addr=0xed65, .value=0xdf, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01df, .value=0x4c, .type=IO_READ},
         {.addr=0x01e0, .value=0x2f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x302d, .value=0xa6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19103,12 +19933,13 @@ UTEST(SingleStepTests_F7, _F7_0359) {
         {.addr=0x00b4, .value=0x72}, {.addr=0x00b5, .value=0x68}, {.addr=0x0b89, .value=0xf7},
         {.addr=0x0b8a, .value=0xb4}, {.addr=0x68af, .value=0xf9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0b89, .value=0xf7, .type=IO_READ},
         {.addr=0x0b8a, .value=0xb4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00b4, .value=0x72, .type=IO_READ},
         {.addr=0x00b5, .value=0x68, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x68af, .value=0xf9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19126,12 +19957,13 @@ UTEST(SingleStepTests_F7, _F7_035A) {
         {.addr=0x01cb, .value=0x45}, {.addr=0x01cc, .value=0x15}, {.addr=0x1592, .value=0x30},
         {.addr=0xcfec, .value=0xf7}, {.addr=0xcfed, .value=0xcb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcfec, .value=0xf7, .type=IO_READ},
         {.addr=0xcfed, .value=0xcb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01cb, .value=0x45, .type=IO_READ},
         {.addr=0x01cc, .value=0x15, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1592, .value=0x30, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19149,12 +19981,13 @@ UTEST(SingleStepTests_F7, _F7_035B) {
         {.addr=0x0149, .value=0x64}, {.addr=0x014a, .value=0x69}, {.addr=0x5f61, .value=0xf7},
         {.addr=0x5f62, .value=0x49}, {.addr=0x6a52, .value=0x07},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5f61, .value=0xf7, .type=IO_READ},
         {.addr=0x5f62, .value=0x49, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0149, .value=0x64, .type=IO_READ},
         {.addr=0x014a, .value=0x69, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6a52, .value=0x07, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19172,12 +20005,13 @@ UTEST(SingleStepTests_F7, _F7_035C) {
         {.addr=0x0169, .value=0xda}, {.addr=0x016a, .value=0xc5}, {.addr=0xc65b, .value=0xa5},
         {.addr=0xf822, .value=0xf7}, {.addr=0xf823, .value=0x69},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf822, .value=0xf7, .type=IO_READ},
         {.addr=0xf823, .value=0x69, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0169, .value=0xda, .type=IO_READ},
         {.addr=0x016a, .value=0xc5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc65b, .value=0xa5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19195,12 +20029,13 @@ UTEST(SingleStepTests_F7, _F7_035D) {
         {.addr=0x00a8, .value=0x40}, {.addr=0x00a9, .value=0x30}, {.addr=0x0cf8, .value=0xf7},
         {.addr=0x0cf9, .value=0xa8}, {.addr=0x30b8, .value=0xd9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0cf8, .value=0xf7, .type=IO_READ},
         {.addr=0x0cf9, .value=0xa8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a8, .value=0x40, .type=IO_READ},
         {.addr=0x00a9, .value=0x30, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x30b8, .value=0xd9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19218,12 +20053,13 @@ UTEST(SingleStepTests_F7, _F7_035E) {
         {.addr=0x0023, .value=0x89}, {.addr=0x0024, .value=0xd0}, {.addr=0x30e8, .value=0xf7},
         {.addr=0x30e9, .value=0x23}, {.addr=0xd16d, .value=0x6b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x30e8, .value=0xf7, .type=IO_READ},
         {.addr=0x30e9, .value=0x23, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0023, .value=0x89, .type=IO_READ},
         {.addr=0x0024, .value=0xd0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd16d, .value=0x6b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19241,12 +20077,13 @@ UTEST(SingleStepTests_F7, _F7_035F) {
         {.addr=0x001e, .value=0x62}, {.addr=0x001f, .value=0xd0}, {.addr=0xd0ef, .value=0x55},
         {.addr=0xd818, .value=0xf7}, {.addr=0xd819, .value=0x1e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd818, .value=0xf7, .type=IO_READ},
         {.addr=0xd819, .value=0x1e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x001e, .value=0x62, .type=IO_READ},
         {.addr=0x001f, .value=0xd0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd0ef, .value=0x55, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19264,12 +20101,13 @@ UTEST(SingleStepTests_F7, _F7_0360) {
         {.addr=0x01f3, .value=0x50}, {.addr=0x01f4, .value=0xdb}, {.addr=0xdb83, .value=0x19},
         {.addr=0xedbe, .value=0xf7}, {.addr=0xedbf, .value=0xf3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xedbe, .value=0xf7, .type=IO_READ},
         {.addr=0xedbf, .value=0xf3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f3, .value=0x50, .type=IO_READ},
         {.addr=0x01f4, .value=0xdb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdb83, .value=0x19, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19287,12 +20125,13 @@ UTEST(SingleStepTests_F7, _F7_0361) {
         {.addr=0x0089, .value=0xc3}, {.addr=0x008a, .value=0x06}, {.addr=0x06ca, .value=0x6f},
         {.addr=0xbc64, .value=0xf7}, {.addr=0xbc65, .value=0x89},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbc64, .value=0xf7, .type=IO_READ},
         {.addr=0xbc65, .value=0x89, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0089, .value=0xc3, .type=IO_READ},
         {.addr=0x008a, .value=0x06, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x06ca, .value=0x6f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19310,12 +20149,13 @@ UTEST(SingleStepTests_F7, _F7_0362) {
         {.addr=0x00e8, .value=0xf4}, {.addr=0x00e9, .value=0x48}, {.addr=0x105c, .value=0xf7},
         {.addr=0x105d, .value=0xe8}, {.addr=0x4960, .value=0x65},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x105c, .value=0xf7, .type=IO_READ},
         {.addr=0x105d, .value=0xe8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e8, .value=0xf4, .type=IO_READ},
         {.addr=0x00e9, .value=0x48, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4960, .value=0x65, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19333,12 +20173,13 @@ UTEST(SingleStepTests_F7, _F7_0363) {
         {.addr=0x0187, .value=0x2a}, {.addr=0x0188, .value=0xfb}, {.addr=0x2b00, .value=0xf7},
         {.addr=0x2b01, .value=0x87}, {.addr=0xfb66, .value=0xb2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2b00, .value=0xf7, .type=IO_READ},
         {.addr=0x2b01, .value=0x87, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0187, .value=0x2a, .type=IO_READ},
         {.addr=0x0188, .value=0xfb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfb66, .value=0xb2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19356,12 +20197,13 @@ UTEST(SingleStepTests_F7, _F7_0364) {
         {.addr=0x0071, .value=0x8a}, {.addr=0x0072, .value=0xb5}, {.addr=0xb5b2, .value=0xe5},
         {.addr=0xd7c4, .value=0xf7}, {.addr=0xd7c5, .value=0x71},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd7c4, .value=0xf7, .type=IO_READ},
         {.addr=0xd7c5, .value=0x71, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0071, .value=0x8a, .type=IO_READ},
         {.addr=0x0072, .value=0xb5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb5b2, .value=0xe5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19379,12 +20221,13 @@ UTEST(SingleStepTests_F7, _F7_0365) {
         {.addr=0x0022, .value=0x1e}, {.addr=0x0023, .value=0x0b}, {.addr=0x0b9c, .value=0xc9},
         {.addr=0xa03f, .value=0xf7}, {.addr=0xa040, .value=0x22},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa03f, .value=0xf7, .type=IO_READ},
         {.addr=0xa040, .value=0x22, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0022, .value=0x1e, .type=IO_READ},
         {.addr=0x0023, .value=0x0b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0b9c, .value=0xc9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19402,12 +20245,13 @@ UTEST(SingleStepTests_F7, _F7_0366) {
         {.addr=0x019a, .value=0xfd}, {.addr=0x019b, .value=0xc9}, {.addr=0xcaec, .value=0x95},
         {.addr=0xdc60, .value=0xf7}, {.addr=0xdc61, .value=0x9a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xdc60, .value=0xf7, .type=IO_READ},
         {.addr=0xdc61, .value=0x9a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019a, .value=0xfd, .type=IO_READ},
         {.addr=0x019b, .value=0xc9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xcaec, .value=0x95, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19425,12 +20269,13 @@ UTEST(SingleStepTests_F7, _F7_0367) {
         {.addr=0x0099, .value=0x17}, {.addr=0x009a, .value=0xe0}, {.addr=0xc4cc, .value=0xf7},
         {.addr=0xc4cd, .value=0x99}, {.addr=0xe0e7, .value=0x88},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc4cc, .value=0xf7, .type=IO_READ},
         {.addr=0xc4cd, .value=0x99, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0099, .value=0x17, .type=IO_READ},
         {.addr=0x009a, .value=0xe0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe0e7, .value=0x88, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19448,12 +20293,13 @@ UTEST(SingleStepTests_F7, _F7_0368) {
         {.addr=0x01e3, .value=0xf0}, {.addr=0x01e4, .value=0xb7}, {.addr=0xb7f5, .value=0x27},
         {.addr=0xe847, .value=0xf7}, {.addr=0xe848, .value=0xe3},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe847, .value=0xf7, .type=IO_READ},
         {.addr=0xe848, .value=0xe3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e3, .value=0xf0, .type=IO_READ},
         {.addr=0x01e4, .value=0xb7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb7f5, .value=0x27, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19471,12 +20317,13 @@ UTEST(SingleStepTests_F7, _F7_0369) {
         {.addr=0x01e8, .value=0xb3}, {.addr=0x01e9, .value=0x54}, {.addr=0x5536, .value=0xa9},
         {.addr=0x995d, .value=0xf7}, {.addr=0x995e, .value=0xe8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x995d, .value=0xf7, .type=IO_READ},
         {.addr=0x995e, .value=0xe8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e8, .value=0xb3, .type=IO_READ},
         {.addr=0x01e9, .value=0x54, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5536, .value=0xa9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19494,12 +20341,13 @@ UTEST(SingleStepTests_F7, _F7_036A) {
         {.addr=0x01e3, .value=0x85}, {.addr=0x01e4, .value=0xdb}, {.addr=0x7383, .value=0xf7},
         {.addr=0x7384, .value=0xe3}, {.addr=0xdc78, .value=0x12},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7383, .value=0xf7, .type=IO_READ},
         {.addr=0x7384, .value=0xe3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e3, .value=0x85, .type=IO_READ},
         {.addr=0x01e4, .value=0xdb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdc78, .value=0x12, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19517,12 +20365,13 @@ UTEST(SingleStepTests_F7, _F7_036B) {
         {.addr=0x00d0, .value=0xcf}, {.addr=0x00d1, .value=0x1b}, {.addr=0x1c20, .value=0xa9},
         {.addr=0xc975, .value=0xf7}, {.addr=0xc976, .value=0xd0},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc975, .value=0xf7, .type=IO_READ},
         {.addr=0xc976, .value=0xd0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d0, .value=0xcf, .type=IO_READ},
         {.addr=0x00d1, .value=0x1b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1c20, .value=0xa9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19540,12 +20389,13 @@ UTEST(SingleStepTests_F7, _F7_036C) {
         {.addr=0x01dc, .value=0xd1}, {.addr=0x01dd, .value=0x4f}, {.addr=0x2701, .value=0xf7},
         {.addr=0x2702, .value=0xdc}, {.addr=0x4fd1, .value=0x6c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2701, .value=0xf7, .type=IO_READ},
         {.addr=0x2702, .value=0xdc, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01dc, .value=0xd1, .type=IO_READ},
         {.addr=0x01dd, .value=0x4f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4fd1, .value=0x6c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19563,12 +20413,13 @@ UTEST(SingleStepTests_F7, _F7_036D) {
         {.addr=0x0131, .value=0xe1}, {.addr=0x0132, .value=0xce}, {.addr=0xcf8a, .value=0x68},
         {.addr=0xedca, .value=0xf7}, {.addr=0xedcb, .value=0x31},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xedca, .value=0xf7, .type=IO_READ},
         {.addr=0xedcb, .value=0x31, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0131, .value=0xe1, .type=IO_READ},
         {.addr=0x0132, .value=0xce, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xcf8a, .value=0x68, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19586,12 +20437,13 @@ UTEST(SingleStepTests_F7, _F7_036E) {
         {.addr=0x00c4, .value=0x68}, {.addr=0x00c5, .value=0xba}, {.addr=0xbacf, .value=0x1f},
         {.addr=0xbef5, .value=0xf7}, {.addr=0xbef6, .value=0xc4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbef5, .value=0xf7, .type=IO_READ},
         {.addr=0xbef6, .value=0xc4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c4, .value=0x68, .type=IO_READ},
         {.addr=0x00c5, .value=0xba, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbacf, .value=0x1f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19609,12 +20461,13 @@ UTEST(SingleStepTests_F7, _F7_036F) {
         {.addr=0x011a, .value=0xa4}, {.addr=0x011b, .value=0x35}, {.addr=0x362a, .value=0xdd},
         {.addr=0x3da1, .value=0xf7}, {.addr=0x3da2, .value=0x1a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3da1, .value=0xf7, .type=IO_READ},
         {.addr=0x3da2, .value=0x1a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x011a, .value=0xa4, .type=IO_READ},
         {.addr=0x011b, .value=0x35, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x362a, .value=0xdd, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19632,12 +20485,13 @@ UTEST(SingleStepTests_F7, _F7_0370) {
         {.addr=0x0084, .value=0xfa}, {.addr=0x0085, .value=0x99}, {.addr=0x5d5d, .value=0xf7},
         {.addr=0x5d5e, .value=0x84}, {.addr=0x9add, .value=0xfa},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5d5d, .value=0xf7, .type=IO_READ},
         {.addr=0x5d5e, .value=0x84, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0084, .value=0xfa, .type=IO_READ},
         {.addr=0x0085, .value=0x99, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9add, .value=0xfa, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19655,12 +20509,13 @@ UTEST(SingleStepTests_F7, _F7_0371) {
         {.addr=0x01e1, .value=0x6f}, {.addr=0x01e2, .value=0x11}, {.addr=0x11ba, .value=0x5a},
         {.addr=0xd9c3, .value=0xf7}, {.addr=0xd9c4, .value=0xe1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd9c3, .value=0xf7, .type=IO_READ},
         {.addr=0xd9c4, .value=0xe1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e1, .value=0x6f, .type=IO_READ},
         {.addr=0x01e2, .value=0x11, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x11ba, .value=0x5a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19678,12 +20533,13 @@ UTEST(SingleStepTests_F7, _F7_0372) {
         {.addr=0x0168, .value=0x4b}, {.addr=0x0169, .value=0xca}, {.addr=0x5b01, .value=0xf7},
         {.addr=0x5b02, .value=0x68}, {.addr=0xcac5, .value=0xc6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5b01, .value=0xf7, .type=IO_READ},
         {.addr=0x5b02, .value=0x68, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0168, .value=0x4b, .type=IO_READ},
         {.addr=0x0169, .value=0xca, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xcac5, .value=0xc6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19701,12 +20557,13 @@ UTEST(SingleStepTests_F7, _F7_0373) {
         {.addr=0x0126, .value=0xc2}, {.addr=0x0127, .value=0x94}, {.addr=0x3664, .value=0xf7},
         {.addr=0x3665, .value=0x26}, {.addr=0x956e, .value=0x7d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3664, .value=0xf7, .type=IO_READ},
         {.addr=0x3665, .value=0x26, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0126, .value=0xc2, .type=IO_READ},
         {.addr=0x0127, .value=0x94, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x956e, .value=0x7d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19724,12 +20581,13 @@ UTEST(SingleStepTests_F7, _F7_0374) {
         {.addr=0x0081, .value=0x2c}, {.addr=0x0082, .value=0x9a}, {.addr=0x6498, .value=0xf7},
         {.addr=0x6499, .value=0x81}, {.addr=0x9a6e, .value=0x0b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6498, .value=0xf7, .type=IO_READ},
         {.addr=0x6499, .value=0x81, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0081, .value=0x2c, .type=IO_READ},
         {.addr=0x0082, .value=0x9a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9a6e, .value=0x0b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19747,12 +20605,13 @@ UTEST(SingleStepTests_F7, _F7_0375) {
         {.addr=0x0038, .value=0x2c}, {.addr=0x0039, .value=0xdb}, {.addr=0xdb40, .value=0x9d},
         {.addr=0xff8d, .value=0xf7}, {.addr=0xff8e, .value=0x38},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xff8d, .value=0xf7, .type=IO_READ},
         {.addr=0xff8e, .value=0x38, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0038, .value=0x2c, .type=IO_READ},
         {.addr=0x0039, .value=0xdb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xdb40, .value=0x9d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19770,12 +20629,13 @@ UTEST(SingleStepTests_F7, _F7_0376) {
         {.addr=0x00d2, .value=0x57}, {.addr=0x00d3, .value=0x4b}, {.addr=0x162b, .value=0xf7},
         {.addr=0x162c, .value=0xd2}, {.addr=0x4c22, .value=0x7f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x162b, .value=0xf7, .type=IO_READ},
         {.addr=0x162c, .value=0xd2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d2, .value=0x57, .type=IO_READ},
         {.addr=0x00d3, .value=0x4b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4c22, .value=0x7f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19793,12 +20653,13 @@ UTEST(SingleStepTests_F7, _F7_0377) {
         {.addr=0x0031, .value=0xe7}, {.addr=0x0032, .value=0xb7}, {.addr=0xb87d, .value=0xf1},
         {.addr=0xf148, .value=0xf7}, {.addr=0xf149, .value=0x31},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf148, .value=0xf7, .type=IO_READ},
         {.addr=0xf149, .value=0x31, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0031, .value=0xe7, .type=IO_READ},
         {.addr=0x0032, .value=0xb7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb87d, .value=0xf1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19816,12 +20677,13 @@ UTEST(SingleStepTests_F7, _F7_0378) {
         {.addr=0x019f, .value=0xde}, {.addr=0x01a0, .value=0xd8}, {.addr=0xab0b, .value=0xf7},
         {.addr=0xab0c, .value=0x9f}, {.addr=0xd9d8, .value=0xeb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xab0b, .value=0xf7, .type=IO_READ},
         {.addr=0xab0c, .value=0x9f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019f, .value=0xde, .type=IO_READ},
         {.addr=0x01a0, .value=0xd8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd9d8, .value=0xeb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19839,12 +20701,13 @@ UTEST(SingleStepTests_F7, _F7_0379) {
         {.addr=0x00c6, .value=0x6e}, {.addr=0x00c7, .value=0x74}, {.addr=0x7559, .value=0x29},
         {.addr=0xf0dc, .value=0xf7}, {.addr=0xf0dd, .value=0xc6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf0dc, .value=0xf7, .type=IO_READ},
         {.addr=0xf0dd, .value=0xc6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c6, .value=0x6e, .type=IO_READ},
         {.addr=0x00c7, .value=0x74, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7559, .value=0x29, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19862,12 +20725,13 @@ UTEST(SingleStepTests_F7, _F7_037A) {
         {.addr=0x0150, .value=0xc2}, {.addr=0x0151, .value=0xbe}, {.addr=0x6bfb, .value=0xf7},
         {.addr=0x6bfc, .value=0x50}, {.addr=0xbf21, .value=0x6e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6bfb, .value=0xf7, .type=IO_READ},
         {.addr=0x6bfc, .value=0x50, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0150, .value=0xc2, .type=IO_READ},
         {.addr=0x0151, .value=0xbe, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbf21, .value=0x6e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19885,12 +20749,13 @@ UTEST(SingleStepTests_F7, _F7_037B) {
         {.addr=0x019f, .value=0x77}, {.addr=0x01a0, .value=0x0b}, {.addr=0x0b7a, .value=0x9e},
         {.addr=0x8b55, .value=0xf7}, {.addr=0x8b56, .value=0x9f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8b55, .value=0xf7, .type=IO_READ},
         {.addr=0x8b56, .value=0x9f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019f, .value=0x77, .type=IO_READ},
         {.addr=0x01a0, .value=0x0b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0b7a, .value=0x9e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19908,12 +20773,13 @@ UTEST(SingleStepTests_F7, _F7_037C) {
         {.addr=0x00bd, .value=0x80}, {.addr=0x00be, .value=0x91}, {.addr=0x27b3, .value=0xf7},
         {.addr=0x27b4, .value=0xbd}, {.addr=0x9231, .value=0x5c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x27b3, .value=0xf7, .type=IO_READ},
         {.addr=0x27b4, .value=0xbd, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00bd, .value=0x80, .type=IO_READ},
         {.addr=0x00be, .value=0x91, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9231, .value=0x5c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19931,12 +20797,13 @@ UTEST(SingleStepTests_F7, _F7_037D) {
         {.addr=0x01e2, .value=0x92}, {.addr=0x01e3, .value=0x49}, {.addr=0x33e8, .value=0xf7},
         {.addr=0x33e9, .value=0xe2}, {.addr=0x49cc, .value=0x2c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x33e8, .value=0xf7, .type=IO_READ},
         {.addr=0x33e9, .value=0xe2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e2, .value=0x92, .type=IO_READ},
         {.addr=0x01e3, .value=0x49, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x49cc, .value=0x2c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19954,12 +20821,13 @@ UTEST(SingleStepTests_F7, _F7_037E) {
         {.addr=0x0089, .value=0x75}, {.addr=0x008a, .value=0x14}, {.addr=0x14a1, .value=0x70},
         {.addr=0xcf74, .value=0xf7}, {.addr=0xcf75, .value=0x89},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcf74, .value=0xf7, .type=IO_READ},
         {.addr=0xcf75, .value=0x89, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0089, .value=0x75, .type=IO_READ},
         {.addr=0x008a, .value=0x14, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x14a1, .value=0x70, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -19977,12 +20845,13 @@ UTEST(SingleStepTests_F7, _F7_037F) {
         {.addr=0x0020, .value=0x25}, {.addr=0x0021, .value=0xcd}, {.addr=0xcd2e, .value=0xd6},
         {.addr=0xe42b, .value=0xf7}, {.addr=0xe42c, .value=0x20},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe42b, .value=0xf7, .type=IO_READ},
         {.addr=0xe42c, .value=0x20, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0020, .value=0x25, .type=IO_READ},
         {.addr=0x0021, .value=0xcd, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xcd2e, .value=0xd6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20000,12 +20869,13 @@ UTEST(SingleStepTests_F7, _F7_0380) {
         {.addr=0x019b, .value=0xc7}, {.addr=0x019c, .value=0x29}, {.addr=0x2aaa, .value=0xe8},
         {.addr=0x7d54, .value=0xf7}, {.addr=0x7d55, .value=0x9b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x7d54, .value=0xf7, .type=IO_READ},
         {.addr=0x7d55, .value=0x9b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019b, .value=0xc7, .type=IO_READ},
         {.addr=0x019c, .value=0x29, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2aaa, .value=0xe8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20023,12 +20893,13 @@ UTEST(SingleStepTests_F7, _F7_0381) {
         {.addr=0x012e, .value=0x3e}, {.addr=0x012f, .value=0x59}, {.addr=0x59b0, .value=0xa3},
         {.addr=0x8cb4, .value=0xf7}, {.addr=0x8cb5, .value=0x2e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8cb4, .value=0xf7, .type=IO_READ},
         {.addr=0x8cb5, .value=0x2e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x012e, .value=0x3e, .type=IO_READ},
         {.addr=0x012f, .value=0x59, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x59b0, .value=0xa3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20046,12 +20917,13 @@ UTEST(SingleStepTests_F7, _F7_0383) {
         {.addr=0x012b, .value=0x83}, {.addr=0x012c, .value=0xab}, {.addr=0x3113, .value=0xf7},
         {.addr=0x3114, .value=0x2b}, {.addr=0xac35, .value=0x9c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3113, .value=0xf7, .type=IO_READ},
         {.addr=0x3114, .value=0x2b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x012b, .value=0x83, .type=IO_READ},
         {.addr=0x012c, .value=0xab, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xac35, .value=0x9c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20069,12 +20941,13 @@ UTEST(SingleStepTests_F7, _F7_0384) {
         {.addr=0x0002, .value=0x6b}, {.addr=0x0003, .value=0xf5}, {.addr=0x54d8, .value=0xf7},
         {.addr=0x54d9, .value=0x02}, {.addr=0xf65e, .value=0x0c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x54d8, .value=0xf7, .type=IO_READ},
         {.addr=0x54d9, .value=0x02, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0002, .value=0x6b, .type=IO_READ},
         {.addr=0x0003, .value=0xf5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf65e, .value=0x0c, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20092,12 +20965,13 @@ UTEST(SingleStepTests_F7, _F7_0385) {
         {.addr=0x014f, .value=0xb4}, {.addr=0x0150, .value=0x79}, {.addr=0x341a, .value=0xf7},
         {.addr=0x341b, .value=0x4f}, {.addr=0x7aa3, .value=0xf4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x341a, .value=0xf7, .type=IO_READ},
         {.addr=0x341b, .value=0x4f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x014f, .value=0xb4, .type=IO_READ},
         {.addr=0x0150, .value=0x79, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7aa3, .value=0xf4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20115,12 +20989,13 @@ UTEST(SingleStepTests_F7, _F7_0386) {
         {.addr=0x01a0, .value=0x6f}, {.addr=0x01a1, .value=0xcb}, {.addr=0x51f5, .value=0xf7},
         {.addr=0x51f6, .value=0xa0}, {.addr=0xcc38, .value=0xbe},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x51f5, .value=0xf7, .type=IO_READ},
         {.addr=0x51f6, .value=0xa0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a0, .value=0x6f, .type=IO_READ},
         {.addr=0x01a1, .value=0xcb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xcc38, .value=0xbe, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20138,12 +21013,13 @@ UTEST(SingleStepTests_F7, _F7_0387) {
         {.addr=0x0035, .value=0x55}, {.addr=0x0036, .value=0x97}, {.addr=0x97cc, .value=0x82},
         {.addr=0xf396, .value=0xf7}, {.addr=0xf397, .value=0x35},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf396, .value=0xf7, .type=IO_READ},
         {.addr=0xf397, .value=0x35, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0035, .value=0x55, .type=IO_READ},
         {.addr=0x0036, .value=0x97, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x97cc, .value=0x82, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20161,12 +21037,13 @@ UTEST(SingleStepTests_F7, _F7_0388) {
         {.addr=0x00e4, .value=0x79}, {.addr=0x00e5, .value=0xac}, {.addr=0xad09, .value=0x9a},
         {.addr=0xf5b4, .value=0xf7}, {.addr=0xf5b5, .value=0xe4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf5b4, .value=0xf7, .type=IO_READ},
         {.addr=0xf5b5, .value=0xe4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e4, .value=0x79, .type=IO_READ},
         {.addr=0x00e5, .value=0xac, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xad09, .value=0x9a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20184,12 +21061,13 @@ UTEST(SingleStepTests_F7, _F7_0389) {
         {.addr=0x01de, .value=0x60}, {.addr=0x01df, .value=0xe4}, {.addr=0xe4e6, .value=0x48},
         {.addr=0xe9b0, .value=0xf7}, {.addr=0xe9b1, .value=0xde},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe9b0, .value=0xf7, .type=IO_READ},
         {.addr=0xe9b1, .value=0xde, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01de, .value=0x60, .type=IO_READ},
         {.addr=0x01df, .value=0xe4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe4e6, .value=0x48, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20207,12 +21085,13 @@ UTEST(SingleStepTests_F7, _F7_038A) {
         {.addr=0x00ee, .value=0x7c}, {.addr=0x00ef, .value=0x22}, {.addr=0x01a3, .value=0xf7},
         {.addr=0x01a4, .value=0xee}, {.addr=0x2284, .value=0x1e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x01a3, .value=0xf7, .type=IO_READ},
         {.addr=0x01a4, .value=0xee, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ee, .value=0x7c, .type=IO_READ},
         {.addr=0x00ef, .value=0x22, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2284, .value=0x1e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20230,12 +21109,13 @@ UTEST(SingleStepTests_F7, _F7_038B) {
         {.addr=0x0173, .value=0x34}, {.addr=0x0174, .value=0x27}, {.addr=0x27ec, .value=0x51},
         {.addr=0x951c, .value=0xf7}, {.addr=0x951d, .value=0x73},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x951c, .value=0xf7, .type=IO_READ},
         {.addr=0x951d, .value=0x73, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0173, .value=0x34, .type=IO_READ},
         {.addr=0x0174, .value=0x27, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x27ec, .value=0x51, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20253,12 +21133,13 @@ UTEST(SingleStepTests_F7, _F7_038C) {
         {.addr=0x01a1, .value=0x5c}, {.addr=0x01a2, .value=0x19}, {.addr=0x19c0, .value=0xd3},
         {.addr=0x61e9, .value=0xf7}, {.addr=0x61ea, .value=0xa1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x61e9, .value=0xf7, .type=IO_READ},
         {.addr=0x61ea, .value=0xa1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a1, .value=0x5c, .type=IO_READ},
         {.addr=0x01a2, .value=0x19, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x19c0, .value=0xd3, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20276,12 +21157,13 @@ UTEST(SingleStepTests_F7, _F7_038D) {
         {.addr=0x0166, .value=0xb3}, {.addr=0x0167, .value=0x67}, {.addr=0x1a53, .value=0xf7},
         {.addr=0x1a54, .value=0x66}, {.addr=0x67d1, .value=0xdb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1a53, .value=0xf7, .type=IO_READ},
         {.addr=0x1a54, .value=0x66, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0166, .value=0xb3, .type=IO_READ},
         {.addr=0x0167, .value=0x67, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x67d1, .value=0xdb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20299,12 +21181,13 @@ UTEST(SingleStepTests_F7, _F7_038E) {
         {.addr=0x0191, .value=0xd7}, {.addr=0x0192, .value=0x1d}, {.addr=0x1ed3, .value=0x18},
         {.addr=0xb3fd, .value=0xf7}, {.addr=0xb3fe, .value=0x91},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb3fd, .value=0xf7, .type=IO_READ},
         {.addr=0xb3fe, .value=0x91, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0191, .value=0xd7, .type=IO_READ},
         {.addr=0x0192, .value=0x1d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1ed3, .value=0x18, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20322,12 +21205,13 @@ UTEST(SingleStepTests_F7, _F7_038F) {
         {.addr=0x019c, .value=0x86}, {.addr=0x019d, .value=0xdd}, {.addr=0x6520, .value=0xf7},
         {.addr=0x6521, .value=0x9c}, {.addr=0xde4a, .value=0xb6},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6520, .value=0xf7, .type=IO_READ},
         {.addr=0x6521, .value=0x9c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019c, .value=0x86, .type=IO_READ},
         {.addr=0x019d, .value=0xdd, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xde4a, .value=0xb6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20345,12 +21229,13 @@ UTEST(SingleStepTests_F7, _F7_0390) {
         {.addr=0x0176, .value=0x96}, {.addr=0x0177, .value=0x89}, {.addr=0x8a81, .value=0xf2},
         {.addr=0xedd5, .value=0xf7}, {.addr=0xedd6, .value=0x76},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xedd5, .value=0xf7, .type=IO_READ},
         {.addr=0xedd6, .value=0x76, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0176, .value=0x96, .type=IO_READ},
         {.addr=0x0177, .value=0x89, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8a81, .value=0xf2, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20368,12 +21253,13 @@ UTEST(SingleStepTests_F7, _F7_0391) {
         {.addr=0x0196, .value=0xe5}, {.addr=0x0197, .value=0x6e}, {.addr=0x30d0, .value=0xf7},
         {.addr=0x30d1, .value=0x96}, {.addr=0x6f0f, .value=0xd9},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x30d0, .value=0xf7, .type=IO_READ},
         {.addr=0x30d1, .value=0x96, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0196, .value=0xe5, .type=IO_READ},
         {.addr=0x0197, .value=0x6e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6f0f, .value=0xd9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20391,12 +21277,13 @@ UTEST(SingleStepTests_F7, _F7_0392) {
         {.addr=0x00e3, .value=0xb0}, {.addr=0x00e4, .value=0x4c}, {.addr=0x15ec, .value=0xf7},
         {.addr=0x15ed, .value=0xe3}, {.addr=0x4d4f, .value=0x49},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x15ec, .value=0xf7, .type=IO_READ},
         {.addr=0x15ed, .value=0xe3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e3, .value=0xb0, .type=IO_READ},
         {.addr=0x00e4, .value=0x4c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4d4f, .value=0x49, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20414,12 +21301,13 @@ UTEST(SingleStepTests_F7, _F7_0393) {
         {.addr=0x01db, .value=0x87}, {.addr=0x01dc, .value=0xa0}, {.addr=0xa097, .value=0x00},
         {.addr=0xb4b9, .value=0xf7}, {.addr=0xb4ba, .value=0xdb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb4b9, .value=0xf7, .type=IO_READ},
         {.addr=0xb4ba, .value=0xdb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01db, .value=0x87, .type=IO_READ},
         {.addr=0x01dc, .value=0xa0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa097, .value=0x00, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20437,12 +21325,13 @@ UTEST(SingleStepTests_F7, _F7_0394) {
         {.addr=0x009b, .value=0xa9}, {.addr=0x009c, .value=0xb9}, {.addr=0xba8f, .value=0xfc},
         {.addr=0xf5e1, .value=0xf7}, {.addr=0xf5e2, .value=0x9b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf5e1, .value=0xf7, .type=IO_READ},
         {.addr=0xf5e2, .value=0x9b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x009b, .value=0xa9, .type=IO_READ},
         {.addr=0x009c, .value=0xb9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xba8f, .value=0xfc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20460,12 +21349,13 @@ UTEST(SingleStepTests_F7, _F7_0395) {
         {.addr=0x00a5, .value=0x01}, {.addr=0x00a6, .value=0x64}, {.addr=0x64de, .value=0xa9},
         {.addr=0xf88d, .value=0xf7}, {.addr=0xf88e, .value=0xa5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf88d, .value=0xf7, .type=IO_READ},
         {.addr=0xf88e, .value=0xa5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a5, .value=0x01, .type=IO_READ},
         {.addr=0x00a6, .value=0x64, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x64de, .value=0xa9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20483,12 +21373,13 @@ UTEST(SingleStepTests_F7, _F7_0396) {
         {.addr=0x0119, .value=0x41}, {.addr=0x011a, .value=0x53}, {.addr=0x53b8, .value=0x08},
         {.addr=0x8308, .value=0xf7}, {.addr=0x8309, .value=0x19},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8308, .value=0xf7, .type=IO_READ},
         {.addr=0x8309, .value=0x19, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0119, .value=0x41, .type=IO_READ},
         {.addr=0x011a, .value=0x53, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x53b8, .value=0x08, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20506,12 +21397,13 @@ UTEST(SingleStepTests_F7, _F7_0397) {
         {.addr=0x00aa, .value=0x5e}, {.addr=0x00ab, .value=0x40}, {.addr=0x4094, .value=0xf1},
         {.addr=0x6b66, .value=0xf7}, {.addr=0x6b67, .value=0xaa},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x6b66, .value=0xf7, .type=IO_READ},
         {.addr=0x6b67, .value=0xaa, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00aa, .value=0x5e, .type=IO_READ},
         {.addr=0x00ab, .value=0x40, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4094, .value=0xf1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20529,12 +21421,13 @@ UTEST(SingleStepTests_F7, _F7_0398) {
         {.addr=0x013e, .value=0xfd}, {.addr=0x013f, .value=0xb0}, {.addr=0x8454, .value=0xf7},
         {.addr=0x8455, .value=0x3e}, {.addr=0xb13e, .value=0xc7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8454, .value=0xf7, .type=IO_READ},
         {.addr=0x8455, .value=0x3e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013e, .value=0xfd, .type=IO_READ},
         {.addr=0x013f, .value=0xb0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb13e, .value=0xc7, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20552,12 +21445,13 @@ UTEST(SingleStepTests_F7, _F7_0399) {
         {.addr=0x016b, .value=0xc4}, {.addr=0x016c, .value=0x03}, {.addr=0x0400, .value=0x23},
         {.addr=0x2e60, .value=0xf7}, {.addr=0x2e61, .value=0x6b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2e60, .value=0xf7, .type=IO_READ},
         {.addr=0x2e61, .value=0x6b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016b, .value=0xc4, .type=IO_READ},
         {.addr=0x016c, .value=0x03, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0400, .value=0x23, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20575,12 +21469,13 @@ UTEST(SingleStepTests_F7, _F7_039A) {
         {.addr=0x0139, .value=0x05}, {.addr=0x013a, .value=0x35}, {.addr=0x1891, .value=0xf7},
         {.addr=0x1892, .value=0x39}, {.addr=0x35a6, .value=0xdb},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1891, .value=0xf7, .type=IO_READ},
         {.addr=0x1892, .value=0x39, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0139, .value=0x05, .type=IO_READ},
         {.addr=0x013a, .value=0x35, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x35a6, .value=0xdb, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20598,12 +21493,13 @@ UTEST(SingleStepTests_F7, _F7_039B) {
         {.addr=0x00e7, .value=0x86}, {.addr=0x00e8, .value=0xa6}, {.addr=0xa6cc, .value=0x45},
         {.addr=0xb3be, .value=0xf7}, {.addr=0xb3bf, .value=0xe7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb3be, .value=0xf7, .type=IO_READ},
         {.addr=0xb3bf, .value=0xe7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e7, .value=0x86, .type=IO_READ},
         {.addr=0x00e8, .value=0xa6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa6cc, .value=0x45, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20621,12 +21517,13 @@ UTEST(SingleStepTests_F7, _F7_039C) {
         {.addr=0x00e1, .value=0x24}, {.addr=0x00e2, .value=0xce}, {.addr=0xced7, .value=0xcf},
         {.addr=0xef7e, .value=0xf7}, {.addr=0xef7f, .value=0xe1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xef7e, .value=0xf7, .type=IO_READ},
         {.addr=0xef7f, .value=0xe1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00e1, .value=0x24, .type=IO_READ},
         {.addr=0x00e2, .value=0xce, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xced7, .value=0xcf, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20644,12 +21541,13 @@ UTEST(SingleStepTests_F7, _F7_039D) {
         {.addr=0x017e, .value=0xf0}, {.addr=0x017f, .value=0xe1}, {.addr=0x28a2, .value=0xf7},
         {.addr=0x28a3, .value=0x7e}, {.addr=0xe2b9, .value=0x83},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x28a2, .value=0xf7, .type=IO_READ},
         {.addr=0x28a3, .value=0x7e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x017e, .value=0xf0, .type=IO_READ},
         {.addr=0x017f, .value=0xe1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe2b9, .value=0x83, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20667,12 +21565,13 @@ UTEST(SingleStepTests_F7, _F7_039E) {
         {.addr=0x00ed, .value=0x8e}, {.addr=0x00ee, .value=0xe7}, {.addr=0xae43, .value=0xf7},
         {.addr=0xae44, .value=0xed}, {.addr=0xe7c9, .value=0xaa},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xae43, .value=0xf7, .type=IO_READ},
         {.addr=0xae44, .value=0xed, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ed, .value=0x8e, .type=IO_READ},
         {.addr=0x00ee, .value=0xe7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe7c9, .value=0xaa, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20690,12 +21589,13 @@ UTEST(SingleStepTests_F7, _F7_039F) {
         {.addr=0x013f, .value=0x69}, {.addr=0x0140, .value=0xc1}, {.addr=0x34a1, .value=0xf7},
         {.addr=0x34a2, .value=0x3f}, {.addr=0xc1fa, .value=0xbc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x34a1, .value=0xf7, .type=IO_READ},
         {.addr=0x34a2, .value=0x3f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x013f, .value=0x69, .type=IO_READ},
         {.addr=0x0140, .value=0xc1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc1fa, .value=0xbc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20713,12 +21613,13 @@ UTEST(SingleStepTests_F7, _F7_03A0) {
         {.addr=0x01b1, .value=0x81}, {.addr=0x01b2, .value=0xa0}, {.addr=0xa0cc, .value=0x9e},
         {.addr=0xaa29, .value=0xf7}, {.addr=0xaa2a, .value=0xb1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xaa29, .value=0xf7, .type=IO_READ},
         {.addr=0xaa2a, .value=0xb1, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b1, .value=0x81, .type=IO_READ},
         {.addr=0x01b2, .value=0xa0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa0cc, .value=0x9e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20736,12 +21637,13 @@ UTEST(SingleStepTests_F7, _F7_03A1) {
         {.addr=0x017a, .value=0xde}, {.addr=0x017b, .value=0xbc}, {.addr=0xbd57, .value=0xad},
         {.addr=0xcda4, .value=0xf7}, {.addr=0xcda5, .value=0x7a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xcda4, .value=0xf7, .type=IO_READ},
         {.addr=0xcda5, .value=0x7a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x017a, .value=0xde, .type=IO_READ},
         {.addr=0x017b, .value=0xbc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbd57, .value=0xad, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20759,12 +21661,13 @@ UTEST(SingleStepTests_F7, _F7_03A2) {
         {.addr=0x0139, .value=0x94}, {.addr=0x013a, .value=0xdd}, {.addr=0x92a3, .value=0xf7},
         {.addr=0x92a4, .value=0x39}, {.addr=0xde85, .value=0xb5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x92a3, .value=0xf7, .type=IO_READ},
         {.addr=0x92a4, .value=0x39, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0139, .value=0x94, .type=IO_READ},
         {.addr=0x013a, .value=0xdd, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xde85, .value=0xb5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20782,12 +21685,13 @@ UTEST(SingleStepTests_F7, _F7_03A3) {
         {.addr=0x002b, .value=0x42}, {.addr=0x002c, .value=0x8a}, {.addr=0x0ca7, .value=0xf7},
         {.addr=0x0ca8, .value=0x2b}, {.addr=0x8b0e, .value=0x61},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0ca7, .value=0xf7, .type=IO_READ},
         {.addr=0x0ca8, .value=0x2b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x002b, .value=0x42, .type=IO_READ},
         {.addr=0x002c, .value=0x8a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8b0e, .value=0x61, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20805,12 +21709,13 @@ UTEST(SingleStepTests_F7, _F7_03A4) {
         {.addr=0x0078, .value=0xa5}, {.addr=0x0079, .value=0x7c}, {.addr=0x68d4, .value=0xf7},
         {.addr=0x68d5, .value=0x78}, {.addr=0x7d67, .value=0x09},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x68d4, .value=0xf7, .type=IO_READ},
         {.addr=0x68d5, .value=0x78, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0078, .value=0xa5, .type=IO_READ},
         {.addr=0x0079, .value=0x7c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7d67, .value=0x09, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20828,12 +21733,13 @@ UTEST(SingleStepTests_F7, _F7_03A5) {
         {.addr=0x000e, .value=0x8e}, {.addr=0x000f, .value=0x7d}, {.addr=0x7d9d, .value=0x9a},
         {.addr=0xa3c5, .value=0xf7}, {.addr=0xa3c6, .value=0x0e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa3c5, .value=0xf7, .type=IO_READ},
         {.addr=0xa3c6, .value=0x0e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000e, .value=0x8e, .type=IO_READ},
         {.addr=0x000f, .value=0x7d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7d9d, .value=0x9a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20851,12 +21757,13 @@ UTEST(SingleStepTests_F7, _F7_03A6) {
         {.addr=0x015a, .value=0x3f}, {.addr=0x015b, .value=0x65}, {.addr=0x65d0, .value=0xa0},
         {.addr=0xf93c, .value=0xf7}, {.addr=0xf93d, .value=0x5a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf93c, .value=0xf7, .type=IO_READ},
         {.addr=0xf93d, .value=0x5a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x015a, .value=0x3f, .type=IO_READ},
         {.addr=0x015b, .value=0x65, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x65d0, .value=0xa0, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20874,12 +21781,13 @@ UTEST(SingleStepTests_F7, _F7_03A7) {
         {.addr=0x01e4, .value=0x5c}, {.addr=0x01e5, .value=0x64}, {.addr=0x6499, .value=0xcf},
         {.addr=0xf23a, .value=0xf7}, {.addr=0xf23b, .value=0xe4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf23a, .value=0xf7, .type=IO_READ},
         {.addr=0xf23b, .value=0xe4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e4, .value=0x5c, .type=IO_READ},
         {.addr=0x01e5, .value=0x64, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6499, .value=0xcf, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20897,12 +21805,13 @@ UTEST(SingleStepTests_F7, _F7_03A9) {
         {.addr=0x005c, .value=0xf8}, {.addr=0x005d, .value=0x6f}, {.addr=0x70b4, .value=0x06},
         {.addr=0xfb7c, .value=0xf7}, {.addr=0xfb7d, .value=0x5c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfb7c, .value=0xf7, .type=IO_READ},
         {.addr=0xfb7d, .value=0x5c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005c, .value=0xf8, .type=IO_READ},
         {.addr=0x005d, .value=0x6f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x70b4, .value=0x06, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20920,12 +21829,13 @@ UTEST(SingleStepTests_F7, _F7_03AA) {
         {.addr=0x0019, .value=0x90}, {.addr=0x001a, .value=0x5f}, {.addr=0x5fa2, .value=0x05},
         {.addr=0xd540, .value=0xf7}, {.addr=0xd541, .value=0x19},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd540, .value=0xf7, .type=IO_READ},
         {.addr=0xd541, .value=0x19, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0019, .value=0x90, .type=IO_READ},
         {.addr=0x001a, .value=0x5f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5fa2, .value=0x05, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20943,12 +21853,13 @@ UTEST(SingleStepTests_F7, _F7_03AB) {
         {.addr=0x017e, .value=0x38}, {.addr=0x017f, .value=0x18}, {.addr=0x1888, .value=0xa9},
         {.addr=0xfbb9, .value=0xf7}, {.addr=0xfbba, .value=0x7e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfbb9, .value=0xf7, .type=IO_READ},
         {.addr=0xfbba, .value=0x7e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x017e, .value=0x38, .type=IO_READ},
         {.addr=0x017f, .value=0x18, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1888, .value=0xa9, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20966,12 +21877,13 @@ UTEST(SingleStepTests_F7, _F7_03AC) {
         {.addr=0x000b, .value=0xa7}, {.addr=0x000c, .value=0x61}, {.addr=0x61eb, .value=0xe5},
         {.addr=0x9a6b, .value=0xf7}, {.addr=0x9a6c, .value=0x0b},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9a6b, .value=0xf7, .type=IO_READ},
         {.addr=0x9a6c, .value=0x0b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x000b, .value=0xa7, .type=IO_READ},
         {.addr=0x000c, .value=0x61, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x61eb, .value=0xe5, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -20989,12 +21901,13 @@ UTEST(SingleStepTests_F7, _F7_03AD) {
         {.addr=0x00d5, .value=0x95}, {.addr=0x00d6, .value=0x49}, {.addr=0x4a16, .value=0xf6},
         {.addr=0xd059, .value=0xf7}, {.addr=0xd05a, .value=0xd5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd059, .value=0xf7, .type=IO_READ},
         {.addr=0xd05a, .value=0xd5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d5, .value=0x95, .type=IO_READ},
         {.addr=0x00d6, .value=0x49, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4a16, .value=0xf6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21012,12 +21925,13 @@ UTEST(SingleStepTests_F7, _F7_03AE) {
         {.addr=0x019d, .value=0x23}, {.addr=0x019e, .value=0x59}, {.addr=0x22db, .value=0xf7},
         {.addr=0x22dc, .value=0x9d}, {.addr=0x5981, .value=0x37},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x22db, .value=0xf7, .type=IO_READ},
         {.addr=0x22dc, .value=0x9d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019d, .value=0x23, .type=IO_READ},
         {.addr=0x019e, .value=0x59, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5981, .value=0x37, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21035,12 +21949,13 @@ UTEST(SingleStepTests_F7, _F7_03AF) {
         {.addr=0x0007, .value=0x0e}, {.addr=0x0008, .value=0x37}, {.addr=0x01f1, .value=0xf7},
         {.addr=0x01f2, .value=0x07}, {.addr=0x3779, .value=0x55},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x01f1, .value=0xf7, .type=IO_READ},
         {.addr=0x01f2, .value=0x07, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0007, .value=0x0e, .type=IO_READ},
         {.addr=0x0008, .value=0x37, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x3779, .value=0x55, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21058,12 +21973,13 @@ UTEST(SingleStepTests_F7, _F7_03B0) {
         {.addr=0x018f, .value=0xc3}, {.addr=0x0190, .value=0xa6}, {.addr=0x1b8e, .value=0xf7},
         {.addr=0x1b8f, .value=0x8f}, {.addr=0xa783, .value=0xba},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1b8e, .value=0xf7, .type=IO_READ},
         {.addr=0x1b8f, .value=0x8f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x018f, .value=0xc3, .type=IO_READ},
         {.addr=0x0190, .value=0xa6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa783, .value=0xba, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21081,12 +21997,13 @@ UTEST(SingleStepTests_F7, _F7_03B1) {
         {.addr=0x0102, .value=0xf7}, {.addr=0x0103, .value=0xf6}, {.addr=0x01f6, .value=0x46},
         {.addr=0x01f7, .value=0x9d}, {.addr=0x9e2d, .value=0x57},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0102, .value=0xf7, .type=IO_READ},
         {.addr=0x0103, .value=0xf6, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f6, .value=0x46, .type=IO_READ},
         {.addr=0x01f7, .value=0x9d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9e2d, .value=0x57, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21104,12 +22021,13 @@ UTEST(SingleStepTests_F7, _F7_03B2) {
         {.addr=0x018a, .value=0x58}, {.addr=0x018b, .value=0x22}, {.addr=0x2290, .value=0x87},
         {.addr=0xa9dd, .value=0xf7}, {.addr=0xa9de, .value=0x8a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa9dd, .value=0xf7, .type=IO_READ},
         {.addr=0xa9de, .value=0x8a, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x018a, .value=0x58, .type=IO_READ},
         {.addr=0x018b, .value=0x22, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2290, .value=0x87, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21127,12 +22045,13 @@ UTEST(SingleStepTests_F7, _F7_03B3) {
         {.addr=0x0005, .value=0x76}, {.addr=0x0006, .value=0xb0}, {.addr=0x4a5c, .value=0xf7},
         {.addr=0x4a5d, .value=0x05}, {.addr=0xb098, .value=0x57},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4a5c, .value=0xf7, .type=IO_READ},
         {.addr=0x4a5d, .value=0x05, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0005, .value=0x76, .type=IO_READ},
         {.addr=0x0006, .value=0xb0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb098, .value=0x57, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21150,12 +22069,13 @@ UTEST(SingleStepTests_F7, _F7_03B4) {
         {.addr=0x01f4, .value=0x49}, {.addr=0x01f5, .value=0xc2}, {.addr=0x8194, .value=0xf7},
         {.addr=0x8195, .value=0xf4}, {.addr=0xc33d, .value=0x5a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8194, .value=0xf7, .type=IO_READ},
         {.addr=0x8195, .value=0xf4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01f4, .value=0x49, .type=IO_READ},
         {.addr=0x01f5, .value=0xc2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xc33d, .value=0x5a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21173,12 +22093,13 @@ UTEST(SingleStepTests_F7, _F7_03B5) {
         {.addr=0x01ef, .value=0x8f}, {.addr=0x01f0, .value=0xbd}, {.addr=0xb3f0, .value=0xf7},
         {.addr=0xb3f1, .value=0xef}, {.addr=0xbe15, .value=0xb8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb3f0, .value=0xf7, .type=IO_READ},
         {.addr=0xb3f1, .value=0xef, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ef, .value=0x8f, .type=IO_READ},
         {.addr=0x01f0, .value=0xbd, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbe15, .value=0xb8, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21196,12 +22117,13 @@ UTEST(SingleStepTests_F7, _F7_03B6) {
         {.addr=0x00c2, .value=0x25}, {.addr=0x00c3, .value=0xf0}, {.addr=0xb123, .value=0xf7},
         {.addr=0xb124, .value=0xc2}, {.addr=0xf0c3, .value=0x72},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb123, .value=0xf7, .type=IO_READ},
         {.addr=0xb124, .value=0xc2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c2, .value=0x25, .type=IO_READ},
         {.addr=0x00c3, .value=0xf0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xf0c3, .value=0x72, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21219,12 +22141,13 @@ UTEST(SingleStepTests_F7, _F7_03B7) {
         {.addr=0x01b7, .value=0x43}, {.addr=0x01b8, .value=0x60}, {.addr=0x60a5, .value=0x0a},
         {.addr=0xe731, .value=0xf7}, {.addr=0xe732, .value=0xb7},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe731, .value=0xf7, .type=IO_READ},
         {.addr=0xe732, .value=0xb7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b7, .value=0x43, .type=IO_READ},
         {.addr=0x01b8, .value=0x60, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x60a5, .value=0x0a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21242,12 +22165,13 @@ UTEST(SingleStepTests_F7, _F7_03B8) {
         {.addr=0x00d9, .value=0x26}, {.addr=0x00da, .value=0xb2}, {.addr=0x0855, .value=0xf7},
         {.addr=0x0856, .value=0xd9}, {.addr=0xb275, .value=0x46},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0855, .value=0xf7, .type=IO_READ},
         {.addr=0x0856, .value=0xd9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d9, .value=0x26, .type=IO_READ},
         {.addr=0x00da, .value=0xb2, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb275, .value=0x46, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21265,12 +22189,13 @@ UTEST(SingleStepTests_F7, _F7_03B9) {
         {.addr=0x00c7, .value=0x6c}, {.addr=0x00c8, .value=0xd4}, {.addr=0x4536, .value=0xf7},
         {.addr=0x4537, .value=0xc7}, {.addr=0xd485, .value=0x25},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4536, .value=0xf7, .type=IO_READ},
         {.addr=0x4537, .value=0xc7, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c7, .value=0x6c, .type=IO_READ},
         {.addr=0x00c8, .value=0xd4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd485, .value=0x25, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21288,12 +22213,13 @@ UTEST(SingleStepTests_F7, _F7_03BA) {
         {.addr=0x0171, .value=0x96}, {.addr=0x0172, .value=0x47}, {.addr=0x4882, .value=0x2b},
         {.addr=0xf72e, .value=0xf7}, {.addr=0xf72f, .value=0x71},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf72e, .value=0xf7, .type=IO_READ},
         {.addr=0xf72f, .value=0x71, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0171, .value=0x96, .type=IO_READ},
         {.addr=0x0172, .value=0x47, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x4882, .value=0x2b, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21311,12 +22237,13 @@ UTEST(SingleStepTests_F7, _F7_03BB) {
         {.addr=0x0064, .value=0xa0}, {.addr=0x0065, .value=0xcf}, {.addr=0x438d, .value=0xf7},
         {.addr=0x438e, .value=0x64}, {.addr=0xd00c, .value=0xdc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x438d, .value=0xf7, .type=IO_READ},
         {.addr=0x438e, .value=0x64, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0064, .value=0xa0, .type=IO_READ},
         {.addr=0x0065, .value=0xcf, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd00c, .value=0xdc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21334,12 +22261,13 @@ UTEST(SingleStepTests_F7, _F7_03BC) {
         {.addr=0x0005, .value=0x78}, {.addr=0x0006, .value=0x82}, {.addr=0x834f, .value=0x6d},
         {.addr=0xed11, .value=0xf7}, {.addr=0xed12, .value=0x05},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xed11, .value=0xf7, .type=IO_READ},
         {.addr=0xed12, .value=0x05, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0005, .value=0x78, .type=IO_READ},
         {.addr=0x0006, .value=0x82, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x834f, .value=0x6d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21357,12 +22285,13 @@ UTEST(SingleStepTests_F7, _F7_03BD) {
         {.addr=0x0198, .value=0x4c}, {.addr=0x0199, .value=0xbc}, {.addr=0x0581, .value=0xf7},
         {.addr=0x0582, .value=0x98}, {.addr=0xbca7, .value=0xdc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0581, .value=0xf7, .type=IO_READ},
         {.addr=0x0582, .value=0x98, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0198, .value=0x4c, .type=IO_READ},
         {.addr=0x0199, .value=0xbc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xbca7, .value=0xdc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21380,12 +22309,13 @@ UTEST(SingleStepTests_F7, _F7_03BE) {
         {.addr=0x0070, .value=0xcf}, {.addr=0x0071, .value=0xe0}, {.addr=0xac8d, .value=0xf7},
         {.addr=0xac8e, .value=0x70}, {.addr=0xe1a4, .value=0x8a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xac8d, .value=0xf7, .type=IO_READ},
         {.addr=0xac8e, .value=0x70, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0070, .value=0xcf, .type=IO_READ},
         {.addr=0x0071, .value=0xe0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe1a4, .value=0x8a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21403,12 +22333,13 @@ UTEST(SingleStepTests_F7, _F7_03BF) {
         {.addr=0x01c5, .value=0x3a}, {.addr=0x01c6, .value=0xb9}, {.addr=0xba03, .value=0xe4},
         {.addr=0xf1b8, .value=0xf7}, {.addr=0xf1b9, .value=0xc5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xf1b8, .value=0xf7, .type=IO_READ},
         {.addr=0xf1b9, .value=0xc5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c5, .value=0x3a, .type=IO_READ},
         {.addr=0x01c6, .value=0xb9, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xba03, .value=0xe4, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21426,12 +22357,13 @@ UTEST(SingleStepTests_F7, _F7_03C0) {
         {.addr=0x0017, .value=0x28}, {.addr=0x0018, .value=0xb1}, {.addr=0x8760, .value=0xf7},
         {.addr=0x8761, .value=0x17}, {.addr=0xb21b, .value=0xfa},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8760, .value=0xf7, .type=IO_READ},
         {.addr=0x8761, .value=0x17, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0017, .value=0x28, .type=IO_READ},
         {.addr=0x0018, .value=0xb1, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb21b, .value=0xfa, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21449,12 +22381,13 @@ UTEST(SingleStepTests_F7, _F7_03C1) {
         {.addr=0x01e4, .value=0x7f}, {.addr=0x01e5, .value=0xfc}, {.addr=0x5a5e, .value=0xf7},
         {.addr=0x5a5f, .value=0xe4}, {.addr=0xfcfc, .value=0x23},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5a5e, .value=0xf7, .type=IO_READ},
         {.addr=0x5a5f, .value=0xe4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e4, .value=0x7f, .type=IO_READ},
         {.addr=0x01e5, .value=0xfc, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfcfc, .value=0x23, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21472,12 +22405,13 @@ UTEST(SingleStepTests_F7, _F7_03C2) {
         {.addr=0x012f, .value=0xba}, {.addr=0x0130, .value=0xe4}, {.addr=0x1a36, .value=0xf7},
         {.addr=0x1a37, .value=0x2f}, {.addr=0xe575, .value=0x17},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x1a36, .value=0xf7, .type=IO_READ},
         {.addr=0x1a37, .value=0x2f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x012f, .value=0xba, .type=IO_READ},
         {.addr=0x0130, .value=0xe4, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe575, .value=0x17, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21495,12 +22429,13 @@ UTEST(SingleStepTests_F7, _F7_03C3) {
         {.addr=0x006e, .value=0xc4}, {.addr=0x006f, .value=0xb0}, {.addr=0xa61c, .value=0xf7},
         {.addr=0xa61d, .value=0x6e}, {.addr=0xb0ec, .value=0x6d},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xa61c, .value=0xf7, .type=IO_READ},
         {.addr=0xa61d, .value=0x6e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x006e, .value=0xc4, .type=IO_READ},
         {.addr=0x006f, .value=0xb0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb0ec, .value=0x6d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21518,12 +22453,13 @@ UTEST(SingleStepTests_F7, _F7_03C4) {
         {.addr=0x00ad, .value=0x91}, {.addr=0x00ae, .value=0xe3}, {.addr=0x90ce, .value=0xf7},
         {.addr=0x90cf, .value=0xad}, {.addr=0xe3b7, .value=0xbf},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x90ce, .value=0xf7, .type=IO_READ},
         {.addr=0x90cf, .value=0xad, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00ad, .value=0x91, .type=IO_READ},
         {.addr=0x00ae, .value=0xe3, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe3b7, .value=0xbf, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21541,12 +22477,13 @@ UTEST(SingleStepTests_F7, _F7_03C5) {
         {.addr=0x00a0, .value=0xb5}, {.addr=0x00a1, .value=0x92}, {.addr=0x23a2, .value=0xf7},
         {.addr=0x23a3, .value=0xa0}, {.addr=0x937f, .value=0x84},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x23a2, .value=0xf7, .type=IO_READ},
         {.addr=0x23a3, .value=0xa0, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00a0, .value=0xb5, .type=IO_READ},
         {.addr=0x00a1, .value=0x92, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x937f, .value=0x84, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21564,12 +22501,13 @@ UTEST(SingleStepTests_F7, _F7_03C6) {
         {.addr=0x0090, .value=0xb1}, {.addr=0x0091, .value=0x00}, {.addr=0x00eb, .value=0x38},
         {.addr=0x13ff, .value=0xf7}, {.addr=0x1400, .value=0x90},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x13ff, .value=0xf7, .type=IO_READ},
         {.addr=0x1400, .value=0x90, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0090, .value=0xb1, .type=IO_READ},
         {.addr=0x0091, .value=0x00, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00eb, .value=0x38, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21587,12 +22525,13 @@ UTEST(SingleStepTests_F7, _F7_03C7) {
         {.addr=0x01ab, .value=0xd2}, {.addr=0x01ac, .value=0x7e}, {.addr=0x7ef0, .value=0x17},
         {.addr=0xc72b, .value=0xf7}, {.addr=0xc72c, .value=0xab},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xc72b, .value=0xf7, .type=IO_READ},
         {.addr=0xc72c, .value=0xab, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01ab, .value=0xd2, .type=IO_READ},
         {.addr=0x01ac, .value=0x7e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7ef0, .value=0x17, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21610,12 +22549,13 @@ UTEST(SingleStepTests_F7, _F7_03C8) {
         {.addr=0x0151, .value=0xff}, {.addr=0x0152, .value=0x57}, {.addr=0x5815, .value=0xa6},
         {.addr=0xfa4f, .value=0xf7}, {.addr=0xfa50, .value=0x51},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xfa4f, .value=0xf7, .type=IO_READ},
         {.addr=0xfa50, .value=0x51, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0151, .value=0xff, .type=IO_READ},
         {.addr=0x0152, .value=0x57, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5815, .value=0xa6, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21633,12 +22573,13 @@ UTEST(SingleStepTests_F7, _F7_03C9) {
         {.addr=0x005f, .value=0x3a}, {.addr=0x0060, .value=0xb8}, {.addr=0xb8f9, .value=0x03},
         {.addr=0xe80c, .value=0xf7}, {.addr=0xe80d, .value=0x5f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xe80c, .value=0xf7, .type=IO_READ},
         {.addr=0xe80d, .value=0x5f, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005f, .value=0x3a, .type=IO_READ},
         {.addr=0x0060, .value=0xb8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb8f9, .value=0x03, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21656,12 +22597,13 @@ UTEST(SingleStepTests_F7, _F7_03CB) {
         {.addr=0x0147, .value=0x24}, {.addr=0x0148, .value=0xd0}, {.addr=0x9929, .value=0xf7},
         {.addr=0x992a, .value=0x47}, {.addr=0xd0fc, .value=0x71},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x9929, .value=0xf7, .type=IO_READ},
         {.addr=0x992a, .value=0x47, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0147, .value=0x24, .type=IO_READ},
         {.addr=0x0148, .value=0xd0, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd0fc, .value=0x71, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21679,12 +22621,13 @@ UTEST(SingleStepTests_F7, _F7_03CC) {
         {.addr=0x005c, .value=0x1f}, {.addr=0x005d, .value=0x0e}, {.addr=0x0eec, .value=0x60},
         {.addr=0xbc9f, .value=0xf7}, {.addr=0xbca0, .value=0x5c},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xbc9f, .value=0xf7, .type=IO_READ},
         {.addr=0xbca0, .value=0x5c, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x005c, .value=0x1f, .type=IO_READ},
         {.addr=0x005d, .value=0x0e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0eec, .value=0x60, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21702,12 +22645,13 @@ UTEST(SingleStepTests_F7, _F7_03CD) {
         {.addr=0x00da, .value=0xba}, {.addr=0x00db, .value=0x6c}, {.addr=0x225a, .value=0xf7},
         {.addr=0x225b, .value=0xda}, {.addr=0x6d75, .value=0x43},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x225a, .value=0xf7, .type=IO_READ},
         {.addr=0x225b, .value=0xda, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00da, .value=0xba, .type=IO_READ},
         {.addr=0x00db, .value=0x6c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x6d75, .value=0x43, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21725,12 +22669,13 @@ UTEST(SingleStepTests_F7, _F7_03CE) {
         {.addr=0x0162, .value=0x2d}, {.addr=0x0163, .value=0x81}, {.addr=0x36c8, .value=0xf7},
         {.addr=0x36c9, .value=0x62}, {.addr=0x8190, .value=0x81},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x36c8, .value=0xf7, .type=IO_READ},
         {.addr=0x36c9, .value=0x62, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0162, .value=0x2d, .type=IO_READ},
         {.addr=0x0163, .value=0x81, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8190, .value=0x81, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21748,12 +22693,13 @@ UTEST(SingleStepTests_F7, _F7_03CF) {
         {.addr=0x01a2, .value=0xb0}, {.addr=0x01a3, .value=0xe7}, {.addr=0x28be, .value=0xf7},
         {.addr=0x28bf, .value=0xa2}, {.addr=0xe868, .value=0x97},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x28be, .value=0xf7, .type=IO_READ},
         {.addr=0x28bf, .value=0xa2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01a2, .value=0xb0, .type=IO_READ},
         {.addr=0x01a3, .value=0xe7, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xe868, .value=0x97, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21771,12 +22717,13 @@ UTEST(SingleStepTests_F7, _F7_03D0) {
         {.addr=0x01b8, .value=0xb3}, {.addr=0x01b9, .value=0x08}, {.addr=0x0901, .value=0x0f},
         {.addr=0x831f, .value=0xf7}, {.addr=0x8320, .value=0xb8},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x831f, .value=0xf7, .type=IO_READ},
         {.addr=0x8320, .value=0xb8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b8, .value=0xb3, .type=IO_READ},
         {.addr=0x01b9, .value=0x08, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0901, .value=0x0f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21794,12 +22741,13 @@ UTEST(SingleStepTests_F7, _F7_03D2) {
         {.addr=0x019b, .value=0x86}, {.addr=0x019c, .value=0x78}, {.addr=0x4b15, .value=0xf7},
         {.addr=0x4b16, .value=0x9b}, {.addr=0x7966, .value=0x8f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x4b15, .value=0xf7, .type=IO_READ},
         {.addr=0x4b16, .value=0x9b, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x019b, .value=0x86, .type=IO_READ},
         {.addr=0x019c, .value=0x78, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x7966, .value=0x8f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21817,12 +22765,13 @@ UTEST(SingleStepTests_F7, _F7_03D3) {
         {.addr=0x0050, .value=0x0b}, {.addr=0x0051, .value=0x0d}, {.addr=0x0d3f, .value=0xb1},
         {.addr=0x5a48, .value=0xf7}, {.addr=0x5a49, .value=0x50},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x5a48, .value=0xf7, .type=IO_READ},
         {.addr=0x5a49, .value=0x50, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0050, .value=0x0b, .type=IO_READ},
         {.addr=0x0051, .value=0x0d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0d3f, .value=0xb1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21840,12 +22789,13 @@ UTEST(SingleStepTests_F7, _F7_03D4) {
         {.addr=0x00d5, .value=0xbb}, {.addr=0x00d6, .value=0xcb}, {.addr=0xcc9f, .value=0x34},
         {.addr=0xd819, .value=0xf7}, {.addr=0xd81a, .value=0xd5},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xd819, .value=0xf7, .type=IO_READ},
         {.addr=0xd81a, .value=0xd5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d5, .value=0xbb, .type=IO_READ},
         {.addr=0x00d6, .value=0xcb, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xcc9f, .value=0x34, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21863,12 +22813,13 @@ UTEST(SingleStepTests_F7, _F7_03D5) {
         {.addr=0x01b9, .value=0x38}, {.addr=0x01ba, .value=0xab}, {.addr=0x3ea9, .value=0xf7},
         {.addr=0x3eaa, .value=0xb9}, {.addr=0xaba0, .value=0x30},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x3ea9, .value=0xf7, .type=IO_READ},
         {.addr=0x3eaa, .value=0xb9, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01b9, .value=0x38, .type=IO_READ},
         {.addr=0x01ba, .value=0xab, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xaba0, .value=0x30, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21886,12 +22837,13 @@ UTEST(SingleStepTests_F7, _F7_03D6) {
         {.addr=0x01c2, .value=0xda}, {.addr=0x01c3, .value=0x4f}, {.addr=0x5064, .value=0xbd},
         {.addr=0x8071, .value=0xf7}, {.addr=0x8072, .value=0xc2},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x8071, .value=0xf7, .type=IO_READ},
         {.addr=0x8072, .value=0xc2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01c2, .value=0xda, .type=IO_READ},
         {.addr=0x01c3, .value=0x4f, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x5064, .value=0xbd, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21909,12 +22861,13 @@ UTEST(SingleStepTests_F7, _F7_03D7) {
         {.addr=0x01e3, .value=0x25}, {.addr=0x01e4, .value=0xa5}, {.addr=0x63ae, .value=0xf7},
         {.addr=0x63af, .value=0xe3}, {.addr=0xa57d, .value=0xf1},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x63ae, .value=0xf7, .type=IO_READ},
         {.addr=0x63af, .value=0xe3, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01e3, .value=0x25, .type=IO_READ},
         {.addr=0x01e4, .value=0xa5, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xa57d, .value=0xf1, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21932,12 +22885,13 @@ UTEST(SingleStepTests_F7, _F7_03D8) {
         {.addr=0x00c4, .value=0xe4}, {.addr=0x00c5, .value=0x80}, {.addr=0x813a, .value=0x15},
         {.addr=0xb557, .value=0xf7}, {.addr=0xb558, .value=0xc4},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb557, .value=0xf7, .type=IO_READ},
         {.addr=0xb558, .value=0xc4, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c4, .value=0xe4, .type=IO_READ},
         {.addr=0x00c5, .value=0x80, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x813a, .value=0x15, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21955,12 +22909,13 @@ UTEST(SingleStepTests_F7, _F7_03D9) {
         {.addr=0x012e, .value=0x38}, {.addr=0x012f, .value=0x93}, {.addr=0x93d1, .value=0x3d},
         {.addr=0xebb6, .value=0xf7}, {.addr=0xebb7, .value=0x2e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xebb6, .value=0xf7, .type=IO_READ},
         {.addr=0xebb7, .value=0x2e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x012e, .value=0x38, .type=IO_READ},
         {.addr=0x012f, .value=0x93, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x93d1, .value=0x3d, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -21978,12 +22933,13 @@ UTEST(SingleStepTests_F7, _F7_03DA) {
         {.addr=0x016e, .value=0x17}, {.addr=0x016f, .value=0xfd}, {.addr=0x0924, .value=0xf7},
         {.addr=0x0925, .value=0x6e}, {.addr=0xfdd3, .value=0x57},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0924, .value=0xf7, .type=IO_READ},
         {.addr=0x0925, .value=0x6e, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x016e, .value=0x17, .type=IO_READ},
         {.addr=0x016f, .value=0xfd, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xfdd3, .value=0x57, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -22001,12 +22957,13 @@ UTEST(SingleStepTests_F7, _F7_03DB) {
         {.addr=0x003d, .value=0xfa}, {.addr=0x003e, .value=0x1d}, {.addr=0x15f9, .value=0xf7},
         {.addr=0x15fa, .value=0x3d}, {.addr=0x1e9c, .value=0x62},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x15f9, .value=0xf7, .type=IO_READ},
         {.addr=0x15fa, .value=0x3d, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x003d, .value=0xfa, .type=IO_READ},
         {.addr=0x003e, .value=0x1d, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x1e9c, .value=0x62, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -22024,12 +22981,13 @@ UTEST(SingleStepTests_F7, _F7_03DC) {
         {.addr=0x00c2, .value=0x05}, {.addr=0x00c3, .value=0x2a}, {.addr=0x2051, .value=0xf7},
         {.addr=0x2052, .value=0xc2}, {.addr=0x2a68, .value=0x96},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x2051, .value=0xf7, .type=IO_READ},
         {.addr=0x2052, .value=0xc2, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c2, .value=0x05, .type=IO_READ},
         {.addr=0x00c3, .value=0x2a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2a68, .value=0x96, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -22047,12 +23005,13 @@ UTEST(SingleStepTests_F7, _F7_03DD) {
         {.addr=0x0111, .value=0xa2}, {.addr=0x0112, .value=0x42}, {.addr=0x40f4, .value=0xf7},
         {.addr=0x40f5, .value=0x11}, {.addr=0x42dc, .value=0x9f},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x40f4, .value=0xf7, .type=IO_READ},
         {.addr=0x40f5, .value=0x11, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0111, .value=0xa2, .type=IO_READ},
         {.addr=0x0112, .value=0x42, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x42dc, .value=0x9f, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -22070,12 +23029,13 @@ UTEST(SingleStepTests_F7, _F7_03DE) {
         {.addr=0x00c8, .value=0xcb}, {.addr=0x00c9, .value=0xb6}, {.addr=0x857e, .value=0xf7},
         {.addr=0x857f, .value=0xc8}, {.addr=0xb739, .value=0xcc},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x857e, .value=0xf7, .type=IO_READ},
         {.addr=0x857f, .value=0xc8, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00c8, .value=0xcb, .type=IO_READ},
         {.addr=0x00c9, .value=0xb6, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xb739, .value=0xcc, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -22093,12 +23053,13 @@ UTEST(SingleStepTests_F7, _F7_03DF) {
         {.addr=0x00d5, .value=0x0e}, {.addr=0x00d6, .value=0x9c}, {.addr=0x77ab, .value=0xf7},
         {.addr=0x77ac, .value=0xd5}, {.addr=0x9cb1, .value=0xda},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x77ab, .value=0xf7, .type=IO_READ},
         {.addr=0x77ac, .value=0xd5, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00d5, .value=0x0e, .type=IO_READ},
         {.addr=0x00d6, .value=0x9c, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x9cb1, .value=0xda, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -22116,12 +23077,13 @@ UTEST(SingleStepTests_F7, _F7_03E0) {
         {.addr=0x0071, .value=0xc9}, {.addr=0x0072, .value=0x8b}, {.addr=0x73ba, .value=0xf7},
         {.addr=0x73bb, .value=0x71}, {.addr=0x8c1c, .value=0x9a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x73ba, .value=0xf7, .type=IO_READ},
         {.addr=0x73bb, .value=0x71, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0071, .value=0xc9, .type=IO_READ},
         {.addr=0x0072, .value=0x8b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8c1c, .value=0x9a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -22139,12 +23101,13 @@ UTEST(SingleStepTests_F7, _F7_03E1) {
         {.addr=0x01fa, .value=0x43}, {.addr=0x01fb, .value=0x23}, {.addr=0x23bc, .value=0x55},
         {.addr=0xb8c9, .value=0xf7}, {.addr=0xb8ca, .value=0xfa},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0xb8c9, .value=0xf7, .type=IO_READ},
         {.addr=0xb8ca, .value=0xfa, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x01fa, .value=0x43, .type=IO_READ},
         {.addr=0x01fb, .value=0x23, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x23bc, .value=0x55, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -22162,12 +23125,13 @@ UTEST(SingleStepTests_F7, _F7_03E3) {
         {.addr=0x0037, .value=0xd7}, {.addr=0x0038, .value=0x2b}, {.addr=0x24b6, .value=0xf7},
         {.addr=0x24b7, .value=0x37}, {.addr=0x2c8f, .value=0x75},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x24b6, .value=0xf7, .type=IO_READ},
         {.addr=0x24b7, .value=0x37, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0037, .value=0xd7, .type=IO_READ},
         {.addr=0x0038, .value=0x2b, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x2c8f, .value=0x75, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -22185,12 +23149,13 @@ UTEST(SingleStepTests_F7, _F7_03E4) {
         {.addr=0x0091, .value=0xff}, {.addr=0x0092, .value=0x8a}, {.addr=0x0ae8, .value=0xf7},
         {.addr=0x0ae9, .value=0x91}, {.addr=0x8b9c, .value=0x3e},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0ae8, .value=0xf7, .type=IO_READ},
         {.addr=0x0ae9, .value=0x91, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0091, .value=0xff, .type=IO_READ},
         {.addr=0x0092, .value=0x8a, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x8b9c, .value=0x3e, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -22208,12 +23173,13 @@ UTEST(SingleStepTests_F7, _F7_03E5) {
         {.addr=0x0060, .value=0x93}, {.addr=0x0061, .value=0xd8}, {.addr=0x49e2, .value=0xf7},
         {.addr=0x49e3, .value=0x60}, {.addr=0xd8ea, .value=0x4a},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x49e2, .value=0xf7, .type=IO_READ},
         {.addr=0x49e3, .value=0x60, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0060, .value=0x93, .type=IO_READ},
         {.addr=0x0061, .value=0xd8, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0xd8ea, .value=0x4a, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -22231,12 +23197,13 @@ UTEST(SingleStepTests_F7, _F7_03E6) {
         {.addr=0x00eb, .value=0x61}, {.addr=0x00ec, .value=0x0e}, {.addr=0x0d3f, .value=0xf7},
         {.addr=0x0d40, .value=0xeb}, {.addr=0x0f39, .value=0x50},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x0d3f, .value=0xf7, .type=IO_READ},
         {.addr=0x0d40, .value=0xeb, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x00eb, .value=0x61, .type=IO_READ},
         {.addr=0x00ec, .value=0x0e, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0f39, .value=0x50, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
@@ -22254,12 +23221,13 @@ UTEST(SingleStepTests_F7, _F7_03E7) {
         {.addr=0x0059, .value=0x78}, {.addr=0x005a, .value=0x08}, {.addr=0x0934, .value=0x56},
         {.addr=0x71ea, .value=0xf7}, {.addr=0x71eb, .value=0x59},
     };
+    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)
     const struct BusEvent events[] = {
         {.addr=0x71ea, .value=0xf7, .type=IO_READ},
         {.addr=0x71eb, .value=0x59, .type=IO_READ},
-        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0059, .value=0x78, .type=IO_READ},
         {.addr=0x005a, .value=0x08, .type=IO_READ},
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},
         {.addr=0x0934, .value=0x56, .type=IO_READ},
     };
     struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
