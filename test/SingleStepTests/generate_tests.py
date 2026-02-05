@@ -143,31 +143,34 @@ class TestCase:
         return "\n".join(lines)
 
 
-def main():
-    json_path = Path(__file__).parent / "specs" / "00.json"
-    output_path = Path(__file__).parent / "00.c"
+def generate_test_suite(opcode: str):
+    spec = opcode + ".json"
+    output = opcode + ".c"
+
+    json_path = Path(__file__).parent / "specs" / spec
+    output_path = Path(__file__).parent / output
 
     with open(json_path) as f:
         tests_json = json.load(f)
 
-    print(f"Generating {len(tests_json)} tests from 00.json...")
+    print(f"Found {len(tests_json)} tests in {spec}")
 
-    # Generate all tests
     test_cases = [TestCase(test_json) for test_json in tests_json]
 
-    # Write to file
     with open(output_path, "w") as f:
         f.write('#include "../utest.h/utest.h"\n')
         f.write('\n')
         f.write('#include "test_helper.h"\n')
         f.write('\n')
 
-        for test_case in test_cases:
+        for test_case in test_cases[:1]:
             f.write(test_case.generate_c_test())
             f.write('\n\n')
 
         f.write("UTEST_MAIN()\n")
 
+def main():
+    generate_test_suite("20")
 
 if __name__ == "__main__":
     main()
