@@ -1110,8 +1110,7 @@ class RegisterIndirectMode(AddressingMode):
 
                 switch (cycle) {{
                     case 2:
-                        // an idle cycle - dummy read from last latched addr (PC from opcode fetch)
-                        {idle_cycle()}
+                        {dummy_read_pc()}
                         return {InstructionStatus.Pending};
                     case 3: {{
                         cpu->addr = direct_page(cpu, cpu->x);

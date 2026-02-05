@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3416 */
+/* generated from generate_instructions.py: l.3415 */
 
 #include "instructions.gen.h"
 
@@ -38,7 +38,7 @@ static inline void parse_membit(uint16_t operand, uint16_t* addr, uint8_t* bit)
 
 static inline enum InstructionStatus tcall_internal(struct SPC_State state[static 1], uint32_t cycle, uint16_t vector)
 {
-    /* generated from generate_instructions.py: l.3232 */
+    /* generated from generate_instructions.py: l.3231 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 8) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -100,7 +100,7 @@ enum InstructionStatus nop(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x20     CLRP */
 enum InstructionStatus clrp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3148 */
+    /* generated from generate_instructions.py: l.3147 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -113,7 +113,7 @@ enum InstructionStatus clrp(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x40     SETP */
 enum InstructionStatus setp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3148 */
+    /* generated from generate_instructions.py: l.3147 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -126,7 +126,7 @@ enum InstructionStatus setp(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x60     CLRC */
 enum InstructionStatus clrc(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3148 */
+    /* generated from generate_instructions.py: l.3147 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -139,7 +139,7 @@ enum InstructionStatus clrc(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x80     SETC */
 enum InstructionStatus setc(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3148 */
+    /* generated from generate_instructions.py: l.3147 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -152,7 +152,7 @@ enum InstructionStatus setc(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xe0     CLRV */
 enum InstructionStatus clrv(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3148 */
+    /* generated from generate_instructions.py: l.3147 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -167,112 +167,112 @@ enum InstructionStatus clrv(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x01     TCALL 0 */
 enum InstructionStatus tcall_0(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffde);
 }
 
 /* 0x11     TCALL 1 */
 enum InstructionStatus tcall_1(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffdc);
 }
 
 /* 0x21     TCALL 2 */
 enum InstructionStatus tcall_2(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffda);
 }
 
 /* 0x31     TCALL 3 */
 enum InstructionStatus tcall_3(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffd8);
 }
 
 /* 0x41     TCALL 4 */
 enum InstructionStatus tcall_4(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffd6);
 }
 
 /* 0x51     TCALL 5 */
 enum InstructionStatus tcall_5(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffd4);
 }
 
 /* 0x61     TCALL 6 */
 enum InstructionStatus tcall_6(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffd2);
 }
 
 /* 0x71     TCALL 7 */
 enum InstructionStatus tcall_7(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffd0);
 }
 
 /* 0x81     TCALL 8 */
 enum InstructionStatus tcall_8(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffce);
 }
 
 /* 0x91     TCALL 9 */
 enum InstructionStatus tcall_9(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffcc);
 }
 
 /* 0xa1     TCALL 10 */
 enum InstructionStatus tcall_10(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffca);
 }
 
 /* 0xb1     TCALL 11 */
 enum InstructionStatus tcall_11(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffc8);
 }
 
 /* 0xc1     TCALL 12 */
 enum InstructionStatus tcall_12(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffc6);
 }
 
 /* 0xd1     TCALL 13 */
 enum InstructionStatus tcall_13(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffc4);
 }
 
 /* 0xe1     TCALL 14 */
 enum InstructionStatus tcall_14(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffc2);
 }
 
 /* 0xf1     TCALL 15 */
 enum InstructionStatus tcall_15(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3286 */
+    /* generated from generate_instructions.py: l.3285 */
     return tcall_internal(state, cycle, 0xffc0);
 }
 
@@ -280,7 +280,7 @@ enum InstructionStatus tcall_15(struct SPC_State state[static 1], uint32_t cycle
 /* 0x02     SET1  d */
 enum InstructionStatus set1_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -316,7 +316,7 @@ enum InstructionStatus set1_direct(struct SPC_State state[static 1], uint32_t cy
 /* 0x12     CLR1  d */
 enum InstructionStatus clr1_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -352,7 +352,7 @@ enum InstructionStatus clr1_direct(struct SPC_State state[static 1], uint32_t cy
 /* 0x22     SET1  d */
 enum InstructionStatus set1_1_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -388,7 +388,7 @@ enum InstructionStatus set1_1_direct(struct SPC_State state[static 1], uint32_t 
 /* 0x32     CLR1  d */
 enum InstructionStatus clr1_1_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -424,7 +424,7 @@ enum InstructionStatus clr1_1_direct(struct SPC_State state[static 1], uint32_t 
 /* 0x42     SET1  d */
 enum InstructionStatus set1_2_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -460,7 +460,7 @@ enum InstructionStatus set1_2_direct(struct SPC_State state[static 1], uint32_t 
 /* 0x52     CLR1  d */
 enum InstructionStatus clr1_2_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -496,7 +496,7 @@ enum InstructionStatus clr1_2_direct(struct SPC_State state[static 1], uint32_t 
 /* 0x62     SET1  d */
 enum InstructionStatus set1_3_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -532,7 +532,7 @@ enum InstructionStatus set1_3_direct(struct SPC_State state[static 1], uint32_t 
 /* 0x72     CLR1  d */
 enum InstructionStatus clr1_3_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -568,7 +568,7 @@ enum InstructionStatus clr1_3_direct(struct SPC_State state[static 1], uint32_t 
 /* 0x82     SET1  d */
 enum InstructionStatus set1_4_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -604,7 +604,7 @@ enum InstructionStatus set1_4_direct(struct SPC_State state[static 1], uint32_t 
 /* 0x92     CLR1  d */
 enum InstructionStatus clr1_4_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -640,7 +640,7 @@ enum InstructionStatus clr1_4_direct(struct SPC_State state[static 1], uint32_t 
 /* 0xa2     SET1  d */
 enum InstructionStatus set1_5_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -676,7 +676,7 @@ enum InstructionStatus set1_5_direct(struct SPC_State state[static 1], uint32_t 
 /* 0xb2     CLR1  d */
 enum InstructionStatus clr1_5_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -712,7 +712,7 @@ enum InstructionStatus clr1_5_direct(struct SPC_State state[static 1], uint32_t 
 /* 0xc2     SET1  d */
 enum InstructionStatus set1_6_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -748,7 +748,7 @@ enum InstructionStatus set1_6_direct(struct SPC_State state[static 1], uint32_t 
 /* 0xd2     CLR1  d */
 enum InstructionStatus clr1_6_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -784,7 +784,7 @@ enum InstructionStatus clr1_6_direct(struct SPC_State state[static 1], uint32_t 
 /* 0xe2     SET1  d */
 enum InstructionStatus set1_7_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -820,7 +820,7 @@ enum InstructionStatus set1_7_direct(struct SPC_State state[static 1], uint32_t 
 /* 0xf2     CLR1  d */
 enum InstructionStatus clr1_7_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -1380,7 +1380,7 @@ enum InstructionStatus sbc_register_direct_indexed_a_x(struct SPC_State state[st
 /* 0xc4     MOV   d, a */
 enum InstructionStatus mov_direct_register_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2063 */
+    /* generated from generate_instructions.py: l.2062 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -1397,7 +1397,7 @@ enum InstructionStatus mov_direct_register_a(struct SPC_State state[static 1], u
         case 4: {
 
             /* payload */
-            /* generated from generate_instructions.py: l.2103 */
+            /* generated from generate_instructions.py: l.2102 */
             bus_write(state, cpu->addr, cpu->a);
             return INSTRUCTION_STATUS_DONE;
         }
@@ -1480,7 +1480,7 @@ enum InstructionStatus mov_register_direct_indexed_a_x(struct SPC_State state[st
 /* 0x05     OR    A, !a */
 enum InstructionStatus or_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1567 */
+    /* generated from generate_instructions.py: l.1566 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -1519,7 +1519,7 @@ enum InstructionStatus or_register_absolute_a(struct SPC_State state[static 1], 
 /* 0x15     OR    A, !a+X */
 enum InstructionStatus or_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -1563,7 +1563,7 @@ enum InstructionStatus or_register_absolute_indexed_x(struct SPC_State state[sta
 /* 0x25     AND   A, !a */
 enum InstructionStatus and_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1567 */
+    /* generated from generate_instructions.py: l.1566 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -1602,7 +1602,7 @@ enum InstructionStatus and_register_absolute_a(struct SPC_State state[static 1],
 /* 0x35     AND   A, !a+X */
 enum InstructionStatus and_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -1646,7 +1646,7 @@ enum InstructionStatus and_register_absolute_indexed_x(struct SPC_State state[st
 /* 0x45     EOR   A, !a */
 enum InstructionStatus eor_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1567 */
+    /* generated from generate_instructions.py: l.1566 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -1685,7 +1685,7 @@ enum InstructionStatus eor_register_absolute_a(struct SPC_State state[static 1],
 /* 0x55     EOR   A, !a+X */
 enum InstructionStatus eor_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -1729,7 +1729,7 @@ enum InstructionStatus eor_register_absolute_indexed_x(struct SPC_State state[st
 /* 0x65     CMP   A, !a */
 enum InstructionStatus cmp_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1567 */
+    /* generated from generate_instructions.py: l.1566 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -1775,7 +1775,7 @@ enum InstructionStatus cmp_register_absolute_a(struct SPC_State state[static 1],
 /* 0x75     CMP   A, !a+X */
 enum InstructionStatus cmp_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -1826,7 +1826,7 @@ enum InstructionStatus cmp_register_absolute_indexed_x(struct SPC_State state[st
 /* 0x85     ADC   A, !a */
 enum InstructionStatus adc_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1567 */
+    /* generated from generate_instructions.py: l.1566 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -1886,7 +1886,7 @@ enum InstructionStatus adc_register_absolute_a(struct SPC_State state[static 1],
 /* 0x95     ADC   A, !a+X */
 enum InstructionStatus adc_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -1951,7 +1951,7 @@ enum InstructionStatus adc_register_absolute_indexed_x(struct SPC_State state[st
 /* 0xa5     SBC   A, !a */
 enum InstructionStatus sbc_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1567 */
+    /* generated from generate_instructions.py: l.1566 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2013,7 +2013,7 @@ enum InstructionStatus sbc_register_absolute_a(struct SPC_State state[static 1],
 /* 0xb5     SBC   A, !a+X */
 enum InstructionStatus sbc_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2080,7 +2080,7 @@ enum InstructionStatus sbc_register_absolute_indexed_x(struct SPC_State state[st
 /* 0xc5     MOV   !a, a */
 enum InstructionStatus mov_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2384 */
+    /* generated from generate_instructions.py: l.2383 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2112,7 +2112,7 @@ enum InstructionStatus mov_absolute_a(struct SPC_State state[static 1], uint32_t
 /* 0xd5     MOV   !a+x, A */
 enum InstructionStatus mov_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2448 */
+    /* generated from generate_instructions.py: l.2447 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2150,7 +2150,7 @@ enum InstructionStatus mov_absolute_indexed_x(struct SPC_State state[static 1], 
 /* 0xe5     MOV   A, !a */
 enum InstructionStatus mov_register_absolute_a(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1567 */
+    /* generated from generate_instructions.py: l.1566 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2189,7 +2189,7 @@ enum InstructionStatus mov_register_absolute_a(struct SPC_State state[static 1],
 /* 0xf5     MOV   A, !a+X */
 enum InstructionStatus mov_register_absolute_indexed_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2241,8 +2241,7 @@ enum InstructionStatus or_register_indirect(struct SPC_State state[static 1], ui
 
     switch (cycle) {
         case 2:
-            // an idle cycle - dummy read from last latched addr (PC from opcode fetch)
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3: {
             cpu->addr = direct_page(cpu, cpu->x);
@@ -2267,7 +2266,7 @@ enum InstructionStatus or_register_indirect(struct SPC_State state[static 1], ui
 /* 0x16     OR    A, !a+Y */
 enum InstructionStatus or_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2318,8 +2317,7 @@ enum InstructionStatus and_register_indirect(struct SPC_State state[static 1], u
 
     switch (cycle) {
         case 2:
-            // an idle cycle - dummy read from last latched addr (PC from opcode fetch)
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3: {
             cpu->addr = direct_page(cpu, cpu->x);
@@ -2344,7 +2342,7 @@ enum InstructionStatus and_register_indirect(struct SPC_State state[static 1], u
 /* 0x36     AND   A, !a+Y */
 enum InstructionStatus and_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2395,8 +2393,7 @@ enum InstructionStatus eor_register_indirect(struct SPC_State state[static 1], u
 
     switch (cycle) {
         case 2:
-            // an idle cycle - dummy read from last latched addr (PC from opcode fetch)
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3: {
             cpu->addr = direct_page(cpu, cpu->x);
@@ -2421,7 +2418,7 @@ enum InstructionStatus eor_register_indirect(struct SPC_State state[static 1], u
 /* 0x56     EOR   A, !a+Y */
 enum InstructionStatus eor_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2472,8 +2469,7 @@ enum InstructionStatus cmp_register_indirect(struct SPC_State state[static 1], u
 
     switch (cycle) {
         case 2:
-            // an idle cycle - dummy read from last latched addr (PC from opcode fetch)
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3: {
             cpu->addr = direct_page(cpu, cpu->x);
@@ -2505,7 +2501,7 @@ enum InstructionStatus cmp_register_indirect(struct SPC_State state[static 1], u
 /* 0x76     CMP   A, !a+Y */
 enum InstructionStatus cmp_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2563,8 +2559,7 @@ enum InstructionStatus adc_register_indirect(struct SPC_State state[static 1], u
 
     switch (cycle) {
         case 2:
-            // an idle cycle - dummy read from last latched addr (PC from opcode fetch)
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3: {
             cpu->addr = direct_page(cpu, cpu->x);
@@ -2610,7 +2605,7 @@ enum InstructionStatus adc_register_indirect(struct SPC_State state[static 1], u
 /* 0x96     ADC   A, !a+Y */
 enum InstructionStatus adc_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2682,8 +2677,7 @@ enum InstructionStatus sbc_register_indirect(struct SPC_State state[static 1], u
 
     switch (cycle) {
         case 2:
-            // an idle cycle - dummy read from last latched addr (PC from opcode fetch)
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3: {
             cpu->addr = direct_page(cpu, cpu->x);
@@ -2731,7 +2725,7 @@ enum InstructionStatus sbc_register_indirect(struct SPC_State state[static 1], u
 /* 0xb6     SBC   A, !a+Y */
 enum InstructionStatus sbc_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2798,7 +2792,7 @@ enum InstructionStatus sbc_register_absolute_indexed_y(struct SPC_State state[st
 /* 0xc6     MOV   (X), A */
 enum InstructionStatus mov_indirect_register(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2163 */
+    /* generated from generate_instructions.py: l.2162 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2824,7 +2818,7 @@ enum InstructionStatus mov_indirect_register(struct SPC_State state[static 1], u
 /* 0xd6     MOV   !a+y, A */
 enum InstructionStatus mov_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2448 */
+    /* generated from generate_instructions.py: l.2447 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2869,8 +2863,7 @@ enum InstructionStatus mov_register_indirect(struct SPC_State state[static 1], u
 
     switch (cycle) {
         case 2:
-            // an idle cycle - dummy read from last latched addr (PC from opcode fetch)
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3: {
             cpu->addr = direct_page(cpu, cpu->x);
@@ -2895,7 +2888,7 @@ enum InstructionStatus mov_register_indirect(struct SPC_State state[static 1], u
 /* 0xf6     MOV   A, !a+Y */
 enum InstructionStatus mov_register_absolute_indexed_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1733 */
+    /* generated from generate_instructions.py: l.1732 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2940,7 +2933,7 @@ enum InstructionStatus mov_register_absolute_indexed_y(struct SPC_State state[st
 /* 0x07     OR    A, [d+X] */
 enum InstructionStatus or_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1284 */
+    /* generated from generate_instructions.py: l.1283 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -2994,7 +2987,7 @@ enum InstructionStatus or_register_indexed_indirect(struct SPC_State state[stati
 /* 0x17     OR    A, [d]+Y */
 enum InstructionStatus or_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1429 */
+    /* generated from generate_instructions.py: l.1428 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3042,7 +3035,7 @@ enum InstructionStatus or_register_indirect_indexed(struct SPC_State state[stati
 /* 0x27     AND   A, [d+X] */
 enum InstructionStatus and_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1284 */
+    /* generated from generate_instructions.py: l.1283 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3096,7 +3089,7 @@ enum InstructionStatus and_register_indexed_indirect(struct SPC_State state[stat
 /* 0x37     AND   A, [d]+Y */
 enum InstructionStatus and_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1429 */
+    /* generated from generate_instructions.py: l.1428 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3144,7 +3137,7 @@ enum InstructionStatus and_register_indirect_indexed(struct SPC_State state[stat
 /* 0x47     EOR   A, [d+X] */
 enum InstructionStatus eor_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1284 */
+    /* generated from generate_instructions.py: l.1283 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3198,7 +3191,7 @@ enum InstructionStatus eor_register_indexed_indirect(struct SPC_State state[stat
 /* 0x57     EOR   A, [d]+Y */
 enum InstructionStatus eor_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1429 */
+    /* generated from generate_instructions.py: l.1428 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3246,7 +3239,7 @@ enum InstructionStatus eor_register_indirect_indexed(struct SPC_State state[stat
 /* 0x67     CMP   A, [d+X] */
 enum InstructionStatus cmp_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1284 */
+    /* generated from generate_instructions.py: l.1283 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3307,7 +3300,7 @@ enum InstructionStatus cmp_register_indexed_indirect(struct SPC_State state[stat
 /* 0x77     CMP   A, [d]+Y */
 enum InstructionStatus cmp_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1429 */
+    /* generated from generate_instructions.py: l.1428 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3362,7 +3355,7 @@ enum InstructionStatus cmp_register_indirect_indexed(struct SPC_State state[stat
 /* 0x87     ADC   A, [d+X] */
 enum InstructionStatus adc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1284 */
+    /* generated from generate_instructions.py: l.1283 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3437,7 +3430,7 @@ enum InstructionStatus adc_register_indexed_indirect(struct SPC_State state[stat
 /* 0x97     ADC   A, [d]+Y */
 enum InstructionStatus adc_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1429 */
+    /* generated from generate_instructions.py: l.1428 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3506,7 +3499,7 @@ enum InstructionStatus adc_register_indirect_indexed(struct SPC_State state[stat
 /* 0xa7     SBC   A, [d+X] */
 enum InstructionStatus sbc_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1284 */
+    /* generated from generate_instructions.py: l.1283 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3583,7 +3576,7 @@ enum InstructionStatus sbc_register_indexed_indirect(struct SPC_State state[stat
 /* 0xb7     SBC   A, [d]+Y */
 enum InstructionStatus sbc_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1429 */
+    /* generated from generate_instructions.py: l.1428 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3654,7 +3647,7 @@ enum InstructionStatus sbc_register_indirect_indexed(struct SPC_State state[stat
 /* 0xc7     MOV   [d+X],A */
 enum InstructionStatus mov_indexed_indirect_register(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2251 */
+    /* generated from generate_instructions.py: l.2250 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 7) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3693,7 +3686,7 @@ enum InstructionStatus mov_indexed_indirect_register(struct SPC_State state[stat
 /* 0xd7     MOV   [d]+Y,A */
 enum InstructionStatus mov_indirect_indexed_register(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2317 */
+    /* generated from generate_instructions.py: l.2316 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 7) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3733,7 +3726,7 @@ enum InstructionStatus mov_indirect_indexed_register(struct SPC_State state[stat
 /* 0xe7     MOV   A, [d+X] */
 enum InstructionStatus mov_register_indexed_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1284 */
+    /* generated from generate_instructions.py: l.1283 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3787,7 +3780,7 @@ enum InstructionStatus mov_register_indexed_indirect(struct SPC_State state[stat
 /* 0xf7     MOV   A, [d]+Y */
 enum InstructionStatus mov_register_indirect_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1429 */
+    /* generated from generate_instructions.py: l.1428 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3859,7 +3852,7 @@ enum InstructionStatus or_register_immediate_a(struct SPC_State state[static 1],
 /* 0x18     OR    d, #i */
 enum InstructionStatus or_direct_immediate(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1932 */
+    /* generated from generate_instructions.py: l.1931 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3925,7 +3918,7 @@ enum InstructionStatus and_register_immediate_a(struct SPC_State state[static 1]
 /* 0x38     AND   d, #i */
 enum InstructionStatus and_direct_immediate(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1932 */
+    /* generated from generate_instructions.py: l.1931 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -3991,7 +3984,7 @@ enum InstructionStatus eor_register_immediate_a(struct SPC_State state[static 1]
 /* 0x58     EOR   d, #i */
 enum InstructionStatus eor_direct_immediate(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1932 */
+    /* generated from generate_instructions.py: l.1931 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4064,7 +4057,7 @@ enum InstructionStatus cmp_register_immediate_a(struct SPC_State state[static 1]
 /* 0x78     CMP   d, #i */
 enum InstructionStatus cmp_direct_immediate(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1932 */
+    /* generated from generate_instructions.py: l.1931 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4157,7 +4150,7 @@ enum InstructionStatus adc_register_immediate_a(struct SPC_State state[static 1]
 /* 0x98     ADC   d, #i */
 enum InstructionStatus adc_direct_immediate(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1932 */
+    /* generated from generate_instructions.py: l.1931 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4265,7 +4258,7 @@ enum InstructionStatus sbc_register_immediate_a(struct SPC_State state[static 1]
 /* 0xb8     SBC   d, #i */
 enum InstructionStatus sbc_direct_immediate(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1932 */
+    /* generated from generate_instructions.py: l.1931 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4359,7 +4352,7 @@ enum InstructionStatus cmp_register_immediate_x(struct SPC_State state[static 1]
 /* 0xd8     MOV   d, x */
 enum InstructionStatus mov_direct_register_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2063 */
+    /* generated from generate_instructions.py: l.2062 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4376,7 +4369,7 @@ enum InstructionStatus mov_direct_register_x(struct SPC_State state[static 1], u
         case 4: {
 
             /* payload */
-            /* generated from generate_instructions.py: l.2113 */
+            /* generated from generate_instructions.py: l.2112 */
             bus_write(state, cpu->addr, cpu->x);
             return INSTRUCTION_STATUS_DONE;
         }
@@ -4444,7 +4437,7 @@ enum InstructionStatus mov_register_direct_x(struct SPC_State state[static 1], u
 /* 0x09     OR    dd, ds */
 enum InstructionStatus or_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2522 */
+    /* generated from generate_instructions.py: l.2521 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4491,7 +4484,7 @@ enum InstructionStatus or_direct_direct(struct SPC_State state[static 1], uint32
 /* 0x19     OR    (X), (Y) */
 enum InstructionStatus or_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2690 */
+    /* generated from generate_instructions.py: l.2689 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4534,7 +4527,7 @@ enum InstructionStatus or_indirect_indirect(struct SPC_State state[static 1], ui
 /* 0x29     AND   dd, ds */
 enum InstructionStatus and_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2522 */
+    /* generated from generate_instructions.py: l.2521 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4581,7 +4574,7 @@ enum InstructionStatus and_direct_direct(struct SPC_State state[static 1], uint3
 /* 0x39     AND   (X), (Y) */
 enum InstructionStatus and_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2690 */
+    /* generated from generate_instructions.py: l.2689 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4624,7 +4617,7 @@ enum InstructionStatus and_indirect_indirect(struct SPC_State state[static 1], u
 /* 0x49     EOR   dd, ds */
 enum InstructionStatus eor_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2522 */
+    /* generated from generate_instructions.py: l.2521 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4671,7 +4664,7 @@ enum InstructionStatus eor_direct_direct(struct SPC_State state[static 1], uint3
 /* 0x59     EOR   (X), (Y) */
 enum InstructionStatus eor_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2690 */
+    /* generated from generate_instructions.py: l.2689 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4714,7 +4707,7 @@ enum InstructionStatus eor_indirect_indirect(struct SPC_State state[static 1], u
 /* 0x69     CMP   dd, ds */
 enum InstructionStatus cmp_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2522 */
+    /* generated from generate_instructions.py: l.2521 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4767,7 +4760,7 @@ enum InstructionStatus cmp_direct_direct(struct SPC_State state[static 1], uint3
 /* 0x79     CMP   (X), (Y) */
 enum InstructionStatus cmp_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2690 */
+    /* generated from generate_instructions.py: l.2689 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4816,7 +4809,7 @@ enum InstructionStatus cmp_indirect_indirect(struct SPC_State state[static 1], u
 /* 0x89     ADC   dd, ds */
 enum InstructionStatus adc_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2522 */
+    /* generated from generate_instructions.py: l.2521 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4882,7 +4875,7 @@ enum InstructionStatus adc_direct_direct(struct SPC_State state[static 1], uint3
 /* 0x99     ADC   (X), (Y) */
 enum InstructionStatus adc_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2690 */
+    /* generated from generate_instructions.py: l.2689 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -4944,7 +4937,7 @@ enum InstructionStatus adc_indirect_indirect(struct SPC_State state[static 1], u
 /* 0xa9     SBC   dd, ds */
 enum InstructionStatus sbc_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2522 */
+    /* generated from generate_instructions.py: l.2521 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5012,7 +5005,7 @@ enum InstructionStatus sbc_direct_direct(struct SPC_State state[static 1], uint3
 /* 0xb9     SBC   (X), (Y) */
 enum InstructionStatus sbc_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2690 */
+    /* generated from generate_instructions.py: l.2689 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5076,7 +5069,7 @@ enum InstructionStatus sbc_indirect_indirect(struct SPC_State state[static 1], u
 /* 0xc9     MOV   !a, x */
 enum InstructionStatus mov_absolute_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2384 */
+    /* generated from generate_instructions.py: l.2383 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5108,7 +5101,7 @@ enum InstructionStatus mov_absolute_x(struct SPC_State state[static 1], uint32_t
 /* 0xe9     MOV   X, !a */
 enum InstructionStatus mov_register_absolute_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1567 */
+    /* generated from generate_instructions.py: l.1566 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5186,7 +5179,7 @@ enum InstructionStatus mov_register_direct_indexed_x_y(struct SPC_State state[st
 /* 0xea     NOT1  m.b */
 enum InstructionStatus not1(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2949 */
+    /* generated from generate_instructions.py: l.2948 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5218,7 +5211,7 @@ enum InstructionStatus not1(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xfa     MOV   dd, ds */
 enum InstructionStatus mov_direct_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2629 */
+    /* generated from generate_instructions.py: l.2628 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5251,7 +5244,7 @@ enum InstructionStatus mov_direct_direct(struct SPC_State state[static 1], uint3
 /* 0x0b     ASL   d */
 enum InstructionStatus asl_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5296,7 +5289,7 @@ enum InstructionStatus asl_direct(struct SPC_State state[static 1], uint32_t cyc
 /* 0x1b     ASL   d+X */
 enum InstructionStatus asl_direct_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3010 */
+    /* generated from generate_instructions.py: l.3009 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5345,7 +5338,7 @@ enum InstructionStatus asl_direct_indexed(struct SPC_State state[static 1], uint
 /* 0x2b     ROL   d */
 enum InstructionStatus rol_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5391,7 +5384,7 @@ enum InstructionStatus rol_direct(struct SPC_State state[static 1], uint32_t cyc
 /* 0x3b     ROL   d+X */
 enum InstructionStatus rol_direct_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3010 */
+    /* generated from generate_instructions.py: l.3009 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5441,7 +5434,7 @@ enum InstructionStatus rol_direct_indexed(struct SPC_State state[static 1], uint
 /* 0x4b     LSR   d */
 enum InstructionStatus lsr_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5486,7 +5479,7 @@ enum InstructionStatus lsr_direct(struct SPC_State state[static 1], uint32_t cyc
 /* 0x5b     LSR   d+X */
 enum InstructionStatus lsr_direct_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3010 */
+    /* generated from generate_instructions.py: l.3009 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5535,7 +5528,7 @@ enum InstructionStatus lsr_direct_indexed(struct SPC_State state[static 1], uint
 /* 0x6b     ROR   d */
 enum InstructionStatus ror_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5581,7 +5574,7 @@ enum InstructionStatus ror_direct(struct SPC_State state[static 1], uint32_t cyc
 /* 0x7b     ROR   d+X */
 enum InstructionStatus ror_direct_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3010 */
+    /* generated from generate_instructions.py: l.3009 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5631,7 +5624,7 @@ enum InstructionStatus ror_direct_indexed(struct SPC_State state[static 1], uint
 /* 0x8b     DEC   d */
 enum InstructionStatus dec_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5672,7 +5665,7 @@ enum InstructionStatus dec_direct(struct SPC_State state[static 1], uint32_t cyc
 /* 0x9b     DEC   d+X */
 enum InstructionStatus dec_direct_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3010 */
+    /* generated from generate_instructions.py: l.3009 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5717,7 +5710,7 @@ enum InstructionStatus dec_direct_indexed(struct SPC_State state[static 1], uint
 /* 0xab     INC   d */
 enum InstructionStatus inc_direct(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2813 */
+    /* generated from generate_instructions.py: l.2812 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5758,7 +5751,7 @@ enum InstructionStatus inc_direct(struct SPC_State state[static 1], uint32_t cyc
 /* 0xbb     INC   d+X */
 enum InstructionStatus inc_direct_indexed(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3010 */
+    /* generated from generate_instructions.py: l.3009 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5803,7 +5796,7 @@ enum InstructionStatus inc_direct_indexed(struct SPC_State state[static 1], uint
 /* 0xcb     MOV   d, y */
 enum InstructionStatus mov_direct_register_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2063 */
+    /* generated from generate_instructions.py: l.2062 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5820,7 +5813,7 @@ enum InstructionStatus mov_direct_register_y(struct SPC_State state[static 1], u
         case 4: {
 
             /* payload */
-            /* generated from generate_instructions.py: l.2123 */
+            /* generated from generate_instructions.py: l.2122 */
             bus_write(state, cpu->addr, cpu->y);
             return INSTRUCTION_STATUS_DONE;
         }
@@ -5903,7 +5896,7 @@ enum InstructionStatus mov_register_direct_indexed_y_x(struct SPC_State state[st
 /* 0xcc     MOV   !a, y */
 enum InstructionStatus mov_absolute_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2384 */
+    /* generated from generate_instructions.py: l.2383 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -5935,7 +5928,7 @@ enum InstructionStatus mov_absolute_y(struct SPC_State state[static 1], uint32_t
 /* 0xec     MOV   Y, !a */
 enum InstructionStatus mov_register_absolute_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1567 */
+    /* generated from generate_instructions.py: l.1566 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -6178,7 +6171,7 @@ enum InstructionStatus mov_reg_reg_y_a(struct SPC_State state[static 1], uint32_
 /* 0x1e     CMP   X, !a */
 enum InstructionStatus cmp_register_absolute_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1567 */
+    /* generated from generate_instructions.py: l.1566 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -6263,7 +6256,7 @@ enum InstructionStatus cmp_register_direct_x(struct SPC_State state[static 1], u
 /* 0x5e     CMP   Y, !a */
 enum InstructionStatus cmp_register_absolute_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1567 */
+    /* generated from generate_instructions.py: l.1566 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -6310,7 +6303,7 @@ enum InstructionStatus cmp_register_absolute_y(struct SPC_State state[static 1],
 /* 0x8f     MOV   d, #i */
 enum InstructionStatus mov_direct_immediate(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1932 */
+    /* generated from generate_instructions.py: l.1931 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -6333,7 +6326,7 @@ enum InstructionStatus mov_direct_immediate(struct SPC_State state[static 1], ui
         case 5: {
 
             /* payload */
-            /* generated from generate_instructions.py: l.2013 */
+            /* generated from generate_instructions.py: l.2012 */
             bus_write(state, cpu->addr, cpu->data8[1]);
             return INSTRUCTION_STATUS_DONE;
         }
@@ -6345,7 +6338,7 @@ enum InstructionStatus mov_direct_immediate(struct SPC_State state[static 1], ui
 /* 0xaf     MOV   (X)+, A */
 enum InstructionStatus mov_indirect_incremented_register(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.2198 */
+    /* generated from generate_instructions.py: l.2197 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -6371,7 +6364,7 @@ enum InstructionStatus mov_indirect_incremented_register(struct SPC_State state[
 /* 0xbf     MOV   A, (X)+ */
 enum InstructionStatus mov_register_indirect_incremented(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.1223 */
+    /* generated from generate_instructions.py: l.1222 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
