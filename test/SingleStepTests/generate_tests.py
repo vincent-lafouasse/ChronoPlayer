@@ -151,7 +151,7 @@ class TestCase:
 
 def generate_test_suite(opcode: str):
     spec = opcode + ".json"
-    output = opcode + ".c"
+    output = opcode + ".gen.c"
 
     json_path = Path(__file__).parent / "specs" / spec
     output_path = Path(__file__).parent / output
@@ -186,6 +186,8 @@ def generate_test_suite(opcode: str):
 
 
 def main():
+    generate_test_suite("00")
+    generate_test_suite("20")
     generate_test_suite("40")
     generate_test_suite("60")
     generate_test_suite("80")
