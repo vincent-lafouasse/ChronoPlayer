@@ -36,7 +36,6 @@ struct BusEventQueue {
     struct BusEvent events[QUEUE_SIZE];
     uint32_t head;  // the next position to pop data off of
     uint32_t tail;  // the next position to write data
-    uint32_t cap;
 };
 
 struct BusEventQueue queue_new(void)
@@ -45,7 +44,6 @@ struct BusEventQueue queue_new(void)
         .events = {0},
         .head = 0,
         .tail = 0,
-        .cap = QUEUE_SIZE,
     };
 }
 
@@ -56,7 +54,7 @@ uint32_t queue_len(const struct BusEventQueue queue[static 1])
 
 bool event_push(struct BusEventQueue queue[static 1], struct BusEvent event)
 {
-    if (queue_len(queue) >= queue->cap) {
+    if (queue_len(queue) >= QUEUE_SIZE) {
         return false;
     }
 
