@@ -81,6 +81,10 @@ def idle_cycle():
     return "(void)bus_read(state, state->cpu.addr); // dummy read from the last latched address"
 
 
+def dummy_read_pc():
+    return "(void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch"
+
+
 def read_pc_to(dest):
     """Generate code to read from PC and latch it to cpu->addr. PC is incremented after."""
     return f"cpu->addr = cpu->pc++; {dest} = bus_read(state, cpu->addr);"
@@ -537,7 +541,7 @@ add_instruction(
 
                 if (cycle != 2) {{ return {InstructionStatus.UnexpectedCycle}; }}
             
-                {idle_cycle()}
+                {dummy_read_pc()}
                 return {InstructionStatus.Done};
             }}
             """
