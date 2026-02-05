@@ -9,29 +9,30 @@ endif()
 message(" -- SingleStepTests: nothing here yet :)")
 
 set(TESTED_SRC_DIR ../../src)
-set(TESTED_SOURCE
+set(COMPILE_OPTIONS -Wall -Wextra -Wpedantic -g3)
+set(INCLUDES
+    ${TESTED_SRC_DIR}
+    ${CMAKE_SOURCE_DIR}/test/utest.h
+)
+
+add_library(spc700_lib STATIC
     ${TESTED_SRC_DIR}/cpu.c
     ${TESTED_SRC_DIR}/instructions.gen.c
     ${TESTED_SRC_DIR}/instruction_table.gen.c
     ${TESTED_SRC_DIR}/bus_io.c
 )
-
-set(COMPILE_OPTIONS -Wall -Wextra -Wpedantic -g3)
-set(LINKED_LIBRARIES m)
-set(INCLUDES
-    ${TESTED_SRC_DIR}
-    ${CMAKE_SOURCE_DIR}/test/utest.h
-)
+target_compile_options(spc700_lib PRIVATE ${COMPILE_OPTIONS})
+target_include_directories(spc700_lib PUBLIC ${TESTED_SRC_DIR})
 
 set(BASENAME SingleStepTests)
 
 function(register_test opcode)
     set(name "${BASENAME}${opcode}")
     set(test_file "${opcode}.c")
-    add_executable(${name} ${test_file} ${TESTED_SOURCE})
+    add_executable(${name} ${test_file})
     target_compile_options(${name} PRIVATE ${COMPILE_OPTIONS})
     target_include_directories(${name} PRIVATE ${INCLUDES})
-    target_link_libraries(${name} PRIVATE ${LINKED_LIBRARIES})
+    target_link_libraries(${name} PRIVATE spc700_lib m)
     add_test(NAME ${name} COMMAND ${name})
 endfunction()
 
