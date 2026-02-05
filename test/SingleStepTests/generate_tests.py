@@ -172,6 +172,8 @@ def main():
         generate_test_suite(opcode)
 
     for msb in "0123456789abcdef":
+        if msb != "d":
+            generate_test_suite(msb + "4")
         generate_test_suite(msb + "5")
         generate_test_suite(msb + "6")
         generate_test_suite(msb + "7")
