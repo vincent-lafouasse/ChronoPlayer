@@ -144,7 +144,7 @@ class TestCase:
 
 
 def main():
-    json_path = Path(__file__).parent / "v1" / "00.json"
+    json_path = Path(__file__).parent / "specs" / "00.json"
 
     with open(json_path) as f:
         tests_json = json.load(f)
