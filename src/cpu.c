@@ -36,10 +36,14 @@ void cpu_tick(struct SPC_State* state)
         exit(1);
     }
 
-    const bool done = instruction->handler(state, cpu->instruction_cycle);
-    if (done) {
+    const enum InstructionStatus status =
+        instruction->handler(state, cpu->instruction_cycle);
+    if (status == INSTRUCTION_STATUS_DONE) {
         cpu->instruction_cycle = 1;
-    } else {
+    } else if (status == INSTRUCTION_STATUS_PENDING) {
         cpu->instruction_cycle++;
-    }
+    } else {
+        fprintf(stderr, "error in instruction handler\n");
+        exit(1);
+    };
 }
