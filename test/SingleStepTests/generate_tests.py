@@ -1,6 +1,10 @@
 import json
 from pathlib import Path
-from pprint import pprint
+
+# Opcodes that need cycle reordering to match Anomie/Near documentation
+# These are indirect indexed addressing mode instructions where the test data
+# has WAIT at position 2, but hardware actually does it at position 4
+REORDERED_OPCODES = {"17", "37", "57", "77", "97", "b7", "f7"}
 
 
 class State:
@@ -12,106 +16,70 @@ class State:
         self.y = state_data["y"]
         self.sp = state_data["sp"]
         self.psw = state_data["psw"]
-        self.aram = state_data["ram"]  # List of [addr, value] pairs
-
-    def log(self, prefix="State"):
-        print(f"{prefix}:")
-        print(f"  PC:  0x{self.pc:04X}")
-        print(f"  A:   0x{self.a:02X}")
-        print(f"  X:   0x{self.x:02X}")
-        print(f"  Y:   0x{self.y:02X}")
-        print(f"  SP:  0x{self.sp:02X}")
-        print(f"  PSW: 0x{self.psw:02X}")
-        print(f"  RAM: {self.aram}")
+        self.aram = state_data["ram"]
 
 
 class BusAccess:
-    Read = 1
-    Write = 2
-
     def __init__(self, addr, value, operation):
         self.addr = addr
         self.value = value  # Can be None for dummy reads
-        self.operation = operation  # BusAccess.Read or BusAccess.Write
-
-    def log(self):
-        val_str = f"0x{self.value:02X}" if self.value is not None else "None"
-        op_str = "read" if self.operation == "read" else "write"
-        print(f"  addr=0x{self.addr:04X}, val={val_str}, op={op_str}")
+        self.operation = operation
 
 
-# {"name":"00 0000","initial":{"pc":30256,"a":56,"x":78,"y":127,"sp":236,"psw":145,"ram":[[30256,0]]},"final":{"a":56,"x":78,"y":127,"sp":236,"pc":30257,"psw":145,"ram":[[30256,0]]},"cycles":[[30256,0,"read"],[30257,null,"read"]]}
 class TestCase:
     def __init__(self, json_obj):
-        self.raw = json_obj
         self.name = json_obj["name"]
-
         self.initial_state = State(json_obj, "initial")
         self.final_state = State(json_obj, "final")
-
         self.bus_accesses = [
             BusAccess(addr, value, operation)
             for addr, value, operation in json_obj["cycles"]
         ]
 
-    def log(self):
-        print("=" * 60)
-        print(f"Test: {self.name}")
-        print("=" * 60)
-        print()
-        self.initial_state.log("Initial State")
-        print()
-        self.final_state.log("Final State")
-        print()
-        print("Bus Accesses:")
-        for i, access in enumerate(self.bus_accesses):
-            print(f"  [{i}]", end=" ")
-            access.log()
-        print()
+    def _reorder_bus_accesses_if_needed(self, opcode):
+        """Reorder bus accesses for indirect indexed instructions to match Anomie/Near.
 
-    def generate_c_test(self):
-        # Sanitize test name for C identifier
-        test_name = "_" + self.name.replace(" ", "_")
-        opcode = self.name.split()[0]
+        Test data has: opcode, operand, WAIT, AAL, AAH, data
+        But Anomie/Near document: opcode, operand, AAL, AAH, WAIT, data
+        """
+        if opcode not in REORDERED_OPCODES:
+            return self.bus_accesses
 
+        if len(self.bus_accesses) == 6 and self.bus_accesses[2].operation == "wait":
+            return [
+                self.bus_accesses[0],  # opcode read
+                self.bus_accesses[1],  # operand read
+                self.bus_accesses[3],  # AAL read
+                self.bus_accesses[4],  # AAH read
+                self.bus_accesses[2],  # WAIT (moved from position 2)
+                self.bus_accesses[5],  # final data read
+            ]
+        return self.bus_accesses
+
+    def _generate_cpu_state(self, state, var_name):
+        """Generate a compact CPU state initializer."""
+        return (
+            f"    const struct CPU_State {var_name} = "
+            f"{{.pc=0x{state.pc:04x}, .a=0x{state.a:02x}, .x=0x{state.x:02x}, "
+            f".y=0x{state.y:02x}, .sp=0x{state.sp:02x}, .status=0x{state.psw:02x}}};"
+        )
+
+    def _generate_ram_array(self, state, var_name):
+        """Generate RAM array, wrapping at 100 columns if needed."""
         lines = []
-        lines.append(f"UTEST(SingleStepTests_{opcode}, {test_name}) {{")
-
-        s = self.initial_state
-        lines.append(
-            f"    const struct CPU_State initial_cpu = {{.pc=0x{s.pc:04x}, .a=0x{s.a:02x}, .x=0x{s.x:02x}, .y=0x{s.y:02x}, .sp=0x{s.sp:02x}, .status=0x{s.psw:02x}}};"
-        )
-
-        # Reorder bus accesses for indirect indexed instructions to match Anomie/Near
-        # Test data has: opcode, operand, WAIT, AAL, AAH, data
-        # But Anomie/Near document: opcode, operand, AAL, AAH, WAIT, data
-        bus_accesses = self.bus_accesses
-        if opcode in ["17", "37", "57", "77", "97", "b7", "f7"]:
-            # Move cycle 2 (the WAIT, index 2) to position 4 (before last cycle)
-            if len(bus_accesses) == 6 and bus_accesses[2].operation == "wait":
-                bus_accesses = [
-                    bus_accesses[0],  # opcode read
-                    bus_accesses[1],  # operand read
-                    bus_accesses[3],  # AAL read (was at index 3)
-                    bus_accesses[4],  # AAH read (was at index 4)
-                    bus_accesses[2],  # WAIT (was at index 2)
-                    bus_accesses[5],  # final data read
-                ]
-
-        # compact, wrap at ~100 cols
         ram_entries = [
-            f"{{.addr=0x{addr:04x}, .value=0x{val:02x}}}" for addr, val in s.aram
+            f"{{.addr=0x{addr:04x}, .value=0x{val:02x}}}" for addr, val in state.aram
         ]
         ram_str = (
-            "const struct RamEntry initial_ram[] = {" + ", ".join(ram_entries) + "};"
+            f"const struct RamEntry {var_name}[] = {{" + ", ".join(ram_entries) + "};"
         )
+
         if len(ram_str) <= 100:
             lines.append(f"    {ram_str}")
         else:
-            # Wrap long lines
-            lines.append("    const struct RamEntry initial_ram[] = {")
+            lines.append(f"    const struct RamEntry {var_name}[] = {{")
             line = "        "
-            for i, entry in enumerate(ram_entries):
+            for entry in ram_entries:
                 if len(line) + len(entry) + 2 > 100 and line.strip():
                     lines.append(line.rstrip())
                     line = "        "
@@ -119,41 +87,20 @@ class TestCase:
             if line.strip():
                 lines.append(line.rstrip())
             lines.append("    };")
+        return lines
 
-        s = self.final_state
-        lines.append(
-            f"    const struct CPU_State final_cpu = {{.pc=0x{s.pc:04x}, .a=0x{s.a:02x}, .x=0x{s.x:02x}, .y=0x{s.y:02x}, .sp=0x{s.sp:02x}, .status=0x{s.psw:02x}}};"
-        )
+    def _generate_bus_events(self, bus_accesses, opcode):
+        """Generate bus event array."""
+        lines = []
+        if opcode in REORDERED_OPCODES:
+            lines.append(
+                "    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)"
+            )
 
-        ram_entries = [
-            f"{{.addr=0x{addr:04x}, .value=0x{val:02x}}}" for addr, val in s.aram
-        ]
-        ram_str = (
-            "const struct RamEntry final_ram[] = {" + ", ".join(ram_entries) + "};"
-        )
-        if len(ram_str) <= 100:
-            lines.append(f"    {ram_str}")
-        else:
-            lines.append("    const struct RamEntry final_ram[] = {")
-            line = "        "
-            for i, entry in enumerate(ram_entries):
-                if len(line) + len(entry) + 2 > 100 and line.strip():
-                    lines.append(line.rstrip())
-                    line = "        "
-                line += entry + ", "
-            if line.strip():
-                lines.append(line.rstrip())
-            lines.append("    };")
-
-        # Reorder tests that disagree with Near and Anomie
-        if opcode in ["17", "37", "57", "77", "97", "b7", "f7"]:
-            lines.append("    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)")
         lines.append("    const struct BusEvent events[] = {")
         for access in bus_accesses:
             if access.operation == "wait":
-                io_type = "IO_WAIT"
-                addr_str = "DUMMY"
-                val_str = "DUMMY"
+                addr_str, val_str, io_type = "DUMMY", "DUMMY", "IO_WAIT"
             else:
                 io_type = "IO_READ" if access.operation == "read" else "IO_WRITE"
                 addr_str = f"0x{access.addr:04x}"
@@ -162,19 +109,30 @@ class TestCase:
                 f"        {{.addr={addr_str}, .value={val_str}, .type={io_type}}},"
             )
         lines.append("    };")
+        return lines
 
-        lines.append(
-            "    struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));"
-        )
-        lines.append(
-            f'    run_and_check("{self.name}", &state, &final_cpu, final_ram, sizeof(final_ram)/sizeof(*final_ram), events, sizeof(events)/sizeof(*events), utest_result);'
-        )
-        lines.append("}")
+    def generate_c_test(self):
+        """Generate complete C test function."""
+        test_name = "_" + self.name.replace(" ", "_")
+        opcode = self.name.split()[0]
+        bus_accesses = self._reorder_bus_accesses_if_needed(opcode)
 
+        lines = [
+            f"UTEST(SingleStepTests_{opcode}, {test_name}) {{",
+            self._generate_cpu_state(self.initial_state, "initial_cpu"),
+            *self._generate_ram_array(self.initial_state, "initial_ram"),
+            self._generate_cpu_state(self.final_state, "final_cpu"),
+            *self._generate_ram_array(self.final_state, "final_ram"),
+            *self._generate_bus_events(bus_accesses, opcode),
+            "    struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));",
+            f'    run_and_check("{self.name}", &state, &final_cpu, final_ram, sizeof(final_ram)/sizeof(*final_ram), events, sizeof(events)/sizeof(*events), utest_result);',
+            "}",
+        ]
         return "\n".join(lines)
 
 
 def generate_test_suite(opcode: str):
+    """Generate test suite for a single opcode."""
     spec = opcode + ".json"
     output = opcode + ".gen.c"
 
@@ -187,10 +145,13 @@ def generate_test_suite(opcode: str):
     print(f"Found {len(tests_json)} tests in {spec}")
 
     # Filter out tests where any IO happens in hardware register range 0x00f0-0x00ff
-    def has_hw_register_access(test):
-        return any(cycle[0] is not None and 0xF0 <= cycle[0] <= 0xFF for cycle in test["cycles"])
-
-    filtered = [t for t in tests_json if not has_hw_register_access(t)]
+    filtered = [
+        t
+        for t in tests_json
+        if not any(
+            cycle[0] is not None and 0xF0 <= cycle[0] <= 0xFF for cycle in t["cycles"]
+        )
+    ]
     print(
         f"Filtered to {len(filtered)} tests (excluded {len(tests_json) - len(filtered)} with IO in 0xf0-0xff)"
     )
@@ -198,59 +159,25 @@ def generate_test_suite(opcode: str):
     test_cases = [TestCase(test_json) for test_json in filtered]
 
     with open(output_path, "w") as f:
-        f.write('#include "../utest.h/utest.h"\n')
-        f.write("\n")
-        f.write('#include "test_helper.h"\n')
-        f.write("\n")
-
+        f.write('#include "../utest.h/utest.h"\n\n')
+        f.write('#include "test_helper.h"\n\n')
         for test_case in test_cases:
             f.write(test_case.generate_c_test())
             f.write("\n\n")
-
         f.write("UTEST_MAIN()\n")
 
 
 def main():
-    generate_test_suite("00")
-    generate_test_suite("20")
-    generate_test_suite("40")
-    generate_test_suite("60")
-    generate_test_suite("80")
-    generate_test_suite("e0")
+    for opcode in ["00", "20", "40", "60", "80", "e0"]:
+        generate_test_suite(opcode)
 
-    generate_test_suite("07")
-    generate_test_suite("17")
-    generate_test_suite("27")
-    generate_test_suite("37")
-    generate_test_suite("47")
-    generate_test_suite("57")
-    generate_test_suite("67")
-    generate_test_suite("77")
-    generate_test_suite("87")
-    generate_test_suite("97")
-    generate_test_suite("a7")
-    generate_test_suite("b7")
-    generate_test_suite("c7")
-    generate_test_suite("d7")
-    generate_test_suite("e7")
-    generate_test_suite("f7")
+    lsb = "7"
+    for msb in "0123456789abcdef":
+        generate_test_suite(msb + lsb)
 
-    generate_test_suite("08")
-    generate_test_suite("18")
-    generate_test_suite("28")
-    generate_test_suite("38")
-    generate_test_suite("48")
-    generate_test_suite("58")
-    generate_test_suite("68")
-    generate_test_suite("78")
-    generate_test_suite("88")
-    generate_test_suite("98")
-    generate_test_suite("a8")
-    generate_test_suite("b8")
-    generate_test_suite("c8")
-    generate_test_suite("d8")
-    generate_test_suite("e8")
-    generate_test_suite("f8")
+    lsb = "8"
+    for msb in "0123456789abcdef":
+        generate_test_suite(msb + lsb)
 
 
 if __name__ == "__main__":
