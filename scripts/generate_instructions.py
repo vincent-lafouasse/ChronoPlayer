@@ -2691,8 +2691,7 @@ class IndirectIndirect(AddressingMode):
 
                 switch (cycle) {{
                     case 2:
-                        // internal operation - dummy read from last latched addr
-                        {idle_cycle()}
+                        {dummy_read_pc()}
                         return {InstructionStatus.Pending};
                     case 3:
                         // src: (Y)
