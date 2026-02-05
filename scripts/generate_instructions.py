@@ -3204,6 +3204,33 @@ class TCallInstruction(Instruction):
           (1)      new PC  Op Code         1
        * WTF with all the IO cycles?
        * Order of reading new addr and pushing old addr may be wrong.
+
+     Actually, we side with Near
+
+    auto SPC700::instructionCallTable(uint4 vector) -> void {
+        read(PC);        2. dummy read of PC
+        idle();          3. true idle
+        push(PC >> 8);   4. push PCH
+        push(PC >> 0);   5. push PCL
+        idle();          6. true idle
+        uint16 address = 0xffde - (vector << 1); 7. fetch AAL
+        uint16 pc = read(address + 0);           8. fetch AAH
+        pc |= read(address + 1) << 8;            
+        PC = pc;                           still 8. publish PC
+    }
+
+    which is in accordance with SingleStepTests
+
+    const struct BusEvent events[] = {
+        {.addr=0xcd88, .value=0x01, .type=IO_READ},   1. fetch opcode
+        {.addr=0xcd89, .value=0xf3, .type=IO_READ},   2. dummy read of new pc
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},   3. true idle
+        {.addr=0x019a, .value=0xcd, .type=IO_WRITE},  4. push PCH
+        {.addr=0x0199, .value=0x89, .type=IO_WRITE},  5. push PCL
+        {.addr=DUMMY, .value=DUMMY, .type=IO_WAIT},   6. true idle
+        {.addr=0xffde, .value=0xa2, .type=IO_READ},   7. read AAL
+        {.addr=0xffdf, .value=0x2e, .type=IO_READ},   8. read AAH
+    };
     """
 
     def __init__(self, n):
