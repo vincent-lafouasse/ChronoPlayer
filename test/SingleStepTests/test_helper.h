@@ -38,6 +38,8 @@ struct BusEvent {
 
 #define QUEUE_SIZE 16
 
+_Static_assert((QUEUE_SIZE & (QUEUE_SIZE - 1)) == 0, "Queue size must be a power of 2");
+
 struct BusEventQueue {
     struct BusEvent events[QUEUE_SIZE];
     uint32_t head;  // the next position to pop data off of
