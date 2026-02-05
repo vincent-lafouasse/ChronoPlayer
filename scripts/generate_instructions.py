@@ -3368,6 +3368,7 @@ def print_opcode_matrix():
 
 C_IMPLEM = "instructions.gen.c"
 HEADER = "instructions.gen.h"
+TABLE = "instruction_table.gen.c"
 DIR = "./src/"
 
 
@@ -3430,9 +3431,33 @@ def make_implementation():
             f.write("\n")  # sep. the columns
 
 
+def make_table():
+    with open(DIR + TABLE, "w") as f:
+        f.write(
+            inspect.cleandoc(
+                f"""
+            {trace_source()}
+
+            #include "{HEADER}"
+            """
+            )
+        )
+        f.write("\n\n")
+
+        f.write("const struct Instruction opcode_lookup_table[256] = {\n")
+
+        for opcode in range(256):
+            f.write(f"    [{opcode:#04x}] = {{0}}")
+            f.write(",\n")
+
+        f.write("};\n")
+
+
 def main():
     make_header()
     make_implementation()
+    make_table()
+
     print_opcode_matrix()
 
 

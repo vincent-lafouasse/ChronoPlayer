@@ -16,6 +16,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	src/load_spc.c
 	src/bus_io.c
 	src/instructions.gen.c
+	src/instruction_table.gen.c
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)
