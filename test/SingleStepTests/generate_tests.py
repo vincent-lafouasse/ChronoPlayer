@@ -186,6 +186,13 @@ def generate_test_suite(opcode: str):
 
 
 def main():
+    generate_test_suite("00")
+    generate_test_suite("20")
+    generate_test_suite("40")
+    generate_test_suite("60")
+    generate_test_suite("80")
+    generate_test_suite("e0")
+
     generate_test_suite("08")
     generate_test_suite("18")
     generate_test_suite("28")
