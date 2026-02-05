@@ -33,7 +33,7 @@ struct BusEventQueue {
     uint32_t tail;  // the next position to write data
 };
 
-struct BusEventQueue queue_new(void)
+static inline struct BusEventQueue queue_new(void)
 {
     return (struct BusEventQueue){
         .events = {0},
@@ -42,17 +42,19 @@ struct BusEventQueue queue_new(void)
     };
 }
 
-uint32_t queue_len(const struct BusEventQueue queue[static 1])
+static inline uint32_t queue_len(const struct BusEventQueue queue[static 1])
 {
     return queue->tail - queue->head;
 }
 
-bool queue_has(const struct BusEventQueue queue[static 1], uint32_t size)
+static inline bool queue_has(const struct BusEventQueue queue[static 1],
+                             uint32_t size)
 {
     return queue_len(queue) == size;
 }
 
-bool event_push(struct BusEventQueue queue[static 1], struct BusEvent event)
+static inline bool event_push(struct BusEventQueue queue[static 1],
+                              struct BusEvent event)
 {
     if (queue_len(queue) >= QUEUE_SIZE) {
         return false;
@@ -63,7 +65,8 @@ bool event_push(struct BusEventQueue queue[static 1], struct BusEvent event)
     return true;
 }
 
-bool event_pop(struct BusEventQueue queue[static 1], struct BusEvent* event)
+static inline bool event_pop(struct BusEventQueue queue[static 1],
+                             struct BusEvent* event)
 {
     if (queue_len(queue) == 0) {
         return false;
@@ -74,11 +77,11 @@ bool event_pop(struct BusEventQueue queue[static 1], struct BusEvent* event)
     return true;
 }
 
-void bus_hook(void* userdata,
-              const struct SPC_State state[static 1],
-              uint16_t addr,
-              uint8_t val,
-              bool is_write)
+static inline void bus_hook(void* userdata,
+                            const struct SPC_State state[static 1],
+                            uint16_t addr,
+                            uint8_t val,
+                            bool is_write)
 {
     (void)state;
     struct BusEventQueue* queue = (struct BusEventQueue*)userdata;
