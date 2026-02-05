@@ -1296,7 +1296,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                         return {InstructionStatus.Pending};
                     case 3:
                         /* internal operation - dummy read from last latched addr */
-                        {idle_cycle()}
+                        {true_idle()}
                         return {InstructionStatus.Pending};
                     case 4:
                         // first indirection

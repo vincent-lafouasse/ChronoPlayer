@@ -2955,7 +2955,7 @@ enum InstructionStatus or_register_indexed_indirect(struct SPC_State state[stati
             return INSTRUCTION_STATUS_PENDING;
         case 3:
             /* internal operation - dummy read from last latched addr */
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             // first indirection
@@ -3057,7 +3057,7 @@ enum InstructionStatus and_register_indexed_indirect(struct SPC_State state[stat
             return INSTRUCTION_STATUS_PENDING;
         case 3:
             /* internal operation - dummy read from last latched addr */
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             // first indirection
@@ -3159,7 +3159,7 @@ enum InstructionStatus eor_register_indexed_indirect(struct SPC_State state[stat
             return INSTRUCTION_STATUS_PENDING;
         case 3:
             /* internal operation - dummy read from last latched addr */
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             // first indirection
@@ -3261,7 +3261,7 @@ enum InstructionStatus cmp_register_indexed_indirect(struct SPC_State state[stat
             return INSTRUCTION_STATUS_PENDING;
         case 3:
             /* internal operation - dummy read from last latched addr */
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             // first indirection
@@ -3377,7 +3377,7 @@ enum InstructionStatus adc_register_indexed_indirect(struct SPC_State state[stat
             return INSTRUCTION_STATUS_PENDING;
         case 3:
             /* internal operation - dummy read from last latched addr */
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             // first indirection
@@ -3521,7 +3521,7 @@ enum InstructionStatus sbc_register_indexed_indirect(struct SPC_State state[stat
             return INSTRUCTION_STATUS_PENDING;
         case 3:
             /* internal operation - dummy read from last latched addr */
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             // first indirection
@@ -3750,7 +3750,7 @@ enum InstructionStatus mov_register_indexed_indirect(struct SPC_State state[stat
             return INSTRUCTION_STATUS_PENDING;
         case 3:
             /* internal operation - dummy read from last latched addr */
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             // first indirection
