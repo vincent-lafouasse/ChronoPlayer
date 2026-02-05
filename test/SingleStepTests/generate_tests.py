@@ -72,74 +72,71 @@ class TestCase:
     def generate_c_test(self):
         # Sanitize test name for C identifier
         test_name = "_" + self.name.replace(" ", "_")
+        opcode = self.name.split()[0]
 
         lines = []
+        lines.append(f"UTEST(SingleStepTests_{opcode}, {test_name}) {{")
 
-        # Test function header
-        opcode = self.name.split()[0]
-        lines.append(f"UTEST(SingleStepTests_{opcode}, {test_name})")
-        lines.append("{")
+        s = self.initial_state
+        lines.append(
+            f"    const struct CPU_State initial_cpu = {{.pc=0x{s.pc:04x}, .a=0x{s.a:02x}, .x=0x{s.x:02x}, .y=0x{s.y:02x}, .sp=0x{s.sp:02x}, .status=0x{s.psw:02x}}};"
+        )
 
-        # Initial CPU state
-        state = self.initial_state
-        lines.append(f"    const struct CPU_State initial_cpu = (struct CPU_State){{")
-        lines.append(f"        .pc = 0x{state.pc:04x},")
-        lines.append(f"        .a = 0x{state.a:02x},")
-        lines.append(f"        .x = 0x{state.x:02x},")
-        lines.append(f"        .y = 0x{state.y:02x},")
-        lines.append(f"        .sp = 0x{state.sp:02x},")
-        lines.append(f"        .status = 0x{state.psw:02x}}};")
+        # compact, wrap at ~100 cols
+        ram_entries = [f"{{0x{addr:04x},0x{val:02x}}}" for addr, val in s.aram]
+        ram_str = (
+            "const struct RamEntry initial_ram[] = {" + ", ".join(ram_entries) + "};"
+        )
+        if len(ram_str) <= 100:
+            lines.append(f"    {ram_str}")
+        else:
+            # Wrap long lines
+            lines.append("    const struct RamEntry initial_ram[] = {")
+            line = "        "
+            for i, entry in enumerate(ram_entries):
+                if len(line) + len(entry) + 2 > 100 and line.strip():
+                    lines.append(line.rstrip())
+                    line = "        "
+                line += entry + ", "
+            if line.strip():
+                lines.append(line.rstrip())
+            lines.append("    };")
 
-        # Initial RAM
-        lines.append("    const struct RamEntry initial_ram[] = {")
-        for addr, value in state.aram:
-            lines.append(f"        {{0x{addr:04x}, 0x{value:02x}}},")
-        lines.append("    };")
-        lines.append("")
+        s = self.final_state
+        lines.append(
+            f"    const struct CPU_State final_cpu = {{.pc=0x{s.pc:04x}, .a=0x{s.a:02x}, .x=0x{s.x:02x}, .y=0x{s.y:02x}, .sp=0x{s.sp:02x}, .status=0x{s.psw:02x}}};"
+        )
 
-        # Final CPU state
-        state = self.final_state
-        lines.append(f"    const struct CPU_State final_cpu = (struct CPU_State){{")
-        lines.append(f"        .pc = 0x{state.pc:04x},")
-        lines.append(f"        .a = 0x{state.a:02x},")
-        lines.append(f"        .x = 0x{state.x:02x},")
-        lines.append(f"        .y = 0x{state.y:02x},")
-        lines.append(f"        .sp = 0x{state.sp:02x},")
-        lines.append(f"        .status = 0x{state.psw:02x}}};")
+        ram_entries = [f"{{0x{addr:04x},0x{val:02x}}}" for addr, val in s.aram]
+        ram_str = (
+            "const struct RamEntry final_ram[] = {" + ", ".join(ram_entries) + "};"
+        )
+        if len(ram_str) <= 100:
+            lines.append(f"    {ram_str}")
+        else:
+            lines.append("    const struct RamEntry final_ram[] = {")
+            line = "        "
+            for i, entry in enumerate(ram_entries):
+                if len(line) + len(entry) + 2 > 100 and line.strip():
+                    lines.append(line.rstrip())
+                    line = "        "
+                line += entry + ", "
+            if line.strip():
+                lines.append(line.rstrip())
+            lines.append("    };")
 
-        # Final RAM
-        lines.append("    const struct RamEntry final_ram[] = {")
-        for addr, value in state.aram:
-            lines.append(f"        {{0x{addr:04x}, 0x{value:02x}}},")
-        lines.append("    };")
-        lines.append("")
-
-        # Bus events
         lines.append("    const struct BusEvent events[] = {")
         for access in self.bus_accesses:
             io_type = "IO_READ" if access.operation == "read" else "IO_WRITE"
-            if access.value is None:
-                value_str = "DUMMY"
-            else:
-                value_str = f"0x{access.value:02x}"
-            lines.append(
-                f"        {{.addr = 0x{access.addr:04x}, .value = {value_str}, .type = {io_type}}},"
-            )
+            val = "DUMMY" if access.value is None else f"0x{access.value:02x}"
+            lines.append(f"        {{0x{access.addr:04x}, {val}, {io_type}}},")
         lines.append("    };")
-        lines.append("")
 
-        # Execution
-        lines.append("    // ----- execution")
-        lines.append("    struct SPC_State state = setup_state(")
         lines.append(
-            "        &initial_cpu, initial_ram, sizeof(initial_ram) / sizeof(*initial_ram));"
-        )
-        lines.append(f'    run_and_check("{self.name}", &state, &final_cpu, final_ram,')
-        lines.append(
-            "                  sizeof(final_ram) / sizeof(*final_ram), events,"
+            "    struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));"
         )
         lines.append(
-            "                  sizeof(events) / sizeof(*events), utest_result);"
+            f'    run_and_check("{self.name}", &state, &final_cpu, final_ram, sizeof(final_ram)/sizeof(*final_ram), events, sizeof(events)/sizeof(*events), utest_result);'
         )
         lines.append("}")
 
