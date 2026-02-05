@@ -2259,8 +2259,7 @@ def generate_indexed_indirect_register():
                         cpu->data8[0] = cpu->operands[0] + cpu->x;
                         return {InstructionStatus.Pending};
                     case 3:
-                        /* internal operation - dummy read from last latched addr */
-                        {idle_cycle()}
+                        {true_idle()}
                         return {InstructionStatus.Pending};
                     case 4:
                         // AAL
