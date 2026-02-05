@@ -6,8 +6,6 @@ if(NOT PROJECT_NAME)
     enable_testing()
 endif()
 
-message(" -- SingleStepTests: nothing here yet :)")
-
 set(TESTED_SRC_DIR ../../src)
 set(COMPILE_OPTIONS -Wall -Wextra -Wpedantic -g3)
 set(INCLUDES
