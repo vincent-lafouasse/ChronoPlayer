@@ -139,8 +139,32 @@ UTEST(InstructionTest, H00_NOP_00_0000)
              test_name, expected_len, i);
     ASSERT_EQ_MSG(expected_len, i, msg);
 
-    // check final CPU
-    (void)finalCpu;
+    const struct CPU_State* cpu = &state.cpu;
+
+    snprintf(msg, msg_size,
+             "-- %s: Register A mismatch. expected 0x%02x was 0x%02x",
+             test_name, finalCpu.a, cpu->a);
+    ASSERT_EQ_MSG(finalCpu.a, cpu->a, msg);
+
+    snprintf(msg, msg_size,
+             "-- %s: Register X mismatch. expected 0x%02x was 0x%02x",
+             test_name, finalCpu.x, cpu->x);
+    ASSERT_EQ_MSG(finalCpu.x, cpu->x, msg);
+
+    snprintf(msg, msg_size,
+             "-- %s: Register Y mismatch. expected 0x%02x was 0x%02x",
+             test_name, finalCpu.y, cpu->y);
+    ASSERT_EQ_MSG(finalCpu.y, cpu->y, msg);
+
+    snprintf(msg, msg_size,
+             "-- %s: Register SP mismatch. expected 0x%02x was 0x%02x",
+             test_name, finalCpu.sp, cpu->sp);
+    ASSERT_EQ_MSG(finalCpu.sp, cpu->sp, msg);
+
+    snprintf(msg, msg_size,
+             "-- %s: Register PSW mismatch. expected 0x%02x was 0x%02x",
+             test_name, finalCpu.status, cpu->status);
+    ASSERT_EQ_MSG(finalCpu.status, cpu->status, msg);
 
     for (size_t i = 0; i < final_ram_size; i++) {
         const uint16_t addr = finalRam[i].addr;
