@@ -25,7 +25,7 @@ struct BusEvent {
     enum IoType type;
 };
 
-#define QUEUE_SIZE 128
+#define QUEUE_SIZE 4
 
 struct BusEventQueue {
     struct BusEvent events[QUEUE_SIZE];
