@@ -11,7 +11,6 @@
 enum IoType {
     IO_READ,
     IO_WRITE,
-    IO_DUMMY_READ,
     IO_WAIT,
 };
 
@@ -22,8 +21,6 @@ static inline const char* io_type_repr(enum IoType type)
             return "WRITE";
         case IO_READ:
             return "READ";
-        case IO_DUMMY_READ:
-            return "DUMMY READ";
         case IO_WAIT:
             return "WAIT";
         default:

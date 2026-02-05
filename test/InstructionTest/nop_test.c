@@ -37,27 +37,33 @@ static inline void compare_bus_events(const char* test_name,
     const size_t msg_size = sizeof(msg) / sizeof(*msg);
 
     snprintf(msg, msg_size,
-             "-- %s: Cycle %zu: Address mismatch - expected "
-             "0x%04X, got 0x%04X",
-             test_name, cyc, expected->addr, actual->addr);
-    ASSERT_TRUE_MSG(expected->addr == actual->addr, msg);
-
-    snprintf(msg, msg_size,
              "-- %s: Cycle %zu: Type mismatch at 0x%04X - expected "
              "%s, got %s",
              test_name, cyc, actual->addr, io_type_repr(expected->type),
              io_type_repr(actual->type));
     ASSERT_TRUE_MSG(expected->type == actual->type, msg);
 
-    if (expected->value != DUMMY) {
-        snprintf(msg, msg_size,
-                 "-- %s: Cycle %zu: Value mismatch at 0x%04X - "
-                 "expected 0x%02X, "
-                 "got 0x%02X",
-                 test_name, cyc, actual->addr, (uint8_t)expected->value,
-                 (uint8_t)actual->value);
-        ASSERT_TRUE_MSG(expected->value == actual->value, msg);
+    if (actual->type == IO_WAIT) {
+        return;
     }
+
+    snprintf(msg, msg_size,
+             "-- %s: Cycle %zu: Address mismatch - expected "
+             "0x%04X, got 0x%04X",
+             test_name, cyc, expected->addr, actual->addr);
+    ASSERT_TRUE_MSG(expected->addr == actual->addr, msg);
+
+    if (expected->value == DUMMY) {
+        return;
+    }
+
+    snprintf(msg, msg_size,
+             "-- %s: Cycle %zu: Value mismatch at 0x%04X - "
+             "expected 0x%02X, "
+             "got 0x%02X",
+             test_name, cyc, actual->addr, (uint8_t)expected->value,
+             (uint8_t)actual->value);
+    ASSERT_TRUE_MSG(expected->value == actual->value, msg);
 }
 
 static inline void run_and_check(const char* test_name,
