@@ -162,7 +162,7 @@ def main():
         f.write('#include "test_helper.h"\n')
         f.write('\n')
 
-        for test_case in test_cases[0:1]:
+        for test_case in test_cases:
             f.write(test_case.generate_c_test())
             f.write('\n\n')
 
