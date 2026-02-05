@@ -3447,8 +3447,17 @@ def make_table():
         f.write("const struct Instruction opcode_lookup_table[256] = {\n")
 
         for opcode in range(256):
-            f.write(f"    [{opcode:#04x}] = {{0}}")
-            f.write(",\n")
+            if opcode in instructions:
+                instr = instructions[opcode]
+                f.write(f"    [{opcode:#04x}] = {{\n")
+                f.write(f'        .mnemonic = "{instr.mnemonic}",\n')
+                f.write(f'        .full_mnemonic = "{instr.full_mnemonic()}",\n')
+                f.write(f"        .handler = {instr.name()},\n")
+                f.write(f"        .length = {0},\n")
+                f.write(f"        .cycles = {0},\n")
+                f.write(f"    }},\n")
+            else:
+                f.write(f"    [{opcode:#04x}] = {{0}},\n")
 
         f.write("};\n")
 
