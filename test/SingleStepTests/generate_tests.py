@@ -155,9 +155,12 @@ def generate_test_suite(opcode: str):
 
     print(f"Found {len(tests_json)} tests in {spec}")
 
-    # Filter out tests where PC is in hardware register range 0x00f0-0x00ff
-    filtered = [t for t in tests_json if not (0xf0 <= t["initial"]["pc"] <= 0xff)]
-    print(f"Filtered to {len(filtered)} tests (excluded {len(tests_json) - len(filtered)} with PC in 0xf0-0xff)")
+    # Filter out tests where any IO happens in hardware register range 0x00f0-0x00ff
+    def has_hw_register_access(test):
+        return any(0xf0 <= cycle[0] <= 0xff for cycle in test["cycles"])
+
+    filtered = [t for t in tests_json if not has_hw_register_access(t)]
+    print(f"Filtered to {len(filtered)} tests (excluded {len(tests_json) - len(filtered)} with IO in 0xf0-0xff)")
 
     test_cases = [TestCase(test_json) for test_json in filtered]
 
