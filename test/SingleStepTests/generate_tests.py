@@ -207,6 +207,14 @@ def main():
     generate_test_suite("58")
     generate_test_suite("68")
     generate_test_suite("78")
+    generate_test_suite("88")
+    generate_test_suite("98")
+    generate_test_suite("a8")
+    generate_test_suite("b8")
+    generate_test_suite("c8")
+    generate_test_suite("d8")
+    generate_test_suite("e8")
+    generate_test_suite("f8")
 
 
 if __name__ == "__main__":
