@@ -126,18 +126,18 @@ struct RamEntry {
         }                                                               \
     }
 
-#define CHECK_RAM(ram_entries)                                              \
-    {                                                                       \
-        const size_t sz__ = sizeof(ram_entries) / sizeof(*ram_entries);     \
-        for (size_t i = 0; i < sz__; i++) {                                 \
-            const uint16_t addr = ram_entries[i].addr;                      \
-            const uint8_t expected = ram_entries[i].value;                  \
-            const uint8_t actual = state.aram[addr];                        \
-            snprintf(                                                       \
-                msg, sizeof(msg),                                           \
-                "-- Final ram mismatch at address 0x%04x. Expected 0x%02x " \
-                "was 0x%02x.",                                              \
-                addr, expected, actual);                                    \
-            ASSERT_EQ_MSG(expected, actual, msg);                           \
-        }                                                                   \
+#define CHECK_RAM(ram_entries, test_name)                                     \
+    {                                                                         \
+        const size_t sz__ = sizeof(ram_entries) / sizeof(*ram_entries);       \
+        for (size_t i = 0; i < sz__; i++) {                                   \
+            const uint16_t addr = ram_entries[i].addr;                        \
+            const uint8_t expected = ram_entries[i].value;                    \
+            const uint8_t actual = state.aram[addr];                          \
+            snprintf(msg, sizeof(msg),                                        \
+                     "-- %s: Final ram mismatch at address 0x%04x. Expected " \
+                     "0x%02x "                                                \
+                     "was 0x%02x.",                                           \
+                     test_name, addr, expected, actual);                      \
+            ASSERT_EQ_MSG(expected, actual, msg);                             \
+        }                                                                     \
     }

@@ -95,7 +95,7 @@ UTEST(InstructionTest, H00_NOP_00_0000)
              expected_len, i);
     ASSERT_EQ_MSG(expected_len, i, msg);
 
-    CHECK_RAM(finalRam);
+    CHECK_RAM(finalRam, "00 0000");
 
     TEARDOWN_TEST();
 }
