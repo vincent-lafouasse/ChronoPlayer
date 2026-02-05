@@ -1,4 +1,4 @@
 # ignore generated files
 src/instructions.gen.c
 src/instructions.gen.h
-src/instruction_table.c
+src/instruction_table.gen.c
