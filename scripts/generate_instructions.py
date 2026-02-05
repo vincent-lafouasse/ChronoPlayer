@@ -3146,7 +3146,7 @@ class PswInstruction(Instruction):
 
                 if (cycle != 2) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
-                {idle_cycle()}
+                {dummy_read_pc()}
             """
             )
             + "\n"

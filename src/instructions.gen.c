@@ -105,7 +105,7 @@ enum InstructionStatus clrp(struct SPC_State state[static 1], uint32_t cycle)
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
 
-    (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+    (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
     psw_write_direct_page(cpu, 0);
     return INSTRUCTION_STATUS_DONE;
 }
@@ -118,7 +118,7 @@ enum InstructionStatus setp(struct SPC_State state[static 1], uint32_t cycle)
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
 
-    (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+    (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
     psw_write_direct_page(cpu, 1);
     return INSTRUCTION_STATUS_DONE;
 }
@@ -131,7 +131,7 @@ enum InstructionStatus clrc(struct SPC_State state[static 1], uint32_t cycle)
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
 
-    (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+    (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
     psw_write_carry(cpu, 0);
     return INSTRUCTION_STATUS_DONE;
 }
@@ -144,7 +144,7 @@ enum InstructionStatus setc(struct SPC_State state[static 1], uint32_t cycle)
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
 
-    (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+    (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
     psw_write_carry(cpu, 1);
     return INSTRUCTION_STATUS_DONE;
 }
@@ -157,7 +157,7 @@ enum InstructionStatus clrv(struct SPC_State state[static 1], uint32_t cycle)
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
 
-    (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+    (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
     psw_write_overflow(cpu, 0);
     psw_write_half_carry(cpu, 0);
     return INSTRUCTION_STATUS_DONE;
