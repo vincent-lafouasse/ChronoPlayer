@@ -163,7 +163,7 @@ def generate_test_suite(opcode: str):
         f.write('#include "test_helper.h"\n')
         f.write('\n')
 
-        for test_case in test_cases[:1]:
+        for test_case in test_cases:
             f.write(test_case.generate_c_test())
             f.write('\n\n')
 
