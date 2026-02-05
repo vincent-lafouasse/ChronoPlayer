@@ -58,6 +58,7 @@ foreach(opcode "00" "20" "40" "60" "80" "e0")
     register_test(${opcode})
 endforeach()
 
+register_column("1")
 register_column_except("4" "d4")
 register_column("5")
 register_column("6")
