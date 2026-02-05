@@ -13,3 +13,7 @@ extern void* g_bus_trace_userdata;
 
 uint8_t bus_read(struct SPC_State state[static 1], uint16_t addr);
 void bus_write(struct SPC_State state[static 1], uint16_t addr, uint8_t val);
+
+// not a dummy read, truly does nothing to the state
+// the only thing it does is register the idle cycle to the hook
+void bus_true_idle(struct SPC_State state[static 1]);

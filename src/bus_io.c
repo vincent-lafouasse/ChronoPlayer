@@ -165,3 +165,8 @@ void bus_write(struct SPC_State* state, uint16_t addr, uint8_t val)
         bus_write_port(state, addr, val);
     }
 }
+
+void bus_true_idle(struct SPC_State state[static 1])
+{
+    (void)state;
+}
