@@ -63,9 +63,8 @@ static inline void run_and_check(const char* test_name,
         snprintf(msg, msg_size,
                  "-- %s: Cycle %zu: Type mismatch at 0x%04X - expected "
                  "%s, got %s",
-                 test_name, i + 1, actual.addr,
-                 expected->type == IO_READ ? "READ" : "WRITE",
-                 actual.type == IO_READ ? "READ" : "WRITE");
+                 test_name, i + 1, actual.addr, io_type_repr(expected->type),
+                 io_type_repr(actual.type));
         ASSERT_TRUE_MSG(expected->type == actual.type, msg);
 
         if (expected->value != DUMMY) {

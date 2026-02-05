@@ -8,14 +8,22 @@
 #include "instruction.h"
 #include "state.h"
 
-#define I_OK INSTRUCTION_STATUS_DONE
-#define I_PENDING INSTRUCTION_STATUS_PENDING
-#define I_ERROR INSTRUCTION_STATUS_UNEXPECTED_CYCLE
-
 enum IoType {
     IO_READ,
     IO_WRITE,
 };
+
+static inline const char* io_type_repr(enum IoType type)
+{
+    switch (type) {
+        case IO_WRITE:
+            return "WRITE";
+        case IO_READ:
+            return "READ";
+        default:
+            return "Unknown IO operation";
+    }
+}
 
 #define DUMMY -1
 
