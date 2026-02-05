@@ -25,6 +25,7 @@ void cpu_tick(struct SPC_State* state)
     if (cpu->instruction_cycle == 1) {
         cpu->addr = cpu->pc++;  // latch the program counter
         cpu->opcode = bus_read(state, cpu->addr);
+        cpu->instruction_cycle = 1;
         return;
     }
 
