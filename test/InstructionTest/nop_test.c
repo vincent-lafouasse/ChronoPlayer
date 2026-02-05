@@ -30,31 +30,50 @@ void log_bus_event(struct BusEvent e)
             (e.type == IO_READ) ? "->" : "<-", e.value);
 }
 
-#define LOG_SZ 128
+#define QUEUE_SIZE 128
 
-struct BusEventLog {
-    struct BusEvent events[LOG_SZ];
-    uint32_t len;
+struct BusEventQueue {
+    struct BusEvent events[QUEUE_SIZE];
+    uint32_t head;  // the next position to pop data off of
+    uint32_t tail;  // the next position to write data
     uint32_t cap;
 };
 
-struct BusEventLog log_new(void)
+struct BusEventQueue queue_new(void)
 {
-    return (struct BusEventLog){
+    return (struct BusEventQueue){
         .events = {0},
-        .len = 0,
-        .cap = LOG_SZ,
+        .head = 0,
+        .tail = 0,
+        .cap = QUEUE_SIZE,
     };
 }
 
-void event_push(struct BusEventLog log[static 1], struct BusEvent event)
+uint32_t queue_len(const struct BusEventQueue queue[static 1])
 {
-    if (log->len >= log->cap) {
-        return;
+    return queue->tail - queue->head;
+}
+
+bool event_push(struct BusEventQueue queue[static 1], struct BusEvent event)
+{
+    if (queue_len(queue) >= queue->cap) {
+        return false;
     }
 
-    log->events[log->len] = event;
-    log->len += 1;
+    queue->events[queue->tail & (QUEUE_SIZE - 1)] = event;
+    queue->tail += 1;
+    return true;
+}
+
+bool event_pop(struct BusEventQueue queue[static 1], struct BusEvent* event)
+{
+    if (queue_len(queue) == 0) {
+        return false;
+    }
+
+    *event = queue->events[queue->head & (QUEUE_SIZE - 1)];
+    queue->head += 1;
+    return true;
 }
 
 void bus_hook(void* userdata,
@@ -63,7 +82,7 @@ void bus_hook(void* userdata,
               uint8_t val,
               bool is_write)
 {
-    struct BusEventLog* log = (struct BusEventLog*)userdata;
+    struct BusEventQueue* queue = (struct BusEventQueue*)userdata;
 
     const struct BusEvent event = {
         .total_cycles = state->cpu.total_cycles,
@@ -73,14 +92,14 @@ void bus_hook(void* userdata,
         .type = is_write ? IO_WRITE : IO_READ,
     };
 
-    event_push(log, event);
+    event_push(queue, event);
 }
 
 UTEST(InstructionTest, H00_NOP)
 {
     struct SPC_State state = {0};
-    struct BusEventLog log;
-    g_bus_trace_userdata = &log;
+    struct BusEventQueue queue;
+    g_bus_trace_userdata = &queue;
     g_bus_trace_hook = &bus_hook;
 
     int cycle;
@@ -89,25 +108,25 @@ UTEST(InstructionTest, H00_NOP)
 
     cycle = 1;
     expected = I_ERROR;
-    log = log_new();
+    queue = queue_new();
     actual = nop(&state, cycle);
     ASSERT_EQ(expected, actual);
-    ASSERT_EQ(log.len, 0u);
+    ASSERT_EQ(queue_len(&queue), 0u);  // fails, no event
 
     cycle = 2;
     expected = I_OK;
-    log = log_new();
+    queue = queue_new();
     actual = nop(&state, cycle);
     ASSERT_EQ(expected, actual);
-    ASSERT_EQ(log.len, 1u);  // fails, len==0
-    log_bus_event(log.events[0]);
+    ASSERT_EQ(queue_len(&queue), 1u);
+    log_bus_event(queue.events[0]);
 
     cycle = 3;
     expected = I_ERROR;
-    log = log_new();
+    queue = queue_new();
     actual = nop(&state, cycle);
     ASSERT_EQ(expected, actual);
-    ASSERT_EQ(log.len, 0u);
+    ASSERT_EQ(queue_len(&queue), 0u);
 
     g_bus_trace_userdata = NULL;
 }
