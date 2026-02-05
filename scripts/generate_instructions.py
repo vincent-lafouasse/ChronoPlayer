@@ -2166,8 +2166,7 @@ def generate_Anomie_13():
 
                     switch (cycle) {{
                         case 2:
-                            /* internal operation - dummy read from last latched addr */
-                            {idle_cycle()}
+                            {dummy_read_pc()}
                             cpu->addr = direct_page(cpu, cpu->x);
                             return {InstructionStatus.Pending};
                         case 3:
