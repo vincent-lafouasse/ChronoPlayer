@@ -66,43 +66,15 @@ static inline void compare_bus_events(const char* test_name,
     ASSERT_TRUE_MSG(expected->value == actual->value, msg);
 }
 
-static inline void run_and_check(const char* test_name,
+static inline void compare_state(const char* test_name,
                                  struct SPC_State state[static 1],
                                  const struct CPU_State final_cpu[static 1],
                                  const struct RamEntry* final_ram,
                                  size_t final_ram_size,
-                                 const struct BusEvent* events,
-                                 size_t n_events,
                                  int* utest_result)
 {
-    struct BusEventQueue queue;
-    SETUP_TEST();
-
-    size_t i = 0;
     char msg[256];
     const size_t msg_size = sizeof(msg) / sizeof(*msg);
-
-    do {
-        cpu_tick(state);
-
-        snprintf(msg, msg_size, "-- %s: Cycle %zu: Missing bus event",
-                 test_name, i + 1);
-        ASSERT_TRUE_MSG(queue_has(&queue, 1), msg);
-
-        const struct BusEvent* expected = events + i;
-        struct BusEvent actual;
-        event_pop(&queue, &actual);  // infallible
-
-        compare_bus_events(test_name, i + 1, expected, &actual, utest_result);
-
-        i++;
-    } while (state->cpu.instruction_cycle != 1);
-
-    snprintf(msg, msg_size,
-             "-- %s: Instruction len mismatch: expected %zu cycles, "
-             "only got %zu",
-             test_name, n_events, i);
-    ASSERT_EQ_MSG(n_events, i, msg);
 
     const struct CPU_State* cpu = &state->cpu;
 
@@ -143,6 +115,48 @@ static inline void run_and_check(const char* test_name,
                  test_name, addr, expected, actual);
         ASSERT_EQ_MSG(expected, actual, msg);
     }
+}
+
+static inline void run_and_check(const char* test_name,
+                                 struct SPC_State state[static 1],
+                                 const struct CPU_State final_cpu[static 1],
+                                 const struct RamEntry* final_ram,
+                                 size_t final_ram_size,
+                                 const struct BusEvent* events,
+                                 size_t n_events,
+                                 int* utest_result)
+{
+    struct BusEventQueue queue;
+    SETUP_TEST();
+
+    size_t i = 0;
+    char msg[256];
+    const size_t msg_size = sizeof(msg) / sizeof(*msg);
+
+    do {
+        cpu_tick(state);
+
+        snprintf(msg, msg_size, "-- %s: Cycle %zu: Missing bus event",
+                 test_name, i + 1);
+        ASSERT_TRUE_MSG(queue_has(&queue, 1), msg);
+
+        const struct BusEvent* expected = events + i;
+        struct BusEvent actual;
+        event_pop(&queue, &actual);  // infallible
+
+        compare_bus_events(test_name, i + 1, expected, &actual, utest_result);
+
+        i++;
+    } while (state->cpu.instruction_cycle != 1);
+
+    snprintf(msg, msg_size,
+             "-- %s: Instruction len mismatch: expected %zu cycles, "
+             "only got %zu",
+             test_name, n_events, i);
+    ASSERT_EQ_MSG(n_events, i, msg);
+
+    compare_state(test_name, state, final_cpu, final_ram, final_ram_size,
+                  utest_result);
 
     TEARDOWN_TEST();
 }
