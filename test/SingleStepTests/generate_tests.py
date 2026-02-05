@@ -178,6 +178,8 @@ def main():
         generate_test_suite(msb + "6")
         generate_test_suite(msb + "7")
         generate_test_suite(msb + "8")
+        if msb != "d":
+            generate_test_suite(msb + "9")
 
 
 if __name__ == "__main__":
