@@ -171,13 +171,9 @@ def main():
     for opcode in ["00", "20", "40", "60", "80", "e0"]:
         generate_test_suite(opcode)
 
-    lsb = "7"
     for msb in "0123456789abcdef":
-        generate_test_suite(msb + lsb)
-
-    lsb = "8"
-    for msb in "0123456789abcdef":
-        generate_test_suite(msb + lsb)
+        generate_test_suite(msb + "7")
+        generate_test_suite(msb + "8")
 
 
 if __name__ == "__main__":
