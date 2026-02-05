@@ -1536,7 +1536,7 @@ enum InstructionStatus or_register_absolute_indexed_x(struct SPC_State state[sta
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->x;
             return INSTRUCTION_STATUS_PENDING;
@@ -1619,7 +1619,7 @@ enum InstructionStatus and_register_absolute_indexed_x(struct SPC_State state[st
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->x;
             return INSTRUCTION_STATUS_PENDING;
@@ -1702,7 +1702,7 @@ enum InstructionStatus eor_register_absolute_indexed_x(struct SPC_State state[st
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->x;
             return INSTRUCTION_STATUS_PENDING;
@@ -1792,7 +1792,7 @@ enum InstructionStatus cmp_register_absolute_indexed_x(struct SPC_State state[st
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->x;
             return INSTRUCTION_STATUS_PENDING;
@@ -1903,7 +1903,7 @@ enum InstructionStatus adc_register_absolute_indexed_x(struct SPC_State state[st
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->x;
             return INSTRUCTION_STATUS_PENDING;
@@ -2030,7 +2030,7 @@ enum InstructionStatus sbc_register_absolute_indexed_x(struct SPC_State state[st
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->x;
             return INSTRUCTION_STATUS_PENDING;
@@ -2206,7 +2206,7 @@ enum InstructionStatus mov_register_absolute_indexed_x(struct SPC_State state[st
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->x;
             return INSTRUCTION_STATUS_PENDING;
@@ -2283,7 +2283,7 @@ enum InstructionStatus or_register_absolute_indexed_y(struct SPC_State state[sta
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
@@ -2359,7 +2359,7 @@ enum InstructionStatus and_register_absolute_indexed_y(struct SPC_State state[st
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
@@ -2435,7 +2435,7 @@ enum InstructionStatus eor_register_absolute_indexed_y(struct SPC_State state[st
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
@@ -2518,7 +2518,7 @@ enum InstructionStatus cmp_register_absolute_indexed_y(struct SPC_State state[st
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
@@ -2622,7 +2622,7 @@ enum InstructionStatus adc_register_absolute_indexed_y(struct SPC_State state[st
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
@@ -2742,7 +2742,7 @@ enum InstructionStatus sbc_register_absolute_indexed_y(struct SPC_State state[st
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
@@ -2905,7 +2905,7 @@ enum InstructionStatus mov_register_absolute_indexed_y(struct SPC_State state[st
             cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             // index AA now
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;

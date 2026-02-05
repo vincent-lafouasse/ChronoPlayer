@@ -1746,7 +1746,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                         cpu->addr = u16_parse(cpu->operands[0], cpu->operands[1]);
                         return {InstructionStatus.Pending};
                     case 4:
-                        {idle_cycle()}
+                        {true_idle()}
                         // index AA now
                         cpu->addr += cpu->{self.reg};
                         return {InstructionStatus.Pending};
