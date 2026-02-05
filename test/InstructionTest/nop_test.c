@@ -27,6 +27,39 @@ static inline struct SPC_State setup_state(const struct CPU_State cpu[static 1],
 
 #define TEARDOWN_TEST() g_bus_trace_userdata = NULL;
 
+static inline void compare_bus_events(const char* test_name,
+                                      size_t cyc,
+                                      const struct BusEvent expected[static 1],
+                                      const struct BusEvent actual[static 1],
+                                      int* utest_result)
+{
+    char msg[256];
+    const size_t msg_size = sizeof(msg) / sizeof(*msg);
+
+    snprintf(msg, msg_size,
+             "-- %s: Cycle %zu: Address mismatch - expected "
+             "0x%04X, got 0x%04X",
+             test_name, cyc, expected->addr, actual->addr);
+    ASSERT_TRUE_MSG(expected->addr == actual->addr, msg);
+
+    snprintf(msg, msg_size,
+             "-- %s: Cycle %zu: Type mismatch at 0x%04X - expected "
+             "%s, got %s",
+             test_name, cyc, actual->addr, io_type_repr(expected->type),
+             io_type_repr(actual->type));
+    ASSERT_TRUE_MSG(expected->type == actual->type, msg);
+
+    if (expected->value != DUMMY) {
+        snprintf(msg, msg_size,
+                 "-- %s: Cycle %zu: Value mismatch at 0x%04X - "
+                 "expected 0x%02X, "
+                 "got 0x%02X",
+                 test_name, cyc, actual->addr, (uint8_t)expected->value,
+                 (uint8_t)actual->value);
+        ASSERT_TRUE_MSG(expected->value == actual->value, msg);
+    }
+}
+
 static inline void run_and_check(const char* test_name,
                                  struct SPC_State state[static 1],
                                  const struct CPU_State final_cpu[static 1],
@@ -54,28 +87,7 @@ static inline void run_and_check(const char* test_name,
         struct BusEvent actual;
         event_pop(&queue, &actual);  // infallible
 
-        snprintf(msg, msg_size,
-                 "-- %s: Cycle %zu: Address mismatch - expected "
-                 "0x%04X, got 0x%04X",
-                 test_name, i + 1, expected->addr, actual.addr);
-        ASSERT_TRUE_MSG(expected->addr == actual.addr, msg);
-
-        snprintf(msg, msg_size,
-                 "-- %s: Cycle %zu: Type mismatch at 0x%04X - expected "
-                 "%s, got %s",
-                 test_name, i + 1, actual.addr, io_type_repr(expected->type),
-                 io_type_repr(actual.type));
-        ASSERT_TRUE_MSG(expected->type == actual.type, msg);
-
-        if (expected->value != DUMMY) {
-            snprintf(msg, msg_size,
-                     "-- %s: Cycle %zu: Value mismatch at 0x%04X - "
-                     "expected 0x%02X, "
-                     "got 0x%02X",
-                     test_name, i + 1, actual.addr, (uint8_t)expected->value,
-                     (uint8_t)actual.value);
-            ASSERT_TRUE_MSG(expected->value == actual.value, msg);
-        }
+        compare_bus_events(test_name, i + 1, expected, &actual, utest_result);
 
         i++;
     } while (state->cpu.instruction_cycle != 1);
