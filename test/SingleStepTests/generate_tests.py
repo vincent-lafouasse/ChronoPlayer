@@ -82,6 +82,22 @@ class TestCase:
             f"    const struct CPU_State initial_cpu = {{.pc=0x{s.pc:04x}, .a=0x{s.a:02x}, .x=0x{s.x:02x}, .y=0x{s.y:02x}, .sp=0x{s.sp:02x}, .status=0x{s.psw:02x}}};"
         )
 
+        # Reorder bus accesses for indirect indexed instructions to match Anomie/Near
+        # Test data has: opcode, operand, WAIT, AAL, AAH, data
+        # But Anomie/Near document: opcode, operand, AAL, AAH, WAIT, data
+        bus_accesses = self.bus_accesses
+        if opcode in ["17", "37", "57", "77", "97", "b7", "f7"]:
+            # Move cycle 2 (the WAIT, index 2) to position 4 (before last cycle)
+            if len(bus_accesses) == 6 and bus_accesses[2].operation == "wait":
+                bus_accesses = [
+                    bus_accesses[0],  # opcode read
+                    bus_accesses[1],  # operand read
+                    bus_accesses[3],  # AAL read (was at index 3)
+                    bus_accesses[4],  # AAH read (was at index 4)
+                    bus_accesses[2],  # WAIT (was at index 2)
+                    bus_accesses[5],  # final data read
+                ]
+
         # compact, wrap at ~100 cols
         ram_entries = [
             f"{{.addr=0x{addr:04x}, .value=0x{val:02x}}}" for addr, val in s.aram
@@ -129,8 +145,11 @@ class TestCase:
                 lines.append(line.rstrip())
             lines.append("    };")
 
+        # Reorder tests that disagree with Near and Anomie
+        if opcode in ["17", "37", "57", "77", "97", "b7", "f7"]:
+            lines.append("    // Bus events reordered to match Anomie/Near (WAIT moved after AAL/AAH reads)")
         lines.append("    const struct BusEvent events[] = {")
-        for access in self.bus_accesses:
+        for access in bus_accesses:
             if access.operation == "wait":
                 io_type = "IO_WAIT"
                 addr_str = "DUMMY"
