@@ -3016,7 +3016,7 @@ enum InstructionStatus or_register_indirect_indexed(struct SPC_State state[stati
             cpu->addr = u16_read_little_endian(cpu->data8);
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address // read before the indexing
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
         case 6: {
@@ -3118,7 +3118,7 @@ enum InstructionStatus and_register_indirect_indexed(struct SPC_State state[stat
             cpu->addr = u16_read_little_endian(cpu->data8);
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address // read before the indexing
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
         case 6: {
@@ -3220,7 +3220,7 @@ enum InstructionStatus eor_register_indirect_indexed(struct SPC_State state[stat
             cpu->addr = u16_read_little_endian(cpu->data8);
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address // read before the indexing
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
         case 6: {
@@ -3329,7 +3329,7 @@ enum InstructionStatus cmp_register_indirect_indexed(struct SPC_State state[stat
             cpu->addr = u16_read_little_endian(cpu->data8);
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address // read before the indexing
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
         case 6: {
@@ -3459,7 +3459,7 @@ enum InstructionStatus adc_register_indirect_indexed(struct SPC_State state[stat
             cpu->addr = u16_read_little_endian(cpu->data8);
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address // read before the indexing
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
         case 6: {
@@ -3605,7 +3605,7 @@ enum InstructionStatus sbc_register_indirect_indexed(struct SPC_State state[stat
             cpu->addr = u16_read_little_endian(cpu->data8);
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address // read before the indexing
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
         case 6: {
@@ -3811,7 +3811,7 @@ enum InstructionStatus mov_register_indirect_indexed(struct SPC_State state[stat
             cpu->addr = u16_read_little_endian(cpu->data8);
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address // read before the indexing
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             cpu->addr += cpu->y;
             return INSTRUCTION_STATUS_PENDING;
         case 6: {

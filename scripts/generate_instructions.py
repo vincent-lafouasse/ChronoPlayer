@@ -1448,7 +1448,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                         cpu->addr = u16_read_little_endian(cpu->data8);
                         return {InstructionStatus.Pending};
                     case 5:
-                        {idle_cycle()} // read before the indexing
+                        {true_idle()}
                         cpu->addr += cpu->y;
                         return {InstructionStatus.Pending};
                     case 6: {{
