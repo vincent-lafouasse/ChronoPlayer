@@ -1,5 +1,6 @@
 #include "../utest.h/utest.h"
 
+#include <stdio.h>
 #include <string.h>
 
 #include "bus_io.h"
@@ -16,10 +17,11 @@ enum IoType {
     IO_WRITE,
 };
 
+#define DUMMY -1
+
 struct BusEvent {
-    uint8_t value;
+    int16_t value;  // Use DUMMY (-1) for dummy reads
     uint16_t addr;
-    bool is_dummy;
     enum IoType type;
 };
 
@@ -90,91 +92,108 @@ void bus_hook(void* userdata,
     event_push(queue, event);
 }
 
-/*
-============================================================
-Test: 00 0000
-============================================================
+struct RamEntry {
+    uint16_t addr;
+    uint8_t value;
+};
 
-Initial State:
-  PC:  0x7630
-  A:   0x38
-  X:   0x4E
-  Y:   0x7F
-  SP:  0xEC
-  PSW: 0x91
-  RAM: [[30256, 0]]
-
-Final State:
-  PC:  0x7631
-  A:   0x38
-  X:   0x4E
-  Y:   0x7F
-  SP:  0xEC
-  PSW: 0x91
-  RAM: [[30256, 0]]
-
-Bus Accesses:
-  [0]   addr=0x7630, val=0x00, op=read
-  [1]   addr=0x7631, val=None, op=read
-
-*/
-
-UTEST(InstructionTest, H00_NOP)
-{
-    struct BusEventQueue queue;
-    g_bus_trace_userdata = &queue;
+#define SETUP_TEST()               \
+    queue = queue_new();           \
+    g_bus_trace_userdata = &queue; \
     g_bus_trace_hook = &bus_hook;
 
+#define TEARDOWN_TEST() g_bus_trace_userdata = NULL;
+
+#define SET_STATE(state, pc__, a__, x__, y__, sp__, psw__) \
+    state.cpu.pc = pc__;                                   \
+    state.cpu.a = a__;                                     \
+    state.cpu.x = x__;                                     \
+    state.cpu.y = y__;                                     \
+    state.cpu.sp = sp__;                                   \
+    state.cpu.status = psw__;                              \
+    state.cpu.instruction_cycle = 1;
+
+// Initial State:
+//   PC:  0x7630
+//   A:   0x38
+//   X:   0x4E
+//   Y:   0x7F
+//   SP:  0xEC
+//   PSW: 0x91
+//   RAM: [[30256, 0]]
+//
+// Final State:
+//   PC:  0x7631
+//   A:   0x38
+//   X:   0x4E
+//   Y:   0x7F
+//   SP:  0xEC
+//   PSW: 0x91
+//   RAM: [[30256, 0]]
+//
+// Bus Accesses:
+//   [0]   addr=0x7630, val=0x00, op=read
+//   [1]   addr=0x7631, val=None, op=read
+
+UTEST(InstructionTest, H00_NOP_00_0000)
+{
+    struct BusEventQueue queue;
+    SETUP_TEST();
+
     struct SPC_State state = {0};
-    state.cpu.pc = 0x7630;
-    state.cpu.a = 0x38;
-    state.cpu.x = 0x4E;
-    state.cpu.y = 0x7F;
-    state.cpu.sp = 0xEC;
-    state.cpu.status = 0x91;
-    state.aram[30256] = 0x00;
-    state.cpu.instruction_cycle = 1;  // very important
+    SET_STATE(state, 0x7630, 0x38, 0x4e, 0x7f, 0xec, 0x91);
+    const struct RamEntry initialRam[] = {
+        {30256, 0},
+    };
 
-    // later a while cycle != 1
-    {
-        const struct BusEvent expected_event = {
-            .addr = 0x7630,
-            .value = 0x00,
-            .type = IO_READ,
-            .is_dummy = false,
-        };
-        struct BusEvent actual_event;
+    struct SPC_State final = {0};
+    SET_STATE(final, 0x7631, 0x38, 0x4e, 0x7f, 0xec, 0x91);
+    const struct RamEntry finalRam[] = {
+        {30256, 0},
+    };
 
+    const struct BusEvent events[] = {
+        {.addr = 0x7630, .value = 0x00, .type = IO_READ},
+        {.addr = 0x7631, .value = DUMMY, .type = IO_READ},
+    };
+
+    size_t i = 0;
+    do {
         cpu_tick(&state);
-        ASSERT_TRUE(queue_has(&queue, 1));
 
-        event_pop(&queue, &actual_event);
-        ASSERT_EQ(expected_event.addr, actual_event.addr);
-        if (!expected_event.is_dummy) {
-            ASSERT_EQ(expected_event.value, actual_event.value);
+        char msg[256];
+        snprintf(msg, sizeof(msg), "Cycle %zu: Missing bus event", i);
+        ASSERT_TRUE_MSG(queue_has(&queue, 1), msg);
+
+        struct BusEvent actual;
+        event_pop(&queue, &actual);  // infallible
+
+        const struct BusEvent* expected = events + i;
+
+        snprintf(msg, sizeof(msg),
+                 "Cycle %zu: Address mismatch - expected 0x%04X, got 0x%04X", i,
+                 expected->addr, actual.addr);
+        ASSERT_TRUE_MSG(expected->addr == actual.addr, msg);
+
+        snprintf(msg, sizeof(msg),
+                 "Cycle %zu: Type mismatch at 0x%04X - expected %s, got %s", i,
+                 actual.addr, expected->type == IO_READ ? "READ" : "WRITE",
+                 actual.type == IO_READ ? "READ" : "WRITE");
+        ASSERT_TRUE_MSG(expected->type == actual.type, msg);
+
+        if (expected->value != DUMMY) {
+            snprintf(msg, sizeof(msg),
+                     "Cycle %zu: Value mismatch at 0x%04X - expected 0x%02X, "
+                     "got 0x%02X",
+                     i, actual.addr, (uint8_t)expected->value,
+                     (uint8_t)actual.value);
+            ASSERT_TRUE_MSG(expected->value == actual.value, msg);
         }
-        ASSERT_EQ(expected_event.type, actual_event.type);
-    }
-    {
-        const struct BusEvent expected_event = {
-            .addr = 0x7630,
-            .type = IO_READ,
-            .is_dummy = true,
-        };
-        struct BusEvent actual_event;
 
-        cpu_tick(&state);
-        ASSERT_TRUE(queue_has(&queue, 1));
+        i++;
+    } while (state.cpu.instruction_cycle != 1);
 
-        event_pop(&queue, &actual_event);
-        ASSERT_EQ(expected_event.addr, actual_event.addr);
-        if (!expected_event.is_dummy) {
-            ASSERT_EQ(expected_event.value, actual_event.value);
-        }
-        ASSERT_EQ(expected_event.type, actual_event.type);
-    }
-
-    g_bus_trace_userdata = NULL;
+    TEARDOWN_TEST();
 }
 
 UTEST_MAIN()
