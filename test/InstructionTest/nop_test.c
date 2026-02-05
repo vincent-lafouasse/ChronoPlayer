@@ -1,6 +1,5 @@
 #include "../utest.h/utest.h"
 
-#include <stdio.h>
 #include <string.h>
 
 #include "bus_io.h"
@@ -18,18 +17,11 @@ enum IoType {
 };
 
 struct BusEvent {
-    uint64_t total_cycles;
-    uint8_t instruction_cycle;
     uint8_t value;
     uint16_t addr;
+    bool is_dummy;
     enum IoType type;
 };
-
-void log_bus_event(struct BusEvent e)
-{
-    fprintf(stderr, "0x%02x: 0x%04x %s 0x%02x\n", e.instruction_cycle, e.addr,
-            (e.type == IO_READ) ? "->" : "<-", e.value);
-}
 
 #define QUEUE_SIZE 128
 
@@ -86,11 +78,10 @@ void bus_hook(void* userdata,
               uint8_t val,
               bool is_write)
 {
+    (void)state;
     struct BusEventQueue* queue = (struct BusEventQueue*)userdata;
 
     const struct BusEvent event = {
-        .total_cycles = state->cpu.total_cycles,
-        .instruction_cycle = state->cpu.instruction_cycle,
         .value = val,
         .addr = addr,
         .type = is_write ? IO_WRITE : IO_READ,
@@ -136,10 +127,6 @@ UTEST(InstructionTest, H00_NOP)
     g_bus_trace_userdata = &queue;
     g_bus_trace_hook = &bus_hook;
 
-    // int cycle;
-    // enum InstructionStatus expected;
-    // enum InstructionStatus actual;
-
     struct SPC_State state = {0};
     state.cpu.pc = 0x7630;
     state.cpu.a = 0x38;
@@ -148,10 +135,46 @@ UTEST(InstructionTest, H00_NOP)
     state.cpu.sp = 0xEC;
     state.cpu.status = 0x91;
     state.aram[30256] = 0x00;
+    state.cpu.instruction_cycle = 1;  // very important
 
-    cpu_tick(&state);
+    // later a while cycle != 1
+    {
+        const struct BusEvent expected_event = {
+            .addr = 0x7630,
+            .value = 0x00,
+            .type = IO_READ,
+            .is_dummy = false,
+        };
+        struct BusEvent actual_event;
 
-    ASSERT_TRUE(true);
+        cpu_tick(&state);
+        ASSERT_TRUE(queue_has(&queue, 1));
+
+        event_pop(&queue, &actual_event);
+        ASSERT_EQ(expected_event.addr, actual_event.addr);
+        if (!expected_event.is_dummy) {
+            ASSERT_EQ(expected_event.value, actual_event.value);
+        }
+        ASSERT_EQ(expected_event.type, actual_event.type);
+    }
+    {
+        const struct BusEvent expected_event = {
+            .addr = 0x7630,
+            .type = IO_READ,
+            .is_dummy = true,
+        };
+        struct BusEvent actual_event;
+
+        cpu_tick(&state);
+        ASSERT_TRUE(queue_has(&queue, 1));
+
+        event_pop(&queue, &actual_event);
+        ASSERT_EQ(expected_event.addr, actual_event.addr);
+        if (!expected_event.is_dummy) {
+            ASSERT_EQ(expected_event.value, actual_event.value);
+        }
+        ASSERT_EQ(expected_event.type, actual_event.type);
+    }
 
     g_bus_trace_userdata = NULL;
 }
