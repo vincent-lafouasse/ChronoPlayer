@@ -3258,40 +3258,36 @@ class TCallInstruction(Instruction):
             if (cycle < 2 || cycle > 8) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
             switch (cycle) {{
-                // cycle 2-3: cache the PC on the stack for later return
                 case 2:
+                    {dummy_read_pc()}
+                    return {InstructionStatus.Pending};
+                case 3:
+                    {true_idle()}
+                    return {InstructionStatus.Pending};
+                case 4:
                     // effective stack address
                     cpu->addr = 0x100 + cpu->sp;
                     {write_to_addr("u16_msb(cpu->pc)")}
                     cpu->sp -= 1;
                     return {InstructionStatus.Pending};
-                case 3:
+                case 5:
                     cpu->addr = 0x100 + cpu->sp;
                     {write_to_addr("u16_lsb(cpu->pc)")}
                     cpu->sp -= 1;
                     return {InstructionStatus.Pending};
-                case 4:
-                    {idle_cycle()}
+                case 6:
+                    {true_idle()}
                     return {InstructionStatus.Pending};
 
-                // cycle 5-6 fetch the address to go to at a predetermined address
-                case 5:
+                case 7:
                     cpu->addr = vector;
                     {read_from_addr("cpu->data8[0]")}
                     return {InstructionStatus.Pending};
-                case 6:
+                case 8:
                     cpu->addr = vector + 1;
                     {read_from_addr("cpu->data8[1]")}
                     // new pc (store in data16, not addr yet - next cycles are idle)
                     cpu->data16 = u16_read_little_endian(cpu->data8);
-                    return {InstructionStatus.Pending};
-
-                // cycle 7-8 are idle, we just publish the new pc at the end of cycle 8
-                case 7:
-                    {idle_cycle()}
-                    return {InstructionStatus.Pending};
-                case 8:
-                    {idle_cycle()}
                     cpu->pc = cpu->data16;
                     return {InstructionStatus.Done};
 

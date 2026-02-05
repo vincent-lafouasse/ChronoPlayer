@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3412 */
+/* generated from generate_instructions.py: l.3435 */
 
 #include "instructions.gen.h"
 
@@ -38,46 +38,42 @@ static inline void parse_membit(uint16_t operand, uint16_t* addr, uint8_t* bit)
 
 static inline enum InstructionStatus tcall_internal(struct SPC_State state[static 1], uint32_t cycle, uint16_t vector)
 {
-    /* generated from generate_instructions.py: l.3228 */
+    /* generated from generate_instructions.py: l.3255 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 8) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
 
     switch (cycle) {
-        // cycle 2-3: cache the PC on the stack for later return
         case 2:
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
             // effective stack address
             cpu->addr = 0x100 + cpu->sp;
             bus_write(state, cpu->addr, u16_msb(cpu->pc));
             cpu->sp -= 1;
             return INSTRUCTION_STATUS_PENDING;
-        case 3:
+        case 5:
             cpu->addr = 0x100 + cpu->sp;
             bus_write(state, cpu->addr, u16_lsb(cpu->pc));
             cpu->sp -= 1;
             return INSTRUCTION_STATUS_PENDING;
-        case 4:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+        case 6:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
 
-        // cycle 5-6 fetch the address to go to at a predetermined address
-        case 5:
+        case 7:
             cpu->addr = vector;
             cpu->data8[0] = bus_read(state, cpu->addr);
             return INSTRUCTION_STATUS_PENDING;
-        case 6:
+        case 8:
             cpu->addr = vector + 1;
             cpu->data8[1] = bus_read(state, cpu->addr);
             // new pc (store in data16, not addr yet - next cycles are idle)
             cpu->data16 = u16_read_little_endian(cpu->data8);
-            return INSTRUCTION_STATUS_PENDING;
-
-        // cycle 7-8 are idle, we just publish the new pc at the end of cycle 8
-        case 7:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
-            return INSTRUCTION_STATUS_PENDING;
-        case 8:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
             cpu->pc = cpu->data16;
             return INSTRUCTION_STATUS_DONE;
 
@@ -167,112 +163,112 @@ enum InstructionStatus clrv(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x01     TCALL 0 */
 enum InstructionStatus tcall_0(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffde);
 }
 
 /* 0x11     TCALL 1 */
 enum InstructionStatus tcall_1(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffdc);
 }
 
 /* 0x21     TCALL 2 */
 enum InstructionStatus tcall_2(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffda);
 }
 
 /* 0x31     TCALL 3 */
 enum InstructionStatus tcall_3(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffd8);
 }
 
 /* 0x41     TCALL 4 */
 enum InstructionStatus tcall_4(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffd6);
 }
 
 /* 0x51     TCALL 5 */
 enum InstructionStatus tcall_5(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffd4);
 }
 
 /* 0x61     TCALL 6 */
 enum InstructionStatus tcall_6(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffd2);
 }
 
 /* 0x71     TCALL 7 */
 enum InstructionStatus tcall_7(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffd0);
 }
 
 /* 0x81     TCALL 8 */
 enum InstructionStatus tcall_8(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffce);
 }
 
 /* 0x91     TCALL 9 */
 enum InstructionStatus tcall_9(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffcc);
 }
 
 /* 0xa1     TCALL 10 */
 enum InstructionStatus tcall_10(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffca);
 }
 
 /* 0xb1     TCALL 11 */
 enum InstructionStatus tcall_11(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffc8);
 }
 
 /* 0xc1     TCALL 12 */
 enum InstructionStatus tcall_12(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffc6);
 }
 
 /* 0xd1     TCALL 13 */
 enum InstructionStatus tcall_13(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffc4);
 }
 
 /* 0xe1     TCALL 14 */
 enum InstructionStatus tcall_14(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffc2);
 }
 
 /* 0xf1     TCALL 15 */
 enum InstructionStatus tcall_15(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3282 */
+    /* generated from generate_instructions.py: l.3305 */
     return tcall_internal(state, cycle, 0xffc0);
 }
 
