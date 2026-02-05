@@ -155,7 +155,11 @@ def generate_test_suite(opcode: str):
 
     print(f"Found {len(tests_json)} tests in {spec}")
 
-    test_cases = [TestCase(test_json) for test_json in tests_json]
+    # Filter out tests where PC is in hardware register range 0x00f0-0x00ff
+    filtered = [t for t in tests_json if not (0xf0 <= t["initial"]["pc"] <= 0xff)]
+    print(f"Filtered to {len(filtered)} tests (excluded {len(tests_json) - len(filtered)} with PC in 0xf0-0xff)")
+
+    test_cases = [TestCase(test_json) for test_json in filtered]
 
     with open(output_path, "w") as f:
         f.write('#include "../utest.h/utest.h"\n')

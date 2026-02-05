@@ -8413,19 +8413,6 @@ UTEST(SingleStepTests_60, _60_0286) {
     run_and_check("60 0286", &state, &final_cpu, final_ram, sizeof(final_ram)/sizeof(*final_ram), events, sizeof(events)/sizeof(*events), utest_result);
 }
 
-UTEST(SingleStepTests_60, _60_0287) {
-    const struct CPU_State initial_cpu = {.pc=0x00f4, .a=0xc6, .x=0x1b, .y=0x4d, .sp=0x5e, .status=0xbc};
-    const struct RamEntry initial_ram[] = {{.addr=0x00f4, .value=0x60}};
-    const struct CPU_State final_cpu = {.pc=0x00f5, .a=0xc6, .x=0x1b, .y=0x4d, .sp=0x5e, .status=0xbc};
-    const struct RamEntry final_ram[] = {{.addr=0x00f4, .value=0x60}};
-    const struct BusEvent events[] = {
-        {.addr=0x00f4, .value=0x60, .type=IO_READ},
-        {.addr=0x00f5, .value=DUMMY, .type=IO_READ},
-    };
-    struct SPC_State state = setup_state(&initial_cpu, initial_ram, sizeof(initial_ram)/sizeof(*initial_ram));
-    run_and_check("60 0287", &state, &final_cpu, final_ram, sizeof(final_ram)/sizeof(*final_ram), events, sizeof(events)/sizeof(*events), utest_result);
-}
-
 UTEST(SingleStepTests_60, _60_0288) {
     const struct CPU_State initial_cpu = {.pc=0xd28b, .a=0x3f, .x=0x7b, .y=0xf2, .sp=0xe4, .status=0x0d};
     const struct RamEntry initial_ram[] = {{.addr=0xd28b, .value=0x60}};
