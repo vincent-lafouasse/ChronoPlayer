@@ -2,28 +2,6 @@
 
 #include "test_helper.h"
 
-// Initial State:
-//   PC:  0x7630
-//   A:   0x38
-//   X:   0x4E
-//   Y:   0x7F
-//   SP:  0xEC
-//   PSW: 0x91
-//   RAM: [[30256, 0]]
-//
-// Final State:
-//   PC:  0x7631
-//   A:   0x38
-//   X:   0x4E
-//   Y:   0x7F
-//   SP:  0xEC
-//   PSW: 0x91
-//   RAM: [[30256, 0]]
-//
-// Bus Accesses:
-//   [0]   addr=0x7630, val=0x00, op=read
-//   [1]   addr=0x7631, val=None, op=read
-
 static inline struct SPC_State setup_state(const struct CPU_State cpu[static 1],
                                            const struct RamEntry* ram_entries,
                                            size_t n_entries)
@@ -49,54 +27,24 @@ static inline struct SPC_State setup_state(const struct CPU_State cpu[static 1],
 
 #define TEARDOWN_TEST() g_bus_trace_userdata = NULL;
 
-UTEST(InstructionTest, H00_NOP_00_0000)
+static inline void run_and_check(const char* test_name,
+                                 struct SPC_State state[static 1],
+                                 const struct CPU_State final_cpu[static 1],
+                                 const struct RamEntry* final_ram,
+                                 size_t final_ram_size,
+                                 const struct BusEvent* events,
+                                 size_t n_events,
+                                 int* utest_result)
 {
-    // ----- data
-    const struct CPU_State initialCpu = (struct CPU_State){.pc = 0x7630,
-                                                           .a = 0x38,
-                                                           .x = 0x4e,
-                                                           .y = 0x7f,
-                                                           .sp = 0xec,
-                                                           .status = 0x91};
-    const struct RamEntry initialRam[] = {
-        {30256, 0},
-    };
-
-    const struct CPU_State finalCpu = (struct CPU_State){.pc = 0x7630,
-                                                         .a = 0x38,
-                                                         .x = 0x4e,
-                                                         .y = 0x7f,
-                                                         .sp = 0xec,
-                                                         .status = 0x91};
-    const struct RamEntry finalRam[] = {
-        {30256, 0},
-    };
-
-    const struct BusEvent events[] = {
-        {.addr = 0x7630, .value = 0x00, .type = IO_READ},
-        {.addr = 0x7631, .value = DUMMY, .type = IO_READ},
-    };
-
-    // ----- setup
     struct BusEventQueue queue;
     SETUP_TEST();
 
-    const size_t initial_ram_size = sizeof(initialRam) / sizeof(*initialRam);
-    struct SPC_State state =
-        setup_state(&initialCpu, initialRam, initial_ram_size);
-
-    const size_t final_ram_size = sizeof(finalRam) / sizeof(*finalRam);
-
-    const size_t expected_len =
-        sizeof(events) / sizeof(*events);  // one Bus IO per cycle
-
-    // ----- execution
     size_t i = 0;
     char msg[256];
     const size_t msg_size = sizeof(msg) / sizeof(*msg);
-    const char* test_name = "00 0000";
+
     do {
-        cpu_tick(&state);
+        cpu_tick(state);
 
         snprintf(msg, msg_size, "-- %s: Cycle %zu: Missing bus event",
                  test_name, i + 1);
@@ -131,45 +79,45 @@ UTEST(InstructionTest, H00_NOP_00_0000)
         }
 
         i++;
-    } while (state.cpu.instruction_cycle != 1);
+    } while (state->cpu.instruction_cycle != 1);
 
     snprintf(msg, msg_size,
              "-- %s: Instruction len mismatch: expected %zu cycles, "
              "only got %zu",
-             test_name, expected_len, i);
-    ASSERT_EQ_MSG(expected_len, i, msg);
+             test_name, n_events, i);
+    ASSERT_EQ_MSG(n_events, i, msg);
 
-    const struct CPU_State* cpu = &state.cpu;
+    const struct CPU_State* cpu = &state->cpu;
 
     snprintf(msg, msg_size,
              "-- %s: Register A mismatch. expected 0x%02x was 0x%02x",
-             test_name, finalCpu.a, cpu->a);
-    ASSERT_EQ_MSG(finalCpu.a, cpu->a, msg);
+             test_name, final_cpu->a, cpu->a);
+    ASSERT_EQ_MSG(final_cpu->a, cpu->a, msg);
 
     snprintf(msg, msg_size,
              "-- %s: Register X mismatch. expected 0x%02x was 0x%02x",
-             test_name, finalCpu.x, cpu->x);
-    ASSERT_EQ_MSG(finalCpu.x, cpu->x, msg);
+             test_name, final_cpu->x, cpu->x);
+    ASSERT_EQ_MSG(final_cpu->x, cpu->x, msg);
 
     snprintf(msg, msg_size,
              "-- %s: Register Y mismatch. expected 0x%02x was 0x%02x",
-             test_name, finalCpu.y, cpu->y);
-    ASSERT_EQ_MSG(finalCpu.y, cpu->y, msg);
+             test_name, final_cpu->y, cpu->y);
+    ASSERT_EQ_MSG(final_cpu->y, cpu->y, msg);
 
     snprintf(msg, msg_size,
              "-- %s: Register SP mismatch. expected 0x%02x was 0x%02x",
-             test_name, finalCpu.sp, cpu->sp);
-    ASSERT_EQ_MSG(finalCpu.sp, cpu->sp, msg);
+             test_name, final_cpu->sp, cpu->sp);
+    ASSERT_EQ_MSG(final_cpu->sp, cpu->sp, msg);
 
     snprintf(msg, msg_size,
              "-- %s: Register PSW mismatch. expected 0x%02x was 0x%02x",
-             test_name, finalCpu.status, cpu->status);
-    ASSERT_EQ_MSG(finalCpu.status, cpu->status, msg);
+             test_name, final_cpu->status, cpu->status);
+    ASSERT_EQ_MSG(final_cpu->status, cpu->status, msg);
 
     for (size_t i = 0; i < final_ram_size; i++) {
-        const uint16_t addr = finalRam[i].addr;
-        const uint8_t expected = finalRam[i].value;
-        const uint8_t actual = state.aram[addr];
+        const uint16_t addr = final_ram[i].addr;
+        const uint8_t expected = final_ram[i].value;
+        const uint8_t actual = state->aram[addr];
 
         snprintf(msg, msg_size,
                  "-- %s: Final ram mismatch at address 0x%04x. Expected "
@@ -180,6 +128,42 @@ UTEST(InstructionTest, H00_NOP_00_0000)
     }
 
     TEARDOWN_TEST();
+}
+
+UTEST(InstructionTest, H00_NOP_00_0000)
+{
+    // ----- data
+    const struct CPU_State initial_cpu = (struct CPU_State){.pc = 0x7630,
+                                                            .a = 0x38,
+                                                            .x = 0x4e,
+                                                            .y = 0x7f,
+                                                            .sp = 0xec,
+                                                            .status = 0x91};
+    const struct RamEntry initial_ram[] = {
+        {30256, 0},
+    };
+
+    const struct CPU_State final_cpu = (struct CPU_State){.pc = 0x7630,
+                                                          .a = 0x38,
+                                                          .x = 0x4e,
+                                                          .y = 0x7f,
+                                                          .sp = 0xec,
+                                                          .status = 0x91};
+    const struct RamEntry final_ram[] = {
+        {30256, 0},
+    };
+
+    const struct BusEvent events[] = {
+        {.addr = 0x7630, .value = 0x00, .type = IO_READ},
+        {.addr = 0x7631, .value = DUMMY, .type = IO_READ},
+    };
+
+    // ----- execution
+    struct SPC_State state = setup_state(
+        &initial_cpu, initial_ram, sizeof(initial_ram) / sizeof(*initial_ram));
+    run_and_check("00 0000", &state, &final_cpu, final_ram,
+                  sizeof(final_ram) / sizeof(*final_ram), events,
+                  sizeof(events) / sizeof(*events), utest_result);
 }
 
 UTEST_MAIN()
