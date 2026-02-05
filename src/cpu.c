@@ -1,6 +1,10 @@
 #include "cpu.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+
+#include "bus_io.h"
+#include "instruction.h"
 
 int dump_cpu_state(char buf[static 41], size_t len, const struct CPU_State* cpu)
 {
@@ -11,4 +15,30 @@ int dump_cpu_state(char buf[static 41], size_t len, const struct CPU_State* cpu)
         (cpu->status & PSW_P) ? 'P' : 'p', (cpu->status & PSW_B) ? 'B' : 'b',
         (cpu->status & PSW_H) ? 'H' : 'h', (cpu->status & PSW_I) ? 'I' : 'i',
         (cpu->status & PSW_Z) ? 'Z' : 'z', (cpu->status & PSW_C) ? 'C' : 'c');
+}
+
+// a single sub-instruction clock tick
+void cpu_tick(struct SPC_State* state)
+{
+    struct CPU_State* cpu = &state->cpu;
+
+    if (cpu->instruction_cycle == 1) {
+        cpu->addr = cpu->pc++;  // latch the program counter
+        cpu->opcode = bus_read(state, cpu->addr);
+        return;
+    }
+
+    const struct Instruction* instruction = opcode_lookup_table + cpu->opcode;
+    if (instruction->handler == NULL) {
+        // later a trace trap rather than an exit probably
+        fprintf(stderr, "Unimplemented opcode: 0x%02x\n", cpu->opcode);
+        exit(1);
+    }
+
+    const bool done = instruction->handler(state, cpu->instruction_cycle);
+    if (done) {
+        cpu->instruction_cycle = 1;
+    } else {
+        cpu->instruction_cycle++;
+    }
 }
