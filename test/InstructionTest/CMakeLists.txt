@@ -16,3 +16,9 @@ target_compile_options(InstructionTest PRIVATE
 )
 
 target_link_libraries(InstructionTest PRIVATE m)
+
+set_target_properties(InstructionTest PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
+add_test(NAME InstructionTest COMMAND InstructionTest)
