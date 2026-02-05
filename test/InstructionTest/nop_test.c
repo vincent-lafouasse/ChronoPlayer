@@ -98,9 +98,39 @@ void bus_hook(void* userdata,
     event_push(queue, event);
 }
 
+/*
+* Total tests in 00.json: 1000
+
+============================================================
+Test: 00 0000
+============================================================
+
+Initial State:
+  PC:  0x7630
+  A:   0x38
+  X:   0x4E
+  Y:   0x7F
+  SP:  0xEC
+  PSW: 0x91
+  RAM: [[30256, 0]]
+
+Final State:
+  PC:  0x7631
+  A:   0x38
+  X:   0x4E
+  Y:   0x7F
+  SP:  0xEC
+  PSW: 0x91
+  RAM: [[30256, 0]]
+
+Bus Accesses:
+  [0]   addr=0x7630, val=0x00, op=read
+  [1]   addr=0x7631, val=None, op=read
+
+*/
+
 UTEST(InstructionTest, H00_NOP)
 {
-    struct SPC_State state = {0};
     struct BusEventQueue queue;
     g_bus_trace_userdata = &queue;
     g_bus_trace_hook = &bus_hook;
@@ -108,6 +138,15 @@ UTEST(InstructionTest, H00_NOP)
     int cycle;
     enum InstructionStatus expected;
     enum InstructionStatus actual;
+
+    struct SPC_State state = {0};
+    state.cpu.pc = 0x7630;
+    state.cpu.a = 0x38;
+    state.cpu.x = 0x4E;
+    state.cpu.y = 0x7F;
+    state.cpu.sp = 0xEC;
+    state.cpu.status = 0x91;
+    state.aram[30256] = 0x00;
 
     cycle = 1;
     expected = I_ERROR;
