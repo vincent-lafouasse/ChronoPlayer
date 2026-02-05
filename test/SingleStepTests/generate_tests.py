@@ -142,7 +142,7 @@ def generate_test_suite(opcode: str):
     with open(json_path) as f:
         tests_json = json.load(f)
 
-    print(f"Found {len(tests_json)} tests in {spec}")
+    print(f"Found {len(tests_json):4d} tests in {spec:10s}", end=" ")
 
     # Filter out tests where any IO happens in hardware register range 0x00f0-0x00ff
     filtered = [
@@ -152,19 +152,32 @@ def generate_test_suite(opcode: str):
             cycle[0] is not None and 0xF0 <= cycle[0] <= 0xFF for cycle in t["cycles"]
         )
     ]
-    print(
-        f"Filtered to {len(filtered)} tests (excluded {len(tests_json) - len(filtered)} with IO in 0xf0-0xff)"
-    )
+    excluded = len(tests_json) - len(filtered)
+    print(f"→ {len(filtered):4d} tests (excluded {excluded:2d} HW regs)", end=" ")
 
     test_cases = [TestCase(test_json) for test_json in filtered]
 
+    # Generate new content
+    new_content = []
+    new_content.append('#include "../utest.h/utest.h"\n\n')
+    new_content.append('#include "test_helper.h"\n\n')
+    for test_case in test_cases:
+        new_content.append(test_case.generate_c_test())
+        new_content.append("\n\n")
+    new_content.append("UTEST_MAIN()\n")
+    new_content = "".join(new_content)
+
+    # Only write if content changed (like make)
+    if output_path.exists():
+        with open(output_path, "r") as f:
+            old_content = f.read()
+        if old_content == new_content:
+            print("→ unchanged")
+            return
+
     with open(output_path, "w") as f:
-        f.write('#include "../utest.h/utest.h"\n\n')
-        f.write('#include "test_helper.h"\n\n')
-        for test_case in test_cases:
-            f.write(test_case.generate_c_test())
-            f.write("\n\n")
-        f.write("UTEST_MAIN()\n")
+        f.write(new_content)
+    print("→ updated")
 
 
 def main():
