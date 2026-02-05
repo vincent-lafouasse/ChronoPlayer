@@ -85,6 +85,10 @@ def dummy_read_pc():
     return "(void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch"
 
 
+def true_idle():
+    return "bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook"
+
+
 def read_pc_to(dest):
     """Generate code to read from PC and latch it to cpu->addr. PC is incremented after."""
     return f"cpu->addr = cpu->pc++; {dest} = bus_read(state, cpu->addr);"
@@ -378,7 +382,9 @@ store = lambda: [trace_source(), "bus_write(state, cpu->addr, cpu->data8[0]);"]
 do_or_mem = lambda: alu_or("cpu->data8[0]", "cpu->data8[1]") + store()
 do_and_mem = lambda: alu_and("cpu->data8[0]", "cpu->data8[1]") + store()
 do_xor_mem = lambda: alu_xor("cpu->data8[0]", "cpu->data8[1]") + store()
-do_cmp_mem = lambda: do_cmp_and_check_psw("cpu->data8[0]", "cpu->data8[1]")
+do_cmp_mem = lambda: do_cmp_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + [
+    true_idle()
+]
 
 do_sbc8_mem = lambda: do_sub8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store()
 do_adc8_mem = lambda: do_add8_and_check_psw("cpu->data8[0]", "cpu->data8[1]") + store()
