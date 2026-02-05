@@ -52,6 +52,11 @@ uint32_t queue_len(const struct BusEventQueue queue[static 1])
     return queue->tail - queue->head;
 }
 
+bool queue_has(const struct BusEventQueue queue[static 1], uint32_t size)
+{
+    return queue_len(queue) == size;
+}
+
 bool event_push(struct BusEventQueue queue[static 1], struct BusEvent event)
 {
     if (queue_len(queue) >= QUEUE_SIZE) {
