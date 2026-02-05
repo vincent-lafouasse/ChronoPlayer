@@ -9,6 +9,7 @@ endif()
 set(TESTED_SRC_DIR ../../src)
 set(COMPILE_OPTIONS -Wall -Wextra -Wpedantic -g3)
 set(INCLUDES
+    .
     ${TESTED_SRC_DIR}
     ${CMAKE_SOURCE_DIR}/test/utest.h
 )
@@ -26,7 +27,7 @@ set(BASENAME SingleStepTests)
 
 function(register_test opcode)
     set(name "${BASENAME}${opcode}")
-    set(test_file "${opcode}.gen.c")
+    set(test_file "tests/${opcode}.gen.c")
     add_executable(${name} ${test_file})
     target_compile_options(${name} PRIVATE ${COMPILE_OPTIONS})
     target_include_directories(${name} PRIVATE ${INCLUDES})

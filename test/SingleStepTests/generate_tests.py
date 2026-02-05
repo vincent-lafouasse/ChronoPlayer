@@ -154,7 +154,7 @@ def generate_test_suite(opcode: str):
     output = opcode + ".gen.c"
 
     json_path = Path(__file__).parent / "specs" / spec
-    output_path = Path(__file__).parent / output
+    output_path = Path(__file__).parent / "tests" / output
 
     with open(json_path) as f:
         tests_json = json.load(f)
