@@ -903,7 +903,7 @@ enum InstructionStatus or_register_direct_indexed_a_x(struct SPC_State state[sta
             cpu->data8[0] = (cpu->operands[0] + cpu->x) & 0xff;
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4: {
             cpu->addr = direct_page(cpu, cpu->data8[0]);
@@ -973,7 +973,7 @@ enum InstructionStatus and_register_direct_indexed_a_x(struct SPC_State state[st
             cpu->data8[0] = (cpu->operands[0] + cpu->x) & 0xff;
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4: {
             cpu->addr = direct_page(cpu, cpu->data8[0]);
@@ -1043,7 +1043,7 @@ enum InstructionStatus eor_register_direct_indexed_a_x(struct SPC_State state[st
             cpu->data8[0] = (cpu->operands[0] + cpu->x) & 0xff;
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4: {
             cpu->addr = direct_page(cpu, cpu->data8[0]);
@@ -1120,7 +1120,7 @@ enum InstructionStatus cmp_register_direct_indexed_a_x(struct SPC_State state[st
             cpu->data8[0] = (cpu->operands[0] + cpu->x) & 0xff;
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4: {
             cpu->addr = direct_page(cpu, cpu->data8[0]);
@@ -1218,7 +1218,7 @@ enum InstructionStatus adc_register_direct_indexed_a_x(struct SPC_State state[st
             cpu->data8[0] = (cpu->operands[0] + cpu->x) & 0xff;
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4: {
             cpu->addr = direct_page(cpu, cpu->data8[0]);
@@ -1332,7 +1332,7 @@ enum InstructionStatus sbc_register_direct_indexed_a_x(struct SPC_State state[st
             cpu->data8[0] = (cpu->operands[0] + cpu->x) & 0xff;
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4: {
             cpu->addr = direct_page(cpu, cpu->data8[0]);
@@ -1454,7 +1454,7 @@ enum InstructionStatus mov_register_direct_indexed_a_x(struct SPC_State state[st
             cpu->data8[0] = (cpu->operands[0] + cpu->x) & 0xff;
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4: {
             cpu->addr = direct_page(cpu, cpu->data8[0]);
@@ -5150,7 +5150,7 @@ enum InstructionStatus mov_register_direct_indexed_x_y(struct SPC_State state[st
             cpu->data8[0] = (cpu->operands[0] + cpu->y) & 0xff;
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4: {
             cpu->addr = direct_page(cpu, cpu->data8[0]);
@@ -5867,7 +5867,7 @@ enum InstructionStatus mov_register_direct_indexed_y_x(struct SPC_State state[st
             cpu->data8[0] = (cpu->operands[0] + cpu->x) & 0xff;
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 4: {
             cpu->addr = direct_page(cpu, cpu->data8[0]);

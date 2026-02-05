@@ -974,7 +974,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                         cpu->data8[0] = (cpu->operands[0] + cpu->{self.src}) & 0xff;
                         return {InstructionStatus.Pending};
                     case 3:
-                        {idle_cycle()}
+                        {true_idle()}
                         return {InstructionStatus.Pending};
                     case 4: {{
                         cpu->addr = direct_page(cpu, cpu->data8[0]);
