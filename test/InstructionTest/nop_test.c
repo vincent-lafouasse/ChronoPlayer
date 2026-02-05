@@ -156,12 +156,14 @@ UTEST(InstructionTest, H00_NOP_00_0000)
         {.addr = 0x7630, .value = 0x00, .type = IO_READ},
         {.addr = 0x7631, .value = DUMMY, .type = IO_READ},
     };
+    const size_t expected_len =
+        sizeof(events) / sizeof(*events);  // one Bus IO per cycle
 
     size_t i = 0;
+    char msg[256];
     do {
         cpu_tick(&state);
 
-        char msg[256];
         snprintf(msg, sizeof(msg), "Cycle %zu: Missing bus event", i);
         ASSERT_TRUE_MSG(queue_has(&queue, 1), msg);
 
@@ -192,6 +194,11 @@ UTEST(InstructionTest, H00_NOP_00_0000)
 
         i++;
     } while (state.cpu.instruction_cycle != 1);
+
+    snprintf(msg, sizeof(msg),
+             "Instruction len mismatch: expected %zu cycles, only got %zu",
+             expected_len, i);
+    ASSERT_EQ_MSG(expected_len, i, msg);
 
     TEARDOWN_TEST();
 }
