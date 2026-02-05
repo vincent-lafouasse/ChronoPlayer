@@ -131,10 +131,16 @@ class TestCase:
 
         lines.append("    const struct BusEvent events[] = {")
         for access in self.bus_accesses:
-            io_type = "IO_READ" if access.operation == "read" else "IO_WRITE"
-            val = "DUMMY" if access.value is None else f"0x{access.value:02x}"
+            if access.operation == "wait":
+                io_type = "IO_WAIT"
+                addr_str = "DUMMY"
+                val_str = "DUMMY"
+            else:
+                io_type = "IO_READ" if access.operation == "read" else "IO_WRITE"
+                addr_str = f"0x{access.addr:04x}"
+                val_str = "DUMMY" if access.value is None else f"0x{access.value:02x}"
             lines.append(
-                f"        {{.addr=0x{access.addr:04x}, .value={val}, .type={io_type}}},"
+                f"        {{.addr={addr_str}, .value={val_str}, .type={io_type}}},"
             )
         lines.append("    };")
 
@@ -163,7 +169,7 @@ def generate_test_suite(opcode: str):
 
     # Filter out tests where any IO happens in hardware register range 0x00f0-0x00ff
     def has_hw_register_access(test):
-        return any(0xF0 <= cycle[0] <= 0xFF for cycle in test["cycles"])
+        return any(cycle[0] is not None and 0xF0 <= cycle[0] <= 0xFF for cycle in test["cycles"])
 
     filtered = [t for t in tests_json if not has_hw_register_access(t)]
     print(
@@ -200,6 +206,7 @@ def main():
     generate_test_suite("48")
     generate_test_suite("58")
     generate_test_suite("68")
+    generate_test_suite("78")
 
 
 if __name__ == "__main__":
