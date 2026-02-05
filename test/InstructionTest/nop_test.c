@@ -135,6 +135,32 @@ struct RamEntry {
 //   [0]   addr=0x7630, val=0x00, op=read
 //   [1]   addr=0x7631, val=None, op=read
 
+#define SETUP_RAM(ram_entries)                                          \
+    {                                                                   \
+        const size_t sz__ = sizeof(ram_entries) / sizeof(*ram_entries); \
+        for (size_t i = 0; i < sz__; i++) {                             \
+            const uint16_t addr = ram_entries[i].addr;                  \
+            const uint8_t value = ram_entries[i].value;                 \
+            state.aram[addr] = value;                                   \
+        }                                                               \
+    }
+
+#define CHECK_RAM(ram_entries)                                              \
+    {                                                                       \
+        const size_t sz__ = sizeof(ram_entries) / sizeof(*ram_entries);     \
+        for (size_t i = 0; i < sz__; i++) {                                 \
+            const uint16_t addr = ram_entries[i].addr;                      \
+            const uint8_t expected = ram_entries[i].value;                  \
+            const uint8_t actual = state.aram[addr];                        \
+            snprintf(                                                       \
+                msg, sizeof(msg),                                           \
+                "-- Final ram mismatch at address 0x%04x. Expected 0x%02x " \
+                "was 0x%02x.",                                              \
+                addr, expected, actual);                                    \
+            ASSERT_EQ_MSG(expected, actual, msg);                           \
+        }                                                                   \
+    }
+
 UTEST(InstructionTest, H00_NOP_00_0000)
 {
     struct BusEventQueue queue;
@@ -159,6 +185,8 @@ UTEST(InstructionTest, H00_NOP_00_0000)
     const size_t expected_len =
         sizeof(events) / sizeof(*events);  // one Bus IO per cycle
 
+    // ------------------------
+    SETUP_RAM(initialRam);
     size_t i = 0;
     char msg[256];
     do {
@@ -173,23 +201,25 @@ UTEST(InstructionTest, H00_NOP_00_0000)
         const struct BusEvent* expected = events + i;
 
         snprintf(msg, sizeof(msg),
-                 "-- Cycle %zu: Address mismatch - expected 0x%04X, got 0x%04X",
+                 "-- Cycle %zu: Address mismatch - expected "
+                 "0x%04X, got 0x%04X",
                  i, expected->addr, actual.addr);
         ASSERT_TRUE_MSG(expected->addr == actual.addr, msg);
 
         snprintf(msg, sizeof(msg),
-                 "-- Cycle %zu: Type mismatch at 0x%04X - expected %s, got %s",
+                 "-- Cycle %zu: Type mismatch at 0x%04X - expected "
+                 "%s, got %s",
                  i, actual.addr, expected->type == IO_READ ? "READ" : "WRITE",
                  actual.type == IO_READ ? "READ" : "WRITE");
         ASSERT_TRUE_MSG(expected->type == actual.type, msg);
 
         if (expected->value != DUMMY) {
-            snprintf(
-                msg, sizeof(msg),
-                "-- Cycle %zu: Value mismatch at 0x%04X - expected 0x%02X, "
-                "got 0x%02X",
-                i, actual.addr, (uint8_t)expected->value,
-                (uint8_t)actual.value);
+            snprintf(msg, sizeof(msg),
+                     "-- Cycle %zu: Value mismatch at 0x%04X - "
+                     "expected 0x%02X, "
+                     "got 0x%02X",
+                     i, actual.addr, (uint8_t)expected->value,
+                     (uint8_t)actual.value);
             ASSERT_TRUE_MSG(expected->value == actual.value, msg);
         }
 
@@ -197,9 +227,12 @@ UTEST(InstructionTest, H00_NOP_00_0000)
     } while (state.cpu.instruction_cycle != 1);
 
     snprintf(msg, sizeof(msg),
-             "-- Instruction len mismatch: expected %zu cycles, only got %zu",
+             "-- Instruction len mismatch: expected %zu cycles, "
+             "only got %zu",
              expected_len, i);
     ASSERT_EQ_MSG(expected_len, i, msg);
+
+    CHECK_RAM(finalRam);
 
     TEARDOWN_TEST();
 }
