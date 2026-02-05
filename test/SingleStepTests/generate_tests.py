@@ -83,7 +83,9 @@ class TestCase:
         )
 
         # compact, wrap at ~100 cols
-        ram_entries = [f"{{.addr=0x{addr:04x}, .value=0x{val:02x}}}" for addr, val in s.aram]
+        ram_entries = [
+            f"{{.addr=0x{addr:04x}, .value=0x{val:02x}}}" for addr, val in s.aram
+        ]
         ram_str = (
             "const struct RamEntry initial_ram[] = {" + ", ".join(ram_entries) + "};"
         )
@@ -107,7 +109,9 @@ class TestCase:
             f"    const struct CPU_State final_cpu = {{.pc=0x{s.pc:04x}, .a=0x{s.a:02x}, .x=0x{s.x:02x}, .y=0x{s.y:02x}, .sp=0x{s.sp:02x}, .status=0x{s.psw:02x}}};"
         )
 
-        ram_entries = [f"{{.addr=0x{addr:04x}, .value=0x{val:02x}}}" for addr, val in s.aram]
+        ram_entries = [
+            f"{{.addr=0x{addr:04x}, .value=0x{val:02x}}}" for addr, val in s.aram
+        ]
         ram_str = (
             "const struct RamEntry final_ram[] = {" + ", ".join(ram_entries) + "};"
         )
@@ -129,7 +133,9 @@ class TestCase:
         for access in self.bus_accesses:
             io_type = "IO_READ" if access.operation == "read" else "IO_WRITE"
             val = "DUMMY" if access.value is None else f"0x{access.value:02x}"
-            lines.append(f"        {{.addr=0x{access.addr:04x}, .value={val}, .type={io_type}}},")
+            lines.append(
+                f"        {{.addr=0x{access.addr:04x}, .value={val}, .type={io_type}}},"
+            )
         lines.append("    };")
 
         lines.append(
@@ -157,30 +163,34 @@ def generate_test_suite(opcode: str):
 
     # Filter out tests where any IO happens in hardware register range 0x00f0-0x00ff
     def has_hw_register_access(test):
-        return any(0xf0 <= cycle[0] <= 0xff for cycle in test["cycles"])
+        return any(0xF0 <= cycle[0] <= 0xFF for cycle in test["cycles"])
 
     filtered = [t for t in tests_json if not has_hw_register_access(t)]
-    print(f"Filtered to {len(filtered)} tests (excluded {len(tests_json) - len(filtered)} with IO in 0xf0-0xff)")
+    print(
+        f"Filtered to {len(filtered)} tests (excluded {len(tests_json) - len(filtered)} with IO in 0xf0-0xff)"
+    )
 
     test_cases = [TestCase(test_json) for test_json in filtered]
 
     with open(output_path, "w") as f:
         f.write('#include "../utest.h/utest.h"\n')
-        f.write('\n')
+        f.write("\n")
         f.write('#include "test_helper.h"\n')
-        f.write('\n')
+        f.write("\n")
 
         for test_case in test_cases:
             f.write(test_case.generate_c_test())
-            f.write('\n\n')
+            f.write("\n\n")
 
         f.write("UTEST_MAIN()\n")
+
 
 def main():
     generate_test_suite("40")
     generate_test_suite("60")
     generate_test_suite("80")
     generate_test_suite("e0")
+
 
 if __name__ == "__main__":
     main()
