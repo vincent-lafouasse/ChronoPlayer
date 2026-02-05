@@ -8,26 +8,6 @@
 #include "instruction.h"
 #include "state.h"
 
-enum IoType {
-    IO_READ,
-    IO_WRITE,
-    IO_WAIT,
-};
-
-static inline const char* io_type_repr(enum IoType type)
-{
-    switch (type) {
-        case IO_WRITE:
-            return "WRITE";
-        case IO_READ:
-            return "READ";
-        case IO_WAIT:
-            return "WAIT";
-        default:
-            return "Unknown IO operation";
-    }
-}
-
 #define DUMMY -1
 
 struct BusEvent {

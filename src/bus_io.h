@@ -2,6 +2,26 @@
 
 #include "state.h"
 
+enum IoType {
+    IO_READ,
+    IO_WRITE,
+    IO_WAIT,
+};
+
+static inline const char* io_type_repr(enum IoType type)
+{
+    switch (type) {
+        case IO_WRITE:
+            return "WRITE";
+        case IO_READ:
+            return "READ";
+        case IO_WAIT:
+            return "WAIT";
+        default:
+            return "Unknown IO operation";
+    }
+}
+
 typedef void (*BusTraceFn)(void* userdata,
                            const struct SPC_State state[static 1],
                            uint16_t addr,
