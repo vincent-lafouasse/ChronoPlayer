@@ -41,6 +41,17 @@ function(register_column lsb)
     endforeach()
 endfunction()
 
+function(register_column_except lsb)
+    # ARGN contains all additional arguments (the exclusion list)
+    set(exclusions ${ARGN})
+    foreach(msb "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "a" "b" "c" "d" "e" "f")
+        set(opcode "${msb}${lsb}")
+        if(NOT ${opcode} IN_LIST exclusions)
+            register_test("${opcode}")
+        endif()
+    endforeach()
+endfunction()
+
 # -----------------
 
 foreach(opcode "00" "20" "40" "60" "80" "e0")
