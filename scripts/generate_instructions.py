@@ -2462,8 +2462,7 @@ def generate_absolute_indexed_register():
                             cpu->data16 = u16_read_little_endian(cpu->data8) + cpu->{reg};
                             return {InstructionStatus.Pending};
                         case 4:
-                            // internal operation - dummy read from last latched addr
-                            {idle_cycle()}
+                            {true_idle()}
                             cpu->addr = cpu->data16;
                             return {InstructionStatus.Pending};
                         case 5:
