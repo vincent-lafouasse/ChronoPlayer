@@ -2,7 +2,9 @@ set(TESTED_SRC "${CMAKE_SOURCE_DIR}/src")
 
 add_executable(InstructionTest
     nop_test.c
+    ${TESTED_SRC}/cpu.c
     ${TESTED_SRC}/instructions.gen.c
+    ${TESTED_SRC}/instruction_table.gen.c
     ${TESTED_SRC}/bus_io.c
 )
 
