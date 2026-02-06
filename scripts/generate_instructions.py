@@ -3098,8 +3098,7 @@ class DirectIndexed(AddressingMode):
                         {read_pc_to("cpu->operands[0]")}
                         return {InstructionStatus.Pending};
                     case 3:
-                        // internal operation - dummy read from last latched addr
-                        {idle_cycle()}
+                        {true_idle()}
                         cpu->addr = direct_page(cpu, cpu->operands[0] + cpu->x);
                         return {InstructionStatus.Pending};
                     case 4:
