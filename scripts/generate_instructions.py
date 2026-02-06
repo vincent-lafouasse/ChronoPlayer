@@ -3383,14 +3383,14 @@ def generate_stack_operations():
                         if (cycle < 2 || cycle > 4) {{ return {InstructionStatus.UnexpectedCycle}; }}
                         switch (cycle) {{
                             case 2:
-                                {true_idle()}
+                                {dummy_read_pc()}
                                 return {InstructionStatus.Pending};
                             case 3:
-                                {true_idle()}
-                                return {InstructionStatus.Pending};
-                            case 4:
                                 cpu->addr = cpu->sp--;
                                 bus_write(state, cpu->addr, cpu->{src});
+                                return {InstructionStatus.Pending};
+                            case 4:
+                                {true_idle()}
                                 return {InstructionStatus.Done};
                             default:
                                 UNREACHABLE();

@@ -6563,14 +6563,14 @@ enum InstructionStatus push_status(struct SPC_State state[static 1], uint32_t cy
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
     switch (cycle) {
         case 2:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
-            return INSTRUCTION_STATUS_PENDING;
-        case 4:
             cpu->addr = cpu->sp--;
             bus_write(state, cpu->addr, cpu->status);
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();
@@ -6611,14 +6611,14 @@ enum InstructionStatus push_a(struct SPC_State state[static 1], uint32_t cycle)
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
     switch (cycle) {
         case 2:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
-            return INSTRUCTION_STATUS_PENDING;
-        case 4:
             cpu->addr = cpu->sp--;
             bus_write(state, cpu->addr, cpu->a);
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();
@@ -6659,14 +6659,14 @@ enum InstructionStatus push_x(struct SPC_State state[static 1], uint32_t cycle)
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
     switch (cycle) {
         case 2:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
-            return INSTRUCTION_STATUS_PENDING;
-        case 4:
             cpu->addr = cpu->sp--;
             bus_write(state, cpu->addr, cpu->x);
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();
@@ -6704,14 +6704,14 @@ enum InstructionStatus push_y(struct SPC_State state[static 1], uint32_t cycle)
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
     switch (cycle) {
         case 2:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
-            return INSTRUCTION_STATUS_PENDING;
-        case 4:
             cpu->addr = cpu->sp--;
             bus_write(state, cpu->addr, cpu->y);
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();
