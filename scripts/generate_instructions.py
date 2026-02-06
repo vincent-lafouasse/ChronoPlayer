@@ -3526,6 +3526,71 @@ def generate_stack_operations():
     generate_push(0x6D, Register.Y)
 
 
+def generate_psw_branches():
+    def gen_inner(opcode, mnemonic):
+        conditions = dict()
+        conditions["BCC"] = f"!psw_{PSW.Carry}(cpu)"
+        conditions["BCS"] = f"psw_{PSW.Carry}(cpu)"
+        conditions["BEQ"] = f"psw_{PSW.Zero}(cpu)"
+        conditions["BMI"] = f"psw_{PSW.Sign}(cpu)"
+        conditions["BNE"] = f"!psw_{PSW.Zero}(cpu)"
+        conditions["BPL"] = f"!psw_{PSW.Sign}(cpu)"
+        conditions["BVC"] = f"!psw_{PSW.Overflow}(cpu)"
+        conditions["BVS"] = f"psw_{PSW.Overflow}(cpu)"
+        conditions["BRA"] = "true"
+        if mnemonic not in conditions:
+            raise ValueError()
+
+        cond = conditions[mnemonic]
+        ret = f"cpu->branch_taken ? {InstructionStatus.Pending} : {InstructionStatus.Done}"
+        add_instruction(
+            opcode,
+            HardcodedInstruction(
+                mnemonic=mnemonic,
+                _full_mnemonic=mnemonic,
+                function_name=mnemonic.lower(),
+                body=inspect.cleandoc(
+                    f"""
+                    {{
+                        {trace_source()}
+                        struct CPU_State* const cpu = &state->cpu;
+                    
+                        if (cycle < 2 || cycle > 4) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                        cpu->branch_taken = {cond};
+                        
+                        switch (cycle) {{
+                            case 2:
+                                cpu->operands[0] = bus_read(state, cpu->pc++);
+                                return {ret};
+                            case 3:
+                                {true_idle()}
+                                return {ret};
+                            case 4:
+                                {true_idle()}
+                                cpu->pc += (int8_t)cpu->operands[0];
+                                return {InstructionStatus.Done};
+                            default:
+                                UNREACHABLE();
+                        }}
+                    }}
+                    """
+                ),
+            ),
+        )
+
+    gen_inner(0x90, "BCC")
+    gen_inner(0xB0, "BCS")
+    gen_inner(0xF0, "BEQ")
+    gen_inner(0x30, "BMI")
+    gen_inner(0xD0, "BNE")
+    gen_inner(0x10, "BPL")
+    gen_inner(0x50, "BVC")
+    gen_inner(0x70, "BVS")
+    gen_inner(0x2F, "BRA")
+
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -3778,6 +3843,7 @@ generate_register_alu_implied()
 generate_stack_operations()
 generate_notc()
 generate_ei_di()
+generate_psw_branches()
 
 
 def print_opcode_matrix():
