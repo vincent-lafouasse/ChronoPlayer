@@ -180,23 +180,25 @@ def generate_test_suite(opcode: str):
     print("→ updated")
 
 
+def generate_column(lsb):
+    for msb in "0123456789abcdef":
+        generate_test_suite(msb + lsb)
+
+
 def main():
     for opcode in ["00", "20", "40", "60", "80", "e0"]:
         generate_test_suite(opcode)
 
-    for msb in "0123456789abcdef":
-        generate_test_suite(msb + "1")
-        generate_test_suite(msb + "2")
-        generate_test_suite(msb + "4")
-        generate_test_suite(msb + "5")
-        generate_test_suite(msb + "6")
-        generate_test_suite(msb + "7")
-        generate_test_suite(msb + "8")
-        generate_test_suite(msb + "9")
-        generate_test_suite(msb + "b")
-
-    for opcode in ["0c", "2c", "4c", "6c", "8c", "ac"]:
-        generate_test_suite(opcode)
+    generate_column("1")
+    generate_column("2")
+    generate_column("4")
+    generate_column("5")
+    generate_column("6")
+    generate_column("7")
+    generate_column("8")
+    generate_column("9")
+    generate_column("b")
+    generate_column("c")
 
 
 if __name__ == "__main__":
