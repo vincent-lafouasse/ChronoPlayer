@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3723 */
+/* generated from generate_instructions.py: l.3815 */
 
 #include "instructions.gen.h"
 
@@ -82,7 +82,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x0d] = {0},
+    [0x0d] = {
+        .mnemonic = "PUSH",
+        .full_mnemonic = "PUSH  PSW",
+        .handler = push_status,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x0e] = {0},
     [0x0f] = {0},
     [0x10] = {0},
@@ -252,7 +258,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x2d] = {0},
+    [0x2d] = {
+        .mnemonic = "PUSH",
+        .full_mnemonic = "PUSH  A",
+        .handler = push_a,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x2e] = {0},
     [0x2f] = {0},
     [0x30] = {0},
@@ -422,7 +434,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x4d] = {0},
+    [0x4d] = {
+        .mnemonic = "PUSH",
+        .full_mnemonic = "PUSH  X",
+        .handler = push_x,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x4e] = {0},
     [0x4f] = {0},
     [0x50] = {0},
@@ -592,7 +610,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x6d] = {0},
+    [0x6d] = {
+        .mnemonic = "PUSH",
+        .full_mnemonic = "PUSH  Y",
+        .handler = push_y,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x6e] = {0},
     [0x6f] = {0},
     [0x70] = {0},
@@ -763,7 +787,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x8e] = {0},
+    [0x8e] = {
+        .mnemonic = "POP",
+        .full_mnemonic = "POP   PSW",
+        .handler = pop_status,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x8f] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   d, #i",
@@ -933,7 +963,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xae] = {0},
+    [0xae] = {
+        .mnemonic = "POP",
+        .full_mnemonic = "POP   A",
+        .handler = pop_a,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xaf] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   (X)+, A",
@@ -1109,7 +1145,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xce] = {0},
+    [0xce] = {
+        .mnemonic = "POP",
+        .full_mnemonic = "POP   X",
+        .handler = pop_x,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xcf] = {0},
     [0xd0] = {0},
     [0xd1] = {
@@ -1279,7 +1321,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .cycles = 0,
     },
     [0xed] = {0},
-    [0xee] = {0},
+    [0xee] = {
+        .mnemonic = "POP",
+        .full_mnemonic = "POP   Y",
+        .handler = pop_y,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xef] = {0},
     [0xf0] = {0},
     [0xf1] = {

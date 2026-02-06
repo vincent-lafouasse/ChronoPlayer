@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3664 */
+/* generated from generate_instructions.py: l.3756 */
 #pragma once
 
 #include <stdbool.h>
@@ -355,12 +355,20 @@ extern enum InstructionStatus mov_register_absolute_y(struct SPC_State state[sta
 /* 0xfc     INC   Y */
 extern enum InstructionStatus inc_y(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0x0d     PUSH  PSW */
+extern enum InstructionStatus push_status(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x1d     DEC   X */
 extern enum InstructionStatus dec_x(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x2d     PUSH  A */
+extern enum InstructionStatus push_a(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x3d     INC   X */
 extern enum InstructionStatus inc_x(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x4d     PUSH  X */
+extern enum InstructionStatus push_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x5d     MOV   X, A */
 extern enum InstructionStatus mov_reg_reg_x_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x6d     PUSH  Y */
+extern enum InstructionStatus push_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x7d     MOV   A, X */
 extern enum InstructionStatus mov_reg_reg_a_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x8d     MOV   Y, #i */
@@ -384,6 +392,14 @@ extern enum InstructionStatus cmp_register_absolute_x(struct SPC_State state[sta
 extern enum InstructionStatus cmp_register_direct_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x5e     CMP   Y, !a */
 extern enum InstructionStatus cmp_register_absolute_y(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x8e     POP   PSW */
+extern enum InstructionStatus pop_status(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xae     POP   A */
+extern enum InstructionStatus pop_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xce     POP   X */
+extern enum InstructionStatus pop_x(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xee     POP   Y */
+extern enum InstructionStatus pop_y(struct SPC_State state[static 1], uint32_t cycle);
 
 /* 0x8f     MOV   d, #i */
 extern enum InstructionStatus mov_direct_immediate(struct SPC_State state[static 1], uint32_t cycle);

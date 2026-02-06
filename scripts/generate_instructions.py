@@ -3362,7 +3362,7 @@ def generate_stack_operations():
             return "X"
         elif reg == Register.Y:
             return "Y"
-        elif reg == Register.PWS:
+        elif reg == Register.PSW:
             return "PSW"
         else:
             raise ValueError(f"invalid register for stack op: {reg}")
@@ -3371,9 +3371,9 @@ def generate_stack_operations():
         add_instruction(
             opcode,
             HardcodedInstruction(
-                mnemonic=mnemonic,
+                mnemonic="PUSH",
                 _full_mnemonic=f"PUSH  {register_repr(src)}",
-                function_name=f"{mnemonic.lower()}_{src}",
+                function_name=f"push_{src}",
                 body=inspect.cleandoc(
                     f"""
                     {{
@@ -3405,9 +3405,9 @@ def generate_stack_operations():
         add_instruction(
             opcode,
             HardcodedInstruction(
-                mnemonic=mnemonic,
+                mnemonic="POP",
                 _full_mnemonic=f"POP   {register_repr(dest)}",
-                function_name=f"{mnemonic.lower()}_{dest}",
+                function_name=f"pop_{dest}",
                 body=inspect.cleandoc(
                     f"""
                     {{
@@ -3424,7 +3424,7 @@ def generate_stack_operations():
                                 return {InstructionStatus.Pending};
                             case 4:
                                 cpu->addr = ++(cpu->sp);
-                                cpu->{src} = bus_write(state, cpu->addr);
+                                cpu->{dest} = bus_write(state, cpu->addr);
                                 return {InstructionStatus.Done};
                             default:
                                 UNREACHABLE();
@@ -3434,6 +3434,16 @@ def generate_stack_operations():
                 ),
             ),
         )
+
+    generate_pop(0xae, Register.A)
+    generate_pop(0x8e, Register.PSW)
+    generate_pop(0xce, Register.X)
+    generate_pop(0xee, Register.Y)
+
+    generate_push(0x2D, Register.A)
+    generate_push(0x0D, Register.PSW)
+    generate_push(0x4D, Register.X)
+    generate_push(0x6D, Register.Y)
 
 
 class PswInstruction(Instruction):
@@ -3685,6 +3695,7 @@ generate_not1()
 DirectIndexed.register_instructions()
 Absolute.register_instructions()
 generate_register_alu_implied()
+generate_stack_operations()
 
 def print_opcode_matrix():
     # ANSI Color Codes

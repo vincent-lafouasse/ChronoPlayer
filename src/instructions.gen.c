@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3692 */
+/* generated from generate_instructions.py: l.3784 */
 
 #include "instructions.gen.h"
 
@@ -38,7 +38,7 @@ static inline void parse_membit(uint16_t operand, uint16_t* addr, uint8_t* bit)
 
 static inline enum InstructionStatus tcall_internal(struct SPC_State state[static 1], uint32_t cycle, uint16_t vector)
 {
-    /* generated from generate_instructions.py: l.3510 */
+    /* generated from generate_instructions.py: l.3601 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 8) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -96,7 +96,7 @@ enum InstructionStatus nop(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x20     CLRP */
 enum InstructionStatus clrp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3399 */
+    /* generated from generate_instructions.py: l.3490 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -109,7 +109,7 @@ enum InstructionStatus clrp(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x40     SETP */
 enum InstructionStatus setp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3399 */
+    /* generated from generate_instructions.py: l.3490 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -122,7 +122,7 @@ enum InstructionStatus setp(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x60     CLRC */
 enum InstructionStatus clrc(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3399 */
+    /* generated from generate_instructions.py: l.3490 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -135,7 +135,7 @@ enum InstructionStatus clrc(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x80     SETC */
 enum InstructionStatus setc(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3399 */
+    /* generated from generate_instructions.py: l.3490 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -148,7 +148,7 @@ enum InstructionStatus setc(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xe0     CLRV */
 enum InstructionStatus clrv(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3399 */
+    /* generated from generate_instructions.py: l.3490 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -163,112 +163,112 @@ enum InstructionStatus clrv(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x01     TCALL 0 */
 enum InstructionStatus tcall_0(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffde);
 }
 
 /* 0x11     TCALL 1 */
 enum InstructionStatus tcall_1(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffdc);
 }
 
 /* 0x21     TCALL 2 */
 enum InstructionStatus tcall_2(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffda);
 }
 
 /* 0x31     TCALL 3 */
 enum InstructionStatus tcall_3(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffd8);
 }
 
 /* 0x41     TCALL 4 */
 enum InstructionStatus tcall_4(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffd6);
 }
 
 /* 0x51     TCALL 5 */
 enum InstructionStatus tcall_5(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffd4);
 }
 
 /* 0x61     TCALL 6 */
 enum InstructionStatus tcall_6(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffd2);
 }
 
 /* 0x71     TCALL 7 */
 enum InstructionStatus tcall_7(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffd0);
 }
 
 /* 0x81     TCALL 8 */
 enum InstructionStatus tcall_8(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffce);
 }
 
 /* 0x91     TCALL 9 */
 enum InstructionStatus tcall_9(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffcc);
 }
 
 /* 0xa1     TCALL 10 */
 enum InstructionStatus tcall_10(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffca);
 }
 
 /* 0xb1     TCALL 11 */
 enum InstructionStatus tcall_11(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffc8);
 }
 
 /* 0xc1     TCALL 12 */
 enum InstructionStatus tcall_12(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffc6);
 }
 
 /* 0xd1     TCALL 13 */
 enum InstructionStatus tcall_13(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffc4);
 }
 
 /* 0xe1     TCALL 14 */
 enum InstructionStatus tcall_14(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffc2);
 }
 
 /* 0xf1     TCALL 15 */
 enum InstructionStatus tcall_15(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3560 */
+    /* generated from generate_instructions.py: l.3651 */
     return tcall_internal(state, cycle, 0xffc0);
 }
 
@@ -6554,6 +6554,29 @@ enum InstructionStatus inc_y(struct SPC_State state[static 1], uint32_t cycle)
                 
 
 
+/* 0x0d     PUSH  PSW */
+enum InstructionStatus push_status(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.3380 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+    switch (cycle) {
+        case 2:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            cpu->addr = cpu->sp--;
+            bus_write(state, cpu->addr, cpu->status);
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
 /* 0x1d     DEC   X */
 enum InstructionStatus dec_x(struct SPC_State state[static 1], uint32_t cycle)
                 {
@@ -6578,6 +6601,29 @@ enum InstructionStatus dec_x(struct SPC_State state[static 1], uint32_t cycle)
                     return INSTRUCTION_STATUS_DONE;
                 }
                 
+
+/* 0x2d     PUSH  A */
+enum InstructionStatus push_a(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.3380 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+    switch (cycle) {
+        case 2:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            cpu->addr = cpu->sp--;
+            bus_write(state, cpu->addr, cpu->a);
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
 
 /* 0x3d     INC   X */
 enum InstructionStatus inc_x(struct SPC_State state[static 1], uint32_t cycle)
@@ -6604,6 +6650,29 @@ enum InstructionStatus inc_x(struct SPC_State state[static 1], uint32_t cycle)
                 }
                 
 
+/* 0x4d     PUSH  X */
+enum InstructionStatus push_x(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.3380 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+    switch (cycle) {
+        case 2:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            cpu->addr = cpu->sp--;
+            bus_write(state, cpu->addr, cpu->x);
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
 /* 0x5d     MOV   X, A */
 enum InstructionStatus mov_reg_reg_x_a(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -6624,6 +6693,29 @@ enum InstructionStatus mov_reg_reg_x_a(struct SPC_State state[static 1], uint32_
         psw_write_neg(cpu, v & 0x80);
     }
     return INSTRUCTION_STATUS_DONE;
+}
+
+/* 0x6d     PUSH  Y */
+enum InstructionStatus push_y(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.3380 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+    switch (cycle) {
+        case 2:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            cpu->addr = cpu->sp--;
+            bus_write(state, cpu->addr, cpu->y);
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
 }
 
 /* 0x7d     MOV   A, X */
@@ -6933,6 +7025,98 @@ enum InstructionStatus cmp_register_absolute_y(struct SPC_State state[static 1],
             }
             return INSTRUCTION_STATUS_DONE;
         }
+        default:
+            UNREACHABLE();
+    }
+}
+
+/* 0x8e     POP   PSW */
+enum InstructionStatus pop_status(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.3414 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+    switch (cycle) {
+        case 2:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            cpu->addr = ++(cpu->sp);
+            cpu->status = bus_write(state, cpu->addr);
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
+/* 0xae     POP   A */
+enum InstructionStatus pop_a(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.3414 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+    switch (cycle) {
+        case 2:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            cpu->addr = ++(cpu->sp);
+            cpu->a = bus_write(state, cpu->addr);
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
+/* 0xce     POP   X */
+enum InstructionStatus pop_x(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.3414 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+    switch (cycle) {
+        case 2:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            cpu->addr = ++(cpu->sp);
+            cpu->x = bus_write(state, cpu->addr);
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
+/* 0xee     POP   Y */
+enum InstructionStatus pop_y(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.3414 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+    switch (cycle) {
+        case 2:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            cpu->addr = ++(cpu->sp);
+            cpu->y = bus_write(state, cpu->addr);
+            return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();
     }
