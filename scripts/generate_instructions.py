@@ -5768,7 +5768,6 @@ def generate_sleep_stop():
                     (void)state;
                     (void)cycle;
                     TRACE_TRAP();
-                    return {InstructionStatus.Done};
                 }}
                 """
             ),
@@ -5788,7 +5787,6 @@ def generate_sleep_stop():
                     (void)state;
                     (void)cycle;
                     TRACE_TRAP();
-                    return {InstructionStatus.Done};
                 }}
                 """
             ),
