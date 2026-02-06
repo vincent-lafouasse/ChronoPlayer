@@ -3324,33 +3324,35 @@ def generate_register_alu_implied():
                     f"""
                     {{
                         {trace_source()}
-
+                        struct CPU_State* const cpu = &state->cpu;
+                    
                         if (cycle != 2) {{ return {InstructionStatus.UnexpectedCycle}; }}
                     
                         {dummy_read_pc()}
                         cpu->data8[0] = cpu->{register};
                         {payload}
-                        cpu->{register} = cpu->data8[0]
+                        cpu->{register} = cpu->data8[0];
                         return {InstructionStatus.Done};
                     }}
                     """
                 ),
             ),
         )
+    
+    generate_inner(0x1c, "ASL", Register.A)
 
-    generate_inner(0x1C, "ASL", Register.A)
+    generate_inner(0x9c, "DEC", Register.A)
+    generate_inner(0x1d, "DEC", Register.X)
+    generate_inner(0xdc, "DEC", Register.Y)
 
-    generate_inner(0x9C, "DEC", Register.A)
-    generate_inner(0x1D, "DEC", Register.X)
-    generate_inner(0xDC, "DEC", Register.Y)
+    generate_inner(0xbc, "INC", Register.A)
+    generate_inner(0x3d, "INC", Register.X)
+    generate_inner(0xfc, "INC", Register.Y)
 
-    generate_inner(0xBC, "INC", Register.A)
-    generate_inner(0x3D, "INC", Register.X)
-    generate_inner(0xFC, "INC", Register.Y)
+    generate_inner(0x5c, "LSR", Register.A)
+    generate_inner(0x3c, "ROL", Register.A)
+    generate_inner(0x7c, "ROR", Register.A)
 
-    generate_inner(0x5C, "LSR", Register.A)
-    generate_inner(0x3C, "ROL", Register.A)
-    generate_inner(0x7C, "ROR", Register.A)
 
 
 class PswInstruction(Instruction):
@@ -3602,7 +3604,6 @@ generate_not1()
 DirectIndexed.register_instructions()
 Absolute.register_instructions()
 generate_register_alu_implied()
-
 
 def print_opcode_matrix():
     # ANSI Color Codes
