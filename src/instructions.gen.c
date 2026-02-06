@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.5886 */
+/* generated from generate_instructions.py: l.5890 */
 
 #include "instructions.gen.h"
 
@@ -9199,6 +9199,8 @@ enum InstructionStatus daa(struct SPC_State state[static 1], uint32_t cycle)
 enum InstructionStatus sleep_(struct SPC_State state[static 1], uint32_t cycle)
 {
     /* generated from generate_instructions.py: l.5767 */
+    (void)state;
+    (void)cycle;
     TRACE_TRAP();
     return INSTRUCTION_STATUS_DONE;
 }
@@ -9206,7 +9208,9 @@ enum InstructionStatus sleep_(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xff     STOP */
 enum InstructionStatus stop(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5785 */
+    /* generated from generate_instructions.py: l.5787 */
+    (void)state;
+    (void)cycle;
     TRACE_TRAP();
     return INSTRUCTION_STATUS_DONE;
 }
