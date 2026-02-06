@@ -3878,6 +3878,14 @@ def generate_bbc_bbs():
 
     BBC branches if bit == 0
     BBS branches if bit == 1
+
+    actually we side with Near who does
+    1 fetch (opcode)
+    2 fetch (DO)
+    3 load  (data)
+    4 wait
+    5 fetch (r)
+    6, 7 wait
     """
 
     def gen_inner(opcode, mnemonic, bit, branch_if_set):
@@ -3914,10 +3922,10 @@ def generate_bbc_bbs():
                                 cpu->data8[0] = bus_read(state, cpu->addr);
                                 return {InstructionStatus.Pending};
                             case 4:
-                                cpu->operands[1] = bus_read(state, cpu->pc++);
+                                {true_idle()}
                                 return {InstructionStatus.Pending};
                             case 5:
-                                {true_idle()}
+                                cpu->operands[1] = bus_read(state, cpu->pc++);
                                 cpu->branch_taken = {cond};
                                 return {ret};
                             case 6:
@@ -4259,6 +4267,10 @@ def generate_cbne():
          [7]      ??      IO              ?
        * Cycles 6 and 7 only present if branch is taken
 
+
+    ^^^ Near swaps the fetch at 4 and wait at 5
+    and so do we
+
     31c CBNE d+X, r -- Test-and-Branch Direct Indexed
     (3 bytes, 6 or 8 cycles)
           1       PC      Op Code         1
@@ -4298,10 +4310,10 @@ def generate_cbne():
                             cpu->data8[0] = bus_read(state, cpu->addr);
                             return {InstructionStatus.Pending};
                         case 4:
-                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            {true_idle()}
                             return {InstructionStatus.Pending};
                         case 5:
-                            {true_idle()}
+                            cpu->operands[1] = bus_read(state, cpu->pc++);
                             cpu->branch_taken = (cpu->a != cpu->data8[0]);
                             return {ret};
                         case 6:
