@@ -195,6 +195,9 @@ def main():
         generate_test_suite(msb + "9")
         generate_test_suite(msb + "b")
 
+    for opcode in ["0c", "2c", "4c", "6c", "8c", "ac"]:
+        generate_test_suite(opcode)
+
 
 if __name__ == "__main__":
     main()

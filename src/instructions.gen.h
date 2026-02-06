@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3491 */
+/* generated from generate_instructions.py: l.3599 */
 #pragma once
 
 #include <stdbool.h>
@@ -322,6 +322,18 @@ extern enum InstructionStatus mov_register_direct_y(struct SPC_State state[stati
 /* 0xfb     MOV   Y, d+X */
 extern enum InstructionStatus mov_register_direct_indexed_y_x(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0x0c     ASL   !a */
+extern enum InstructionStatus asl_absolute(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x2c     ROL   !a */
+extern enum InstructionStatus rol_absolute(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x4c     LSR   !a */
+extern enum InstructionStatus lsr_absolute(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x6c     ROR   !a */
+extern enum InstructionStatus ror_absolute(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x8c     DEC   !a */
+extern enum InstructionStatus dec_absolute(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xac     INC   !a */
+extern enum InstructionStatus inc_absolute(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xcc     MOV   !a, y */
 extern enum InstructionStatus mov_absolute_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xec     MOV   Y, !a */

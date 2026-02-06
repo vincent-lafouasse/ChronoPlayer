@@ -3183,6 +3183,113 @@ class DirectIndexed(AddressingMode):
         )
 
 
+class Absolute(AddressingMode):
+    """
+    22 Absolute (RMW) -- !a
+     (ASL,DEC,INC,LSR,ROL,ROR,TCLR1,TSET1)
+     (3 bytes)
+     (5 or 6 cycles)
+           1       PC      Op Code         1
+           2       PC+1    AAL             1
+           3       PC+2    AAH             1
+          [4]      AA      Data (read)     1
+           5       AA      Data (read)     1
+           6       AA      Data (write)    1
+       * Verified by blargg.
+       * 2 and 3 could be swapped, but that would be odd.
+       * Cycle 4 only for TSET1 and TCLR1.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.cycles = 5
+
+    def name(self, mnemonic):
+        if mnemonic in ["TSET1", "TCLR1"]:
+            raise ValueError(f"{mnemonic} must be done separately")
+        return f"{mnemonic.lower()}_absolute"
+
+    def render(self, mnemonic, payload):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration(mnemonic)}
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                switch (cycle) {{
+                    case 2:
+                        // AAL
+                        cpu->operands[0] = bus_read(state, cpu->pc++);
+                        return {InstructionStatus.Pending};
+                    case 3:
+                        // AAH
+                        cpu->operands[1] = bus_read(state, cpu->pc++);
+                        cpu->addr = u16_read_little_endian(cpu->operands);
+                        return {InstructionStatus.Pending};
+                    case 4:
+                        // RMW read
+                        cpu->data8[0] = bus_read(state, cpu->addr);
+                        return {InstructionStatus.Pending};
+                    case 5: {{
+                        // RMW modify
+            """
+        )
+
+        footer = inspect.cleandoc(
+            f"""
+                        // RMW write
+                        {write_to_addr("cpu->data8[0]")}
+                        return {InstructionStatus.Done};
+                    }}
+                    default:
+                        UNREACHABLE();
+                }}
+            }}
+            """
+        )
+
+        return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @classmethod
+    def register(cls, opcode, mnemonic):
+        if mnemonic == "ASL":
+            payload = do_asl()
+        elif mnemonic == "DEC":
+            payload = do_dec()
+        elif mnemonic == "INC":
+            payload = do_inc()
+        elif mnemonic == "LSR":
+            payload = do_lsr()
+        elif mnemonic == "ROR":
+            payload = do_ror()
+        elif mnemonic == "ROL":
+            payload = do_rol()
+        else:
+            raise ValueError(f"Unrecognised mnemonic for class {cls}: {mnemonic}")
+
+        add_instruction(
+            opcode,
+            TemplateInstruction(
+                mnemonic,
+                mnemonic + "   !a",
+                cls(),
+                payload,
+            ),
+        )
+
+    @classmethod
+    def register_instructions(cls):
+        cls.register(0x0C, "ASL")
+        cls.register(0x8C, "DEC")
+        cls.register(0xAC, "INC")
+        cls.register(0x4C, "LSR")
+        cls.register(0x2C, "ROL")
+        cls.register(0x6C, "ROR")
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -3430,6 +3537,7 @@ IndirectIndirect.register_instructions()
 Direct.register_instructions()
 generate_not1()
 DirectIndexed.register_instructions()
+Absolute.register_instructions()
 
 
 def print_opcode_matrix():

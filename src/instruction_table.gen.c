@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3550 */
+/* generated from generate_instructions.py: l.3658 */
 
 #include "instructions.gen.h"
 
@@ -75,7 +75,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x0c] = {0},
+    [0x0c] = {
+        .mnemonic = "ASL",
+        .full_mnemonic = "ASL   !a",
+        .handler = asl_absolute,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x0d] = {0},
     [0x0e] = {0},
     [0x0f] = {0},
@@ -227,7 +233,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x2c] = {0},
+    [0x2c] = {
+        .mnemonic = "ROL",
+        .full_mnemonic = "ROL   !a",
+        .handler = rol_absolute,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x2d] = {0},
     [0x2e] = {0},
     [0x2f] = {0},
@@ -379,7 +391,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x4c] = {0},
+    [0x4c] = {
+        .mnemonic = "LSR",
+        .full_mnemonic = "LSR   !a",
+        .handler = lsr_absolute,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x4d] = {0},
     [0x4e] = {0},
     [0x4f] = {0},
@@ -537,7 +555,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x6c] = {0},
+    [0x6c] = {
+        .mnemonic = "ROR",
+        .full_mnemonic = "ROR   !a",
+        .handler = ror_absolute,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x6d] = {0},
     [0x6e] = {0},
     [0x6f] = {0},
@@ -689,7 +713,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x8c] = {0},
+    [0x8c] = {
+        .mnemonic = "DEC",
+        .full_mnemonic = "DEC   !a",
+        .handler = dec_absolute,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x8d] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   Y, #i",
@@ -847,7 +877,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xac] = {0},
+    [0xac] = {
+        .mnemonic = "INC",
+        .full_mnemonic = "INC   !a",
+        .handler = inc_absolute,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xad] = {
         .mnemonic = "CMP",
         .full_mnemonic = "CMP   Y, #i",
