@@ -3060,6 +3060,42 @@ def generate_not1():
     )
 
 
+def generate_notc():
+    """
+    Implied addressing mode
+    """
+    add_instruction(
+        0xED,
+        HardcodedInstruction(
+            mnemonic="NOTC",
+            _full_mnemonic=f"NOTC",
+            function_name=f"notc",
+            body=inspect.cleandoc(
+                f"""
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                if (cycle < 2 || cycle > 3) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                switch (cycle) {{
+                    case 2:
+                        {dummy_read_pc()}
+                        return {InstructionStatus.Pending};
+                    case 3:
+                        {true_idle()}
+                        psw_write_carry(cpu, !psw_carry(cpu));
+                        return {InstructionStatus.Done};
+                    default:
+                        UNREACHABLE();
+                }}
+            }}
+            """
+            ),
+        ),
+    )
+
+
 class DirectIndexed(AddressingMode):
     """
     21 Direct Indexed (RMW) -- d+X
@@ -3698,6 +3734,7 @@ DirectIndexed.register_instructions()
 Absolute.register_instructions()
 generate_register_alu_implied()
 generate_stack_operations()
+generate_notc()
 
 def print_opcode_matrix():
     # ANSI Color Codes

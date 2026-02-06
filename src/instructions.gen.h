@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3758 */
+/* generated from generate_instructions.py: l.3795 */
 #pragma once
 
 #include <stdbool.h>
@@ -383,6 +383,8 @@ extern enum InstructionStatus mov_reg_reg_sp_x(struct SPC_State state[static 1],
 extern enum InstructionStatus mov_register_immediate_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xdd     MOV   A, Y */
 extern enum InstructionStatus mov_reg_reg_a_y(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xed     NOTC */
+extern enum InstructionStatus notc(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xfd     MOV   Y, A */
 extern enum InstructionStatus mov_reg_reg_y_a(struct SPC_State state[static 1], uint32_t cycle);
 

@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3817 */
+/* generated from generate_instructions.py: l.3854 */
 
 #include "instructions.gen.h"
 
@@ -1320,7 +1320,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xed] = {0},
+    [0xed] = {
+        .mnemonic = "NOTC",
+        .full_mnemonic = "NOTC",
+        .handler = notc,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xee] = {
         .mnemonic = "POP",
         .full_mnemonic = "POP   Y",
