@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3905 */
+/* generated from generate_instructions.py: l.4004 */
 #pragma once
 
 #include <stdbool.h>
@@ -105,6 +105,38 @@ extern enum InstructionStatus set1_7_direct(struct SPC_State state[static 1], ui
 /* 0xf2     CLR1  d */
 extern enum InstructionStatus clr1_7_direct(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0x03     BBS d.0, r */
+extern enum InstructionStatus bbs_0(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x13     BBC d.0, r */
+extern enum InstructionStatus bbc_0(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x23     BBS d.1, r */
+extern enum InstructionStatus bbs_1(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x33     BBC d.1, r */
+extern enum InstructionStatus bbc_1(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x43     BBS d.2, r */
+extern enum InstructionStatus bbs_2(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x53     BBC d.2, r */
+extern enum InstructionStatus bbc_2(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x63     BBS d.3, r */
+extern enum InstructionStatus bbs_3(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x73     BBC d.3, r */
+extern enum InstructionStatus bbc_3(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x83     BBS d.4, r */
+extern enum InstructionStatus bbs_4(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x93     BBC d.4, r */
+extern enum InstructionStatus bbc_4(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xa3     BBS d.5, r */
+extern enum InstructionStatus bbs_5(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xb3     BBC d.5, r */
+extern enum InstructionStatus bbc_5(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xc3     BBS d.6, r */
+extern enum InstructionStatus bbs_6(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xd3     BBC d.6, r */
+extern enum InstructionStatus bbc_6(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xe3     BBS d.7, r */
+extern enum InstructionStatus bbs_7(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xf3     BBC d.7, r */
+extern enum InstructionStatus bbc_7(struct SPC_State state[static 1], uint32_t cycle);
 
 /* 0x04     OR    A, d */
 extern enum InstructionStatus or_register_direct_a(struct SPC_State state[static 1], uint32_t cycle);

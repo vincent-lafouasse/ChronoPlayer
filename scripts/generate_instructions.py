@@ -3846,6 +3846,105 @@ generate_ei_di()
 generate_psw_branches()
 
 
+def generate_bbc_bbs():
+    """
+    31b Test-and-Branch Direct -- d.b, r
+    (BBC, BBS)
+    (3 bytes)
+    (5 or 7 cycles)
+          1       PC      Op Code         1
+          2       PC+1    DO              1
+          3       DO      Data            1
+          4       PC+2    R               1
+          5       ??      IO              ?
+         [6]      ??      IO              ?
+         [7]      ??      IO              ?
+       * Cycles 6 and 7 only present if branch is taken
+
+    BBC branches if bit == 0
+    BBS branches if bit == 1
+    """
+
+    def gen_inner(opcode, mnemonic, bit, branch_if_set):
+        test = f"cpu->data8[0] & (1 << {bit})"
+        if branch_if_set:
+            cond = test
+        else:
+            cond = f"!({test})"
+
+        full_mn = f"{mnemonic} d.{bit}, r"
+        fname = f"{mnemonic.lower()}_{bit}"
+        ret = f"cpu->branch_taken ? {InstructionStatus.Pending} : {InstructionStatus.Done}"
+
+        add_instruction(
+            opcode,
+            HardcodedInstruction(
+                mnemonic=mnemonic,
+                _full_mnemonic=full_mn,
+                function_name=fname,
+                body=inspect.cleandoc(
+                    f"""
+                    {{
+                        {trace_source()}
+                        struct CPU_State* const cpu = &state->cpu;
+
+                        if (cycle < 2 || cycle > 7) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                        switch (cycle) {{
+                            case 2:
+                                cpu->operands[0] = bus_read(state, cpu->pc++);
+                                return {InstructionStatus.Pending};
+                            case 3:
+                                cpu->addr = direct_page(cpu, cpu->operands[0]);
+                                cpu->data8[0] = bus_read(state, cpu->addr);
+                                return {InstructionStatus.Pending};
+                            case 4:
+                                cpu->operands[1] = bus_read(state, cpu->pc++);
+                                return {InstructionStatus.Pending};
+                            case 5:
+                                {true_idle()}
+                                cpu->branch_taken = {cond};
+                                return {ret};
+                            case 6:
+                                {true_idle()}
+                                return {ret};
+                            case 7:
+                                {true_idle()}
+                                cpu->pc += (int8_t)cpu->operands[1];
+                                return {InstructionStatus.Done};
+                            default:
+                                UNREACHABLE();
+                        }}
+                    }}
+                    """
+                ),
+            ),
+        )
+
+    # BBS d.n, r  -- branch if bit n is set
+    gen_inner(0x03, "BBS", 0, True)
+    gen_inner(0x23, "BBS", 1, True)
+    gen_inner(0x43, "BBS", 2, True)
+    gen_inner(0x63, "BBS", 3, True)
+    gen_inner(0x83, "BBS", 4, True)
+    gen_inner(0xA3, "BBS", 5, True)
+    gen_inner(0xC3, "BBS", 6, True)
+    gen_inner(0xE3, "BBS", 7, True)
+
+    # BBC d.n, r  -- branch if bit n is clear
+    gen_inner(0x13, "BBC", 0, False)
+    gen_inner(0x33, "BBC", 1, False)
+    gen_inner(0x53, "BBC", 2, False)
+    gen_inner(0x73, "BBC", 3, False)
+    gen_inner(0x93, "BBC", 4, False)
+    gen_inner(0xB3, "BBC", 5, False)
+    gen_inner(0xD3, "BBC", 6, False)
+    gen_inner(0xF3, "BBC", 7, False)
+
+
+generate_bbc_bbs()
+
+
 def print_opcode_matrix():
     # ANSI Color Codes
     GREEN = "\033[92m"

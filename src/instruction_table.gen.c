@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3964 */
+/* generated from generate_instructions.py: l.4063 */
 
 #include "instructions.gen.h"
 
@@ -24,7 +24,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x03] = {0},
+    [0x03] = {
+        .mnemonic = "BBS",
+        .full_mnemonic = "BBS d.0, r",
+        .handler = bbs_0,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x04] = {
         .mnemonic = "OR",
         .full_mnemonic = "OR    A, d",
@@ -112,7 +118,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x13] = {0},
+    [0x13] = {
+        .mnemonic = "BBC",
+        .full_mnemonic = "BBC d.0, r",
+        .handler = bbc_0,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x14] = {
         .mnemonic = "OR",
         .full_mnemonic = "OR    A, d+X",
@@ -206,7 +218,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x23] = {0},
+    [0x23] = {
+        .mnemonic = "BBS",
+        .full_mnemonic = "BBS d.1, r",
+        .handler = bbs_1,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x24] = {
         .mnemonic = "AND",
         .full_mnemonic = "AND   A, d",
@@ -300,7 +318,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x33] = {0},
+    [0x33] = {
+        .mnemonic = "BBC",
+        .full_mnemonic = "BBC d.1, r",
+        .handler = bbc_1,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x34] = {
         .mnemonic = "AND",
         .full_mnemonic = "AND   A, d+X",
@@ -394,7 +418,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x43] = {0},
+    [0x43] = {
+        .mnemonic = "BBS",
+        .full_mnemonic = "BBS d.2, r",
+        .handler = bbs_2,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x44] = {
         .mnemonic = "EOR",
         .full_mnemonic = "EOR   A, d",
@@ -482,7 +512,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x53] = {0},
+    [0x53] = {
+        .mnemonic = "BBC",
+        .full_mnemonic = "BBC d.2, r",
+        .handler = bbc_2,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x54] = {
         .mnemonic = "EOR",
         .full_mnemonic = "EOR   A, d+X",
@@ -576,7 +612,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x63] = {0},
+    [0x63] = {
+        .mnemonic = "BBS",
+        .full_mnemonic = "BBS d.3, r",
+        .handler = bbs_3,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x64] = {
         .mnemonic = "CMP",
         .full_mnemonic = "CMP   A, d",
@@ -664,7 +706,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x73] = {0},
+    [0x73] = {
+        .mnemonic = "BBC",
+        .full_mnemonic = "BBC d.3, r",
+        .handler = bbc_3,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x74] = {
         .mnemonic = "CMP",
         .full_mnemonic = "CMP   A, d+X",
@@ -752,7 +800,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x83] = {0},
+    [0x83] = {
+        .mnemonic = "BBS",
+        .full_mnemonic = "BBS d.4, r",
+        .handler = bbs_4,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x84] = {
         .mnemonic = "ADC",
         .full_mnemonic = "ADC   A, d",
@@ -852,7 +906,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x93] = {0},
+    [0x93] = {
+        .mnemonic = "BBC",
+        .full_mnemonic = "BBC d.4, r",
+        .handler = bbc_4,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x94] = {
         .mnemonic = "ADC",
         .full_mnemonic = "ADC   A, d+X",
@@ -940,7 +1000,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xa3] = {0},
+    [0xa3] = {
+        .mnemonic = "BBS",
+        .full_mnemonic = "BBS d.5, r",
+        .handler = bbs_5,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xa4] = {
         .mnemonic = "SBC",
         .full_mnemonic = "SBC   A, d",
@@ -1040,7 +1106,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xb3] = {0},
+    [0xb3] = {
+        .mnemonic = "BBC",
+        .full_mnemonic = "BBC d.5, r",
+        .handler = bbc_5,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xb4] = {
         .mnemonic = "SBC",
         .full_mnemonic = "SBC   A, d+X",
@@ -1134,7 +1206,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xc3] = {0},
+    [0xc3] = {
+        .mnemonic = "BBS",
+        .full_mnemonic = "BBS d.6, r",
+        .handler = bbs_6,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xc4] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   d, a",
@@ -1228,7 +1306,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xd3] = {0},
+    [0xd3] = {
+        .mnemonic = "BBC",
+        .full_mnemonic = "BBC d.6, r",
+        .handler = bbc_6,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xd4] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   d+x, a",
@@ -1316,7 +1400,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xe3] = {0},
+    [0xe3] = {
+        .mnemonic = "BBS",
+        .full_mnemonic = "BBS d.7, r",
+        .handler = bbs_7,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xe4] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   A, d",
@@ -1416,7 +1506,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xf3] = {0},
+    [0xf3] = {
+        .mnemonic = "BBC",
+        .full_mnemonic = "BBC d.7, r",
+        .handler = bbc_7,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xf4] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   A, d+X",
