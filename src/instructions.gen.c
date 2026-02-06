@@ -8507,7 +8507,7 @@ enum InstructionStatus pop_status(struct SPC_State state[static 1], uint32_t cyc
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
     switch (cycle) {
         case 2:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3:
             bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
@@ -8584,7 +8584,7 @@ enum InstructionStatus pop_a(struct SPC_State state[static 1], uint32_t cycle)
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
     switch (cycle) {
         case 2:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3:
             bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
@@ -8637,7 +8637,7 @@ enum InstructionStatus pop_x(struct SPC_State state[static 1], uint32_t cycle)
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
     switch (cycle) {
         case 2:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3:
             bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
@@ -8699,7 +8699,7 @@ enum InstructionStatus pop_y(struct SPC_State state[static 1], uint32_t cycle)
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
     switch (cycle) {
         case 2:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3:
             bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
