@@ -3290,6 +3290,69 @@ class Absolute(AddressingMode):
         cls.register(0x6C, "ROR")
 
 
+def generate_register_alu_implied():
+    def generate_inner(opcode, mnemonic, register):
+        if mnemonic == "ASL":
+            payload = do_asl()
+        elif mnemonic == "DEC":
+            payload = do_dec()
+        elif mnemonic == "INC":
+            payload = do_inc()
+        elif mnemonic == "LSR":
+            payload = do_lsr()
+        elif mnemonic == "ROR":
+            payload = do_ror()
+        elif mnemonic == "ROL":
+            payload = do_rol()
+        else:
+            raise ValueError(f"Unrecognised mnemonic for register ALU op: {mnemonic}")
+
+        # could do enumerate, do not care
+        for i in range(len(payload)):
+            if i != 0:
+                payload[i] = "    " + payload[i]
+
+        payload = "\n".join(payload)
+
+        add_instruction(
+            opcode,
+            HardcodedInstruction(
+                mnemonic=mnemonic,
+                _full_mnemonic=f"{mnemonic}   {register.upper()}",
+                function_name=f"{mnemonic.lower()}_{register}",
+                body=inspect.cleandoc(
+                    f"""
+                    {{
+                        {trace_source()}
+
+                        if (cycle != 2) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                    
+                        {dummy_read_pc()}
+                        cpu->data8[0] = cpu->{register};
+                        {payload}
+                        cpu->{register} = cpu->data8[0]
+                        return {InstructionStatus.Done};
+                    }}
+                    """
+                ),
+            ),
+        )
+
+    generate_inner(0x1C, "ASL", Register.A)
+
+    generate_inner(0x9C, "DEC", Register.A)
+    generate_inner(0x1D, "DEC", Register.X)
+    generate_inner(0xDC, "DEC", Register.Y)
+
+    generate_inner(0xBC, "INC", Register.A)
+    generate_inner(0x3D, "INC", Register.X)
+    generate_inner(0xFC, "INC", Register.Y)
+
+    generate_inner(0x5C, "LSR", Register.A)
+    generate_inner(0x3C, "ROL", Register.A)
+    generate_inner(0x7C, "ROR", Register.A)
+
+
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -3538,6 +3601,7 @@ Direct.register_instructions()
 generate_not1()
 DirectIndexed.register_instructions()
 Absolute.register_instructions()
+generate_register_alu_implied()
 
 
 def print_opcode_matrix():

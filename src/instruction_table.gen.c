@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3658 */
+/* generated from generate_instructions.py: l.3722 */
 
 #include "instructions.gen.h"
 
@@ -151,8 +151,20 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x1c] = {0},
-    [0x1d] = {0},
+    [0x1c] = {
+        .mnemonic = "ASL",
+        .full_mnemonic = "ASL   A",
+        .handler = asl_a,
+        .length = 0,
+        .cycles = 0,
+    },
+    [0x1d] = {
+        .mnemonic = "DEC",
+        .full_mnemonic = "DEC   X",
+        .handler = dec_x,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x1e] = {
         .mnemonic = "CMP",
         .full_mnemonic = "CMP   X, !a",
@@ -309,8 +321,20 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x3c] = {0},
-    [0x3d] = {0},
+    [0x3c] = {
+        .mnemonic = "ROL",
+        .full_mnemonic = "ROL   A",
+        .handler = rol_a,
+        .length = 0,
+        .cycles = 0,
+    },
+    [0x3d] = {
+        .mnemonic = "INC",
+        .full_mnemonic = "INC   X",
+        .handler = inc_x,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x3e] = {
         .mnemonic = "CMP",
         .full_mnemonic = "CMP   X, d",
@@ -467,7 +491,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x5c] = {0},
+    [0x5c] = {
+        .mnemonic = "LSR",
+        .full_mnemonic = "LSR   A",
+        .handler = lsr_a,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x5d] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   X, A",
@@ -631,7 +661,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x7c] = {0},
+    [0x7c] = {
+        .mnemonic = "ROR",
+        .full_mnemonic = "ROR   A",
+        .handler = ror_a,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x7d] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   A, X",
@@ -801,7 +837,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x9c] = {0},
+    [0x9c] = {
+        .mnemonic = "DEC",
+        .full_mnemonic = "DEC   A",
+        .handler = dec_a,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x9d] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   X, SP",
@@ -965,7 +1007,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xbc] = {0},
+    [0xbc] = {
+        .mnemonic = "INC",
+        .full_mnemonic = "INC   A",
+        .handler = inc_a,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xbd] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   SP, X",
@@ -1129,7 +1177,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xdc] = {0},
+    [0xdc] = {
+        .mnemonic = "DEC",
+        .full_mnemonic = "DEC   Y",
+        .handler = dec_y,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xdd] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   A, Y",
@@ -1299,7 +1353,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xfc] = {0},
+    [0xfc] = {
+        .mnemonic = "INC",
+        .full_mnemonic = "INC   Y",
+        .handler = inc_y,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xfd] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   Y, A",
