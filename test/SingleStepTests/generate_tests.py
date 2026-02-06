@@ -186,20 +186,8 @@ def generate_column(lsb):
 
 
 def main():
-    for opcode in ["00", "20", "40", "60", "80", "e0"]:
-        generate_test_suite(opcode)
-
-    generate_column("1")
-    generate_column("2")
-    generate_column("4")
-    generate_column("5")
-    generate_column("6")
-    generate_column("7")
-    generate_column("8")
-    generate_column("9")
-    generate_column("b")
-    generate_column("c")
-    generate_column("d")
+    for lsb in "0123456789abcdef":
+        generate_column(lsb)
 
 
 if __name__ == "__main__":
