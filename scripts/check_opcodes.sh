@@ -14,6 +14,16 @@ PASS=0
 FAIL=0
 SKIP=0
 
+# ANSI colors (disabled if not a terminal)
+if [ -t 1 ]; then
+    RED='\033[0;31m'
+    GRN='\033[0;32m'
+    YLW='\033[0;33m'
+    RST='\033[0m'
+else
+    RED='' GRN='' YLW='' RST=''
+fi
+
 # Build a flat lookup file from anomie's reference
 # Each line: "hex_opcode MNEMONIC bytes cycles_raw"
 TMPREF=$(mktemp)
@@ -57,7 +67,7 @@ emit_check() {
     local op_bare="${op#0x}"
 
     if ! lookup_ref "$op_bare"; then
-        printf "SKIP  %s  %-6s (not in anomie reference)\n" "$op" "$mn"
+        printf "${YLW}SKIP  %s  %-6s (not in anomie reference)${RST}\n" "$op" "$mn"
         SKIP=$((SKIP + 1))
         return
     fi
@@ -73,10 +83,10 @@ emit_check() {
             errors="$errors  length: got=$len ref=$ref_bytes"
         fi
         if [ -n "$errors" ]; then
-            printf "FAIL  %s  %-6s%s\n" "$op" "$mn" "$errors"
+            printf "${RED}FAIL  %s  %-6s%s${RST}\n" "$op" "$mn" "$errors"
             FAIL=$((FAIL + 1))
         else
-            printf "OK    %s  %-6s (SLEEP/STOP, cycles=? skipped)\n" "$op" "$mn"
+            printf "${GRN}OK    %s  %-6s (SLEEP/STOP, cycles=? skipped)${RST}\n" "$op" "$mn"
             PASS=$((PASS + 1))
         fi
         return
@@ -111,15 +121,18 @@ emit_check() {
     fi
 
     if [ -n "$errors" ]; then
-        printf "FAIL  %s  %-6s%s\n" "$op" "$mn" "$errors"
+        printf "${RED}FAIL  %s  %-6s%s${RST}\n" "$op" "$mn" "$errors"
         FAIL=$((FAIL + 1))
     else
-        printf "OK    %s  %-6s len=%s cyc=%s\n" "$op" "$mn" "$len" "$cyc"
+        printf "${GRN}OK    %s  %-6s len=%s cyc=%s${RST}\n" "$op" "$mn" "$len" "$cyc"
         PASS=$((PASS + 1))
     fi
 }
 
-# Parse instruction_table.gen.c
+# Parse instruction_table.gen.c, collect results with sort key
+TMPOUT=$(mktemp)
+trap 'rm -f "$TMPREF" "$TMPOUT"' EXIT
+
 current_opcode=""
 current_mnemonic=""
 current_length=""
@@ -136,7 +149,12 @@ while IFS= read -r line; do
         current_cycles="${BASH_REMATCH[1]}"
         # cycles is the last field, emit check
         if [ -n "$current_opcode" ]; then
-            emit_check "$current_opcode" "$current_mnemonic" "$current_length" "$current_cycles"
+            # extract hex nibbles for sort key: LSB first, then MSB
+            local_hex="${current_opcode#0x}"
+            msb="${local_hex%?}"
+            lsb="${local_hex#?}"
+            emit_check "$current_opcode" "$current_mnemonic" "$current_length" "$current_cycles" \
+                | while IFS= read -r result; do echo "${lsb}${msb} ${result}"; done >> "$TMPOUT"
         fi
         current_opcode=""
         current_mnemonic=""
@@ -145,7 +163,10 @@ while IFS= read -r line; do
     fi
 done < "$TABLE"
 
+# Output sorted by LSB (column-major), then MSB within each column
+sort "$TMPOUT" | cut -d' ' -f2-
+
 echo ""
 echo "--- Summary ---"
-echo "PASS: $PASS  FAIL: $FAIL  SKIP: $SKIP"
+printf "${GRN}PASS: %d${RST}  ${RED}FAIL: %d${RST}  ${YLW}SKIP: %d${RST}\n" "$PASS" "$FAIL" "$SKIP"
 exit $((FAIL > 0 ? 1 : 0))
