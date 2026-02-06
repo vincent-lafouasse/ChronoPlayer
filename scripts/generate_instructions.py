@@ -1242,8 +1242,7 @@ def generate_register_indirect_incremented():
 
                     switch (cycle) {{
                         case 2:
-                            /* internal operation - dummy read from last latched addr */
-                            {idle_cycle()}
+                            {dummy_read_pc()}
                             return {InstructionStatus.Pending};
                         case 3:
                             cpu->addr = direct_page(cpu, cpu->x);
@@ -1254,8 +1253,7 @@ def generate_register_indirect_incremented():
                             /* we could increment X now but let's do it cycle 4 bc why not */
                             return {InstructionStatus.Pending};
                         case 4:
-                            /* internal operation - dummy read from last latched addr */
-                            {idle_cycle()}
+                            {true_idle()}
                             cpu->x += 1;
                             return {InstructionStatus.Done};
                         default:
