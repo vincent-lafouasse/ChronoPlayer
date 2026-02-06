@@ -7046,7 +7046,7 @@ enum InstructionStatus pop_status(struct SPC_State state[static 1], uint32_t cyc
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             cpu->addr = ++(cpu->sp);
-            cpu->status = bus_write(state, cpu->addr);
+            cpu->status = bus_read(state, cpu->addr);
             return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();
@@ -7069,7 +7069,7 @@ enum InstructionStatus pop_a(struct SPC_State state[static 1], uint32_t cycle)
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             cpu->addr = ++(cpu->sp);
-            cpu->a = bus_write(state, cpu->addr);
+            cpu->a = bus_read(state, cpu->addr);
             return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();
@@ -7092,7 +7092,7 @@ enum InstructionStatus pop_x(struct SPC_State state[static 1], uint32_t cycle)
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             cpu->addr = ++(cpu->sp);
-            cpu->x = bus_write(state, cpu->addr);
+            cpu->x = bus_read(state, cpu->addr);
             return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();
@@ -7115,7 +7115,7 @@ enum InstructionStatus pop_y(struct SPC_State state[static 1], uint32_t cycle)
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             cpu->addr = ++(cpu->sp);
-            cpu->y = bus_write(state, cpu->addr);
+            cpu->y = bus_read(state, cpu->addr);
             return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();

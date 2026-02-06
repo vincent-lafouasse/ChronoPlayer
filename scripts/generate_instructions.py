@@ -3424,7 +3424,7 @@ def generate_stack_operations():
                                 return {InstructionStatus.Pending};
                             case 4:
                                 cpu->addr = ++(cpu->sp);
-                                cpu->{dest} = bus_write(state, cpu->addr);
+                                cpu->{dest} = bus_read(state, cpu->addr);
                                 return {InstructionStatus.Done};
                             default:
                                 UNREACHABLE();
