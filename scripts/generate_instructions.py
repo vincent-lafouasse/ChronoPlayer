@@ -3386,7 +3386,8 @@ def generate_stack_operations():
                                 {dummy_read_pc()}
                                 return {InstructionStatus.Pending};
                             case 3:
-                                cpu->addr = 0x100 | cpu->sp--;
+                                cpu->data8[0] = cpu->sp--;
+                                cpu->addr = 0x100 | cpu->data8[0];
                                 bus_write(state, cpu->addr, cpu->{src});
                                 return {InstructionStatus.Pending};
                             case 4:
@@ -3423,7 +3424,8 @@ def generate_stack_operations():
                                 {true_idle()}
                                 return {InstructionStatus.Pending};
                             case 4:
-                                cpu->addr = 0x100 | ++(cpu->sp);
+                                cpu->data8[0] = ++(cpu->sp);
+                                cpu->addr = 0x100 | cpu->data8[0];
                                 cpu->{dest} = bus_read(state, cpu->addr);
                                 return {InstructionStatus.Done};
                             default:
