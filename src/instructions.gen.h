@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3407 */
+/* generated from generate_instructions.py: l.3492 */
 #pragma once
 
 #include <stdbool.h>
@@ -112,6 +112,8 @@ extern enum InstructionStatus sbc_register_direct_a(struct SPC_State state[stati
 extern enum InstructionStatus sbc_register_direct_indexed_a_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xc4     MOV   d, a */
 extern enum InstructionStatus mov_direct_register_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xd4     MOV   d+x, a */
+extern enum InstructionStatus mov_direct_indexed_register_x_a(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe4     MOV   A, d */
 extern enum InstructionStatus mov_register_direct_a(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xf4     MOV   A, d+X */
@@ -275,6 +277,8 @@ extern enum InstructionStatus sbc_direct_direct(struct SPC_State state[static 1]
 extern enum InstructionStatus sbc_indirect_indirect(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xc9     MOV   !a, x */
 extern enum InstructionStatus mov_absolute_x(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xd9     MOV   d+y, x */
+extern enum InstructionStatus mov_direct_indexed_register_y_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe9     MOV   X, !a */
 extern enum InstructionStatus mov_register_absolute_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xf9     MOV   X, d+Y */
@@ -311,6 +315,8 @@ extern enum InstructionStatus inc_direct(struct SPC_State state[static 1], uint3
 extern enum InstructionStatus inc_direct_indexed(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xcb     MOV   d, y */
 extern enum InstructionStatus mov_direct_register_y(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xdb     MOV   d+x, y */
+extern enum InstructionStatus mov_direct_indexed_register_x_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xeb     MOV   Y, d */
 extern enum InstructionStatus mov_register_direct_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xfb     MOV   Y, d+X */

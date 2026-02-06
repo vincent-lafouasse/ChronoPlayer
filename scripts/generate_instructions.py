@@ -2124,6 +2124,90 @@ class DirectRegister(AddressingMode):
         )
 
 
+class DirectIndexedRegister(AddressingMode):
+    """
+    12 Direct Indexed, Register -- d+X,A; d+X,Y; d+Y,X
+     (MOV,MOV,MOV)
+     (2 bytes)
+     (5 cycles)
+           1       PC      Op Code         1
+           2       PC+1    DO              1
+           3       ??      IO              1
+           4       DO+X/Y  Data (read)     1
+           5       DO+X/Y  Data (write)    0
+       * Verified by blargg. 2 and 3 could be swapped, but that's unlikely.
+       * Yes, RMW even for MOV
+    """
+
+    def __init__(self, dest, src):
+        super().__init__()
+        self.cycles = 5
+        self.len = 2
+        self.dest = dest
+        self.src = src
+
+    def name(self, mnemonic):
+        return f"{mnemonic.lower()}_direct_indexed_register_{self.dest}_{self.src}"
+
+    def render(self, mnemonic, payload):
+        header = inspect.cleandoc(
+            f"""
+            {self.declaration(mnemonic)}
+            {{
+                {trace_source()}
+                struct CPU_State* const cpu = &state->cpu;
+
+                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                switch (cycle) {{
+                    case 2:
+                        {read_pc_to("cpu->operands[0]")}
+                        cpu->addr = direct_page(cpu, cpu->operands[0] + cpu->{self.dest});
+                        return {InstructionStatus.Pending};
+                    case 3:
+                        {true_idle()}
+                        return {InstructionStatus.Pending};
+                    case 4:
+                        // "useless" read in RMW mov
+                        (void)bus_read(state, cpu->addr);
+                        cpu->data8[0] = cpu->{self.src}; // what we actually want to store
+                        return {InstructionStatus.Pending};
+                    case 5: {{
+            """
+        )
+
+        footer = inspect.cleandoc(
+            f"""
+                        return {InstructionStatus.Done};
+                    }}
+                    default:
+                        UNREACHABLE();
+                }}
+            }}
+            """
+        )
+
+        return assemble_instruction(header, payload, footer, indent_depth=3)
+
+    @classmethod
+    def register(cls, opcode, dest, src):
+        add_instruction(
+            opcode,
+            TemplateInstruction(
+                "MOV",
+                f"MOV   d+{dest}, {src}",
+                cls(dest, src),
+                [trace_source()] + store(),
+            ),
+        )
+
+    @classmethod
+    def register_instructions(cls):
+        cls.register(opcode=0xD4, dest=Register.X, src=Register.A)
+        cls.register(opcode=0xDB, dest=Register.X, src=Register.Y)
+        cls.register(opcode=0xD9, dest=Register.Y, src=Register.X)
+
+
 def generate_Anomie_13():
     """
     13a Indirect, Register -- (X),A
@@ -3336,6 +3420,7 @@ RegisterAbsolute.register_instructions()
 RegisterAbsoluteIndexed.register_instructions()
 DirectImmediateMode.register_instructions()
 DirectRegister.register_instructions()
+DirectIndexedRegister.register_instructions()
 generate_Anomie_13()
 generate_indexed_indirect_register()
 generate_indirect_indexed_register()

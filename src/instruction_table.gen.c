@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3466 */
+/* generated from generate_instructions.py: l.3551 */
 
 #include "instructions.gen.h"
 
@@ -1043,7 +1043,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .cycles = 0,
     },
     [0xd3] = {0},
-    [0xd4] = {0},
+    [0xd4] = {
+        .mnemonic = "MOV",
+        .full_mnemonic = "MOV   d+x, a",
+        .handler = mov_direct_indexed_register_x_a,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xd5] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   !a+x, A",
@@ -1072,9 +1078,21 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xd9] = {0},
+    [0xd9] = {
+        .mnemonic = "MOV",
+        .full_mnemonic = "MOV   d+y, x",
+        .handler = mov_direct_indexed_register_y_x,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xda] = {0},
-    [0xdb] = {0},
+    [0xdb] = {
+        .mnemonic = "MOV",
+        .full_mnemonic = "MOV   d+x, y",
+        .handler = mov_direct_indexed_register_x_y,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xdc] = {0},
     [0xdd] = {
         .mnemonic = "MOV",
