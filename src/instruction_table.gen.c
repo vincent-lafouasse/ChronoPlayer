@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.4406 */
+/* generated from generate_instructions.py: l.4692 */
 
 #include "instructions.gen.h"
 
@@ -1001,8 +1001,20 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x9e] = {0},
-    [0x9f] = {0},
+    [0x9e] = {
+        .mnemonic = "DIV",
+        .full_mnemonic = "DIV YA, X",
+        .handler = div_ya_x,
+        .length = 0,
+        .cycles = 0,
+    },
+    [0x9f] = {
+        .mnemonic = "XCN",
+        .full_mnemonic = "XCN A",
+        .handler = xcn,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xa0] = {
         .mnemonic = "EI",
         .full_mnemonic = "EI",
@@ -1201,7 +1213,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xbe] = {0},
+    [0xbe] = {
+        .mnemonic = "DAS",
+        .full_mnemonic = "DAS A",
+        .handler = das,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xbf] = {
         .mnemonic = "MOV",
         .full_mnemonic = "MOV   A, (X)+",
@@ -1308,7 +1326,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xcf] = {0},
+    [0xcf] = {
+        .mnemonic = "MUL",
+        .full_mnemonic = "MUL YA",
+        .handler = mul,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xd0] = {
         .mnemonic = "BNE",
         .full_mnemonic = "BNE",
@@ -1408,7 +1432,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xdf] = {0},
+    [0xdf] = {
+        .mnemonic = "DAA",
+        .full_mnemonic = "DAA A",
+        .handler = daa,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xe0] = {
         .mnemonic = "CLRV",
         .full_mnemonic = "CLRV",

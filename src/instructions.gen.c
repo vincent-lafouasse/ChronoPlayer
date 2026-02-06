@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.4375 */
+/* generated from generate_instructions.py: l.4661 */
 
 #include "instructions.gen.h"
 
@@ -7783,7 +7783,7 @@ enum InstructionStatus cmp_register_absolute_x(struct SPC_State state[static 1],
 /* 0x2e     CBNE d, r */
 enum InstructionStatus cbne_dp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.3986 */
+    /* generated from generate_instructions.py: l.4272 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 7) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -7903,7 +7903,7 @@ enum InstructionStatus cmp_register_absolute_y(struct SPC_State state[static 1],
 /* 0x6e     DBNZ d, r */
 enum InstructionStatus dbnz_dp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.4111 */
+    /* generated from generate_instructions.py: l.4397 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 7) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -7960,6 +7960,59 @@ enum InstructionStatus pop_status(struct SPC_State state[static 1], uint32_t cyc
     }
 }
 
+/* 0x9e     DIV YA, X */
+enum InstructionStatus div_ya_x(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.4176 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 12) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+
+    switch (cycle) {
+        case 2:
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 12:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            {
+                psw_write_half_carry(cpu, (cpu->x & 0x0f) <= (cpu->y & 0x0f));
+                uint32_t yva = ((uint32_t)cpu->y << 8) | cpu->a;
+                uint32_t x = (uint32_t)cpu->x << 9;
+                for (int i = 0; i < 9; i++) {
+                    yva <<= 1;
+                    if (yva & 0x20000) {
+                        yva = (yva & 0x1ffff) | 1;
+                    }
+                    if (yva >= x) {
+                        yva ^= 1;
+                    }
+                    if (yva & 1) {
+                        yva = (yva - x) & 0x1ffff;
+                    }
+                }
+                psw_write_overflow(cpu, yva & 0x100);
+                cpu->y = (uint8_t)(yva >> 9);
+                cpu->a = (uint8_t)(yva & 0xff);
+                psw_write_neg(cpu, cpu->a & 0x80);
+                psw_write_zero(cpu, cpu->a == 0);
+            }
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
 /* 0xae     POP   A */
 enum InstructionStatus pop_a(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -7978,6 +8031,35 @@ enum InstructionStatus pop_a(struct SPC_State state[static 1], uint32_t cycle)
             cpu->data8[0] = ++(cpu->sp);
             cpu->addr = 0x100 | cpu->data8[0];
             cpu->a = bus_read(state, cpu->addr);
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
+/* 0xbe     DAS A */
+enum InstructionStatus das(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.4007 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 3) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+
+    switch (cycle) {
+        case 2:
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            if (!psw_carry(cpu) || cpu->a > 0x99) {
+                cpu->a -= 0x60;
+                psw_write_carry(cpu, 0);
+            }
+            if (!psw_half_carry(cpu) || (cpu->a & 0x0f) > 0x09) {
+                cpu->a -= 0x06;
+            }
+            psw_write_neg(cpu, cpu->a & 0x80);
+            psw_write_zero(cpu, cpu->a == 0);
             return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();
@@ -8011,7 +8093,7 @@ enum InstructionStatus pop_x(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xde     CBNE d+X, r */
 enum InstructionStatus cbne_dp_x(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.4032 */
+    /* generated from generate_instructions.py: l.4318 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 8) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -8073,7 +8155,7 @@ enum InstructionStatus pop_y(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xfe     DBNZ Y, r */
 enum InstructionStatus dbnz_y(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.4158 */
+    /* generated from generate_instructions.py: l.4444 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -8106,7 +8188,7 @@ enum InstructionStatus dbnz_y(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x1f     JMP [!a+X] */
 enum InstructionStatus jmp_abs_x_indirect(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.4255 */
+    /* generated from generate_instructions.py: l.4541 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -8163,7 +8245,7 @@ enum InstructionStatus bra(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x5f     JMP !a */
 enum InstructionStatus jmp_abs(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.4223 */
+    /* generated from generate_instructions.py: l.4509 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 3) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -8211,6 +8293,35 @@ enum InstructionStatus mov_direct_immediate(struct SPC_State state[static 1], ui
             bus_write(state, cpu->addr, cpu->data8[1]);
             return INSTRUCTION_STATUS_DONE;
         }
+        default:
+            UNREACHABLE();
+    }
+}
+
+/* 0x9f     XCN A */
+enum InstructionStatus xcn(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.4058 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+
+    switch (cycle) {
+        case 2:
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 5:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            cpu->a = (cpu->a >> 4) | (cpu->a << 4);
+            psw_write_neg(cpu, cpu->a & 0x80);
+            psw_write_zero(cpu, cpu->a == 0);
+            return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();
     }
@@ -8267,6 +8378,70 @@ enum InstructionStatus mov_register_indirect_incremented(struct SPC_State state[
             /* internal operation - dummy read from last latched addr */
             (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
             cpu->x += 1;
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
+/* 0xcf     MUL YA */
+enum InstructionStatus mul(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.4108 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 9) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+
+    switch (cycle) {
+        case 2:
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 9:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            {
+                const uint16_t result = (uint16_t)cpu->y * (uint16_t)cpu->a;
+                cpu->a = (uint8_t)(result & 0xff);
+                cpu->y = (uint8_t)(result >> 8);
+                psw_write_neg(cpu, cpu->y & 0x80);
+                psw_write_zero(cpu, cpu->y == 0);
+            }
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
+/* 0xdf     DAA A */
+enum InstructionStatus daa(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.3967 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 3) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+
+    switch (cycle) {
+        case 2:
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            if (psw_carry(cpu) || cpu->a > 0x99) {
+                cpu->a += 0x60;
+                psw_write_carry(cpu, 1);
+            }
+            if (psw_half_carry(cpu) || (cpu->a & 0x0f) > 0x09) {
+                cpu->a += 0x06;
+            }
+            psw_write_neg(cpu, cpu->a & 0x80);
+            psw_write_zero(cpu, cpu->a == 0);
             return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();

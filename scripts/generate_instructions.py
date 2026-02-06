@@ -3945,6 +3945,292 @@ def generate_bbc_bbs():
 generate_bbc_bbs()
 
 
+def generate_daa_das():
+    """
+    25 Implied -- DAA, DAS
+    (1 byte, 3 cycles)
+    DAA and DAS depend on C and H: First, if A>0x99 or Carry, add/sub 0x60
+    and set Carry. Then if (A&0x0f)>9 or HalfCarry, add/sub 0x06
+    (but don't change HalfCarry).
+    """
+
+    # DAA A  (0xDF) -- decimal adjust for addition
+    add_instruction(
+        0xDF,
+        HardcodedInstruction(
+            mnemonic="DAA",
+            _full_mnemonic="DAA A",
+            function_name="daa",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 3) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {dummy_read_pc()}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {true_idle()}
+                            if (psw_carry(cpu) || cpu->a > 0x99) {{
+                                cpu->a += 0x60;
+                                psw_write_carry(cpu, 1);
+                            }}
+                            if (psw_half_carry(cpu) || (cpu->a & 0x0f) > 0x09) {{
+                                cpu->a += 0x06;
+                            }}
+                            psw_write_neg(cpu, cpu->a & 0x80);
+                            psw_write_zero(cpu, cpu->a == 0);
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # DAS A  (0xBE) -- decimal adjust for subtraction
+    add_instruction(
+        0xBE,
+        HardcodedInstruction(
+            mnemonic="DAS",
+            _full_mnemonic="DAS A",
+            function_name="das",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 3) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {dummy_read_pc()}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {true_idle()}
+                            if (!psw_carry(cpu) || cpu->a > 0x99) {{
+                                cpu->a -= 0x60;
+                                psw_write_carry(cpu, 0);
+                            }}
+                            if (!psw_half_carry(cpu) || (cpu->a & 0x0f) > 0x09) {{
+                                cpu->a -= 0x06;
+                            }}
+                            psw_write_neg(cpu, cpu->a & 0x80);
+                            psw_write_zero(cpu, cpu->a == 0);
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_daa_das()
+
+
+def generate_xcn():
+    """
+    25 Implied -- XCN
+    (1 byte, 5 cycles)
+    A = (A>>4) | (A<<4)   -- swap nybbles
+    Sets N, Z based on result.
+    """
+
+    add_instruction(
+        0x9F,
+        HardcodedInstruction(
+            mnemonic="XCN",
+            _full_mnemonic="XCN A",
+            function_name="xcn",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 5) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {dummy_read_pc()}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            {true_idle()}
+                            cpu->a = (cpu->a >> 4) | (cpu->a << 4);
+                            psw_write_neg(cpu, cpu->a & 0x80);
+                            psw_write_zero(cpu, cpu->a == 0);
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_xcn()
+
+
+def generate_mul():
+    """
+    25 Implied -- MUL YA
+    (1 byte, 9 cycles)
+    YA = Y * A.  N, Z set based on Y only.
+    """
+
+    add_instruction(
+        0xCF,
+        HardcodedInstruction(
+            mnemonic="MUL",
+            _full_mnemonic="MUL YA",
+            function_name="mul",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 9) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {dummy_read_pc()}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 9:
+                            {true_idle()}
+                            {{
+                                const uint16_t result = (uint16_t)cpu->y * (uint16_t)cpu->a;
+                                cpu->a = (uint8_t)(result & 0xff);
+                                cpu->y = (uint8_t)(result >> 8);
+                                psw_write_neg(cpu, cpu->y & 0x80);
+                                psw_write_zero(cpu, cpu->y == 0);
+                            }}
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_mul()
+
+
+def generate_div():
+    """
+    25 Implied -- DIV YA, X
+    (1 byte, 12 cycles)
+    A = YA / X, Y = YA mod X.
+    N, Z set on A. V set if quotient > 0xFF.
+    H set based on (X & 0xF) <= (Y & 0xF).
+
+    Algorithm from anomie:
+      uint17 yva=YA
+      uint17 x=X<<9
+      loop 9 times {{
+          ROL yva
+          if(yva>=x) yva=yva XOR 1
+          if(yva&1) yva-=x       // clip to 17 bits
+      }}
+      yva => Y, A, and V flag as YYYYYYYY V AAAAAAAA
+    """
+
+    add_instruction(
+        0x9E,
+        HardcodedInstruction(
+            mnemonic="DIV",
+            _full_mnemonic="DIV YA, X",
+            function_name="div_ya_x",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 12) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {dummy_read_pc()}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 12:
+                            {true_idle()}
+                            {{
+                                psw_write_half_carry(cpu, (cpu->x & 0x0f) <= (cpu->y & 0x0f));
+                                uint32_t yva = ((uint32_t)cpu->y << 8) | cpu->a;
+                                uint32_t x = (uint32_t)cpu->x << 9;
+                                for (int i = 0; i < 9; i++) {{
+                                    yva <<= 1;
+                                    if (yva & 0x20000) {{
+                                        yva = (yva & 0x1ffff) | 1;
+                                    }}
+                                    if (yva >= x) {{
+                                        yva ^= 1;
+                                    }}
+                                    if (yva & 1) {{
+                                        yva = (yva - x) & 0x1ffff;
+                                    }}
+                                }}
+                                psw_write_overflow(cpu, yva & 0x100);
+                                cpu->y = (uint8_t)(yva >> 9);
+                                cpu->a = (uint8_t)(yva & 0xff);
+                                psw_write_neg(cpu, cpu->a & 0x80);
+                                psw_write_zero(cpu, cpu->a == 0);
+                            }}
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_div()
+
+
 def generate_cbne():
     """
     31b CBNE d, r -- Test-and-Branch Direct

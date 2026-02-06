@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.4347 */
+/* generated from generate_instructions.py: l.4633 */
 #pragma once
 
 #include <stdbool.h>
@@ -452,8 +452,12 @@ extern enum InstructionStatus cmp_register_absolute_y(struct SPC_State state[sta
 extern enum InstructionStatus dbnz_dp(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x8e     POP   PSW */
 extern enum InstructionStatus pop_status(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x9e     DIV YA, X */
+extern enum InstructionStatus div_ya_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xae     POP   A */
 extern enum InstructionStatus pop_a(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xbe     DAS A */
+extern enum InstructionStatus das(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xce     POP   X */
 extern enum InstructionStatus pop_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xde     CBNE d+X, r */
@@ -471,8 +475,14 @@ extern enum InstructionStatus bra(struct SPC_State state[static 1], uint32_t cyc
 extern enum InstructionStatus jmp_abs(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x8f     MOV   d, #i */
 extern enum InstructionStatus mov_direct_immediate(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x9f     XCN A */
+extern enum InstructionStatus xcn(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xaf     MOV   (X)+, A */
 extern enum InstructionStatus mov_indirect_incremented_register(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xbf     MOV   A, (X)+ */
 extern enum InstructionStatus mov_register_indirect_incremented(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xcf     MUL YA */
+extern enum InstructionStatus mul(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xdf     DAA A */
+extern enum InstructionStatus daa(struct SPC_State state[static 1], uint32_t cycle);
 
