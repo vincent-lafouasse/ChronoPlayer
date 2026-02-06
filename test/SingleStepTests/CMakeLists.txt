@@ -54,7 +54,7 @@ endfunction()
 
 # -----------------
 
-foreach(opcode "00" "20" "40" "60" "80" "e0")
+foreach(opcode "00" "20" "40" "60" "80" "a0" "c0" "e0")
     register_test(${opcode})
 endforeach()
 

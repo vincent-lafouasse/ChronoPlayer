@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3795 */
+/* generated from generate_instructions.py: l.3839 */
 #pragma once
 
 #include <stdbool.h>
@@ -16,6 +16,10 @@ extern enum InstructionStatus setp(struct SPC_State state[static 1], uint32_t cy
 extern enum InstructionStatus clrc(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x80     SETC */
 extern enum InstructionStatus setc(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xa0     EI */
+extern enum InstructionStatus ei(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xc0     DI */
+extern enum InstructionStatus di(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xe0     CLRV */
 extern enum InstructionStatus clrv(struct SPC_State state[static 1], uint32_t cycle);
 

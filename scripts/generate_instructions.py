@@ -3096,6 +3096,48 @@ def generate_notc():
     )
 
 
+def generate_ei_di():
+    def generate_inner(opcode, mnemonic):
+        if mnemonic == "EI":
+            value = 1
+        elif mnemonic == "DI":
+            value = 0
+
+        add_instruction(
+            opcode,
+            HardcodedInstruction(
+                mnemonic=mnemonic,
+                _full_mnemonic=mnemonic,
+                function_name=mnemonic.lower(),
+                body=inspect.cleandoc(
+                    f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 3) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {dummy_read_pc()}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {true_idle()}
+                            psw_write_interrupt_enable(cpu, {value});
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+                ),
+            ),
+        )
+
+    generate_inner(0xA0, "EI")
+    generate_inner(0xC0, "DI")
+
+
 class DirectIndexed(AddressingMode):
     """
     21 Direct Indexed (RMW) -- d+X
@@ -3374,20 +3416,20 @@ def generate_register_alu_implied():
                 ),
             ),
         )
-    
-    generate_inner(0x1c, "ASL", Register.A)
 
-    generate_inner(0x9c, "DEC", Register.A)
-    generate_inner(0x1d, "DEC", Register.X)
-    generate_inner(0xdc, "DEC", Register.Y)
+    generate_inner(0x1C, "ASL", Register.A)
 
-    generate_inner(0xbc, "INC", Register.A)
-    generate_inner(0x3d, "INC", Register.X)
-    generate_inner(0xfc, "INC", Register.Y)
+    generate_inner(0x9C, "DEC", Register.A)
+    generate_inner(0x1D, "DEC", Register.X)
+    generate_inner(0xDC, "DEC", Register.Y)
 
-    generate_inner(0x5c, "LSR", Register.A)
-    generate_inner(0x3c, "ROL", Register.A)
-    generate_inner(0x7c, "ROR", Register.A)
+    generate_inner(0xBC, "INC", Register.A)
+    generate_inner(0x3D, "INC", Register.X)
+    generate_inner(0xFC, "INC", Register.Y)
+
+    generate_inner(0x5C, "LSR", Register.A)
+    generate_inner(0x3C, "ROL", Register.A)
+    generate_inner(0x7C, "ROR", Register.A)
 
 
 def generate_stack_operations():
@@ -3473,10 +3515,10 @@ def generate_stack_operations():
             ),
         )
 
-    generate_pop(0xae, Register.A)
-    generate_pop(0x8e, Register.PSW)
-    generate_pop(0xce, Register.X)
-    generate_pop(0xee, Register.Y)
+    generate_pop(0xAE, Register.A)
+    generate_pop(0x8E, Register.PSW)
+    generate_pop(0xCE, Register.X)
+    generate_pop(0xEE, Register.Y)
 
     generate_push(0x2D, Register.A)
     generate_push(0x0D, Register.PSW)
@@ -3735,6 +3777,8 @@ Absolute.register_instructions()
 generate_register_alu_implied()
 generate_stack_operations()
 generate_notc()
+generate_ei_di()
+
 
 def print_opcode_matrix():
     # ANSI Color Codes

@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.3854 */
+/* generated from generate_instructions.py: l.3898 */
 
 #include "instructions.gen.h"
 
@@ -883,7 +883,13 @@ const struct Instruction opcode_lookup_table[256] = {
     },
     [0x9e] = {0},
     [0x9f] = {0},
-    [0xa0] = {0},
+    [0xa0] = {
+        .mnemonic = "EI",
+        .full_mnemonic = "EI",
+        .handler = ei,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xa1] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 10",
@@ -1065,7 +1071,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xc0] = {0},
+    [0xc0] = {
+        .mnemonic = "DI",
+        .full_mnemonic = "DI",
+        .handler = di,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xc1] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 12",
