@@ -1,35 +1,69 @@
 #!/bin/bash
 
-MODE=$1
-OPCODE=$2
-OPCODE_LOWER=$(echo "$OPCODE" | tr '[:upper:]' '[:lower:]')
-OPCODE_UPPER=$(echo "$OPCODE" | tr '[:lower:]' '[:upper:]')
-
 usage() {
-    echo "Usage: $0 [--implem | --test | --fail] <opcode>"
+    echo "Usage: $0 [--implem | --test | --fail | -i | -t | -f] <opcode>"
+    echo "  Flags can be combined: -ti <opcode> for --test and --implem"
     exit 1
 }
 
-if [[ $MODE != --* ]] || [ -z "$OPCODE" ]; then usage; fi
+# Parse flags
+SHOW_IMPLEM=false
+SHOW_TEST=false
+SHOW_FAIL=false
+OPCODE=""
 
-case "$MODE" in
---implem)
+for arg in "$@"; do
+    case "$arg" in
+    --implem) SHOW_IMPLEM=true ;;
+    --test)   SHOW_TEST=true ;;
+    --fail)   SHOW_FAIL=true ;;
+    -*)
+        # strip leading dashes and iterate over each character
+        flags="${arg#-}"
+        for (( j=0; j<${#flags}; j++ )); do
+            c="${flags:$j:1}"
+            case "$c" in
+            i) SHOW_IMPLEM=true ;;
+            t) SHOW_TEST=true ;;
+            f) SHOW_FAIL=true ;;
+            *) echo "Unknown flag: -$c"; usage ;;
+            esac
+        done
+        ;;
+    *)
+        if [ -n "$OPCODE" ]; then
+            echo "Error: unexpected argument '$arg'"
+            usage
+        fi
+        OPCODE="$arg"
+        ;;
+    esac
+done
+
+if [ -z "$OPCODE" ] || ! $SHOW_IMPLEM && ! $SHOW_TEST && ! $SHOW_FAIL; then
+    usage
+fi
+
+OPCODE_LOWER=$(echo "$OPCODE" | tr '[:upper:]' '[:lower:]')
+OPCODE_UPPER=$(echo "$OPCODE" | tr '[:lower:]' '[:upper:]')
+
+if $SHOW_IMPLEM; then
     FILE="src/instructions.gen.c"
     echo "--- Implementation: 0x$OPCODE_UPPER ---"
     sed -n "/\/\* 0x$OPCODE/I,/^}/p" "$FILE"
-    ;;
+fi
 
---test)
+if $SHOW_TEST; then
     FILE="./test/SingleStepTests/tests/${OPCODE_LOWER}.gen.c"
-    [ ! -f "$FILE" ] && {
+    if [ ! -f "$FILE" ]; then
         echo "Error: $FILE not found"
         exit 1
-    }
+    fi
     echo "--- First Test Case for $OPCODE_UPPER ---"
     sed -n "/UTEST/,/^}/ { p; /^}/q; }" "$FILE"
-    ;;
+fi
 
---fail)
+if $SHOW_FAIL; then
     LOG="build/test-logs/SingleStepTests${OPCODE_LOWER}.log"
     SRC="./test/SingleStepTests/tests/${OPCODE_LOWER}.gen.c"
 
@@ -56,9 +90,4 @@ case "$MODE" in
 
     # 3. Pull that specific test block from the source file
     sed -n "/UTEST(.*, .*_$TEST_ID)/,/^}/p" "$SRC"
-    ;;
-
-*)
-    usage
-    ;;
-esac
+fi
