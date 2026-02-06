@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.4633 */
+/* generated from generate_instructions.py: l.5846 */
 #pragma once
 
 #include <stdbool.h>
@@ -336,6 +336,34 @@ extern enum InstructionStatus mov_register_absolute_x(struct SPC_State state[sta
 /* 0xf9     MOV   X, d+Y */
 extern enum InstructionStatus mov_register_direct_indexed_x_y(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0x0a     OR1 C, m.b */
+extern enum InstructionStatus or1(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x1a     DECW d */
+extern enum InstructionStatus decw(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x2a     OR1 C, /m.b */
+extern enum InstructionStatus or1_not(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x3a     INCW d */
+extern enum InstructionStatus incw(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x4a     AND1 C, m.b */
+extern enum InstructionStatus and1(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x5a     CMPW YA, d */
+extern enum InstructionStatus cmpw(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x6a     AND1 C, /m.b */
+extern enum InstructionStatus and1_not(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x7a     ADDW YA, d */
+extern enum InstructionStatus addw(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x8a     EOR1 C, m.b */
+extern enum InstructionStatus eor1(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x9a     SUBW YA, d */
+extern enum InstructionStatus subw(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xaa     MOV1 C, m.b */
+extern enum InstructionStatus mov1_c_membit(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xba     MOVW YA, d */
+extern enum InstructionStatus movw_ya_dp(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xca     MOV1 m.b, C */
+extern enum InstructionStatus mov1_membit_c(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xda     MOVW d, YA */
+extern enum InstructionStatus movw_dp_ya(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xea     NOT1  m.b */
 extern enum InstructionStatus not1(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xfa     MOV   dd, ds */
@@ -440,16 +468,22 @@ extern enum InstructionStatus notc(struct SPC_State state[static 1], uint32_t cy
 /* 0xfd     MOV   Y, A */
 extern enum InstructionStatus mov_reg_reg_y_a(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0x0e     TSET1 !a */
+extern enum InstructionStatus tset1(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x1e     CMP   X, !a */
 extern enum InstructionStatus cmp_register_absolute_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x2e     CBNE d, r */
 extern enum InstructionStatus cbne_dp(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x3e     CMP   X, d */
 extern enum InstructionStatus cmp_register_direct_x(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x4e     TCLR1 !a */
+extern enum InstructionStatus tclr1(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x5e     CMP   Y, !a */
 extern enum InstructionStatus cmp_register_absolute_y(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x6e     DBNZ d, r */
 extern enum InstructionStatus dbnz_dp(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x7e     CMP Y, d */
+extern enum InstructionStatus cmp_y_dp(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x8e     POP   PSW */
 extern enum InstructionStatus pop_status(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x9e     DIV YA, X */
@@ -467,12 +501,22 @@ extern enum InstructionStatus pop_y(struct SPC_State state[static 1], uint32_t c
 /* 0xfe     DBNZ Y, r */
 extern enum InstructionStatus dbnz_y(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0x0f     BRK */
+extern enum InstructionStatus brk(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x1f     JMP [!a+X] */
 extern enum InstructionStatus jmp_abs_x_indirect(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x2f     BRA */
 extern enum InstructionStatus bra(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x3f     CALL !a */
+extern enum InstructionStatus call(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x4f     PCALL u */
+extern enum InstructionStatus pcall(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x5f     JMP !a */
 extern enum InstructionStatus jmp_abs(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x6f     RET */
+extern enum InstructionStatus ret(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x7f     RET1 */
+extern enum InstructionStatus ret1(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x8f     MOV   d, #i */
 extern enum InstructionStatus mov_direct_immediate(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x9f     XCN A */
@@ -485,4 +529,8 @@ extern enum InstructionStatus mov_register_indirect_incremented(struct SPC_State
 extern enum InstructionStatus mul(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xdf     DAA A */
 extern enum InstructionStatus daa(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xef     SLEEP */
+extern enum InstructionStatus sleep_(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xff     STOP */
+extern enum InstructionStatus stop(struct SPC_State state[static 1], uint32_t cycle);
 

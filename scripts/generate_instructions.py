@@ -63,6 +63,22 @@ class InstructionStatus(StrEnum):
 
 register_helper(
     inspect.cleandoc(
+        """
+        #ifndef TRACE_TRAP
+            #if defined(__GNUC__) || defined(__clang__)
+                #define TRACE_TRAP() __builtin_trap()
+            #elif defined(_MSC_VER)
+                #define TRACE_TRAP() __debugbreak()
+            #else
+                #define TRACE_TRAP() abort()
+            #endif
+        #endif
+        """
+    )
+)
+
+register_helper(
+    inspect.cleandoc(
         f"""
         static inline void parse_membit(uint16_t operand, uint16_t* addr, uint8_t* bit)
         {{
@@ -3590,7 +3606,6 @@ def generate_psw_branches():
     gen_inner(0x2F, "BRA")
 
 
-
 class PswInstruction(Instruction):
     """
     a subset of  25 Implied
@@ -4574,6 +4589,1200 @@ def generate_jmp():
 generate_jmp()
 
 
+def generate_carry_membit():
+    """
+    23 Carry, MemBit -- C,m.b; C,/m.b
+    (AND1, OR1, EOR1, MOV1 C,m.b)
+    (3 bytes)
+    (4 or 5 cycles)
+          1       PC      Op Code         1
+          2       PC+1    AAL             1
+          3       PC+2    AAH & BIT       1
+          4       AA      Data            1
+         [5]      ??      IO              ?
+       * Cycle 5 present only in EOR1 and OR1.
+
+    24 MemBit, Carry -- m.b,C
+    (MOV1 m.b, C)
+    (3 bytes)
+    (6 cycles)
+          1       PC      Op Code         1
+          2       PC+1    AAL             1
+          3       PC+2    AAH & BIT       1
+          4       AA      Data (read)     1
+          5       ??      IO              ?
+          6       AA      Data (write)    0
+    """
+
+    # AND1 C, m.b  (0x4A) -- 4 cycles
+    add_instruction(
+        0x4A,
+        HardcodedInstruction(
+            mnemonic="AND1",
+            _full_mnemonic="AND1 C, m.b",
+            function_name="and1",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 4) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {read_pc_to("cpu->operands[0]")}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {read_pc_to("cpu->operands[1]")}
+                            cpu->data16 = u16_read_little_endian(cpu->operands);
+                            parse_membit(cpu->data16, &cpu->addr, &cpu->bit);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {read_from_addr("cpu->data8[0]")}
+                            psw_write_carry(cpu, psw_carry(cpu) & bit_at(cpu->data8[0], cpu->bit));
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # AND1 C, /m.b  (0x6A) -- 4 cycles
+    add_instruction(
+        0x6A,
+        HardcodedInstruction(
+            mnemonic="AND1",
+            _full_mnemonic="AND1 C, /m.b",
+            function_name="and1_not",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 4) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {read_pc_to("cpu->operands[0]")}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {read_pc_to("cpu->operands[1]")}
+                            cpu->data16 = u16_read_little_endian(cpu->operands);
+                            parse_membit(cpu->data16, &cpu->addr, &cpu->bit);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {read_from_addr("cpu->data8[0]")}
+                            psw_write_carry(cpu, psw_carry(cpu) & !bit_at(cpu->data8[0], cpu->bit));
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # OR1 C, m.b  (0x0A) -- 5 cycles
+    add_instruction(
+        0x0A,
+        HardcodedInstruction(
+            mnemonic="OR1",
+            _full_mnemonic="OR1 C, m.b",
+            function_name="or1",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 5) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {read_pc_to("cpu->operands[0]")}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {read_pc_to("cpu->operands[1]")}
+                            cpu->data16 = u16_read_little_endian(cpu->operands);
+                            parse_membit(cpu->data16, &cpu->addr, &cpu->bit);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {read_from_addr("cpu->data8[0]")}
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            {true_idle()}
+                            psw_write_carry(cpu, psw_carry(cpu) | bit_at(cpu->data8[0], cpu->bit));
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # OR1 C, /m.b  (0x2A) -- 5 cycles
+    add_instruction(
+        0x2A,
+        HardcodedInstruction(
+            mnemonic="OR1",
+            _full_mnemonic="OR1 C, /m.b",
+            function_name="or1_not",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 5) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {read_pc_to("cpu->operands[0]")}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {read_pc_to("cpu->operands[1]")}
+                            cpu->data16 = u16_read_little_endian(cpu->operands);
+                            parse_membit(cpu->data16, &cpu->addr, &cpu->bit);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {read_from_addr("cpu->data8[0]")}
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            {true_idle()}
+                            psw_write_carry(cpu, psw_carry(cpu) | !bit_at(cpu->data8[0], cpu->bit));
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # EOR1 C, m.b  (0x8A) -- 5 cycles
+    add_instruction(
+        0x8A,
+        HardcodedInstruction(
+            mnemonic="EOR1",
+            _full_mnemonic="EOR1 C, m.b",
+            function_name="eor1",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 5) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {read_pc_to("cpu->operands[0]")}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {read_pc_to("cpu->operands[1]")}
+                            cpu->data16 = u16_read_little_endian(cpu->operands);
+                            parse_membit(cpu->data16, &cpu->addr, &cpu->bit);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {read_from_addr("cpu->data8[0]")}
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            {true_idle()}
+                            psw_write_carry(cpu, psw_carry(cpu) ^ bit_at(cpu->data8[0], cpu->bit));
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # MOV1 C, m.b  (0xAA) -- 4 cycles
+    add_instruction(
+        0xAA,
+        HardcodedInstruction(
+            mnemonic="MOV1",
+            _full_mnemonic="MOV1 C, m.b",
+            function_name="mov1_c_membit",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 4) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {read_pc_to("cpu->operands[0]")}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {read_pc_to("cpu->operands[1]")}
+                            cpu->data16 = u16_read_little_endian(cpu->operands);
+                            parse_membit(cpu->data16, &cpu->addr, &cpu->bit);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {read_from_addr("cpu->data8[0]")}
+                            psw_write_carry(cpu, bit_at(cpu->data8[0], cpu->bit));
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # MOV1 m.b, C  (0xCA) -- 6 cycles (category 24)
+    add_instruction(
+        0xCA,
+        HardcodedInstruction(
+            mnemonic="MOV1",
+            _full_mnemonic="MOV1 m.b, C",
+            function_name="mov1_membit_c",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 6) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {read_pc_to("cpu->operands[0]")}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {read_pc_to("cpu->operands[1]")}
+                            cpu->data16 = u16_read_little_endian(cpu->operands);
+                            parse_membit(cpu->data16, &cpu->addr, &cpu->bit);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {read_from_addr("cpu->data8[0]")}
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            {true_idle()}
+                            bit_write(cpu->data8, cpu->bit, psw_carry(cpu));
+                            return {InstructionStatus.Pending};
+                        case 6:
+                            {write_to_addr("cpu->data8[0]")}
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_carry_membit()
+
+
+def generate_tset1_tclr1():
+    """
+    22 Absolute (RMW) -- !a
+    (TSET1, TCLR1)
+    (3 bytes, 6 cycles)
+          1       PC      Op Code         1
+          2       PC+1    AAL             1
+          3       PC+2    AAH             1
+          4       AA      Data (read)     1    -- extra read for TSET1/TCLR1
+          5       AA      Data (read)     1
+          6       AA      Data (write)    0
+
+    TSET1: (a) = (a) | A,  NZ set as for A - (a)
+    TCLR1: (a) = (a) & ~A, NZ set as for A - (a)
+    """
+
+    # TSET1 !a  (0x0E)
+    add_instruction(
+        0x0E,
+        HardcodedInstruction(
+            mnemonic="TSET1",
+            _full_mnemonic="TSET1 !a",
+            function_name="tset1",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 6) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {read_pc_to("cpu->operands[0]")}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {read_pc_to("cpu->operands[1]")}
+                            cpu->addr = u16_read_little_endian(cpu->operands);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {read_from_addr("cpu->data8[0]")}
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            // second read; set NZ based on A - (a)
+                            {read_from_addr("cpu->data8[0]")}
+                            {{
+                                const uint8_t cmp = cpu->a - cpu->data8[0];
+                                psw_write_neg(cpu, cmp & 0x80);
+                                psw_write_zero(cpu, cmp == 0);
+                            }}
+                            return {InstructionStatus.Pending};
+                        case 6:
+                            // write back (a) | A
+                            cpu->data8[0] |= cpu->a;
+                            {write_to_addr("cpu->data8[0]")}
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # TCLR1 !a  (0x4E)
+    add_instruction(
+        0x4E,
+        HardcodedInstruction(
+            mnemonic="TCLR1",
+            _full_mnemonic="TCLR1 !a",
+            function_name="tclr1",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 6) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {read_pc_to("cpu->operands[0]")}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {read_pc_to("cpu->operands[1]")}
+                            cpu->addr = u16_read_little_endian(cpu->operands);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {read_from_addr("cpu->data8[0]")}
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            // second read; set NZ based on A - (a)
+                            {read_from_addr("cpu->data8[0]")}
+                            {{
+                                const uint8_t cmp = cpu->a - cpu->data8[0];
+                                psw_write_neg(cpu, cmp & 0x80);
+                                psw_write_zero(cpu, cmp == 0);
+                            }}
+                            return {InstructionStatus.Pending};
+                        case 6:
+                            // write back (a) & ~A
+                            cpu->data8[0] &= ~cpu->a;
+                            {write_to_addr("cpu->data8[0]")}
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_tset1_tclr1()
+
+
+def generate_word_ops():
+    """
+    26 Word-Register, Direct -- YA,d
+    (ADDW, CMPW, MOVW YA,d, SUBW)
+    (2 bytes)
+    (4 or 5 cycles)
+          1       PC      Op Code         1
+          2       PC+1    DO              1
+          3       DO      Data 1 Low      1
+         [4]      ??      IO              ?      -- not present for CMPW
+          5       DO+1    Data 1 High     1
+
+    27 Direct, Word-Register -- d,YA
+    (MOVW d, YA)
+    (2 bytes)
+    (5 cycles)
+          1       PC      Op Code         1
+          2       PC+1    DO              1
+          3       DO      Data Low (read) 1
+          4       DO      Data Low        0
+          5       DO+1    Data High       0
+
+    28 Word-Direct (RMW) -- d
+    (DECW, INCW)
+    (2 bytes)
+    (6 cycles)
+          1       PC      Op Code         1
+          2       PC+1    DO              1
+          3       DO      Data 1 Low      1
+          4       DO      Data 1 Low      0
+          5       DO+1    Data 1 High     1
+          6       DO+1    Data 1 High     0
+    """
+
+    # ADDW YA, d  (0x7A) -- 5 cycles
+    add_instruction(
+        0x7A,
+        HardcodedInstruction(
+            mnemonic="ADDW",
+            _full_mnemonic="ADDW YA, d",
+            function_name="addw",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 5) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            cpu->addr = direct_page(cpu, cpu->operands[0]);
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+                            {{
+                                const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
+                                const uint16_t operand = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                                const uint32_t result = (uint32_t)ya + (uint32_t)operand;
+                                // H flag based on high byte add
+                                psw_write_half_carry(cpu, ((cpu->y ^ cpu->data8[1] ^ (uint8_t)(result >> 8)) & 0x10) != 0);
+                                psw_write_overflow(cpu, (~(ya ^ operand) & (ya ^ result) & 0x8000) != 0);
+                                psw_write_carry(cpu, result > 0xffff);
+                                cpu->a = (uint8_t)(result & 0xff);
+                                cpu->y = (uint8_t)(result >> 8);
+                                psw_write_neg(cpu, cpu->y & 0x80);
+                                psw_write_zero(cpu, (result & 0xffff) == 0);
+                            }}
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # SUBW YA, d  (0x9A) -- 5 cycles
+    add_instruction(
+        0x9A,
+        HardcodedInstruction(
+            mnemonic="SUBW",
+            _full_mnemonic="SUBW YA, d",
+            function_name="subw",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 5) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            cpu->addr = direct_page(cpu, cpu->operands[0]);
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+                            {{
+                                const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
+                                const uint16_t operand = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                                const uint32_t result = (uint32_t)ya - (uint32_t)operand;
+                                // H flag based on high byte sub
+                                psw_write_half_carry(cpu, ((cpu->y ^ cpu->data8[1] ^ (uint8_t)(result >> 8)) & 0x10) != 0);
+                                psw_write_overflow(cpu, ((ya ^ operand) & (ya ^ result) & 0x8000) != 0);
+                                psw_write_carry(cpu, ya >= operand);
+                                cpu->a = (uint8_t)(result & 0xff);
+                                cpu->y = (uint8_t)(result >> 8);
+                                psw_write_neg(cpu, cpu->y & 0x80);
+                                psw_write_zero(cpu, (result & 0xffff) == 0);
+                            }}
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # CMPW YA, d  (0x5A) -- 4 cycles (no IO cycle 4)
+    add_instruction(
+        0x5A,
+        HardcodedInstruction(
+            mnemonic="CMPW",
+            _full_mnemonic="CMPW YA, d",
+            function_name="cmpw",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 4) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            cpu->addr = direct_page(cpu, cpu->operands[0]);
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+                            {{
+                                const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
+                                const uint16_t operand = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                                const uint16_t result = ya - operand;
+                                psw_write_carry(cpu, ya >= operand);
+                                psw_write_neg(cpu, result & 0x8000);
+                                psw_write_zero(cpu, result == 0);
+                            }}
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # MOVW YA, d  (0xBA) -- 5 cycles
+    add_instruction(
+        0xBA,
+        HardcodedInstruction(
+            mnemonic="MOVW",
+            _full_mnemonic="MOVW YA, d",
+            function_name="movw_ya_dp",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 5) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            cpu->addr = direct_page(cpu, cpu->operands[0]);
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+                            cpu->a = cpu->data8[0];
+                            cpu->y = cpu->data8[1];
+                            {{
+                                const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
+                                psw_write_neg(cpu, ya & 0x8000);
+                                psw_write_zero(cpu, ya == 0);
+                            }}
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # MOVW d, YA  (0xDA) -- 5 cycles (category 27: read low, write low, write high)
+    add_instruction(
+        0xDA,
+        HardcodedInstruction(
+            mnemonic="MOVW",
+            _full_mnemonic="MOVW d, YA",
+            function_name="movw_dp_ya",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 5) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            cpu->addr = direct_page(cpu, cpu->operands[0]);
+                            // RMW read of low byte (discarded)
+                            (void)bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            bus_write(state, cpu->addr, cpu->a);
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            bus_write(state, cpu->addr + 1, cpu->y);
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # INCW d  (0x3A) -- 6 cycles (category 28)
+    add_instruction(
+        0x3A,
+        HardcodedInstruction(
+            mnemonic="INCW",
+            _full_mnemonic="INCW d",
+            function_name="incw",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 6) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            cpu->addr = direct_page(cpu, cpu->operands[0]);
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            // write back low byte (incremented)
+                            cpu->data8[0]++;
+                            bus_write(state, cpu->addr, cpu->data8[0]);
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+                            return {InstructionStatus.Pending};
+                        case 6:
+                            // carry from low byte increment
+                            if (cpu->data8[0] == 0) cpu->data8[1]++;
+                            bus_write(state, cpu->addr + 1, cpu->data8[1]);
+                            {{
+                                const uint16_t result = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                                psw_write_neg(cpu, result & 0x8000);
+                                psw_write_zero(cpu, result == 0);
+                            }}
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # DECW d  (0x1A) -- 6 cycles (category 28)
+    add_instruction(
+        0x1A,
+        HardcodedInstruction(
+            mnemonic="DECW",
+            _full_mnemonic="DECW d",
+            function_name="decw",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 6) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            cpu->addr = direct_page(cpu, cpu->operands[0]);
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            // write back low byte (decremented)
+                            cpu->data8[0]--;
+                            bus_write(state, cpu->addr, cpu->data8[0]);
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+                            return {InstructionStatus.Pending};
+                        case 6:
+                            // borrow from low byte decrement
+                            if (cpu->data8[0] == 0xff) cpu->data8[1]--;
+                            bus_write(state, cpu->addr + 1, cpu->data8[1]);
+                            {{
+                                const uint16_t result = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                                psw_write_neg(cpu, result & 0x8000);
+                                psw_write_zero(cpu, result == 0);
+                            }}
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_word_ops()
+
+
+def generate_cmp_y_dp():
+    """
+    3 Register, Direct -- CMP Y, d
+    (2 bytes, 3 cycles)
+          1       PC      Op Code         1
+          2       PC+1    DO              1
+          3       DO      Data            1
+    """
+
+    # CMP Y, d  (0x7E)
+    add_instruction(
+        0x7E,
+        HardcodedInstruction(
+            mnemonic="CMP",
+            _full_mnemonic="CMP Y, d",
+            function_name="cmp_y_dp",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 3) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            cpu->addr = direct_page(cpu, cpu->operands[0]);
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            {{
+                                const uint8_t res = cpu->y - cpu->data8[0];
+                                psw_write_carry(cpu, cpu->y >= cpu->data8[0]);
+                                psw_write_neg(cpu, res & 0x80);
+                                psw_write_zero(cpu, res == 0);
+                            }}
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_cmp_y_dp()
+
+
+def generate_call_pcall():
+    """
+    32a CALL !a
+    (3 bytes, 8 cycles)
+    Following TCALL cycle order (Near's, verified by SingleStepTests):
+          2: dummy read of PC
+          3: true idle
+          4: push PCH
+          5: push PCL
+          6: read AAL from PC+1
+          7: read AAH from PC+2
+          8: true idle
+
+    32b PCALL u
+    (2 bytes, 6 cycles)
+    Following Near-style order:
+          2: dummy read of PC
+          3: true idle
+          4: push PCH
+          5: push PCL
+          6: read U from PC+1 -> PC = 0xFF00 | U
+    """
+
+    # CALL !a  (0x3F) -- 8 cycles
+    add_instruction(
+        0x3F,
+        HardcodedInstruction(
+            mnemonic="CALL",
+            _full_mnemonic="CALL !a",
+            function_name="call",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 8) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {dummy_read_pc()}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            cpu->addr = 0x100 + cpu->sp;
+                            {write_to_addr("u16_msb(cpu->pc)")}
+                            cpu->sp -= 1;
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->addr = 0x100 + cpu->sp;
+                            {write_to_addr("u16_lsb(cpu->pc)")}
+                            cpu->sp -= 1;
+                            return {InstructionStatus.Pending};
+                        case 6:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 7:
+                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 8:
+                            {true_idle()}
+                            cpu->pc = u16_read_little_endian(cpu->operands);
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # PCALL u  (0x4F) -- 6 cycles
+    add_instruction(
+        0x4F,
+        HardcodedInstruction(
+            mnemonic="PCALL",
+            _full_mnemonic="PCALL u",
+            function_name="pcall",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 6) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            cpu->addr = 0x100 + cpu->sp;
+                            {write_to_addr("u16_msb(cpu->pc)")}
+                            cpu->sp -= 1;
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->addr = 0x100 + cpu->sp;
+                            {write_to_addr("u16_lsb(cpu->pc)")}
+                            cpu->sp -= 1;
+                            return {InstructionStatus.Pending};
+                        case 6:
+                            {true_idle()}
+                            cpu->pc = 0xFF00 | (uint16_t)cpu->operands[0];
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_call_pcall()
+
+
+def generate_ret_ret1():
+    """
+    33a RET
+    (1 byte, 5 cycles)
+    Following Near-style order:
+          2: dummy read of PC
+          3: true idle
+          4: pop PCL
+          5: pop PCH
+
+    33b RET1
+    (1 byte, 6 cycles)
+    Following Near-style order:
+          2: dummy read of PC
+          3: true idle
+          4: pop PSW
+          5: pop PCL
+          6: pop PCH
+    """
+
+    # RET  (0x6F) -- 5 cycles
+    add_instruction(
+        0x6F,
+        HardcodedInstruction(
+            mnemonic="RET",
+            _full_mnemonic="RET",
+            function_name="ret",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 5) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {dummy_read_pc()}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            cpu->sp += 1;
+                            cpu->addr = 0x100 | cpu->sp;
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->sp += 1;
+                            cpu->addr = 0x100 | cpu->sp;
+                            cpu->data8[1] = bus_read(state, cpu->addr);
+                            cpu->pc = u16_read_little_endian(cpu->data8);
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # RET1  (0x7F) -- 6 cycles
+    add_instruction(
+        0x7F,
+        HardcodedInstruction(
+            mnemonic="RET1",
+            _full_mnemonic="RET1",
+            function_name="ret1",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 6) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {dummy_read_pc()}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            cpu->sp += 1;
+                            cpu->addr = 0x100 | cpu->sp;
+                            cpu->status = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->sp += 1;
+                            cpu->addr = 0x100 | cpu->sp;
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 6:
+                            cpu->sp += 1;
+                            cpu->addr = 0x100 | cpu->sp;
+                            cpu->data8[1] = bus_read(state, cpu->addr);
+                            cpu->pc = u16_read_little_endian(cpu->data8);
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_ret_ret1()
+
+
+def generate_brk():
+    """
+    32d BRK
+    (1 byte, 8 cycles)
+    Following Near/TCALL-style order:
+          2: dummy read of PC
+          3: true idle
+          4: push PCH
+          5: push PCL
+          6: push PSW
+          7: read AAL from 0xFFDE
+          8: read AAH from 0xFFDF
+    Sets B=1, I=0
+    """
+
+    add_instruction(
+        0x0F,
+        HardcodedInstruction(
+            mnemonic="BRK",
+            _full_mnemonic="BRK",
+            function_name="brk",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 8) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            {dummy_read_pc()}
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            cpu->addr = 0x100 + cpu->sp;
+                            {write_to_addr("u16_msb(cpu->pc)")}
+                            cpu->sp -= 1;
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->addr = 0x100 + cpu->sp;
+                            {write_to_addr("u16_lsb(cpu->pc)")}
+                            cpu->sp -= 1;
+                            return {InstructionStatus.Pending};
+                        case 6:
+                            cpu->addr = 0x100 + cpu->sp;
+                            {write_to_addr("cpu->status")}
+                            cpu->sp -= 1;
+                            return {InstructionStatus.Pending};
+                        case 7:
+                            cpu->data8[0] = bus_read(state, 0xFFDE);
+                            return {InstructionStatus.Pending};
+                        case 8:
+                            cpu->data8[1] = bus_read(state, 0xFFDF);
+                            cpu->pc = u16_read_little_endian(cpu->data8);
+                            flag_set(&cpu->status, PSW_BREAK);
+                            psw_write_interrupt_enable(cpu, 0);
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_brk()
+
+
+def generate_sleep_stop():
+    """
+    SLEEP (0xEF) and STOP (0xFF)
+    These should never be called in practice.
+    """
+
+    add_instruction(
+        0xEF,
+        HardcodedInstruction(
+            mnemonic="SLEEP",
+            _full_mnemonic="SLEEP",
+            function_name="sleep_",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    TRACE_TRAP();
+                    return {InstructionStatus.Done};
+                }}
+                """
+            ),
+        ),
+    )
+
+    add_instruction(
+        0xFF,
+        HardcodedInstruction(
+            mnemonic="STOP",
+            _full_mnemonic="STOP",
+            function_name="stop",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    TRACE_TRAP();
+                    return {InstructionStatus.Done};
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_sleep_stop()
+
+
 def print_opcode_matrix():
     # ANSI Color Codes
     GREEN = "\033[92m"
@@ -4617,6 +5826,10 @@ def print_opcode_matrix():
         f"{BOLD}Progress: {done}/{total} ({percent:.1f}%) | "
         f"{GREEN}Implemented: {done}{RESET} | {RED}Missing: {missing_count}{RESET}\n"
     )
+
+    for opcode in range(256):
+        if opcode not in instructions:
+            print(f"missing: 0x{opcode:02x}")
 
 
 C_IMPLEM = "instructions.gen.c"
