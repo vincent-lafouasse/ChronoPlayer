@@ -199,6 +199,7 @@ def main():
     generate_column("9")
     generate_column("b")
     generate_column("c")
+    generate_column("d")
 
 
 if __name__ == "__main__":
