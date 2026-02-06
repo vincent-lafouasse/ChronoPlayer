@@ -30,7 +30,7 @@ TMPREF=$(mktemp)
 trap 'rm -f "$TMPREF"' EXIT
 
 while IFS= read -r line; do
-    if [[ "$line" =~ ^[[:space:]]+([A-Z][A-Z0-9]*)[[:space:]].*[[:space:]]([0-9A-Fa-f][0-9A-Fa-f])[[:space:]]+([0-9]+)[[:space:]]+([0-9/\?]+)[[:space:]] ]]; then
+    if [[ $line =~ ^[[:space:]]+([A-Z][A-Z0-9]*)[[:space:]].*[[:space:]]([0-9A-Fa-f][0-9A-Fa-f])[[:space:]]+([0-9]+)[[:space:]]+([0-9/\?]+)[[:space:]] ]]; then
         mnemonic="${BASH_REMATCH[1]}"
         opcode_hex="${BASH_REMATCH[2]}"
         bytes="${BASH_REMATCH[3]}"
@@ -39,9 +39,9 @@ while IFS= read -r line; do
         # normalize opcode to lowercase
         opcode_hex=$(echo "$opcode_hex" | tr '[:upper:]' '[:lower:]')
 
-        echo "$opcode_hex $mnemonic $bytes $cycles_raw" >> "$TMPREF"
+        echo "$opcode_hex $mnemonic $bytes $cycles_raw" >>"$TMPREF"
     fi
-done < "$ANOMIE"
+done <"$ANOMIE"
 
 # Lookup function: sets ref_mn, ref_bytes, ref_cycles from TMPREF
 lookup_ref() {
@@ -139,13 +139,13 @@ current_length=""
 current_cycles=""
 
 while IFS= read -r line; do
-    if [[ "$line" =~ \[(0x[0-9a-fA-F]+)\] ]]; then
+    if [[ $line =~ \[(0x[0-9a-fA-F]+)\] ]]; then
         current_opcode="${BASH_REMATCH[1]}"
-    elif [[ "$line" =~ \.mnemonic[[:space:]]*=[[:space:]]*\"([^\"]+)\" ]]; then
+    elif [[ $line =~ \.mnemonic[[:space:]]*=[[:space:]]*\"([^\"]+)\" ]]; then
         current_mnemonic="${BASH_REMATCH[1]}"
-    elif [[ "$line" =~ \.length[[:space:]]*=[[:space:]]*([0-9]+) ]]; then
+    elif [[ $line =~ \.length[[:space:]]*=[[:space:]]*([0-9]+) ]]; then
         current_length="${BASH_REMATCH[1]}"
-    elif [[ "$line" =~ \.cycles[[:space:]]*=[[:space:]]*([0-9]+) ]]; then
+    elif [[ $line =~ \.cycles[[:space:]]*=[[:space:]]*([0-9]+) ]]; then
         current_cycles="${BASH_REMATCH[1]}"
         # cycles is the last field, emit check
         if [ -n "$current_opcode" ]; then
@@ -153,15 +153,15 @@ while IFS= read -r line; do
             local_hex="${current_opcode#0x}"
             msb="${local_hex%?}"
             lsb="${local_hex#?}"
-            emit_check "$current_opcode" "$current_mnemonic" "$current_length" "$current_cycles" \
-                | while IFS= read -r result; do echo "${lsb}${msb} ${result}"; done >> "$TMPOUT"
+            emit_check "$current_opcode" "$current_mnemonic" "$current_length" "$current_cycles" |
+                while IFS= read -r result; do echo "${lsb}${msb} ${result}"; done >>"$TMPOUT"
         fi
         current_opcode=""
         current_mnemonic=""
         current_length=""
         current_cycles=""
     fi
-done < "$TABLE"
+done <"$TABLE"
 
 # Output sorted by LSB (column-major), then MSB within each column
 sort "$TMPOUT" | cut -d' ' -f2-
