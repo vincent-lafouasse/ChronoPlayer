@@ -54,16 +54,8 @@ endfunction()
 
 # -----------------
 
-register_column("0")
-register_column("1")
-register_column("2")
-register_column("3")
-register_column("4")
-register_column("5")
-register_column("6")
-register_column("7")
-register_column("8")
-register_column("9")
-register_column("b")
-register_column("c")
-register_column("d")
+foreach(col "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "a" "b" "c" "d" "e")
+    register_column(${col})
+endforeach()
+
+register_column_except("f" "ef" "ff")
