@@ -187,16 +187,13 @@ def main():
     for msb in "0123456789abcdef":
         generate_test_suite(msb + "1")
         generate_test_suite(msb + "2")
-        if msb != "d":
-            generate_test_suite(msb + "4")
+        generate_test_suite(msb + "4")
         generate_test_suite(msb + "5")
         generate_test_suite(msb + "6")
         generate_test_suite(msb + "7")
         generate_test_suite(msb + "8")
-        if msb != "d":
-            generate_test_suite(msb + "9")
-        if msb != "d":
-            generate_test_suite(msb + "b")
+        generate_test_suite(msb + "9")
+        generate_test_suite(msb + "b")
 
 
 if __name__ == "__main__":
