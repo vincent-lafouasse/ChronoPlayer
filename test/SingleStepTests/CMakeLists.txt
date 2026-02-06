@@ -67,7 +67,4 @@ register_column("7")
 register_column("8")
 register_column("9")
 register_column("b")
-
-foreach(opcode "0c" "2c" "4c" "6c" "8c" "ac")
-    register_test(${opcode})
-endforeach()
+register_column("c")
