@@ -3354,6 +3354,56 @@ def generate_register_alu_implied():
     generate_inner(0x7c, "ROR", Register.A)
 
 
+def generate_stack_operations():
+    def register_repr(reg):
+        if reg == Register.A:
+            return "A"
+        elif reg == Register.X:
+            return "X"
+        elif reg == Register.Y:
+            return "Y"
+        elif reg == Register.PWS:
+            return "PSW"
+        else:
+            raise ValueError(f"invalid register for stack op: {reg}")
+
+    def generate_push(opcode, src):
+        add_instruction(
+            opcode,
+            HardcodedInstruction(
+                mnemonic=mnemonic,
+                _full_mnemonic=f"PUSH  {register_repr(src)}",
+                function_name=f"{mnemonic.lower()}_{register}",
+                body=inspect.cleandoc(
+                    f"""
+                    {{
+                        {trace_source()}
+                        struct CPU_State* const cpu = &state->cpu;
+                    
+                        if (cycle < 2 || cycle > 4) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                        switch (cycle) {{
+                            case 2:
+                                {true_idle()}
+                                return {InstructionStatus.Pending};
+                            case 3:
+                                {true_idle()}
+                                return {InstructionStatus.Pending};
+                            case 4:
+                                cpu->addr = cpu->sp--;
+                                bus_write(state, cpu->addr, cpu->{src});
+                                return {InstructionStatus.Done};
+                            default:
+                                UNREACHABLE();
+                        }}
+                    }}
+                    """
+                ),
+            ),
+        )
+
+    def generate_pop(opcode, dest):
+        pass
+
 
 class PswInstruction(Instruction):
     """
