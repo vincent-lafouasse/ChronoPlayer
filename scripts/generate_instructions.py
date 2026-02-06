@@ -3945,6 +3945,349 @@ def generate_bbc_bbs():
 generate_bbc_bbs()
 
 
+def generate_cbne():
+    """
+    31b CBNE d, r -- Test-and-Branch Direct
+    (3 bytes, 5 or 7 cycles)
+          1       PC      Op Code         1
+          2       PC+1    DO              1
+          3       DO      Data            1
+          4       PC+2    R               1
+          5       ??      IO              ?
+         [6]      ??      IO              ?
+         [7]      ??      IO              ?
+       * Cycles 6 and 7 only present if branch is taken
+
+    31c CBNE d+X, r -- Test-and-Branch Direct Indexed
+    (3 bytes, 6 or 8 cycles)
+          1       PC      Op Code         1
+          2       PC+1    DO              1
+          3       ??      IO              ?
+          4       DO+X    Data            1
+          5       PC+2    R               1
+          6       ??      IO              ?
+         [7]      ??      IO              ?
+         [8]      ??      IO              ?
+       * Cycles 7 and 8 only present if branch is taken
+    """
+
+    ret = f"cpu->branch_taken ? {InstructionStatus.Pending} : {InstructionStatus.Done}"
+
+    # CBNE d, r  (0x2E)
+    add_instruction(
+        0x2E,
+        HardcodedInstruction(
+            mnemonic="CBNE",
+            _full_mnemonic="CBNE d, r",
+            function_name="cbne_dp",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 7) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            cpu->addr = direct_page(cpu, cpu->operands[0]);
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            {true_idle()}
+                            cpu->branch_taken = (cpu->a != cpu->data8[0]);
+                            return {ret};
+                        case 6:
+                            {true_idle()}
+                            return {ret};
+                        case 7:
+                            {true_idle()}
+                            cpu->pc += (int8_t)cpu->operands[1];
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # CBNE d+X, r  (0xDE)
+    add_instruction(
+        0xDE,
+        HardcodedInstruction(
+            mnemonic="CBNE",
+            _full_mnemonic="CBNE d+X, r",
+            function_name="cbne_dp_x",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 8) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            cpu->addr = direct_page(cpu, cpu->operands[0] + cpu->x);
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 6:
+                            {true_idle()}
+                            cpu->branch_taken = (cpu->a != cpu->data8[0]);
+                            return {ret};
+                        case 7:
+                            {true_idle()}
+                            return {ret};
+                        case 8:
+                            {true_idle()}
+                            cpu->pc += (int8_t)cpu->operands[1];
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_cbne()
+
+
+def generate_dbnz():
+    """
+    31d DBNZ d, r -- Modify-and-Branch Direct
+    (3 bytes, 5 or 7 cycles)
+          1       PC      Op Code         1
+          2       PC+1    DO              1
+          3       DO      Data   (read)   1
+          4       DO      Data-1 (write)  0
+          5       PC+2    R               1
+         [6]      ??      IO              ?
+         [7]      ??      IO              ?
+       * Cycles 6 and 7 only present if branch is taken
+
+    31e DBNZ Y, r -- Modify-and-Branch Register
+    (2 bytes, 4 or 6 cycles)
+          1       PC      Op Code         1
+          2       PC+1    R               1
+          3       ??      IO              ?
+          4       ??      IO              ?
+         [5]      ??      IO              ?
+         [6]      ??      IO              ?
+       * Cycles 5 and 6 only present if branch is taken
+    """
+
+    ret = f"cpu->branch_taken ? {InstructionStatus.Pending} : {InstructionStatus.Done}"
+
+    # DBNZ d, r  (0x6E)
+    add_instruction(
+        0x6E,
+        HardcodedInstruction(
+            mnemonic="DBNZ",
+            _full_mnemonic="DBNZ d, r",
+            function_name="dbnz_dp",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 7) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            cpu->addr = direct_page(cpu, cpu->operands[0]);
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            cpu->data8[0]--;
+                            bus_write(state, cpu->addr, cpu->data8[0]);
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            cpu->branch_taken = (cpu->data8[0] != 0);
+                            return {ret};
+                        case 6:
+                            {true_idle()}
+                            return {ret};
+                        case 7:
+                            {true_idle()}
+                            cpu->pc += (int8_t)cpu->operands[1];
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # DBNZ Y, r  (0xFE)
+    add_instruction(
+        0xFE,
+        HardcodedInstruction(
+            mnemonic="DBNZ",
+            _full_mnemonic="DBNZ Y, r",
+            function_name="dbnz_y",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 6) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            {true_idle()}
+                            cpu->y--;
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {true_idle()}
+                            cpu->branch_taken = (cpu->y != 0);
+                            return {ret};
+                        case 5:
+                            {true_idle()}
+                            return {ret};
+                        case 6:
+                            {true_idle()}
+                            cpu->pc += (int8_t)cpu->operands[0];
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_dbnz()
+
+
+def generate_jmp():
+    """
+    30a JMP Absolute -- !a
+    (3 bytes, 3 cycles)
+          1       PC      Op Code         1
+          2       PC+1    AAL             1
+          3       PC+2    AAH             1
+
+    30b JMP Absolute Indexed Indirect -- [!a+X]
+    (3 bytes, 6 cycles)
+          1       PC      Op Code         1
+          2       PC+1    AAL             1
+          3       PC+2    AAH             1
+          4       ??      IO              ?
+          5       AA+X    PCL             1
+          6       AA+X+1  PCH             1
+    """
+
+    # JMP !a  (0x5F)
+    add_instruction(
+        0x5F,
+        HardcodedInstruction(
+            mnemonic="JMP",
+            _full_mnemonic="JMP !a",
+            function_name="jmp_abs",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 3) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            cpu->pc = (uint16_t)cpu->operands[0] | ((uint16_t)cpu->operands[1] << 8);
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+    # JMP [!a+X]  (0x1F)
+    add_instruction(
+        0x1F,
+        HardcodedInstruction(
+            mnemonic="JMP",
+            _full_mnemonic="JMP [!a+X]",
+            function_name="jmp_abs_x_indirect",
+            body=inspect.cleandoc(
+                f"""
+                {{
+                    {trace_source()}
+                    struct CPU_State* const cpu = &state->cpu;
+
+                    if (cycle < 2 || cycle > 6) {{ return {InstructionStatus.UnexpectedCycle}; }}
+
+                    switch (cycle) {{
+                        case 2:
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 3:
+                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
+                        case 4:
+                            {true_idle()}
+                            cpu->addr = ((uint16_t)cpu->operands[0] | ((uint16_t)cpu->operands[1] << 8)) + cpu->x;
+                            return {InstructionStatus.Pending};
+                        case 5:
+                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            return {InstructionStatus.Pending};
+                        case 6:
+                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+                            cpu->pc = (uint16_t)cpu->data8[0] | ((uint16_t)cpu->data8[1] << 8);
+                            return {InstructionStatus.Done};
+                        default:
+                            UNREACHABLE();
+                    }}
+                }}
+                """
+            ),
+        ),
+    )
+
+
+generate_jmp()
+
+
 def print_opcode_matrix():
     # ANSI Color Codes
     GREEN = "\033[92m"

@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.4063 */
+/* generated from generate_instructions.py: l.4406 */
 
 #include "instructions.gen.h"
 
@@ -196,7 +196,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x1f] = {0},
+    [0x1f] = {
+        .mnemonic = "JMP",
+        .full_mnemonic = "JMP [!a+X]",
+        .handler = jmp_abs_x_indirect,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x20] = {
         .mnemonic = "CLRP",
         .full_mnemonic = "CLRP",
@@ -289,7 +295,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x2e] = {0},
+    [0x2e] = {
+        .mnemonic = "CBNE",
+        .full_mnemonic = "CBNE d, r",
+        .handler = cbne_dp,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x2f] = {
         .mnemonic = "BRA",
         .full_mnemonic = "BRA",
@@ -590,7 +602,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x5f] = {0},
+    [0x5f] = {
+        .mnemonic = "JMP",
+        .full_mnemonic = "JMP !a",
+        .handler = jmp_abs,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x60] = {
         .mnemonic = "CLRC",
         .full_mnemonic = "CLRC",
@@ -683,7 +701,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0x6e] = {0},
+    [0x6e] = {
+        .mnemonic = "DBNZ",
+        .full_mnemonic = "DBNZ d, r",
+        .handler = dbnz_dp,
+        .length = 0,
+        .cycles = 0,
+    },
     [0x6f] = {0},
     [0x70] = {
         .mnemonic = "BVS",
@@ -1377,7 +1401,13 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xde] = {0},
+    [0xde] = {
+        .mnemonic = "CBNE",
+        .full_mnemonic = "CBNE d+X, r",
+        .handler = cbne_dp_x,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xdf] = {0},
     [0xe0] = {
         .mnemonic = "CLRV",
@@ -1583,6 +1613,12 @@ const struct Instruction opcode_lookup_table[256] = {
         .length = 0,
         .cycles = 0,
     },
-    [0xfe] = {0},
+    [0xfe] = {
+        .mnemonic = "DBNZ",
+        .full_mnemonic = "DBNZ Y, r",
+        .handler = dbnz_y,
+        .length = 0,
+        .cycles = 0,
+    },
     [0xff] = {0},
 };

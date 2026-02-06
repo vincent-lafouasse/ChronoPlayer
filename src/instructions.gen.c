@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.4032 */
+/* generated from generate_instructions.py: l.4375 */
 
 #include "instructions.gen.h"
 
@@ -7780,6 +7780,41 @@ enum InstructionStatus cmp_register_absolute_x(struct SPC_State state[static 1],
     }
 }
 
+/* 0x2e     CBNE d, r */
+enum InstructionStatus cbne_dp(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.3986 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 7) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            cpu->operands[1] = bus_read(state, cpu->pc++);
+            return INSTRUCTION_STATUS_PENDING;
+        case 5:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            cpu->branch_taken = (cpu->a != cpu->data8[0]);
+            return cpu->branch_taken ? INSTRUCTION_STATUS_PENDING : INSTRUCTION_STATUS_DONE;
+        case 6:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return cpu->branch_taken ? INSTRUCTION_STATUS_PENDING : INSTRUCTION_STATUS_DONE;
+        case 7:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            cpu->pc += (int8_t)cpu->operands[1];
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
 /* 0x3e     CMP   X, d */
 enum InstructionStatus cmp_register_direct_x(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -7865,6 +7900,42 @@ enum InstructionStatus cmp_register_absolute_y(struct SPC_State state[static 1],
     }
 }
 
+/* 0x6e     DBNZ d, r */
+enum InstructionStatus dbnz_dp(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.4111 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 7) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            cpu->data8[0]--;
+            bus_write(state, cpu->addr, cpu->data8[0]);
+            return INSTRUCTION_STATUS_PENDING;
+        case 5:
+            cpu->operands[1] = bus_read(state, cpu->pc++);
+            cpu->branch_taken = (cpu->data8[0] != 0);
+            return cpu->branch_taken ? INSTRUCTION_STATUS_PENDING : INSTRUCTION_STATUS_DONE;
+        case 6:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return cpu->branch_taken ? INSTRUCTION_STATUS_PENDING : INSTRUCTION_STATUS_DONE;
+        case 7:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            cpu->pc += (int8_t)cpu->operands[1];
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
 /* 0x8e     POP   PSW */
 enum InstructionStatus pop_status(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -7937,6 +8008,44 @@ enum InstructionStatus pop_x(struct SPC_State state[static 1], uint32_t cycle)
     }
 }
 
+/* 0xde     CBNE d+X, r */
+enum InstructionStatus cbne_dp_x(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.4032 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 8) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            cpu->addr = direct_page(cpu, cpu->operands[0] + cpu->x);
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return INSTRUCTION_STATUS_PENDING;
+        case 5:
+            cpu->operands[1] = bus_read(state, cpu->pc++);
+            return INSTRUCTION_STATUS_PENDING;
+        case 6:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            cpu->branch_taken = (cpu->a != cpu->data8[0]);
+            return cpu->branch_taken ? INSTRUCTION_STATUS_PENDING : INSTRUCTION_STATUS_DONE;
+        case 7:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return cpu->branch_taken ? INSTRUCTION_STATUS_PENDING : INSTRUCTION_STATUS_DONE;
+        case 8:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            cpu->pc += (int8_t)cpu->operands[1];
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
 /* 0xee     POP   Y */
 enum InstructionStatus pop_y(struct SPC_State state[static 1], uint32_t cycle)
 {
@@ -7961,6 +8070,69 @@ enum InstructionStatus pop_y(struct SPC_State state[static 1], uint32_t cycle)
     }
 }
 
+/* 0xfe     DBNZ Y, r */
+enum InstructionStatus dbnz_y(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.4158 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            cpu->y--;
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            cpu->branch_taken = (cpu->y != 0);
+            return cpu->branch_taken ? INSTRUCTION_STATUS_PENDING : INSTRUCTION_STATUS_DONE;
+        case 5:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            return cpu->branch_taken ? INSTRUCTION_STATUS_PENDING : INSTRUCTION_STATUS_DONE;
+        case 6:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            cpu->pc += (int8_t)cpu->operands[0];
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
+
+/* 0x1f     JMP [!a+X] */
+enum InstructionStatus jmp_abs_x_indirect(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.4255 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            cpu->operands[1] = bus_read(state, cpu->pc++);
+            return INSTRUCTION_STATUS_PENDING;
+        case 4:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            cpu->addr = ((uint16_t)cpu->operands[0] | ((uint16_t)cpu->operands[1] << 8)) + cpu->x;
+            return INSTRUCTION_STATUS_PENDING;
+        case 5:
+            cpu->data8[0] = bus_read(state, cpu->addr);
+            return INSTRUCTION_STATUS_PENDING;
+        case 6:
+            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+            cpu->pc = (uint16_t)cpu->data8[0] | ((uint16_t)cpu->data8[1] << 8);
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
 
 /* 0x2f     BRA */
 enum InstructionStatus bra(struct SPC_State state[static 1], uint32_t cycle)
@@ -7982,6 +8154,27 @@ enum InstructionStatus bra(struct SPC_State state[static 1], uint32_t cycle)
         case 4:
             bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             cpu->pc += (int8_t)cpu->operands[0];
+            return INSTRUCTION_STATUS_DONE;
+        default:
+            UNREACHABLE();
+    }
+}
+
+/* 0x5f     JMP !a */
+enum InstructionStatus jmp_abs(struct SPC_State state[static 1], uint32_t cycle)
+{
+    /* generated from generate_instructions.py: l.4223 */
+    struct CPU_State* const cpu = &state->cpu;
+
+    if (cycle < 2 || cycle > 3) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
+
+    switch (cycle) {
+        case 2:
+            cpu->operands[0] = bus_read(state, cpu->pc++);
+            return INSTRUCTION_STATUS_PENDING;
+        case 3:
+            cpu->operands[1] = bus_read(state, cpu->pc++);
+            cpu->pc = (uint16_t)cpu->operands[0] | ((uint16_t)cpu->operands[1] << 8);
             return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();

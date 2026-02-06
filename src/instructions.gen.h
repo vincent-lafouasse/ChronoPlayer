@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.4004 */
+/* generated from generate_instructions.py: l.4347 */
 #pragma once
 
 #include <stdbool.h>
@@ -442,21 +442,33 @@ extern enum InstructionStatus mov_reg_reg_y_a(struct SPC_State state[static 1], 
 
 /* 0x1e     CMP   X, !a */
 extern enum InstructionStatus cmp_register_absolute_x(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x2e     CBNE d, r */
+extern enum InstructionStatus cbne_dp(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x3e     CMP   X, d */
 extern enum InstructionStatus cmp_register_direct_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x5e     CMP   Y, !a */
 extern enum InstructionStatus cmp_register_absolute_y(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x6e     DBNZ d, r */
+extern enum InstructionStatus dbnz_dp(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x8e     POP   PSW */
 extern enum InstructionStatus pop_status(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xae     POP   A */
 extern enum InstructionStatus pop_a(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xce     POP   X */
 extern enum InstructionStatus pop_x(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xde     CBNE d+X, r */
+extern enum InstructionStatus cbne_dp_x(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xee     POP   Y */
 extern enum InstructionStatus pop_y(struct SPC_State state[static 1], uint32_t cycle);
+/* 0xfe     DBNZ Y, r */
+extern enum InstructionStatus dbnz_y(struct SPC_State state[static 1], uint32_t cycle);
 
+/* 0x1f     JMP [!a+X] */
+extern enum InstructionStatus jmp_abs_x_indirect(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x2f     BRA */
 extern enum InstructionStatus bra(struct SPC_State state[static 1], uint32_t cycle);
+/* 0x5f     JMP !a */
+extern enum InstructionStatus jmp_abs(struct SPC_State state[static 1], uint32_t cycle);
 /* 0x8f     MOV   d, #i */
 extern enum InstructionStatus mov_direct_immediate(struct SPC_State state[static 1], uint32_t cycle);
 /* 0xaf     MOV   (X)+, A */
