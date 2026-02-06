@@ -5442,25 +5442,44 @@ generate_cmp_y_dp()
 
 def generate_call_pcall():
     """
-    32a CALL !a
-    (3 bytes, 8 cycles)
-    Following TCALL cycle order (Near's, verified by SingleStepTests):
-          2: dummy read of PC
-          3: true idle
-          4: push PCH
-          5: push PCL
-          6: read AAL from PC+1
-          7: read AAH from PC+2
-          8: true idle
+    32a CALL
+    (CALL)
+    (3 bytes)
+    (8 cycles)
+        1       PC      Op Code         1
+        2       SP      PCH             0
+        3       SP-1    PCL             0
+        4       ??      IO              ?
+        5       PC+1    AAL             1
+        6       PC+2    AAH             1
+        7       ??      IO              ?
+        8       ??      IO              ?
+       (1)      new PC  Op Code         1
+    * WTF with all the IO cycles? 
+    * Order of reading new addr and pushing old addr may be wrong.
 
-    32b PCALL u
-    (2 bytes, 6 cycles)
-    Following Near-style order:
-          2: dummy read of PC
-          3: true idle
-          4: push PCH
-          5: push PCL
-          6: read U from PC+1 -> PC = 0xFF00 | U
+    We actually side with Near here
+    
+    2. fetch AAL
+    3. fetch AAH
+    4. idle
+    5. push PCH
+    6. push PCL
+    7. idle
+    8. idle
+
+    32b PCALL
+    (PCALL)
+    (2 bytes)
+    (6 cycles)
+        1       PC      Op Code         1
+        2       SP      PCH             0
+        3       SP-1    PCL             0
+        4       PC+1    U               1
+        5       Vec     AAL             1
+        6       Vec+1   AAH             1
+       (1)      new PC  Op Code         1
+    * Order of reading new addr and pushing old addr may be wrong.
     """
 
     # CALL !a  (0x3F) -- 8 cycles
@@ -5480,26 +5499,27 @@ def generate_call_pcall():
 
                     switch (cycle) {{
                         case 2:
-                            {dummy_read_pc()}
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
                             return {InstructionStatus.Pending};
                         case 3:
-                            {true_idle()}
+                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            cpu->addr = u16_read_little_endian(cpu->operands);
                             return {InstructionStatus.Pending};
                         case 4:
+                            {true_idle()}
+                            return {InstructionStatus.Pending};
+                        case 5:
                             cpu->addr = 0x100 + cpu->sp;
                             {write_to_addr("u16_msb(cpu->pc)")}
                             cpu->sp -= 1;
                             return {InstructionStatus.Pending};
-                        case 5:
+                        case 6:
                             cpu->addr = 0x100 + cpu->sp;
                             {write_to_addr("u16_lsb(cpu->pc)")}
                             cpu->sp -= 1;
                             return {InstructionStatus.Pending};
-                        case 6:
-                            cpu->operands[0] = bus_read(state, cpu->pc++);
-                            return {InstructionStatus.Pending};
                         case 7:
-                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            {true_idle()}
                             return {InstructionStatus.Pending};
                         case 8:
                             {true_idle()}
