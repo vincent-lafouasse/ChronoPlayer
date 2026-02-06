@@ -6684,7 +6684,7 @@ enum InstructionStatus mov_reg_reg_x_a(struct SPC_State state[static 1], uint32_
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
 
-    (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+    (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
 
     /* payload */
     /* generated from generate_instructions.py: l.339 */
@@ -6730,7 +6730,7 @@ enum InstructionStatus mov_reg_reg_a_x(struct SPC_State state[static 1], uint32_
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
 
-    (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+    (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
 
     /* payload */
     /* generated from generate_instructions.py: l.339 */
@@ -6775,7 +6775,7 @@ enum InstructionStatus mov_reg_reg_x_sp(struct SPC_State state[static 1], uint32
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
 
-    (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+    (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
 
     /* payload */
     /* generated from generate_instructions.py: l.339 */
@@ -6827,7 +6827,7 @@ enum InstructionStatus mov_reg_reg_sp_x(struct SPC_State state[static 1], uint32
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
 
-    (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+    (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
 
     /* payload */
     /* generated from generate_instructions.py: l.339 */
@@ -6866,7 +6866,7 @@ enum InstructionStatus mov_reg_reg_a_y(struct SPC_State state[static 1], uint32_
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
 
-    (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+    (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
 
     /* payload */
     /* generated from generate_instructions.py: l.339 */
@@ -6888,7 +6888,7 @@ enum InstructionStatus mov_reg_reg_y_a(struct SPC_State state[static 1], uint32_
 
     if (cycle != 2) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
 
-    (void)bus_read(state, state->cpu.addr); // dummy read from the last latched address
+    (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
 
     /* payload */
     /* generated from generate_instructions.py: l.339 */
