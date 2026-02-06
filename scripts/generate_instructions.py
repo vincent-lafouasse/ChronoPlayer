@@ -3373,7 +3373,7 @@ def generate_stack_operations():
             HardcodedInstruction(
                 mnemonic=mnemonic,
                 _full_mnemonic=f"PUSH  {register_repr(src)}",
-                function_name=f"{mnemonic.lower()}_{register}",
+                function_name=f"{mnemonic.lower()}_{src}",
                 body=inspect.cleandoc(
                     f"""
                     {{
@@ -3402,7 +3402,38 @@ def generate_stack_operations():
         )
 
     def generate_pop(opcode, dest):
-        pass
+        add_instruction(
+            opcode,
+            HardcodedInstruction(
+                mnemonic=mnemonic,
+                _full_mnemonic=f"POP   {register_repr(dest)}",
+                function_name=f"{mnemonic.lower()}_{dest}",
+                body=inspect.cleandoc(
+                    f"""
+                    {{
+                        {trace_source()}
+                        struct CPU_State* const cpu = &state->cpu;
+                    
+                        if (cycle < 2 || cycle > 4) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                        switch (cycle) {{
+                            case 2:
+                                {true_idle()}
+                                return {InstructionStatus.Pending};
+                            case 3:
+                                {true_idle()}
+                                return {InstructionStatus.Pending};
+                            case 4:
+                                cpu->addr = ++(cpu->sp);
+                                cpu->{src} = bus_write(state, cpu->addr);
+                                return {InstructionStatus.Done};
+                            default:
+                                UNREACHABLE();
+                        }}
+                    }}
+                    """
+                ),
+            ),
+        )
 
 
 class PswInstruction(Instruction):
