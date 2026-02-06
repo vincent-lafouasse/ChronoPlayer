@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.5888 */
+/* generated from generate_instructions.py: l.5906 */
 
 #include "instructions.gen.h"
 
@@ -8750,7 +8750,7 @@ enum InstructionStatus dbnz_y(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x0f     BRK */
 enum InstructionStatus brk(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5703 */
+    /* generated from generate_instructions.py: l.5721 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 8) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -8760,22 +8760,22 @@ enum InstructionStatus brk(struct SPC_State state[static 1], uint32_t cycle)
             (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
-            return INSTRUCTION_STATUS_PENDING;
-        case 4:
             cpu->addr = 0x100 + cpu->sp;
             bus_write(state, cpu->addr, u16_msb(cpu->pc));
             cpu->sp -= 1;
             return INSTRUCTION_STATUS_PENDING;
-        case 5:
+        case 4:
             cpu->addr = 0x100 + cpu->sp;
             bus_write(state, cpu->addr, u16_lsb(cpu->pc));
             cpu->sp -= 1;
             return INSTRUCTION_STATUS_PENDING;
-        case 6:
+        case 5:
             cpu->addr = 0x100 + cpu->sp;
             bus_write(state, cpu->addr, cpu->status);
             cpu->sp -= 1;
+            return INSTRUCTION_STATUS_PENDING;
+        case 6:
+            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 7:
             cpu->data8[0] = bus_read(state, 0xFFDE);
@@ -9198,7 +9198,7 @@ enum InstructionStatus daa(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xef     SLEEP */
 enum InstructionStatus sleep_(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5767 */
+    /* generated from generate_instructions.py: l.5785 */
     (void)state;
     (void)cycle;
     TRACE_TRAP();
@@ -9207,7 +9207,7 @@ enum InstructionStatus sleep_(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xff     STOP */
 enum InstructionStatus stop(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5786 */
+    /* generated from generate_instructions.py: l.5804 */
     (void)state;
     (void)cycle;
     TRACE_TRAP();

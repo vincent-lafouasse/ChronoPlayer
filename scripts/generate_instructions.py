@@ -5679,16 +5679,34 @@ generate_ret_ret1()
 def generate_brk():
     """
     32d BRK
-    (1 byte, 8 cycles)
-    Following Near/TCALL-style order:
-          2: dummy read of PC
-          3: true idle
-          4: push PCH
-          5: push PCL
-          6: push PSW
-          7: read AAL from 0xFFDE
-          8: read AAH from 0xFFDF
-    Sets B=1, I=0
+    (BRK)
+    (1 byte)
+    (8 cycles)
+        1       PC      Op Code         1
+        2       SP      PCH             0
+        3       SP-1    PCL             0
+        4       SP-2    PSW             0
+        5       $FFDE   AAL             1
+        6       $FFDF   AAH             1
+        7       ??      IO              ?
+        8       ??      IO              ?
+       (1)      new PC  Op Code         1
+    * WTF with all the IO cycles? 
+    * Order of reading new addr and pushing old addr may be wrong.
+
+    actually we side with Near
+    auto SPC700::instructionBreak() -> void {
+      read(PC);                           2.dummy
+      push(PC >> 8);                      3. push hi
+      push(PC >> 0);                      4. push lo
+      push(P);                            5. push psw
+      idle();                             6. idle
+      uint16 address = read(0xffde + 0);  7. read vec lo
+      address |= read(0xffde + 1) << 8;   8. read vec hi
+      PC = address;
+      IF = 0;
+      BF = 1;
+    }
     """
 
     add_instruction(
@@ -5710,22 +5728,22 @@ def generate_brk():
                             {dummy_read_pc()}
                             return {InstructionStatus.Pending};
                         case 3:
-                            {true_idle()}
-                            return {InstructionStatus.Pending};
-                        case 4:
                             cpu->addr = 0x100 + cpu->sp;
                             {write_to_addr("u16_msb(cpu->pc)")}
                             cpu->sp -= 1;
                             return {InstructionStatus.Pending};
-                        case 5:
+                        case 4:
                             cpu->addr = 0x100 + cpu->sp;
                             {write_to_addr("u16_lsb(cpu->pc)")}
                             cpu->sp -= 1;
                             return {InstructionStatus.Pending};
-                        case 6:
+                        case 5:
                             cpu->addr = 0x100 + cpu->sp;
                             {write_to_addr("cpu->status")}
                             cpu->sp -= 1;
+                            return {InstructionStatus.Pending};
+                        case 6:
+                            {true_idle()}
                             return {InstructionStatus.Pending};
                         case 7:
                             cpu->data8[0] = bus_read(state, 0xFFDE);
