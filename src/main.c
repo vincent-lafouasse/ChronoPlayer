@@ -178,7 +178,7 @@ int16_t brr_decode_sample(const struct BRR_Block block[static 1],
     // shifts above that would overflow and saturate based on sign instead
     const uint8_t shift = brr_shift(block);
 
-    int16_t sample = brr_nibble(block, index);
+    int32_t sample = brr_nibble(block, index);
     if (shift <= 12) {
         sample = (sample << shift) >> 1;
     } else {
