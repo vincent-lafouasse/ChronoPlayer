@@ -73,8 +73,10 @@ struct BRR_Sample {
     uint16_t loop;   // where to go to block end
 };
 
-struct BRR_Sample identify_sample(const struct DSP_State dsp[static 1])
+struct BRR_Sample identify_sample(const struct SPC_State state[static 1])
 {
+    const struct DSP_State* const dsp = &state->dsp;
+
     const uint8_t sample_table_msb = dsp->registers[0x5d];
     const uint16_t sample_table = AS_U16(sample_table_msb) << 8;
     printf("samples start at 0x%04x\n", sample_table);
@@ -86,12 +88,15 @@ struct BRR_Sample identify_sample(const struct DSP_State dsp[static 1])
     const uint16_t sample_location_offset = 4 * AS_U16(voice_regs->srcn);
     const uint16_t sample_location = sample_table + sample_location_offset;
 
-    const uint16_t start_lo = sample_location;
-    const uint16_t start_hi = sample_location + 1;
-    const uint16_t loop_lo = sample_location + 2;
-    const uint16_t loop_hi = sample_location + 3;
+    const uint8_t start_lo = state->aram[sample_location];
+    const uint8_t start_hi = state->aram[sample_location + 1];
+    const uint8_t loop_lo = state->aram[sample_location + 2];
+    const uint8_t loop_hi = state->aram[sample_location + 3];
 
-    return (struct BRR_Sample){0};
+    return (struct BRR_Sample){
+        .start = u16_parse(start_lo, start_hi),
+        .loop = u16_parse(loop_lo, loop_hi),
+    };
 }
 
 int main(void)
@@ -101,5 +106,8 @@ int main(void)
     struct SPC_State spc_state;
     load_spc_or_exit(spc_path, &spc_state);
 
-    (void)identify_sample(&spc_state.dsp);
+    const struct BRR_Sample sample0 = identify_sample(&spc_state);
+    printf("Sample at:\n");
+    printf("    start: 0x%04x\n", sample0.start);
+    printf("    loop : 0x%04x\n", sample0.loop);
 }
