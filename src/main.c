@@ -7,6 +7,17 @@
 
 #include "utils.h"
 
+#define DSP_V_VOLL(voice)   ((voice) << 4 | 0x0)
+#define DSP_V_VOLR(voice)   ((voice) << 4 | 0x1)
+#define DSP_V_PITCHL(voice) ((voice) << 4 | 0x2)
+#define DSP_V_PITCHH(voice) ((voice) << 4 | 0x3)
+#define DSP_V_SRCN(voice)   ((voice) << 4 | 0x4)
+#define DSP_V_ADSR1(voice)  ((voice) << 4 | 0x5)
+#define DSP_V_ADSR2(voice)  ((voice) << 4 | 0x6)
+#define DSP_V_GAIN(voice)   ((voice) << 4 | 0x7)
+#define DSP_V_ENVX(voice)   ((voice) << 4 | 0x8)
+#define DSP_V_OUTX(voice)   ((voice) << 4 | 0x9)
+
 struct BRR_Sample {
     uint16_t start;  // where the sample starts
     uint16_t loop;   // where to go to block end
