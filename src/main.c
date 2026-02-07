@@ -99,6 +99,53 @@ struct BRR_Sample identify_sample(const struct SPC_State state[static 1])
     };
 }
 
+struct BRR_Block {
+    uint8_t header;   // ssss'ffle
+    uint8_t data[8];  // actually i4[16]
+};
+
+static inline const struct BRR_Block* brr_block_at(
+    const uint8_t aram[static 0x10000],
+    uint16_t offset)
+{
+    return (const struct BRR_Block*)(aram + offset);
+}
+
+static inline uint8_t brr_shift(const struct BRR_Block* block)
+{
+    return (block->header) >> 4;
+}
+
+static inline uint8_t brr_filter(const struct BRR_Block* block)
+{
+    return (block->header >> 2) & 0x3;
+}
+
+static inline bool brr_loop(const struct BRR_Block* block)
+{
+    return bit_at(block->header, 1);
+}
+
+static inline bool brr_end(const struct BRR_Block* block)
+{
+    return bit_at(block->header, 0);
+}
+
+static inline int8_t brr_nibble(const struct BRR_Block* block, uint8_t index)
+{
+    assert(index < 16);
+
+    const uint8_t byte = block->data[index >> 1];  // index / 2
+
+    if (index & 1) {
+        // Odd index: low nibble, sign-extend
+        return (int8_t)(byte << 4) >> 4;
+    } else {
+        // Even index: high nibble, sign-extend
+        return (int8_t)(byte & 0xf0) >> 4;
+    }
+}
+
 int main(void)
 {
     const char* spc_path = "./spc/304 Corridors of Time.spc";
