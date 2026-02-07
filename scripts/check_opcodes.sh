@@ -108,11 +108,10 @@ emit_check() {
     if [ "$cyc" = "0" ]; then
         errors="$errors  cycles: not set (ref=$ref_cycles)"
     elif echo "$ref_cycles" | grep -q '/'; then
-        # branch instruction: anomie gives "min/max"
+        # branch instruction: anomie gives "not-taken/taken", check against not-taken only
         local ref_min="${ref_cycles%/*}"
-        local ref_max="${ref_cycles#*/}"
-        if [ "$cyc" != "$ref_min" ] && [ "$cyc" != "$ref_max" ]; then
-            errors="$errors  cycles: got=$cyc ref=$ref_cycles (branch)"
+        if [ "$cyc" != "$ref_min" ]; then
+            errors="$errors  cycles: got=$cyc ref=$ref_min (branch, +2 on taken)"
         fi
     else
         if [ "$cyc" != "$ref_cycles" ]; then
