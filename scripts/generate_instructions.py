@@ -4356,12 +4356,12 @@ def generate_cbne():
                             cpu->data8[0] = bus_read(state, cpu->addr);
                             return {InstructionStatus.Pending};
                         case 5:
-                            cpu->operands[1] = bus_read(state, cpu->pc++);
-                            return {InstructionStatus.Pending};
-                        case 6:
                             {true_idle()}
                             cpu->branch_taken = (cpu->a != cpu->data8[0]);
                             return {ret};
+                        case 6:
+                            cpu->operands[1] = bus_read(state, cpu->pc++);
+                            return {InstructionStatus.Pending};
                         case 7:
                             {true_idle()}
                             return {ret};
