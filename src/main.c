@@ -110,4 +110,12 @@ int main(void)
     printf("Sample at:\n");
     printf("    start: 0x%04x\n", sample0.start);
     printf("    loop : 0x%04x\n", sample0.loop);
+
+    const uint16_t span_size = sample0.loop - sample0.start;
+    printf("\nSpan size: %u\n", span_size);
+    if (span_size % 9 != 0) {
+        printf("Weird, there's not a round number of BRR blocks\n");
+    } else {
+        printf("there are %u blocks between start and loop\n", span_size / 9);
+    }
 }
