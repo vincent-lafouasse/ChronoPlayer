@@ -18,7 +18,8 @@ struct BusEvent {
 
 #define QUEUE_SIZE 16
 
-_Static_assert((QUEUE_SIZE & (QUEUE_SIZE - 1)) == 0, "Queue size must be a power of 2");
+_Static_assert((QUEUE_SIZE & (QUEUE_SIZE - 1)) == 0,
+               "Queue size must be a power of 2");
 
 struct BusEventQueue {
     struct BusEvent events[QUEUE_SIZE];
@@ -74,7 +75,7 @@ static inline void bus_hook(void* userdata,
                             const struct SPC_State state[static 1],
                             uint16_t addr,
                             uint8_t val,
-                           enum IoType io_type)
+                            enum IoType io_type)
 {
     (void)state;
     struct BusEventQueue* queue = (struct BusEventQueue*)userdata;

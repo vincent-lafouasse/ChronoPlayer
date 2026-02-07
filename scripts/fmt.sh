@@ -1,5 +1,6 @@
 #!/bin/bash
 
-find src -name '*.c' -or -name '*.h' | \
-  grep -v -f .clang-format-ignore | \
-  xargs clang-format -i
+set -o xtrace
+
+TO_FORMAT=$(find src test -name '*.c' -or -name '*.h' | grep -v '\.gen\.' | grep -v 'utest')
+clang-format -i $TO_FORMAT
