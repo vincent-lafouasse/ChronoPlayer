@@ -8674,10 +8674,10 @@ enum InstructionStatus cbne_dp_x(struct SPC_State state[static 1], uint32_t cycl
         case 5:
             bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             cpu->branch_taken = (cpu->a != cpu->data8[0]);
-            return cpu->branch_taken ? INSTRUCTION_STATUS_PENDING : INSTRUCTION_STATUS_DONE;
+            return INSTRUCTION_STATUS_PENDING;
         case 6:
             cpu->operands[1] = bus_read(state, cpu->pc++);
-            return INSTRUCTION_STATUS_PENDING;
+            return cpu->branch_taken ? INSTRUCTION_STATUS_PENDING : INSTRUCTION_STATUS_DONE;
         case 7:
             bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return cpu->branch_taken ? INSTRUCTION_STATUS_PENDING : INSTRUCTION_STATUS_DONE;
