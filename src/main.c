@@ -229,6 +229,15 @@ int16_t brr_decode_sample(const struct BRR_Block block[static 1],
     return result;
 }
 
+void brr_decode_block(const struct BRR_Block block[static 1],
+                      uint16_t buffer[static 16],
+                      struct BRR_Context ctx[static 1])
+{
+    for (uint8_t i = 0; i < 16; i++) {
+        buffer[i] = brr_decode_sample(block, i, ctx);
+    }
+}
+
 int main(void)
 {
     const char* spc_path = "./spc/304 Corridors of Time.spc";
