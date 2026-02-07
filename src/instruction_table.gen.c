@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.6131 */
+/* generated from generate_instructions.py: l.6137 */
 
 #include "instructions.gen.h"
 
@@ -14,8 +14,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 0",
         .handler = tcall_0,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0x02] = {
         .mnemonic = "SET1",
@@ -126,8 +126,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 1",
         .handler = tcall_1,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0x12] = {
         .mnemonic = "CLR1",
@@ -238,8 +238,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 2",
         .handler = tcall_2,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0x22] = {
         .mnemonic = "SET1",
@@ -350,8 +350,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 3",
         .handler = tcall_3,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0x32] = {
         .mnemonic = "CLR1",
@@ -462,8 +462,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 4",
         .handler = tcall_4,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0x42] = {
         .mnemonic = "SET1",
@@ -574,8 +574,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 5",
         .handler = tcall_5,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0x52] = {
         .mnemonic = "CLR1",
@@ -686,8 +686,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 6",
         .handler = tcall_6,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0x62] = {
         .mnemonic = "SET1",
@@ -798,8 +798,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 7",
         .handler = tcall_7,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0x72] = {
         .mnemonic = "CLR1",
@@ -910,8 +910,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 8",
         .handler = tcall_8,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0x82] = {
         .mnemonic = "SET1",
@@ -1022,8 +1022,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 9",
         .handler = tcall_9,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0x92] = {
         .mnemonic = "CLR1",
@@ -1134,8 +1134,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 10",
         .handler = tcall_10,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0xa2] = {
         .mnemonic = "SET1",
@@ -1246,8 +1246,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 11",
         .handler = tcall_11,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0xb2] = {
         .mnemonic = "CLR1",
@@ -1358,8 +1358,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 12",
         .handler = tcall_12,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0xc2] = {
         .mnemonic = "SET1",
@@ -1470,8 +1470,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 13",
         .handler = tcall_13,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0xd2] = {
         .mnemonic = "CLR1",
@@ -1582,8 +1582,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 14",
         .handler = tcall_14,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0xe2] = {
         .mnemonic = "SET1",
@@ -1694,8 +1694,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "TCALL",
         .full_mnemonic = "TCALL 15",
         .handler = tcall_15,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 8,
     },
     [0xf2] = {
         .mnemonic = "CLR1",

@@ -3873,6 +3873,12 @@ class TCallInstruction(Instruction):
         self.n = n
         self.vector = 0xFFC0 + (15 - self.n) * 2
 
+    def length(self):
+        return 1
+
+    def cycles(self):
+        return 8
+
     def name(self):
         return f"tcall_{self.n}"
 
