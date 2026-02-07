@@ -6,6 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <sys/fcntl.h>
+#include <unistd.h>
+
 #include "utils.h"
 
 #define DSP_V_VOLL(voice) ((voice) << 4 | 0x0)
@@ -310,14 +313,26 @@ int main(void)
     printf("    start: 0x%04x\n", instrument0.start);
     printf("    loop : 0x%04x\n", instrument0.loop);
 
-    const uint16_t span_size = instrument0.loop - instrument0.start;
-    printf("\nSpan size: %u\n", span_size);
-    if (span_size % 9 != 0) {
-        printf("Weird, there's not a round number of BRR blocks\n");
-    } else {
-        printf("there are %u blocks between start and loop\n", span_size / 9);
+    int fd = open("instrument.pcm", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (fd < 0) {
+        perror("Failed to open instrument.pcm");
+        return 1;
     }
-    printf("\n");
 
-    brr_block_log(brr_block_at(spc_state.aram, instrument0.start));
+    size_t len;
+    int16_t* pcm = extract_instrument(&instrument0, spc_state.aram, &len);
+
+    ssize_t written = write(fd, pcm, len * sizeof(*pcm));
+    if (written < 0) {
+        perror("Failed to write PCM data");
+        free(pcm);
+        close(fd);
+        return 1;
+    }
+
+    printf("\nWrote %zu samples (%zu bytes) to instrument.pcm\n", len,
+           len * sizeof(*pcm));
+
+    free(pcm);
+    close(fd);
 }
