@@ -2425,7 +2425,7 @@ def generate_indexed_indirect_register():
             mnemonic="MOV",
             _full_mnemonic="MOV   [d+X],A",
             function_name="mov_indexed_indirect_register",
-            length_cycles=[1, 4],
+            length_cycles=[2, 7],
             body=inspect.cleandoc(
                 f"""
             {{
@@ -2492,7 +2492,7 @@ def generate_indirect_indexed_register():
             mnemonic="MOV",
             _full_mnemonic="MOV   [d]+Y,A",
             function_name="mov_indirect_indexed_register",
-            length_cycles=[1, 4],
+            length_cycles=[2, 7],
             body=inspect.cleandoc(
                 f"""
             {{
@@ -2560,7 +2560,7 @@ def generate_absolute_register():
                 mnemonic="MOV",
                 _full_mnemonic=f"MOV   !a, {reg}",
                 function_name=f"mov_absolute_{reg}",
-                length_cycles=[1, 4],
+                length_cycles=[3, 5],
                 body=inspect.cleandoc(
                     f"""
                 {{
@@ -2625,7 +2625,7 @@ def generate_absolute_indexed_register():
                 mnemonic="MOV",
                 _full_mnemonic=f"MOV   !a+{reg}, A",
                 function_name=f"mov_absolute_indexed_{reg}",
-                length_cycles=[1, 4],
+                length_cycles=[3, 6],
                 body=inspect.cleandoc(
                     f"""
                 {{
