@@ -232,7 +232,7 @@ int16_t brr_decode_sample(const struct BRR_Block block[static 1],
 }
 
 void brr_decode_block(const struct BRR_Block block[static 1],
-                      uint16_t buffer[static 16],
+                      int16_t buffer[static 16],
                       struct BRR_Context ctx[static 1])
 {
     for (uint8_t i = 0; i < 16; i++) {
@@ -241,6 +241,7 @@ void brr_decode_block(const struct BRR_Block block[static 1],
 }
 
 int16_t* extract_instrument(const struct VoiceInstrument instrument[static 1],
+                            const uint8_t aram[static 0x10000],
                             size_t* len_out)
 {
     const size_t capacity =
@@ -249,12 +250,29 @@ int16_t* extract_instrument(const struct VoiceInstrument instrument[static 1],
 
     int16_t* buffer = calloc(capacity, sizeof(*buffer));
     if (buffer == NULL) {
-        goto out;
+        *len_out = 0;
+        return NULL;
     }
 
     uint16_t addr = instrument->start;
+    struct BRR_Context ctx = {0};
 
-out:
+    bool stop = false;
+    do {
+        const struct BRR_Block* block = brr_block_at(aram, addr);
+
+        brr_decode_block(block, buffer + len, &ctx);
+        len += 16;
+
+        if (brr_loop(block)) {
+            addr = instrument->loop;
+        } else {
+            addr += 9;
+        }
+
+        stop = brr_end(block);
+    } while (len + 16 < capacity && !stop);
+
     *len_out = len;
     return buffer;
 }
