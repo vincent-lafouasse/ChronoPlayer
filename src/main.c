@@ -344,7 +344,7 @@ int main(void)
     char path[256] = {0};
     for (int i = 0; i < 8; i++) {
         const struct VoiceInstrument instr = get_instrument(&spc_state, i);
-        snprintf(path, sizeof(path), "instrument%i.pcm", i);
+        snprintf(path, sizeof(path), "local/instrument%i.pcm", i);
         dump_instrument(&instr, spc_state.aram, path);
         memset(path, 0, sizeof(path));
     }
