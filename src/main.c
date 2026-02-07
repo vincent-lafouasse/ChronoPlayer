@@ -37,6 +37,30 @@
 
 #define DSP_EFFC(i) ((i) << 4 | 0xf)
 
+struct DSP_VoiceRegisters {
+    uint8_t vol_left;    // $x0 VxVOLL
+    uint8_t vol_right;   // $x1 VxVOLR
+    uint8_t pitch_low;   // $x2 VxPITCHL
+    uint8_t pitch_high;  // $x3 VxPITCHH
+    uint8_t srcn;        // $x4 VxSRCN
+    uint8_t adsr1;       // $x5 VxADSR1
+    uint8_t adsr2;       // $x6 VxADSR2
+    uint8_t gain;        // $x7 VxGAIN
+    uint8_t envx;        // $x8 VxENVX
+    uint8_t outx;        // $x9 VxOUTX
+    uint8_t unused[6];   // $xA-$xF
+};
+
+struct DSP_VoiceRegisters* voice_registers(struct DSP_State dsp[static 1],
+                                           uint8_t voice)
+{
+    assert(voice < 8);
+
+    const size_t offset = AS_U16(voice) << 4;
+    const uint8_t* alias = dsp->registers + offset;
+    return (struct DSP_VoiceRegisters*)alias;
+}
+
 struct BRR_Sample {
     uint16_t start;  // where the sample starts
     uint16_t loop;   // where to go to block end
