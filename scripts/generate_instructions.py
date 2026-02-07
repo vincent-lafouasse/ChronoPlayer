@@ -3230,7 +3230,7 @@ def generate_ei_di():
                 mnemonic=mnemonic,
                 _full_mnemonic=mnemonic,
                 function_name=mnemonic.lower(),
-                length_cycles=[1, 4],
+                length_cycles=[1, 3],
                 body=inspect.cleandoc(
                     f"""
                 {{
@@ -3752,6 +3752,12 @@ class PswInstruction(Instruction):
             self.value = 1
         else:
             raise ValueError(f"invalid PSW instruction: {mnemonic}")
+
+    def length(self):
+        return 1
+
+    def cycles(self):
+        return 2
 
     def name(self):
         return self.mnemonic.lower()

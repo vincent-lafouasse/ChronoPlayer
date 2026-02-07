@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.6125 */
+/* generated from generate_instructions.py: l.6131 */
 
 #include "instructions.gen.h"
 
@@ -231,8 +231,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "CLRP",
         .full_mnemonic = "CLRP",
         .handler = clrp,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 2,
     },
     [0x21] = {
         .mnemonic = "TCALL",
@@ -455,8 +455,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "SETP",
         .full_mnemonic = "SETP",
         .handler = setp,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 2,
     },
     [0x41] = {
         .mnemonic = "TCALL",
@@ -679,8 +679,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "CLRC",
         .full_mnemonic = "CLRC",
         .handler = clrc,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 2,
     },
     [0x61] = {
         .mnemonic = "TCALL",
@@ -903,8 +903,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "SETC",
         .full_mnemonic = "SETC",
         .handler = setc,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 2,
     },
     [0x81] = {
         .mnemonic = "TCALL",
@@ -1128,7 +1128,7 @@ const struct Instruction opcode_lookup_table[256] = {
         .full_mnemonic = "EI",
         .handler = ei,
         .length = 1,
-        .cycles = 4,
+        .cycles = 3,
     },
     [0xa1] = {
         .mnemonic = "TCALL",
@@ -1352,7 +1352,7 @@ const struct Instruction opcode_lookup_table[256] = {
         .full_mnemonic = "DI",
         .handler = di,
         .length = 1,
-        .cycles = 4,
+        .cycles = 3,
     },
     [0xc1] = {
         .mnemonic = "TCALL",
@@ -1575,8 +1575,8 @@ const struct Instruction opcode_lookup_table[256] = {
         .mnemonic = "CLRV",
         .full_mnemonic = "CLRV",
         .handler = clrv,
-        .length = 0,
-        .cycles = 0,
+        .length = 1,
+        .cycles = 2,
     },
     [0xe1] = {
         .mnemonic = "TCALL",
