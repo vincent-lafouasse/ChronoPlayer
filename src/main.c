@@ -160,6 +160,36 @@ static void brr_block_log(const struct BRR_Block* block)
     }
 }
 
+// filters have a delay of 2 samples and need a 2 sample buffer
+struct BRR_Context {
+    int8_t prev;
+    int8_t prevprev;
+};
+
+int16_t brr_decode_sample(const struct BRR_Block block[static 1],
+                          uint8_t index,
+                          struct BRR_Context ctx)
+{
+    assert(index < 16);
+
+    // shift should be in 0..=12
+    // shifts above that would overflow and saturate based on sign instead
+    const uint8_t shift = brr_shift(block);
+
+    int16_t sample = brr_nibble(block, index);
+    if (shift <= 12) {
+        sample = (sample << shift) >> 1;
+    } else {
+        sample = (sample >= 0) ? 0 : -2048;
+    }
+
+    const uint8_t filter = brr_filter(block);
+    (void)filter;
+    (void)ctx;
+
+    return sample;
+}
+
 int main(void)
 {
     const char* spc_path = "./spc/304 Corridors of Time.spc";
