@@ -52,7 +52,7 @@ struct VoiceRegisters {
 };
 
 struct VoiceRegisters* voice_registers(struct DSP_State dsp[static 1],
-                                           uint8_t voice)
+                                       uint8_t voice)
 {
     assert(voice < 8);
 
@@ -61,9 +61,9 @@ struct VoiceRegisters* voice_registers(struct DSP_State dsp[static 1],
     return (struct VoiceRegisters*)alias;
 }
 
-
-const struct VoiceRegisters* voice_registers_const(const struct DSP_State dsp[static 1],
-                                           uint8_t voice)
+const struct VoiceRegisters* voice_registers_const(
+    const struct DSP_State dsp[static 1],
+    uint8_t voice)
 {
     return voice_registers((struct DSP_State*)dsp, voice);
 }
