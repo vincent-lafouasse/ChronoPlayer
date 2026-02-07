@@ -123,14 +123,14 @@ static inline uint8_t brr_filter(const struct BRR_Block* block)
     return (block->header >> 2) & 0x3;
 }
 
-static inline bool brr_loop(const struct BRR_Block* block)
+static inline bool brr_must_loop(const struct BRR_Block* block)
 {
     return bit_at(block->header, 1);
 }
 
-static inline bool brr_end(const struct BRR_Block* block)
+static inline bool brr_is_end(const struct BRR_Block* block)
 {
-    return bit_at(block->header, 0);
+    return bit_at(block->header, 0) == 0;
 }
 
 static inline int8_t brr_nibble(const struct BRR_Block* block, uint8_t index)
@@ -153,8 +153,8 @@ static void brr_block_log(const struct BRR_Block* block)
     printf("header: %02x\n", block->header);
     printf("    shift: %u\n", brr_shift(block));
     printf("    filter: %u\n", brr_filter(block));
-    printf("    loop: %u\n", brr_loop(block));
-    printf("    end: %u\n", brr_end(block));
+    printf("    loop: %u\n", brr_must_loop(block));
+    printf("    end: %u\n", brr_is_end(block));
     printf("\n");
 
     for (int i = 0; i < 16; i++) {
@@ -257,21 +257,24 @@ int16_t* extract_instrument(const struct VoiceInstrument instrument[static 1],
     uint16_t addr = instrument->start;
     struct BRR_Context ctx = {0};
 
-    bool stop = false;
     do {
         const struct BRR_Block* block = brr_block_at(aram, addr);
 
         brr_decode_block(block, buffer + len, &ctx);
         len += 16;
 
-        if (brr_loop(block)) {
-            addr = instrument->loop;
-        } else {
+        if (!brr_is_end(block)) {
             addr += 9;
+            continue;
         }
 
-        stop = brr_end(block);
-    } while (len + 16 < capacity && !stop);
+        // this is the last block, do we loop or not
+        if (brr_must_loop(block)) {
+            addr = instrument->loop;
+        } else {
+            break;
+        }
+    } while (len + 16 < capacity);
 
     *len_out = len;
     return buffer;
