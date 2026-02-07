@@ -15,7 +15,7 @@ struct BRR_Sample {
 struct BRR_Sample identify_sample(const struct DSP_State dsp[static 1])
 {
     const uint8_t sample_table_msb = dsp->registers[0x5d];
-    const uint16_t sample_table = u16_parse(0u, sample_table_msb);
+    const uint16_t sample_table = AS_U16(sample_table_msb) << 8;
     printf("samples start at 0x%04x\n", sample_table);
 
     // voice 0 only for now
