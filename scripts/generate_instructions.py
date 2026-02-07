@@ -3685,7 +3685,7 @@ def generate_psw_branches():
                 mnemonic=mnemonic,
                 _full_mnemonic=mnemonic,
                 function_name=mnemonic.lower(),
-                length_cycles=[1, 4],
+                length_cycles=[2, 2],
                 body=inspect.cleandoc(
                     f"""
                     {{
