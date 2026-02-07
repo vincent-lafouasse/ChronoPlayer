@@ -5463,11 +5463,11 @@ def generate_call_pcall():
         7       ??      IO              ?
         8       ??      IO              ?
        (1)      new PC  Op Code         1
-    * WTF with all the IO cycles? 
+    * WTF with all the IO cycles?
     * Order of reading new addr and pushing old addr may be wrong.
 
     We actually side with Near here
-    
+
     2. fetch AAL
     3. fetch AAH
     4. idle
@@ -5719,7 +5719,7 @@ def generate_brk():
         7       ??      IO              ?
         8       ??      IO              ?
        (1)      new PC  Op Code         1
-    * WTF with all the IO cycles? 
+    * WTF with all the IO cycles?
     * Order of reading new addr and pushing old addr may be wrong.
 
     actually we side with Near
