@@ -349,3 +349,27 @@ int main(void)
         memset(path, 0, sizeof(path));
     }
 }
+
+struct Voice {
+    // state
+    uint8_t step;
+
+    // adpcm data
+    uint16_t brr_pointer;
+    uint8_t brr_header;
+    uint8_t brr_data[2];
+
+    // cached registers
+    uint8_t srcn;
+    uint8_t dir;
+    uint8_t pitch_low;
+    uint8_t pitch_high;
+    uint8_t gain;
+    uint8_t adsr1;
+    uint8_t adsr2;
+
+    // pending registers
+    bool endx;
+    uint8_t outx;
+    uint8_t envx;
+};
