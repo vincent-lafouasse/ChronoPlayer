@@ -123,14 +123,16 @@ static inline uint8_t brr_filter(const struct BRR_Block* block)
     return (block->header >> 2) & 0x3;
 }
 
-static inline bool brr_must_loop(const struct BRR_Block* block)
+static inline bool brr_is_last_block(const struct BRR_Block* block)
 {
-    return bit_at(block->header, 1);
+    // END flag (bit 0): 0 = last block, 1 = continue to next block
+    return bit_at(block->header, 0) == 0;
 }
 
-static inline bool brr_is_end(const struct BRR_Block* block)
+static inline bool brr_should_loop(const struct BRR_Block* block)
 {
-    return bit_at(block->header, 0) == 0;
+    // LOOP flag (bit 1): 1 = loop back to loop point, 0 = terminate
+    return bit_at(block->header, 1);
 }
 
 static inline int8_t brr_nibble(const struct BRR_Block* block, uint8_t index)
@@ -153,8 +155,8 @@ static void brr_block_log(const struct BRR_Block* block)
     printf("header: %02x\n", block->header);
     printf("    shift: %u\n", brr_shift(block));
     printf("    filter: %u\n", brr_filter(block));
-    printf("    loop: %u\n", brr_must_loop(block));
-    printf("    end: %u\n", brr_is_end(block));
+    printf("    is_last_block: %u\n", brr_is_last_block(block));
+    printf("    should_loop: %u\n", brr_should_loop(block));
     printf("\n");
 
     for (int i = 0; i < 16; i++) {
@@ -277,16 +279,18 @@ int16_t* extract_instrument(const struct VoiceInstrument instrument[static 1],
         brr_decode_block(block, buffer + len, &ctx);
         len += 16;
 
-        if (!brr_is_end(block)) {
+        // Check if we've reached the last block
+        if (!brr_is_last_block(block)) {
+            // Not the last block yet, continue to next block
             addr += 9;
             continue;
         }
 
-        // this is the last block, do we loop or not
-        if (brr_must_loop(block)) {
-            addr = instrument->loop;
+        // We've reached the last block - should we loop or terminate?
+        if (brr_should_loop(block)) {
+            addr = instrument->loop;  // Loop back to loop point
         } else {
-            break;
+            break;  // Terminate: no loop flag set
         }
     } while (len + 16 < capacity);
 
