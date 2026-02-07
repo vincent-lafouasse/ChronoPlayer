@@ -68,12 +68,13 @@ const struct VoiceRegisters* voice_registers_const(
     return voice_registers((struct DSP_State*)dsp, voice);
 }
 
-struct BRR_Sample {
+struct VoiceInstrument {
     uint16_t start;  // where the sample starts
     uint16_t loop;   // where to go to block end
 };
 
-struct BRR_Sample identify_sample(const struct SPC_State state[static 1])
+struct VoiceInstrument identify_instrument(
+    const struct SPC_State state[static 1])
 {
     const struct DSP_State* const dsp = &state->dsp;
 
@@ -93,7 +94,7 @@ struct BRR_Sample identify_sample(const struct SPC_State state[static 1])
     const uint8_t loop_lo = state->aram[sample_location + 2];
     const uint8_t loop_hi = state->aram[sample_location + 3];
 
-    return (struct BRR_Sample){
+    return (struct VoiceInstrument){
         .start = u16_parse(start_lo, start_hi),
         .loop = u16_parse(loop_lo, loop_hi),
     };
@@ -245,12 +246,12 @@ int main(void)
     struct SPC_State spc_state;
     load_spc_or_exit(spc_path, &spc_state);
 
-    const struct BRR_Sample sample0 = identify_sample(&spc_state);
-    printf("Sample at:\n");
-    printf("    start: 0x%04x\n", sample0.start);
-    printf("    loop : 0x%04x\n", sample0.loop);
+    const struct VoiceInstrument instrument0 = identify_instrument(&spc_state);
+    printf("Instrument at:\n");
+    printf("    start: 0x%04x\n", instrument0.start);
+    printf("    loop : 0x%04x\n", instrument0.loop);
 
-    const uint16_t span_size = sample0.loop - sample0.start;
+    const uint16_t span_size = instrument0.loop - instrument0.start;
     printf("\nSpan size: %u\n", span_size);
     if (span_size % 9 != 0) {
         printf("Weird, there's not a round number of BRR blocks\n");
@@ -259,5 +260,5 @@ int main(void)
     }
     printf("\n");
 
-    brr_block_log(brr_block_at(spc_state.aram, sample0.start));
+    brr_block_log(brr_block_at(spc_state.aram, instrument0.start));
 }
