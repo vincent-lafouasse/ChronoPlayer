@@ -172,6 +172,12 @@ class AddressingMode:
     def render(self, mnemonic, payload):
         raise ValueError("cannot render base class")
 
+    def cycles(self):
+        return 0
+
+    def length(self):
+        return 0
+
 
 class Instruction:
     def __init__(self, mnemonic):
@@ -188,6 +194,12 @@ class Instruction:
 
     def render(self):
         raise NotImplementedError("can't call base Instruction.render()")
+
+    def cycles(self):
+        return 0
+
+    def length(self):
+        return 0
 
     def print(self):
         print(self.render())
@@ -206,23 +218,37 @@ class TemplateInstruction(Instruction):
     def name(self):
         return self.mode.name(self.mnemonic)
 
+    def cycles(self):
+        return self.mode.cycles()
+
+    def length(self):
+        return self.mode.length()
+
     def render(self):
         lines = self.mode.render(self.mnemonic, self.payload)
         return "\n".join(lines)
 
 
 class HardcodedInstruction(Instruction):
-    def __init__(self, mnemonic, _full_mnemonic, function_name, body):
+    def __init__(self, mnemonic, _full_mnemonic, function_name, length_cycles, body):
         super().__init__(mnemonic)
         self.function_name = function_name
         self.lines = body.splitlines()
         self._full_mnemonic = _full_mnemonic
+
+        self._length, self._cycles = length_cycles
 
     def full_mnemonic(self):
         return self._full_mnemonic
 
     def name(self):
         return self.function_name
+
+    def cycles(self):
+        return self._cycles
+
+    def length(self):
+        return self._length
 
     def render(self):
         return "\n".join([self.declaration()] + self.lines)
@@ -557,6 +583,7 @@ add_instruction(
         mnemonic="NOP",
         _full_mnemonic="NOP",
         function_name="nop",
+        length_cycles=[1, 2],
         body=inspect.cleandoc(
             f"""
             {{
@@ -588,11 +615,16 @@ class RegisterImmediateMode(AddressingMode):
 
     def __init__(self, register):
         super().__init__()
-        self.cycles = 2
         allowed_registers = [Register.A, Register.X, Register.Y]
         if register not in allowed_registers:
             raise ValueError(f"Disallowed register for Register, Immediate: {register}")
         self.register = register
+
+    def cycles(self):
+        return 2
+
+    def length(self):
+        return 2
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_immediate_{self.register}"
@@ -818,7 +850,12 @@ class RegisterDirectMode(AddressingMode):
     def __init__(self, register):
         super().__init__()
         self.register = register
-        self.cycles = 3
+
+    def cycles(self):
+        return 3
+
+    def length(self):
+        return 2
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_direct_{self.register}"
@@ -831,7 +868,7 @@ class RegisterDirectMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -966,9 +1003,14 @@ class RegisterDirectIndexedMode(AddressingMode):
 
     def __init__(self, dst, src):
         super().__init__()
-        self.cycles = 4
         self.dst = dst
         self.src = src
+
+    def length(self):
+        return 2
+
+    def cycles(self):
+        return 4
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_direct_indexed_{self.dst}_{self.src}"
@@ -981,7 +1023,7 @@ class RegisterDirectIndexedMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -1110,7 +1152,12 @@ class RegisterIndirectMode(AddressingMode):
 
     def __init__(self):
         super().__init__()
-        self.cycles = 3
+
+    def length(self):
+        return 1
+
+    def cycles(self):
+        return 3
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_indirect"
@@ -1123,7 +1170,7 @@ class RegisterIndirectMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -1233,6 +1280,7 @@ def generate_register_indirect_incremented():
             mnemonic="MOV",
             _full_mnemonic="MOV   A, (X)+",
             function_name="mov_register_indirect_incremented",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -1285,7 +1333,12 @@ class RegisterIndexedIndirectMode(AddressingMode):
 
     def __init__(self):
         super().__init__()
-        self.cycles = 6
+
+    def length(self):
+        return 2
+
+    def cycles(self):
+        return 6
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_indexed_indirect"
@@ -1298,7 +1351,7 @@ class RegisterIndexedIndirectMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -1430,7 +1483,12 @@ class RegisterIndirectIndexedMode(AddressingMode):
 
     def __init__(self):
         super().__init__()
-        self.cycles = 6
+
+    def length(self):
+        return 2
+
+    def cycles(self):
+        return 6
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_indirect_indexed"
@@ -1443,7 +1501,7 @@ class RegisterIndirectIndexedMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -1567,8 +1625,13 @@ class RegisterAbsolute(AddressingMode):
 
     def __init__(self, reg):
         super().__init__()
-        self.cycles = 4
         self.reg = reg
+
+    def length(self):
+        return 3
+
+    def cycles(self):
+        return 4
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_absolute_{self.reg}"
@@ -1581,7 +1644,7 @@ class RegisterAbsolute(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -1733,8 +1796,13 @@ class RegisterAbsoluteIndexed(AddressingMode):
 
     def __init__(self, reg):
         super().__init__()
-        self.cycles = 5
         self.reg = reg
+
+    def length(self):
+        return 3
+
+    def cycles(self):
+        return 5
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_register_absolute_indexed_{self.reg}"
@@ -1747,7 +1815,7 @@ class RegisterAbsoluteIndexed(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -1933,7 +2001,12 @@ class DirectImmediateMode(AddressingMode):
 
     def __init__(self):
         super().__init__()
-        self.cycles = 5
+
+    def length(self):
+        return 3
+
+    def cycles(self):
+        return 5
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_direct_immediate"
@@ -1946,7 +2019,7 @@ class DirectImmediateMode(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -2063,8 +2136,13 @@ class DirectRegister(AddressingMode):
 
     def __init__(self, reg):
         super().__init__()
-        self.cycles = 4
         self.reg = reg
+
+    def length(self):
+        return 2
+
+    def cycles(self):
+        return 4
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_direct_register_{self.reg}"
@@ -2077,7 +2155,7 @@ class DirectRegister(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -2156,10 +2234,14 @@ class DirectIndexedRegister(AddressingMode):
 
     def __init__(self, dest, src):
         super().__init__()
-        self.cycles = 5
-        self.len = 2
         self.dest = dest
         self.src = src
+
+    def length(self):
+        return 2
+
+    def cycles(self):
+        return 5
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_direct_indexed_register_{self.dest}_{self.src}"
@@ -2172,7 +2254,7 @@ class DirectIndexedRegister(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -2255,6 +2337,7 @@ def generate_Anomie_13():
             mnemonic="MOV",
             _full_mnemonic="MOV   (X), A",
             function_name="mov_indirect_register",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -2289,6 +2372,7 @@ def generate_Anomie_13():
             mnemonic="MOV",
             _full_mnemonic="MOV   (X)+, A",
             function_name="mov_indirect_incremented_register",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -2341,6 +2425,7 @@ def generate_indexed_indirect_register():
             mnemonic="MOV",
             _full_mnemonic="MOV   [d+X],A",
             function_name="mov_indexed_indirect_register",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
             {{
@@ -2407,6 +2492,7 @@ def generate_indirect_indexed_register():
             mnemonic="MOV",
             _full_mnemonic="MOV   [d]+Y,A",
             function_name="mov_indirect_indexed_register",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
             {{
@@ -2474,6 +2560,7 @@ def generate_absolute_register():
                 mnemonic="MOV",
                 _full_mnemonic=f"MOV   !a, {reg}",
                 function_name=f"mov_absolute_{reg}",
+                length_cycles=[1, 4],
                 body=inspect.cleandoc(
                     f"""
                 {{
@@ -2538,6 +2625,7 @@ def generate_absolute_indexed_register():
                 mnemonic="MOV",
                 _full_mnemonic=f"MOV   !a+{reg}, A",
                 function_name=f"mov_absolute_indexed_{reg}",
+                length_cycles=[1, 4],
                 body=inspect.cleandoc(
                     f"""
                 {{
@@ -2602,7 +2690,13 @@ class DirectDirect(AddressingMode):
 
     def __init__(self):
         super().__init__()
-        self.cycles = 6
+
+    def length(self):
+        return 3
+
+    def cycles(self):
+        # MOV dd,ds is actually hardcoded
+        return 6
 
     def name(self, mnemonic):
         if mnemonic == "MOV":
@@ -2617,7 +2711,7 @@ class DirectDirect(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -2718,6 +2812,7 @@ class DirectDirect(AddressingMode):
                 mnemonic="MOV",
                 _full_mnemonic=f"MOV   dd, ds",
                 function_name=f"mov_direct_direct",
+                length_cycles=[1, 4],
                 body=inspect.cleandoc(
                     f"""
                 {{
@@ -2772,7 +2867,12 @@ class IndirectIndirect(AddressingMode):
 
     def __init__(self):
         super().__init__()
-        self.cycles = 5
+
+    def length(self):
+        return 1
+
+    def cycles(self):
+        return 5
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_indirect_indirect"
@@ -2785,7 +2885,7 @@ class IndirectIndirect(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -2892,8 +2992,13 @@ class Direct(AddressingMode):
 
     def __init__(self, bit=None):
         super().__init__()
-        self.cycles = 4
         self.bit = bit
+
+    def length(self):
+        return 2
+
+    def cycles(self):
+        return 4
 
     def name(self, mnemonic):
         bit_str = f"_{self.bit}" if self.bit else ""
@@ -2907,7 +3012,7 @@ class Direct(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -3037,6 +3142,7 @@ def generate_not1():
             mnemonic="NOT1",
             _full_mnemonic=f"NOT1  m.b",
             function_name=f"not1",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
             {{
@@ -3084,6 +3190,7 @@ def generate_notc():
             mnemonic="NOTC",
             _full_mnemonic=f"NOTC",
             function_name=f"notc",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
             {{
@@ -3123,6 +3230,7 @@ def generate_ei_di():
                 mnemonic=mnemonic,
                 _full_mnemonic=mnemonic,
                 function_name=mnemonic.lower(),
+                length_cycles=[1, 4],
                 body=inspect.cleandoc(
                     f"""
                 {{
@@ -3169,7 +3277,12 @@ class DirectIndexed(AddressingMode):
 
     def __init__(self):
         super().__init__()
-        self.cycles = 5
+
+    def length(self):
+        return 2
+
+    def cycles(self):
+        return 5
 
     def name(self, mnemonic):
         return f"{mnemonic.lower()}_direct_indexed"
@@ -3182,7 +3295,7 @@ class DirectIndexed(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -3294,7 +3407,13 @@ class Absolute(AddressingMode):
 
     def __init__(self):
         super().__init__()
-        self.cycles = 5
+
+    def length(self):
+        return 3
+
+    def cycles(self):
+        # TSET1 TCLR1 are hardcoded
+        return 5
 
     def name(self, mnemonic):
         if mnemonic in ["TSET1", "TCLR1"]:
@@ -3309,7 +3428,7 @@ class Absolute(AddressingMode):
                 {trace_source()}
                 struct CPU_State* const cpu = &state->cpu;
 
-                if (cycle < 2 || cycle > {self.cycles}) {{ return {InstructionStatus.UnexpectedCycle}; }}
+                if (cycle < 2 || cycle > {self.cycles()}) {{ return {InstructionStatus.UnexpectedCycle}; }}
 
                 switch (cycle) {{
                     case 2:
@@ -3412,6 +3531,7 @@ def generate_register_alu_implied():
                 mnemonic=mnemonic,
                 _full_mnemonic=f"{mnemonic}   {register.upper()}",
                 function_name=f"{mnemonic.lower()}_{register}",
+                length_cycles=[1, 4],
                 body=inspect.cleandoc(
                     f"""
                     {{
@@ -3466,6 +3586,7 @@ def generate_stack_operations():
                 mnemonic="PUSH",
                 _full_mnemonic=f"PUSH  {register_repr(src)}",
                 function_name=f"push_{src}",
+                length_cycles=[1, 4],
                 body=inspect.cleandoc(
                     f"""
                     {{
@@ -3501,6 +3622,7 @@ def generate_stack_operations():
                 mnemonic="POP",
                 _full_mnemonic=f"POP   {register_repr(dest)}",
                 function_name=f"pop_{dest}",
+                length_cycles=[1, 4],
                 body=inspect.cleandoc(
                     f"""
                     {{
@@ -3563,6 +3685,7 @@ def generate_psw_branches():
                 mnemonic=mnemonic,
                 _full_mnemonic=mnemonic,
                 function_name=mnemonic.lower(),
+                length_cycles=[1, 4],
                 body=inspect.cleandoc(
                     f"""
                     {{
@@ -3903,6 +4026,7 @@ def generate_bbc_bbs():
                 mnemonic=mnemonic,
                 _full_mnemonic=full_mn,
                 function_name=fname,
+                length_cycles=[1, 4],
                 body=inspect.cleandoc(
                     f"""
                     {{
@@ -3982,6 +4106,7 @@ def generate_daa_das():
             mnemonic="DAA",
             _full_mnemonic="DAA A",
             function_name="daa",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4022,6 +4147,7 @@ def generate_daa_das():
             mnemonic="DAS",
             _full_mnemonic="DAS A",
             function_name="das",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4073,6 +4199,7 @@ def generate_xcn():
             mnemonic="XCN",
             _full_mnemonic="XCN A",
             function_name="xcn",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4123,6 +4250,7 @@ def generate_mul():
             mnemonic="MUL",
             _full_mnemonic="MUL YA",
             function_name="mul",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4191,6 +4319,7 @@ def generate_div():
             mnemonic="DIV",
             _full_mnemonic="DIV YA, X",
             function_name="div_ya_x",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4291,6 +4420,7 @@ def generate_cbne():
             mnemonic="CBNE",
             _full_mnemonic="CBNE d, r",
             function_name="cbne_dp",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4337,6 +4467,7 @@ def generate_cbne():
             mnemonic="CBNE",
             _full_mnemonic="CBNE d+X, r",
             function_name="cbne_dp_x",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4416,6 +4547,7 @@ def generate_dbnz():
             mnemonic="DBNZ",
             _full_mnemonic="DBNZ d, r",
             function_name="dbnz_dp",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4463,6 +4595,7 @@ def generate_dbnz():
             mnemonic="DBNZ",
             _full_mnemonic="DBNZ Y, r",
             function_name="dbnz_y",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4528,6 +4661,7 @@ def generate_jmp():
             mnemonic="JMP",
             _full_mnemonic="JMP !a",
             function_name="jmp_abs",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4560,6 +4694,7 @@ def generate_jmp():
             mnemonic="JMP",
             _full_mnemonic="JMP [!a+X]",
             function_name="jmp_abs_x_indirect",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4631,6 +4766,7 @@ def generate_carry_membit():
             mnemonic="AND1",
             _full_mnemonic="AND1 C, m.b",
             function_name="and1",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4668,6 +4804,7 @@ def generate_carry_membit():
             mnemonic="AND1",
             _full_mnemonic="AND1 C, /m.b",
             function_name="and1_not",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4705,6 +4842,7 @@ def generate_carry_membit():
             mnemonic="OR1",
             _full_mnemonic="OR1 C, m.b",
             function_name="or1",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4745,6 +4883,7 @@ def generate_carry_membit():
             mnemonic="OR1",
             _full_mnemonic="OR1 C, /m.b",
             function_name="or1_not",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4785,6 +4924,7 @@ def generate_carry_membit():
             mnemonic="EOR1",
             _full_mnemonic="EOR1 C, m.b",
             function_name="eor1",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4825,6 +4965,7 @@ def generate_carry_membit():
             mnemonic="MOV1",
             _full_mnemonic="MOV1 C, m.b",
             function_name="mov1_c_membit",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4862,6 +5003,7 @@ def generate_carry_membit():
             mnemonic="MOV1",
             _full_mnemonic="MOV1 m.b, C",
             function_name="mov1_membit_c",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4925,6 +5067,7 @@ def generate_tset1_tclr1():
             mnemonic="TSET1",
             _full_mnemonic="TSET1 !a",
             function_name="tset1",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4974,6 +5117,7 @@ def generate_tset1_tclr1():
             mnemonic="TCLR1",
             _full_mnemonic="TCLR1 !a",
             function_name="tclr1",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5061,6 +5205,7 @@ def generate_word_ops():
             mnemonic="ADDW",
             _full_mnemonic="ADDW YA, d",
             function_name="addw",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5113,6 +5258,7 @@ def generate_word_ops():
             mnemonic="SUBW",
             _full_mnemonic="SUBW YA, d",
             function_name="subw",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5165,6 +5311,7 @@ def generate_word_ops():
             mnemonic="CMPW",
             _full_mnemonic="CMPW YA, d",
             function_name="cmpw",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5209,6 +5356,7 @@ def generate_word_ops():
             mnemonic="MOVW",
             _full_mnemonic="MOVW YA, d",
             function_name="movw_ya_dp",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5255,6 +5403,7 @@ def generate_word_ops():
             mnemonic="MOVW",
             _full_mnemonic="MOVW d, YA",
             function_name="movw_dp_ya",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5295,6 +5444,7 @@ def generate_word_ops():
             mnemonic="INCW",
             _full_mnemonic="INCW d",
             function_name="incw",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5348,6 +5498,7 @@ def generate_word_ops():
             mnemonic="DECW",
             _full_mnemonic="DECW d",
             function_name="decw",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5414,6 +5565,7 @@ def generate_cmp_y_dp():
             mnemonic="CMP",
             _full_mnemonic="CMP Y, d",
             function_name="cmp_y_dp",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5498,6 +5650,7 @@ def generate_call_pcall():
             mnemonic="CALL",
             _full_mnemonic="CALL !a",
             function_name="call",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5550,6 +5703,7 @@ def generate_call_pcall():
             mnemonic="PCALL",
             _full_mnemonic="PCALL u",
             function_name="pcall",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5619,6 +5773,7 @@ def generate_ret_ret1():
             mnemonic="RET",
             _full_mnemonic="RET",
             function_name="ret",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5661,6 +5816,7 @@ def generate_ret_ret1():
             mnemonic="RET1",
             _full_mnemonic="RET1",
             function_name="ret1",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5744,6 +5900,7 @@ def generate_brk():
             mnemonic="BRK",
             _full_mnemonic="BRK",
             function_name="brk",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5808,6 +5965,7 @@ def generate_sleep_stop():
             mnemonic="SLEEP",
             _full_mnemonic="SLEEP",
             function_name="sleep_",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5827,6 +5985,7 @@ def generate_sleep_stop():
             mnemonic="STOP",
             _full_mnemonic="STOP",
             function_name="stop",
+            length_cycles=[1, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5980,8 +6139,8 @@ def make_table():
                 f.write(f'        .mnemonic = "{instr.mnemonic}",\n')
                 f.write(f'        .full_mnemonic = "{instr.full_mnemonic()}",\n')
                 f.write(f"        .handler = {instr.name()},\n")
-                f.write(f"        .length = {0},\n")
-                f.write(f"        .cycles = {0},\n")
+                f.write(f"        .length = {instr.length()},\n")
+                f.write(f"        .cycles = {instr.cycles()},\n")
                 f.write(f"    }},\n")
             else:
                 f.write(f"    [{opcode:#04x}] = {{0}},\n")
@@ -5994,7 +6153,7 @@ def main():
     make_implementation()
     make_table()
 
-    #print_opcode_matrix()
+    # print_opcode_matrix()
     ok = all(op in instructions for op in range(256))
     ok = ok and len(instructions) == 256
 
