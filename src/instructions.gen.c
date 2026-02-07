@@ -6304,8 +6304,8 @@ enum InstructionStatus addw(struct SPC_State state[static 1], uint32_t cycle)
                 const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
                 const uint16_t operand = ((uint16_t)high << 8) | cpu->data8[1];
                 const uint32_t result = (uint32_t)ya + (uint32_t)operand;
-                // H flag based on low byte add
-                psw_write_half_carry(cpu, ((cpu->a ^ cpu->data8[1] ^ (uint8_t)result) & 0x10) != 0);
+                // H flag based on high byte add
+                psw_write_half_carry(cpu, ((cpu->y ^ high ^ (uint8_t)(result >> 8)) & 0x10) != 0);
                 psw_write_overflow(cpu, (~(ya ^ operand) & (ya ^ result) & 0x8000) != 0);
                 psw_write_carry(cpu, result > 0xffff);
                 cpu->a = (uint8_t)(result & 0xff);
@@ -6374,8 +6374,8 @@ enum InstructionStatus subw(struct SPC_State state[static 1], uint32_t cycle)
                 const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
                 const uint16_t operand = ((uint16_t)high << 8) | cpu->data8[1];
                 const uint32_t result = (uint32_t)ya - (uint32_t)operand;
-                // H flag based on low byte sub
-                psw_write_half_carry(cpu, ((cpu->a ^ cpu->data8[1] ^ (uint8_t)result) & 0x10) != 0);
+                // H flag based on high byte sub (inverted: H = no half-borrow)
+                psw_write_half_carry(cpu, ((cpu->y ^ high ^ (uint8_t)(result >> 8)) & 0x10) == 0);
                 psw_write_overflow(cpu, ((ya ^ operand) & (ya ^ result) & 0x8000) != 0);
                 psw_write_carry(cpu, ya >= operand);
                 cpu->a = (uint8_t)(result & 0xff);
