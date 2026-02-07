@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <string.h>
 #include <sys/fcntl.h>
 #include <unistd.h>
 
@@ -77,18 +78,16 @@ struct VoiceInstrument {
     uint16_t loop;   // where to go to block end
 };
 
-struct VoiceInstrument identify_instrument(
-    const struct SPC_State state[static 1])
+struct VoiceInstrument get_instrument(const struct SPC_State state[static 1],
+                                      size_t index)
 {
+    assert(index < 8);
+
     const struct DSP_State* const dsp = &state->dsp;
 
     const uint8_t sample_table_msb = dsp->registers[0x5d];
     const uint16_t sample_table = AS_U16(sample_table_msb) << 8;
-    printf("samples start at 0x%04x\n", sample_table);
-
-    // voice 0 only for now
-    // msn is 0
-    const struct VoiceRegisters* voice_regs = voice_registers_const(dsp, 0);
+    const struct VoiceRegisters* voice_regs = voice_registers_const(dsp, index);
 
     const uint16_t sample_location_offset = 4 * AS_U16(voice_regs->srcn);
     const uint16_t sample_location = sample_table + sample_location_offset;
@@ -301,6 +300,40 @@ int16_t* extract_instrument(const struct VoiceInstrument instrument[static 1],
     return buffer;
 }
 
+bool dump_instrument(const struct VoiceInstrument instr[static 1],
+                     const uint8_t aram[static 0x10000],
+                     const char* path)
+{
+    bool ok = true;
+    int fd = -1;
+    int16_t* pcm = NULL;
+
+    fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (fd < 0) {
+        perror("Failed to open instrument.pcm");
+        ok = false;
+        goto out;
+    }
+
+    size_t len;
+    pcm = extract_instrument(instr, aram, &len);
+
+    ssize_t written = write(fd, pcm, len * sizeof(*pcm));
+    if (written < 0) {
+        perror("Failed to write PCM data");
+        ok = false;
+        goto out;
+    }
+
+    printf("\nWrote %zu samples (%zu bytes) to %s\n", len, len * sizeof(*pcm),
+           path);
+
+out:
+    free(pcm);
+    close(fd);
+    return ok;
+}
+
 int main(void)
 {
     const char* spc_path = "./spc/304 Corridors of Time.spc";
@@ -308,31 +341,11 @@ int main(void)
     struct SPC_State spc_state;
     load_spc_or_exit(spc_path, &spc_state);
 
-    const struct VoiceInstrument instrument0 = identify_instrument(&spc_state);
-    printf("Instrument at:\n");
-    printf("    start: 0x%04x\n", instrument0.start);
-    printf("    loop : 0x%04x\n", instrument0.loop);
-
-    int fd = open("instrument.pcm", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (fd < 0) {
-        perror("Failed to open instrument.pcm");
-        return 1;
+    char path[256] = {0};
+    for (int i = 0; i < 8; i++) {
+        const struct VoiceInstrument instr = get_instrument(&spc_state, i);
+        snprintf(path, sizeof(path), "instrument%i.pcm", i);
+        dump_instrument(&instr, spc_state.aram, path);
+        memset(path, 0, sizeof(path));
     }
-
-    size_t len;
-    int16_t* pcm = extract_instrument(&instrument0, spc_state.aram, &len);
-
-    ssize_t written = write(fd, pcm, len * sizeof(*pcm));
-    if (written < 0) {
-        perror("Failed to write PCM data");
-        free(pcm);
-        close(fd);
-        return 1;
-    }
-
-    printf("\nWrote %zu samples (%zu bytes) to instrument.pcm\n", len,
-           len * sizeof(*pcm));
-
-    free(pcm);
-    close(fd);
 }
