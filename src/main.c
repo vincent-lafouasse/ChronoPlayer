@@ -168,7 +168,7 @@ struct BRR_Context {
 
 int16_t brr_decode_sample(const struct BRR_Block block[static 1],
                           uint8_t index,
-                          struct BRR_Context ctx)
+                          struct BRR_Context ctx[static 1])
 {
     assert(index < 16);
 
@@ -184,10 +184,49 @@ int16_t brr_decode_sample(const struct BRR_Block block[static 1],
     }
 
     const uint8_t filter = brr_filter(block);
-    (void)filter;
-    (void)ctx;
 
-    return sample;
+    // up to second order recursive filter
+    // uses fixed point arithmetic
+    switch (filter) {
+        case 0:
+            // filter 0 does nothing
+            break;
+
+        case 1:  // 15/16 ie +1 - 1/16
+            sample += ctx->prev - (ctx->prev >> 4);
+            break;
+
+        case 2:  // 61/32 - 15/16
+            sample += (ctx->prev << 1);
+            sample -= ((ctx->prev << 1) + ctx->prev) >> 5;
+            sample -= ctx->prevprev;
+            sample += ctx->prevprev >> 4;
+            break;
+
+        case 3:  // 115/64 - 13/16
+            sample += (ctx->prev << 1);
+            sample -= (ctx->prev + (ctx->prev << 2) + (ctx->prev << 3)) >> 6;
+            sample -= ctx->prevprev;
+            sample += ((ctx->prevprev << 1) + ctx->prevprev) >> 4;
+            break;
+    }
+
+    // Clamp to 16 bits
+    if (sample > 32767) {
+        sample = 32767;
+    }
+    if (sample < -32768) {
+        sample = -32768;
+    }
+
+    // Clip to 15 bits (drop low bit)
+    const int16_t result = sample & 0xFFFE;
+
+    // Update history
+    ctx->prevprev = ctx->prev;
+    ctx->prev = result;
+
+    return result;
 }
 
 int main(void)
