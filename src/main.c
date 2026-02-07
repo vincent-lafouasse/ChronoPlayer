@@ -164,8 +164,8 @@ static void brr_block_log(const struct BRR_Block* block)
 
 // filters have a delay of 2 samples and need a 2 sample buffer
 struct BRR_Context {
-    int8_t prev;
-    int8_t prevprev;
+    int16_t prev;
+    int16_t prevprev;
 };
 
 int16_t brr_decode_sample(const struct BRR_Block block[static 1],
