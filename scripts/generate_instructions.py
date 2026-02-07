@@ -773,6 +773,12 @@ class MovRegisterRegister(Instruction):
         self.dst = dst
         self.update_psw = dst != Register.SP
 
+    def length(self):
+        return 1
+
+    def cycles(self):
+        return 2
+
     def full_mnemonic(self):
         return f"MOV   {self.dst.name}, {self.src.name}"
 
@@ -3190,7 +3196,7 @@ def generate_notc():
             mnemonic="NOTC",
             _full_mnemonic=f"NOTC",
             function_name=f"notc",
-            length_cycles=[1, 4],
+            length_cycles=[1, 3],
             body=inspect.cleandoc(
                 f"""
             {{
@@ -3531,7 +3537,7 @@ def generate_register_alu_implied():
                 mnemonic=mnemonic,
                 _full_mnemonic=f"{mnemonic}   {register.upper()}",
                 function_name=f"{mnemonic.lower()}_{register}",
-                length_cycles=[1, 4],
+                length_cycles=[1, 2],
                 body=inspect.cleandoc(
                     f"""
                     {{
@@ -3679,13 +3685,18 @@ def generate_psw_branches():
 
         cond = conditions[mnemonic]
         ret = f"cpu->branch_taken ? {InstructionStatus.Pending} : {InstructionStatus.Done}"
+
+        if mnemonic == "BRA":
+            cycles = 4  # branch always taken
+        else:
+            cycles = 2  # implicit +2 on branch taken
         add_instruction(
             opcode,
             HardcodedInstruction(
                 mnemonic=mnemonic,
                 _full_mnemonic=mnemonic,
                 function_name=mnemonic.lower(),
-                length_cycles=[2, 2],
+                length_cycles=[2, cycles],
                 body=inspect.cleandoc(
                     f"""
                     {{
@@ -4118,7 +4129,7 @@ def generate_daa_das():
             mnemonic="DAA",
             _full_mnemonic="DAA A",
             function_name="daa",
-            length_cycles=[1, 4],
+            length_cycles=[1, 3],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4159,7 +4170,7 @@ def generate_daa_das():
             mnemonic="DAS",
             _full_mnemonic="DAS A",
             function_name="das",
-            length_cycles=[1, 4],
+            length_cycles=[1, 3],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4211,7 +4222,7 @@ def generate_xcn():
             mnemonic="XCN",
             _full_mnemonic="XCN A",
             function_name="xcn",
-            length_cycles=[1, 4],
+            length_cycles=[1, 5],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4262,7 +4273,7 @@ def generate_mul():
             mnemonic="MUL",
             _full_mnemonic="MUL YA",
             function_name="mul",
-            length_cycles=[1, 4],
+            length_cycles=[1, 9],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4331,7 +4342,7 @@ def generate_div():
             mnemonic="DIV",
             _full_mnemonic="DIV YA, X",
             function_name="div_ya_x",
-            length_cycles=[1, 4],
+            length_cycles=[1, 12],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4432,7 +4443,7 @@ def generate_cbne():
             mnemonic="CBNE",
             _full_mnemonic="CBNE d, r",
             function_name="cbne_dp",
-            length_cycles=[1, 4],
+            length_cycles=[3, 5],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4479,7 +4490,7 @@ def generate_cbne():
             mnemonic="CBNE",
             _full_mnemonic="CBNE d+X, r",
             function_name="cbne_dp_x",
-            length_cycles=[1, 4],
+            length_cycles=[3, 6],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4559,7 +4570,7 @@ def generate_dbnz():
             mnemonic="DBNZ",
             _full_mnemonic="DBNZ d, r",
             function_name="dbnz_dp",
-            length_cycles=[1, 4],
+            length_cycles=[3, 5],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4607,7 +4618,7 @@ def generate_dbnz():
             mnemonic="DBNZ",
             _full_mnemonic="DBNZ Y, r",
             function_name="dbnz_y",
-            length_cycles=[1, 4],
+            length_cycles=[2, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4673,7 +4684,7 @@ def generate_jmp():
             mnemonic="JMP",
             _full_mnemonic="JMP !a",
             function_name="jmp_abs",
-            length_cycles=[1, 4],
+            length_cycles=[3, 3],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4706,7 +4717,7 @@ def generate_jmp():
             mnemonic="JMP",
             _full_mnemonic="JMP [!a+X]",
             function_name="jmp_abs_x_indirect",
-            length_cycles=[1, 4],
+            length_cycles=[3, 6],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5079,7 +5090,7 @@ def generate_tset1_tclr1():
             mnemonic="TSET1",
             _full_mnemonic="TSET1 !a",
             function_name="tset1",
-            length_cycles=[1, 4],
+            length_cycles=[3, 6],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5129,7 +5140,7 @@ def generate_tset1_tclr1():
             mnemonic="TCLR1",
             _full_mnemonic="TCLR1 !a",
             function_name="tclr1",
-            length_cycles=[1, 4],
+            length_cycles=[3, 6],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5577,7 +5588,7 @@ def generate_cmp_y_dp():
             mnemonic="CMP",
             _full_mnemonic="CMP Y, d",
             function_name="cmp_y_dp",
-            length_cycles=[1, 4],
+            length_cycles=[2, 3],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5662,7 +5673,7 @@ def generate_call_pcall():
             mnemonic="CALL",
             _full_mnemonic="CALL !a",
             function_name="call",
-            length_cycles=[1, 4],
+            length_cycles=[3, 8],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5715,7 +5726,7 @@ def generate_call_pcall():
             mnemonic="PCALL",
             _full_mnemonic="PCALL u",
             function_name="pcall",
-            length_cycles=[1, 4],
+            length_cycles=[2, 6],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5785,7 +5796,7 @@ def generate_ret_ret1():
             mnemonic="RET",
             _full_mnemonic="RET",
             function_name="ret",
-            length_cycles=[1, 4],
+            length_cycles=[1, 5],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5828,7 +5839,7 @@ def generate_ret_ret1():
             mnemonic="RET1",
             _full_mnemonic="RET1",
             function_name="ret1",
-            length_cycles=[1, 4],
+            length_cycles=[1, 6],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5912,7 +5923,7 @@ def generate_brk():
             mnemonic="BRK",
             _full_mnemonic="BRK",
             function_name="brk",
-            length_cycles=[1, 4],
+            length_cycles=[1, 8],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5977,7 +5988,7 @@ def generate_sleep_stop():
             mnemonic="SLEEP",
             _full_mnemonic="SLEEP",
             function_name="sleep_",
-            length_cycles=[1, 4],
+            length_cycles=[1, 3],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5997,7 +6008,7 @@ def generate_sleep_stop():
             mnemonic="STOP",
             _full_mnemonic="STOP",
             function_name="stop",
-            length_cycles=[1, 4],
+            length_cycles=[1, 3],
             body=inspect.cleandoc(
                 f"""
                 {{
