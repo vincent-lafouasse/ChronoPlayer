@@ -2812,7 +2812,7 @@ class DirectDirect(AddressingMode):
                 mnemonic="MOV",
                 _full_mnemonic=f"MOV   dd, ds",
                 function_name=f"mov_direct_direct",
-                length_cycles=[1, 4],
+                length_cycles=[3, 5],
                 body=inspect.cleandoc(
                     f"""
                 {{
@@ -3142,7 +3142,7 @@ def generate_not1():
             mnemonic="NOT1",
             _full_mnemonic=f"NOT1  m.b",
             function_name=f"not1",
-            length_cycles=[1, 4],
+            length_cycles=[3, 5],
             body=inspect.cleandoc(
                 f"""
             {{
@@ -4778,7 +4778,7 @@ def generate_carry_membit():
             mnemonic="AND1",
             _full_mnemonic="AND1 C, m.b",
             function_name="and1",
-            length_cycles=[1, 4],
+            length_cycles=[3, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4816,7 +4816,7 @@ def generate_carry_membit():
             mnemonic="AND1",
             _full_mnemonic="AND1 C, /m.b",
             function_name="and1_not",
-            length_cycles=[1, 4],
+            length_cycles=[3, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4854,7 +4854,7 @@ def generate_carry_membit():
             mnemonic="OR1",
             _full_mnemonic="OR1 C, m.b",
             function_name="or1",
-            length_cycles=[1, 4],
+            length_cycles=[3, 5],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4895,7 +4895,7 @@ def generate_carry_membit():
             mnemonic="OR1",
             _full_mnemonic="OR1 C, /m.b",
             function_name="or1_not",
-            length_cycles=[1, 4],
+            length_cycles=[3, 5],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4936,7 +4936,7 @@ def generate_carry_membit():
             mnemonic="EOR1",
             _full_mnemonic="EOR1 C, m.b",
             function_name="eor1",
-            length_cycles=[1, 4],
+            length_cycles=[3, 5],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -4977,7 +4977,7 @@ def generate_carry_membit():
             mnemonic="MOV1",
             _full_mnemonic="MOV1 C, m.b",
             function_name="mov1_c_membit",
-            length_cycles=[1, 4],
+            length_cycles=[3, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5015,7 +5015,7 @@ def generate_carry_membit():
             mnemonic="MOV1",
             _full_mnemonic="MOV1 m.b, C",
             function_name="mov1_membit_c",
-            length_cycles=[1, 4],
+            length_cycles=[3, 6],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5217,7 +5217,7 @@ def generate_word_ops():
             mnemonic="ADDW",
             _full_mnemonic="ADDW YA, d",
             function_name="addw",
-            length_cycles=[1, 4],
+            length_cycles=[2, 5],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5270,7 +5270,7 @@ def generate_word_ops():
             mnemonic="SUBW",
             _full_mnemonic="SUBW YA, d",
             function_name="subw",
-            length_cycles=[1, 4],
+            length_cycles=[2, 5],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5323,7 +5323,7 @@ def generate_word_ops():
             mnemonic="CMPW",
             _full_mnemonic="CMPW YA, d",
             function_name="cmpw",
-            length_cycles=[1, 4],
+            length_cycles=[2, 4],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5368,7 +5368,7 @@ def generate_word_ops():
             mnemonic="MOVW",
             _full_mnemonic="MOVW YA, d",
             function_name="movw_ya_dp",
-            length_cycles=[1, 4],
+            length_cycles=[2, 5],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5415,7 +5415,7 @@ def generate_word_ops():
             mnemonic="MOVW",
             _full_mnemonic="MOVW d, YA",
             function_name="movw_dp_ya",
-            length_cycles=[1, 4],
+            length_cycles=[2, 5],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5456,7 +5456,7 @@ def generate_word_ops():
             mnemonic="INCW",
             _full_mnemonic="INCW d",
             function_name="incw",
-            length_cycles=[1, 4],
+            length_cycles=[2, 6],
             body=inspect.cleandoc(
                 f"""
                 {{
@@ -5510,7 +5510,7 @@ def generate_word_ops():
             mnemonic="DECW",
             _full_mnemonic="DECW d",
             function_name="decw",
-            length_cycles=[1, 4],
+            length_cycles=[2, 6],
             body=inspect.cleandoc(
                 f"""
                 {{
