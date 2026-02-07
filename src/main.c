@@ -37,7 +37,7 @@
 
 #define DSP_EFFC(i) ((i) << 4 | 0xf)
 
-struct DSP_VoiceRegisters {
+struct VoiceRegisters {
     uint8_t vol_left;    // $x0 VxVOLL
     uint8_t vol_right;   // $x1 VxVOLR
     uint8_t pitch_low;   // $x2 VxPITCHL
@@ -51,14 +51,14 @@ struct DSP_VoiceRegisters {
     uint8_t unused[6];   // $xA-$xF
 };
 
-struct DSP_VoiceRegisters* voice_registers(struct DSP_State dsp[static 1],
+struct VoiceRegisters* voice_registers(struct DSP_State dsp[static 1],
                                            uint8_t voice)
 {
     assert(voice < 8);
 
     const size_t offset = AS_U16(voice) << 4;
     const uint8_t* alias = dsp->registers + offset;
-    return (struct DSP_VoiceRegisters*)alias;
+    return (struct VoiceRegisters*)alias;
 }
 
 struct BRR_Sample {
