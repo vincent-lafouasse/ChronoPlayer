@@ -61,6 +61,13 @@ struct VoiceRegisters* voice_registers(struct DSP_State dsp[static 1],
     return (struct VoiceRegisters*)alias;
 }
 
+
+const struct VoiceRegisters* voice_registers_const(const struct DSP_State dsp[static 1],
+                                           uint8_t voice)
+{
+    return voice_registers((struct DSP_State*)dsp, voice);
+}
+
 struct BRR_Sample {
     uint16_t start;  // where the sample starts
     uint16_t loop;   // where to go to block end
@@ -74,19 +81,17 @@ struct BRR_Sample identify_sample(const struct DSP_State dsp[static 1])
 
     // voice 0 only for now
     // msn is 0
-    const int8_t v0_voll = (int8_t)dsp->registers[0x00];
-    const int8_t v0_volr = (int8_t)dsp->registers[0x01];
+    const struct VoiceRegisters* voice_regs = voice_registers_const(dsp, 0);
 
-    const uint8_t v0_pitch_hl = dsp->registers[0x02];
-    const uint8_t v0_pitch_hh = dsp->registers[0x03] & 0x3f;
-    const uint16_t v0_pitch = u16_parse(v0_pitch_hl, v0_pitch_hh);
+    const uint16_t sample_location_offset = 4 * AS_U16(voice_regs->srcn);
+    const uint16_t sample_location = sample_table + sample_location_offset;
 
-    const uint8_t v0_srcn = dsp->registers[0x04];
-    const uint16_t v0_sample_location = sample_table + v0_srcn;
+    const uint16_t start_lo = sample_location;
+    const uint16_t start_hi = sample_location + 1;
+    const uint16_t loop_lo = sample_location + 2;
+    const uint16_t loop_hi = sample_location + 3;
 
-    struct BRR_Sample sample = {0};
-
-    return sample;
+    return (struct BRR_Sample){0};
 }
 
 int main(void)
