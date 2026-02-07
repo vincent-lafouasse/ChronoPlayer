@@ -4038,7 +4038,7 @@ def generate_bbc_bbs():
                 mnemonic=mnemonic,
                 _full_mnemonic=full_mn,
                 function_name=fname,
-                length_cycles=[1, 4],
+                length_cycles=[3, 5],
                 body=inspect.cleandoc(
                     f"""
                     {{
