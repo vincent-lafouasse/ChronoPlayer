@@ -4,6 +4,7 @@
 
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "utils.h"
 
@@ -237,6 +238,25 @@ void brr_decode_block(const struct BRR_Block block[static 1],
     for (uint8_t i = 0; i < 16; i++) {
         buffer[i] = brr_decode_sample(block, i, ctx);
     }
+}
+
+int16_t* extract_instrument(const struct VoiceInstrument instrument[static 1],
+                            size_t* len_out)
+{
+    const size_t capacity =
+        5 * 32000;  // 5 seconds of audio at 32kHz should be fine
+    size_t len = 0;
+
+    int16_t* buffer = calloc(capacity, sizeof(*buffer));
+    if (buffer == NULL) {
+        goto out;
+    }
+
+    uint16_t addr = instrument->start;
+
+out:
+    *len_out = len;
+    return buffer;
 }
 
 int main(void)
