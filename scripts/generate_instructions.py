@@ -4472,14 +4472,14 @@ def generate_dbnz():
 
                     switch (cycle) {{
                         case 2:
-                            cpu->operands[0] = bus_read(state, cpu->pc++);
+                            {dummy_read_pc()}
                             return {InstructionStatus.Pending};
                         case 3:
                             {true_idle()}
                             cpu->y--;
                             return {InstructionStatus.Pending};
                         case 4:
-                            {true_idle()}
+                            cpu->operands[0] = bus_read(state, cpu->pc++);
                             cpu->branch_taken = (cpu->y != 0);
                             return {ret};
                         case 5:

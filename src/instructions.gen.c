@@ -8724,14 +8724,14 @@ enum InstructionStatus dbnz_y(struct SPC_State state[static 1], uint32_t cycle)
 
     switch (cycle) {
         case 2:
-            cpu->operands[0] = bus_read(state, cpu->pc++);
+            (void)bus_read(state, state->cpu.pc); // dummy read/pre-fetch
             return INSTRUCTION_STATUS_PENDING;
         case 3:
             bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             cpu->y--;
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
+            cpu->operands[0] = bus_read(state, cpu->pc++);
             cpu->branch_taken = (cpu->y != 0);
             return cpu->branch_taken ? INSTRUCTION_STATUS_PENDING : INSTRUCTION_STATUS_DONE;
         case 5:
