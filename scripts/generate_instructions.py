@@ -1,6 +1,7 @@
 from enum import StrEnum, Enum
 import inspect
 import os
+import sys
 
 
 def trace_source():
@@ -5993,7 +5994,20 @@ def main():
     make_implementation()
     make_table()
 
-    print_opcode_matrix()
+    #print_opcode_matrix()
+    ok = all(op in instructions for op in range(256))
+    ok = ok and len(instructions) == 256
+
+    GREEN = "\033[92m"
+    RED = "\033[91m"
+    RESET = "\033[0m"
+
+    if ok:
+        print(f"---- Generation: {GREEN}Ok{RESET}")
+        sys.exit(0)
+    else:
+        print(f"---- Generation: {READ}Missing opcodes{RESET}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
