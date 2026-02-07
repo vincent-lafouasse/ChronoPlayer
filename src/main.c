@@ -146,6 +146,20 @@ static inline int8_t brr_nibble(const struct BRR_Block* block, uint8_t index)
     }
 }
 
+static void brr_block_log(const struct BRR_Block* block)
+{
+    printf("header: %02x\n", block->header);
+    printf("    shift: %u\n", brr_shift(block));
+    printf("    filter: %u\n", brr_filter(block));
+    printf("    loop: %u\n", brr_loop(block));
+    printf("    end: %u\n", brr_end(block));
+    printf("\n");
+
+    for (int i = 0; i < 16; i++) {
+        printf("data[i] = %i\n", brr_nibble(block, i));
+    }
+}
+
 int main(void)
 {
     const char* spc_path = "./spc/304 Corridors of Time.spc";
@@ -165,4 +179,7 @@ int main(void)
     } else {
         printf("there are %u blocks between start and loop\n", span_size / 9);
     }
+    printf("\n");
+
+    brr_block_log(brr_block_at(spc_state.aram, sample0.start));
 }
