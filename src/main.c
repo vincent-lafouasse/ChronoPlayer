@@ -372,4 +372,18 @@ struct Voice {
     bool endx;
     uint8_t outx;
     uint8_t envx;
+
+    struct VoiceRegisters* registers;
 };
+
+// TODO: pull UNREACHABLE from instructions
+#define UNREACHABLE() exit(1);
+
+void voice_step(struct Voice voice[static 1],
+                const uint8_t aram[static 0x10000]);
+
+void voice_step1(struct Voice voice[static 1])
+{
+    voice->srcn = voice->registers->srcn;
+    voice->step += 1;
+}
