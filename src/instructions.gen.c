@@ -1,4 +1,4 @@
-/* generated from generate_instructions.py: l.5923 */
+/* generated from generate_instructions.py: l.5934 */
 
 #include "instructions.gen.h"
 
@@ -6083,7 +6083,7 @@ enum InstructionStatus or1(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x1a     DECW d */
 enum InstructionStatus decw(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5345 */
+    /* generated from generate_instructions.py: l.5353 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -6093,23 +6093,26 @@ enum InstructionStatus decw(struct SPC_State state[static 1], uint32_t cycle)
             cpu->operands[0] = bus_read(state, cpu->pc++);
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            cpu->addr = direct_page(cpu, cpu->operands[0]);
-            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->data8[0] = cpu->operands[0];
+            cpu->data8[1] = bus_read(state, direct_page(cpu, cpu->data8[0]));
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             // write back low byte (decremented)
-            cpu->data8[0]--;
-            bus_write(state, cpu->addr, cpu->data8[0]);
+            cpu->data8[1]--;
+            bus_write(state, direct_page(cpu, cpu->data8[0]), cpu->data8[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+            cpu->data8[0]++;
+            cpu->addr = direct_page(cpu, cpu->data8[0]);
+            cpu->data16 = bus_read(state, cpu->addr);
             return INSTRUCTION_STATUS_PENDING;
         case 6:
-            // borrow from low byte decrement
-            if (cpu->data8[0] == 0xff) cpu->data8[1]--;
-            bus_write(state, cpu->addr + 1, cpu->data8[1]);
             {
-                const uint16_t result = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                // borrow from low byte decrement
+                uint8_t high = (uint8_t)cpu->data16;
+                if (cpu->data8[1] == 0xff) high--;
+                bus_write(state, cpu->addr, high);
+                const uint16_t result = ((uint16_t)high << 8) | cpu->data8[1];
                 psw_write_neg(cpu, result & 0x8000);
                 psw_write_zero(cpu, result == 0);
             }
@@ -6151,7 +6154,7 @@ enum InstructionStatus or1_not(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x3a     INCW d */
 enum InstructionStatus incw(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5295 */
+    /* generated from generate_instructions.py: l.5300 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -6161,23 +6164,26 @@ enum InstructionStatus incw(struct SPC_State state[static 1], uint32_t cycle)
             cpu->operands[0] = bus_read(state, cpu->pc++);
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            cpu->addr = direct_page(cpu, cpu->operands[0]);
-            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->data8[0] = cpu->operands[0];
+            cpu->data8[1] = bus_read(state, direct_page(cpu, cpu->data8[0]));
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             // write back low byte (incremented)
-            cpu->data8[0]++;
-            bus_write(state, cpu->addr, cpu->data8[0]);
+            cpu->data8[1]++;
+            bus_write(state, direct_page(cpu, cpu->data8[0]), cpu->data8[1]);
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+            cpu->data8[0]++;
+            cpu->addr = direct_page(cpu, cpu->data8[0]);
+            cpu->data16 = bus_read(state, cpu->addr);
             return INSTRUCTION_STATUS_PENDING;
         case 6:
-            // carry from low byte increment
-            if (cpu->data8[0] == 0) cpu->data8[1]++;
-            bus_write(state, cpu->addr + 1, cpu->data8[1]);
             {
-                const uint16_t result = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                // carry from low byte increment
+                uint8_t high = (uint8_t)cpu->data16;
+                if (cpu->data8[1] == 0) high++;
+                bus_write(state, cpu->addr, high);
+                const uint16_t result = ((uint16_t)high << 8) | cpu->data8[1];
                 psw_write_neg(cpu, result & 0x8000);
                 psw_write_zero(cpu, result == 0);
             }
@@ -6216,7 +6222,7 @@ enum InstructionStatus and1(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x5a     CMPW YA, d */
 enum InstructionStatus cmpw(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5168 */
+    /* generated from generate_instructions.py: l.5170 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 4) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -6226,14 +6232,15 @@ enum InstructionStatus cmpw(struct SPC_State state[static 1], uint32_t cycle)
             cpu->operands[0] = bus_read(state, cpu->pc++);
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            cpu->addr = direct_page(cpu, cpu->operands[0]);
-            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->data8[0] = cpu->operands[0];
+            cpu->data8[1] = bus_read(state, direct_page(cpu, cpu->data8[0]));
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+            cpu->data8[0]++;
             {
+                const uint8_t high = bus_read(state, direct_page(cpu, cpu->data8[0]));
                 const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
-                const uint16_t operand = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                const uint16_t operand = ((uint16_t)high << 8) | cpu->data8[1];
                 const uint16_t result = ya - operand;
                 psw_write_carry(cpu, ya >= operand);
                 psw_write_neg(cpu, result & 0x8000);
@@ -6284,20 +6291,21 @@ enum InstructionStatus addw(struct SPC_State state[static 1], uint32_t cycle)
             cpu->operands[0] = bus_read(state, cpu->pc++);
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            cpu->addr = direct_page(cpu, cpu->operands[0]);
-            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->data8[0] = cpu->operands[0];
+            cpu->data8[1] = bus_read(state, direct_page(cpu, cpu->data8[0]));
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+            cpu->data8[0]++;
             {
+                const uint8_t high = bus_read(state, direct_page(cpu, cpu->data8[0]));
                 const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
-                const uint16_t operand = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                const uint16_t operand = ((uint16_t)high << 8) | cpu->data8[1];
                 const uint32_t result = (uint32_t)ya + (uint32_t)operand;
-                // H flag based on high byte add
-                psw_write_half_carry(cpu, ((cpu->y ^ cpu->data8[1] ^ (uint8_t)(result >> 8)) & 0x10) != 0);
+                // H flag based on low byte add
+                psw_write_half_carry(cpu, ((cpu->a ^ cpu->data8[1] ^ (uint8_t)result) & 0x10) != 0);
                 psw_write_overflow(cpu, (~(ya ^ operand) & (ya ^ result) & 0x8000) != 0);
                 psw_write_carry(cpu, result > 0xffff);
                 cpu->a = (uint8_t)(result & 0xff);
@@ -6343,7 +6351,7 @@ enum InstructionStatus eor1(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x9a     SUBW YA, d */
 enum InstructionStatus subw(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5117 */
+    /* generated from generate_instructions.py: l.5118 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -6353,20 +6361,21 @@ enum InstructionStatus subw(struct SPC_State state[static 1], uint32_t cycle)
             cpu->operands[0] = bus_read(state, cpu->pc++);
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            cpu->addr = direct_page(cpu, cpu->operands[0]);
-            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->data8[0] = cpu->operands[0];
+            cpu->data8[1] = bus_read(state, direct_page(cpu, cpu->data8[0]));
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+            cpu->data8[0]++;
             {
+                const uint8_t high = bus_read(state, direct_page(cpu, cpu->data8[0]));
                 const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
-                const uint16_t operand = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                const uint16_t operand = ((uint16_t)high << 8) | cpu->data8[1];
                 const uint32_t result = (uint32_t)ya - (uint32_t)operand;
-                // H flag based on high byte sub
-                psw_write_half_carry(cpu, ((cpu->y ^ cpu->data8[1] ^ (uint8_t)(result >> 8)) & 0x10) != 0);
+                // H flag based on low byte sub
+                psw_write_half_carry(cpu, ((cpu->a ^ cpu->data8[1] ^ (uint8_t)result) & 0x10) != 0);
                 psw_write_overflow(cpu, ((ya ^ operand) & (ya ^ result) & 0x8000) != 0);
                 psw_write_carry(cpu, ya >= operand);
                 cpu->a = (uint8_t)(result & 0xff);
@@ -6409,7 +6418,7 @@ enum InstructionStatus mov1_c_membit(struct SPC_State state[static 1], uint32_t 
 /* 0xba     MOVW YA, d */
 enum InstructionStatus movw_ya_dp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5211 */
+    /* generated from generate_instructions.py: l.5214 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -6419,17 +6428,18 @@ enum InstructionStatus movw_ya_dp(struct SPC_State state[static 1], uint32_t cyc
             cpu->operands[0] = bus_read(state, cpu->pc++);
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            cpu->addr = direct_page(cpu, cpu->operands[0]);
-            cpu->data8[0] = bus_read(state, cpu->addr);
+            cpu->data8[0] = cpu->operands[0];
+            cpu->data8[1] = bus_read(state, direct_page(cpu, cpu->data8[0]));
             return INSTRUCTION_STATUS_PENDING;
         case 4:
             bus_true_idle(state); // truly do nothing except register a IO_WAIT to the hook
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            cpu->data8[1] = bus_read(state, cpu->addr + 1);
-            cpu->a = cpu->data8[0];
-            cpu->y = cpu->data8[1];
+            cpu->data8[0]++;
             {
+                const uint8_t high = bus_read(state, direct_page(cpu, cpu->data8[0]));
+                cpu->a = cpu->data8[1];
+                cpu->y = high;
                 const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
                 psw_write_neg(cpu, ya & 0x8000);
                 psw_write_zero(cpu, ya == 0);
@@ -6475,7 +6485,7 @@ enum InstructionStatus mov1_membit_c(struct SPC_State state[static 1], uint32_t 
 /* 0xda     MOVW d, YA */
 enum InstructionStatus movw_dp_ya(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5256 */
+    /* generated from generate_instructions.py: l.5260 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -6485,15 +6495,16 @@ enum InstructionStatus movw_dp_ya(struct SPC_State state[static 1], uint32_t cyc
             cpu->operands[0] = bus_read(state, cpu->pc++);
             return INSTRUCTION_STATUS_PENDING;
         case 3:
-            cpu->addr = direct_page(cpu, cpu->operands[0]);
+            cpu->data8[0] = cpu->operands[0];
             // RMW read of low byte (discarded)
-            (void)bus_read(state, cpu->addr);
+            (void)bus_read(state, direct_page(cpu, cpu->data8[0]));
             return INSTRUCTION_STATUS_PENDING;
         case 4:
-            bus_write(state, cpu->addr, cpu->a);
+            bus_write(state, direct_page(cpu, cpu->data8[0]), cpu->a);
             return INSTRUCTION_STATUS_PENDING;
         case 5:
-            bus_write(state, cpu->addr + 1, cpu->y);
+            cpu->data8[0]++;
+            bus_write(state, direct_page(cpu, cpu->data8[0]), cpu->y);
             return INSTRUCTION_STATUS_DONE;
         default:
             UNREACHABLE();
@@ -8474,7 +8485,7 @@ enum InstructionStatus dbnz_dp(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x7e     CMP Y, d */
 enum InstructionStatus cmp_y_dp(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5408 */
+    /* generated from generate_instructions.py: l.5419 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 3) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -8750,7 +8761,7 @@ enum InstructionStatus dbnz_y(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x0f     BRK */
 enum InstructionStatus brk(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5738 */
+    /* generated from generate_instructions.py: l.5749 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 8) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -8851,7 +8862,7 @@ enum InstructionStatus bra(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x3f     CALL !a */
 enum InstructionStatus call(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5492 */
+    /* generated from generate_instructions.py: l.5503 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 8) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -8892,7 +8903,7 @@ enum InstructionStatus call(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x4f     PCALL u */
 enum InstructionStatus pcall(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5544 */
+    /* generated from generate_instructions.py: l.5555 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -8947,7 +8958,7 @@ enum InstructionStatus jmp_abs(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x6f     RET */
 enum InstructionStatus ret(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5613 */
+    /* generated from generate_instructions.py: l.5624 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 5) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -8978,7 +8989,7 @@ enum InstructionStatus ret(struct SPC_State state[static 1], uint32_t cycle)
 /* 0x7f     RET1 */
 enum InstructionStatus ret1(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5655 */
+    /* generated from generate_instructions.py: l.5666 */
     struct CPU_State* const cpu = &state->cpu;
 
     if (cycle < 2 || cycle > 6) { return INSTRUCTION_STATUS_UNEXPECTED_CYCLE; }
@@ -9196,7 +9207,7 @@ enum InstructionStatus daa(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xef     SLEEP */
 enum InstructionStatus sleep_(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5802 */
+    /* generated from generate_instructions.py: l.5813 */
     (void)state;
     (void)cycle;
     TRACE_TRAP();
@@ -9205,7 +9216,7 @@ enum InstructionStatus sleep_(struct SPC_State state[static 1], uint32_t cycle)
 /* 0xff     STOP */
 enum InstructionStatus stop(struct SPC_State state[static 1], uint32_t cycle)
 {
-    /* generated from generate_instructions.py: l.5821 */
+    /* generated from generate_instructions.py: l.5832 */
     (void)state;
     (void)cycle;
     TRACE_TRAP();

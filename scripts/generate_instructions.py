@@ -5073,20 +5073,21 @@ def generate_word_ops():
                             cpu->operands[0] = bus_read(state, cpu->pc++);
                             return {InstructionStatus.Pending};
                         case 3:
-                            cpu->addr = direct_page(cpu, cpu->operands[0]);
-                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            cpu->data8[0] = cpu->operands[0];
+                            cpu->data8[1] = bus_read(state, direct_page(cpu, cpu->data8[0]));
                             return {InstructionStatus.Pending};
                         case 4:
                             {true_idle()}
                             return {InstructionStatus.Pending};
                         case 5:
-                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+                            cpu->data8[0]++;
                             {{
+                                const uint8_t high = bus_read(state, direct_page(cpu, cpu->data8[0]));
                                 const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
-                                const uint16_t operand = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                                const uint16_t operand = ((uint16_t)high << 8) | cpu->data8[1];
                                 const uint32_t result = (uint32_t)ya + (uint32_t)operand;
-                                // H flag based on high byte add
-                                psw_write_half_carry(cpu, ((cpu->y ^ cpu->data8[1] ^ (uint8_t)(result >> 8)) & 0x10) != 0);
+                                // H flag based on low byte add
+                                psw_write_half_carry(cpu, ((cpu->a ^ cpu->data8[1] ^ (uint8_t)result) & 0x10) != 0);
                                 psw_write_overflow(cpu, (~(ya ^ operand) & (ya ^ result) & 0x8000) != 0);
                                 psw_write_carry(cpu, result > 0xffff);
                                 cpu->a = (uint8_t)(result & 0xff);
@@ -5124,20 +5125,21 @@ def generate_word_ops():
                             cpu->operands[0] = bus_read(state, cpu->pc++);
                             return {InstructionStatus.Pending};
                         case 3:
-                            cpu->addr = direct_page(cpu, cpu->operands[0]);
-                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            cpu->data8[0] = cpu->operands[0];
+                            cpu->data8[1] = bus_read(state, direct_page(cpu, cpu->data8[0]));
                             return {InstructionStatus.Pending};
                         case 4:
                             {true_idle()}
                             return {InstructionStatus.Pending};
                         case 5:
-                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+                            cpu->data8[0]++;
                             {{
+                                const uint8_t high = bus_read(state, direct_page(cpu, cpu->data8[0]));
                                 const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
-                                const uint16_t operand = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                                const uint16_t operand = ((uint16_t)high << 8) | cpu->data8[1];
                                 const uint32_t result = (uint32_t)ya - (uint32_t)operand;
-                                // H flag based on high byte sub
-                                psw_write_half_carry(cpu, ((cpu->y ^ cpu->data8[1] ^ (uint8_t)(result >> 8)) & 0x10) != 0);
+                                // H flag based on low byte sub
+                                psw_write_half_carry(cpu, ((cpu->a ^ cpu->data8[1] ^ (uint8_t)result) & 0x10) != 0);
                                 psw_write_overflow(cpu, ((ya ^ operand) & (ya ^ result) & 0x8000) != 0);
                                 psw_write_carry(cpu, ya >= operand);
                                 cpu->a = (uint8_t)(result & 0xff);
@@ -5175,14 +5177,15 @@ def generate_word_ops():
                             cpu->operands[0] = bus_read(state, cpu->pc++);
                             return {InstructionStatus.Pending};
                         case 3:
-                            cpu->addr = direct_page(cpu, cpu->operands[0]);
-                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            cpu->data8[0] = cpu->operands[0];
+                            cpu->data8[1] = bus_read(state, direct_page(cpu, cpu->data8[0]));
                             return {InstructionStatus.Pending};
                         case 4:
-                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+                            cpu->data8[0]++;
                             {{
+                                const uint8_t high = bus_read(state, direct_page(cpu, cpu->data8[0]));
                                 const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
-                                const uint16_t operand = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                                const uint16_t operand = ((uint16_t)high << 8) | cpu->data8[1];
                                 const uint16_t result = ya - operand;
                                 psw_write_carry(cpu, ya >= operand);
                                 psw_write_neg(cpu, result & 0x8000);
@@ -5218,17 +5221,18 @@ def generate_word_ops():
                             cpu->operands[0] = bus_read(state, cpu->pc++);
                             return {InstructionStatus.Pending};
                         case 3:
-                            cpu->addr = direct_page(cpu, cpu->operands[0]);
-                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            cpu->data8[0] = cpu->operands[0];
+                            cpu->data8[1] = bus_read(state, direct_page(cpu, cpu->data8[0]));
                             return {InstructionStatus.Pending};
                         case 4:
                             {true_idle()}
                             return {InstructionStatus.Pending};
                         case 5:
-                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
-                            cpu->a = cpu->data8[0];
-                            cpu->y = cpu->data8[1];
+                            cpu->data8[0]++;
                             {{
+                                const uint8_t high = bus_read(state, direct_page(cpu, cpu->data8[0]));
+                                cpu->a = cpu->data8[1];
+                                cpu->y = high;
                                 const uint16_t ya = ((uint16_t)cpu->y << 8) | cpu->a;
                                 psw_write_neg(cpu, ya & 0x8000);
                                 psw_write_zero(cpu, ya == 0);
@@ -5263,15 +5267,16 @@ def generate_word_ops():
                             cpu->operands[0] = bus_read(state, cpu->pc++);
                             return {InstructionStatus.Pending};
                         case 3:
-                            cpu->addr = direct_page(cpu, cpu->operands[0]);
+                            cpu->data8[0] = cpu->operands[0];
                             // RMW read of low byte (discarded)
-                            (void)bus_read(state, cpu->addr);
+                            (void)bus_read(state, direct_page(cpu, cpu->data8[0]));
                             return {InstructionStatus.Pending};
                         case 4:
-                            bus_write(state, cpu->addr, cpu->a);
+                            bus_write(state, direct_page(cpu, cpu->data8[0]), cpu->a);
                             return {InstructionStatus.Pending};
                         case 5:
-                            bus_write(state, cpu->addr + 1, cpu->y);
+                            cpu->data8[0]++;
+                            bus_write(state, direct_page(cpu, cpu->data8[0]), cpu->y);
                             return {InstructionStatus.Done};
                         default:
                             UNREACHABLE();
@@ -5302,23 +5307,26 @@ def generate_word_ops():
                             cpu->operands[0] = bus_read(state, cpu->pc++);
                             return {InstructionStatus.Pending};
                         case 3:
-                            cpu->addr = direct_page(cpu, cpu->operands[0]);
-                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            cpu->data8[0] = cpu->operands[0];
+                            cpu->data8[1] = bus_read(state, direct_page(cpu, cpu->data8[0]));
                             return {InstructionStatus.Pending};
                         case 4:
                             // write back low byte (incremented)
-                            cpu->data8[0]++;
-                            bus_write(state, cpu->addr, cpu->data8[0]);
+                            cpu->data8[1]++;
+                            bus_write(state, direct_page(cpu, cpu->data8[0]), cpu->data8[1]);
                             return {InstructionStatus.Pending};
                         case 5:
-                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+                            cpu->data8[0]++;
+                            cpu->addr = direct_page(cpu, cpu->data8[0]);
+                            cpu->data16 = bus_read(state, cpu->addr);
                             return {InstructionStatus.Pending};
                         case 6:
-                            // carry from low byte increment
-                            if (cpu->data8[0] == 0) cpu->data8[1]++;
-                            bus_write(state, cpu->addr + 1, cpu->data8[1]);
                             {{
-                                const uint16_t result = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                                // carry from low byte increment
+                                uint8_t high = (uint8_t)cpu->data16;
+                                if (cpu->data8[1] == 0) high++;
+                                bus_write(state, cpu->addr, high);
+                                const uint16_t result = ((uint16_t)high << 8) | cpu->data8[1];
                                 psw_write_neg(cpu, result & 0x8000);
                                 psw_write_zero(cpu, result == 0);
                             }}
@@ -5352,23 +5360,26 @@ def generate_word_ops():
                             cpu->operands[0] = bus_read(state, cpu->pc++);
                             return {InstructionStatus.Pending};
                         case 3:
-                            cpu->addr = direct_page(cpu, cpu->operands[0]);
-                            cpu->data8[0] = bus_read(state, cpu->addr);
+                            cpu->data8[0] = cpu->operands[0];
+                            cpu->data8[1] = bus_read(state, direct_page(cpu, cpu->data8[0]));
                             return {InstructionStatus.Pending};
                         case 4:
                             // write back low byte (decremented)
-                            cpu->data8[0]--;
-                            bus_write(state, cpu->addr, cpu->data8[0]);
+                            cpu->data8[1]--;
+                            bus_write(state, direct_page(cpu, cpu->data8[0]), cpu->data8[1]);
                             return {InstructionStatus.Pending};
                         case 5:
-                            cpu->data8[1] = bus_read(state, cpu->addr + 1);
+                            cpu->data8[0]++;
+                            cpu->addr = direct_page(cpu, cpu->data8[0]);
+                            cpu->data16 = bus_read(state, cpu->addr);
                             return {InstructionStatus.Pending};
                         case 6:
-                            // borrow from low byte decrement
-                            if (cpu->data8[0] == 0xff) cpu->data8[1]--;
-                            bus_write(state, cpu->addr + 1, cpu->data8[1]);
                             {{
-                                const uint16_t result = ((uint16_t)cpu->data8[1] << 8) | cpu->data8[0];
+                                // borrow from low byte decrement
+                                uint8_t high = (uint8_t)cpu->data16;
+                                if (cpu->data8[1] == 0xff) high--;
+                                bus_write(state, cpu->addr, high);
+                                const uint16_t result = ((uint16_t)high << 8) | cpu->data8[1];
                                 psw_write_neg(cpu, result & 0x8000);
                                 psw_write_zero(cpu, result == 0);
                             }}
