@@ -13,6 +13,7 @@ add_executable(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE
 	src/main.c
 	src/cpu.c
+	src/dsp.c
 	src/load_spc.c
 	src/bus_io.c
 	src/instructions.gen.c
