@@ -25,5 +25,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE m)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -g3
                                                -fdiagnostics-color=always)
 
-enable_testing()
-add_subdirectory(test)
+
+SET(TESTING OFF CACHE BOOL "compile tests" FORCE)
+if (TESTING)
+	enable_testing()
+	add_subdirectory(test)
+endif()
