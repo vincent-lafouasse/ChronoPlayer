@@ -31,3 +31,5 @@
 #define DSP_EDL (0x7d)
 
 #define DSP_FFC(i) ((i) << 4 | 0xf)
+
+void dsp_load_latches(struct DSP_State dsp[static restrict 1]);

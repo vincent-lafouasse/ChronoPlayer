@@ -11,6 +11,7 @@
 #include <unistd.h>
 
 #include "cpu.h"
+#include "dsp.h"
 #include "utils.h"
 
 // failures to read (exact amount of) bytes are always fatal
@@ -147,6 +148,7 @@ void load_spc_or_exit(const char* path, struct SPC_State* out)
         status = EX_IOERR;
         goto out;
     }
+    dsp_load_latches(&dsp);
 
     // 64B of garbage then 64B of extra RAM
     uint8_t extra[128];
