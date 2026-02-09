@@ -31,6 +31,16 @@ struct DSP_State {
     int16_t echo_buf[2];
     uint8_t addr_latch;
 
+    // internal latches
+    // effectively snapshots of certain registers taken at specific clock phases
+    // in the 32 duty cycle pipeline
+    // writes from the CPU don't affect the voices until that register is
+    // latched/loaded
+    uint8_t ffc[8];  // FIR filter applied to echo signal
+    uint8_t eon;
+    uint8_t non;
+    uint8_t dir;  // the RAM page that contains the samples
+
     uint64_t total_cycles;
 };
 
