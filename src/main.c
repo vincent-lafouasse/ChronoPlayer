@@ -374,7 +374,8 @@ void voice_step1(struct Voice voice[static 1])
 //           applicable.
 //        Check FLG bit 7 (NOT previously loaded).
 //        Check BRR header 'e' and 'l' bits to determine if the voice ends.
-//        Handle KOFF and KON using previously loaded values. If KON, ENDX.x will
+//        Handle KOFF and KON using previously loaded values. If KON, ENDX.x
+//        will
 //         be cleared in step S7.
 //        Load VxGAIN or VxADSR2 register depending on ADSR1.7.
 //        Update the volume envelope, using previously loaded values.
@@ -382,9 +383,9 @@ void voice_step1(struct Voice voice[static 1])
 //     If a new group of BRR samples is required, load the second BRR byte and
 //      decode the group of 4 BRR samples. This is definitely not done when not
 //      necessary. If necessary, adjust the BRR pointer to the next block, or
-//      flag the loop address for loading next step S2 and set ENDX.x in step S7.
-//      Note that this setting of ENDX.x will not override the clearing due to KON
-//      in step S3c, if both occur during the same sample.
+//      flag the loop address for loading next step S2 and set ENDX.x in step
+//      S7. Note that this setting of ENDX.x will not override the clearing due
+//      to KON in step S3c, if both occur during the same sample.
 //     Increment interpolation sample position as specified by pitch values.
 //     At any point from now until we next get to S3c, the next sample may be
 //      calculated using the interpolation position and BRR buffer contents.
