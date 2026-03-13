@@ -153,7 +153,7 @@ out:
     return value;
 }
 
-void bus_write(struct SPC_State* state, uint16_t addr, uint8_t val)
+void bus_write(struct SPC_State state[static 1], uint16_t addr, uint8_t val)
 {
     if (g_bus_trace_hook != NULL) {
         g_bus_trace_hook(g_bus_trace_userdata, state, addr, val, IO_WRITE);
