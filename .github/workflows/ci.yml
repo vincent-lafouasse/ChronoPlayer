@@ -17,7 +17,7 @@ jobs:
         run: |
           sudo apt-get update -q
           sudo apt-get install -y clang-format shellcheck
-          pip3 install black
+          pip3 install black==25.9.0
 
       - name: Check formatting and analyse shell scripts
         run: bash ./scripts/lint.sh --check
