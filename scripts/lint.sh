@@ -58,13 +58,9 @@ while IFS= read -r f; do SH_FILES+=("$f"); done \
 
 # Formatted by black:
 PY_FILES=(
-    scripts/generate_tests.py
+    ./test/SingleStepTests/generate_tests.py
+    ./scripts/generate_instructions.py
 )
-
-# Exempt from black — intentionally loose single-use generators:
-# PY_SKIP=(
-#     scripts/generate_instructions.py
-# )
 
 ERRORS=0
 
