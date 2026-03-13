@@ -49,9 +49,9 @@ jobs:
       - name: Build — ChronoPlayer
         run: cmake --build build --target ChronoPlayer --parallel $(nproc)
 
-#      - name: Build — tests
-#        run: cmake --build build --parallel $(nproc)
-#
+      - name: Build — tests
+        run: cmake --build build --parallel $(nproc)
+
 #      # CTest gives structured pass/fail counts and stops early on failure.
 #      # --parallel runs all 254 tests concurrently (they are independent).
 #      - name: Run tests — CTest
