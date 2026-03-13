@@ -14,7 +14,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install style tools
-        run: sudo apt-get update -q && sudo apt-get install -y clang-format python3-black shellcheck
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y clang-format shellcheck
+          pip3 install black
 
       - name: Check formatting and analyse shell scripts
         run: bash ./scripts/lint.sh --check
