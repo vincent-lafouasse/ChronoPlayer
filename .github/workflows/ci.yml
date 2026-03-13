@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  # ── No build needed — reads source files only ──────────────────────────────
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install style tools
+        run: sudo apt-get update -q && sudo apt-get install -y clang-format python3-black shellcheck
+
+      - name: Check formatting and analyse shell scripts
+        run: bash ./scripts/lint.sh --check
+
+  validate-opcodes:
+    name: Validate opcode table
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cross-reference instruction_table.gen.c against anomie reference
+        # check_opcodes.sh exits 1 on any mnemonic / length / cycle mismatch.
+        run: bash ./scripts/check_opcodes.sh
+
+  # ── Needs compilation ───────────────────────────────────────────────────────
+
+#  build-and-test:
+#    name: Build & Test
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Install build dependencies
+#        run: sudo apt-get update -q && sudo apt-get install -y cmake gcc clang-tidy
+#
+#      # TESTING is hard-forced OFF in CMakeLists.txt with the FORCE keyword,
+#      # which makes -DTESTING=ON on the cmake command line ineffective.
+#      # Patch the one line so the CI build includes tests without permanently
+#      # changing the developer default.
+#      - name: Patch CMakeLists.txt — enable tests
+#        run: |
+#          sed -i \
+#            's/SET(TESTING OFF CACHE BOOL "compile tests" FORCE)/SET(TESTING ON CACHE BOOL "compile tests" FORCE)/' \
+#            CMakeLists.txt
+#
+#      - name: Configure
+#        run: cmake -B build
+#
+#      # compile_commands.json is emitted by the Configure step
+#      # (CMAKE_EXPORT_COMPILE_COMMANDS is ON in CMakeLists.txt).
+#      # Generated files (*.gen.*) are excluded — they are machine-produced and
+#      # noisy without being actionable.
+#      - name: Analyse — clang-tidy
+#        run: |
+#          find src -name '*.c' -o -name '*.h' | grep -v '\.gen\.' | \
+#            xargs clang-tidy -p build
+#
+#      # Build the main binary and all 254 SingleStepTests* executables.
+#      - name: Build
+#        run: cmake --build build --parallel $(nproc)
+#
+#      # CTest gives structured pass/fail counts and stops early on failure.
+#      # --parallel runs all 254 tests concurrently (they are independent).
+#      - name: Run tests — CTest
+#        run: >
+#          ctest
+#          --test-dir build
+#          --output-on-failure
+#          --parallel $(nproc)
+#
+#      # The custom script runs the same binaries but produces the 16×16 opcode
+#      # grid and writes per-opcode logs to build/test-logs/*.log.
+#      # always() ensures we see the grid even when CTest already reported a
+#      # failure, which is useful for spotting patterns across opcodes.
+#      - name: Run tests — visual grid
+#        if: always()
+#        run: bash ./scripts/run_all_tests.sh
+#
+#      - name: Upload test logs
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: test-logs
+#          path: build/test-logs/
+#          # Keep logs for a week; they can be large (254 files × N test cases).
+#          retention-days: 7
