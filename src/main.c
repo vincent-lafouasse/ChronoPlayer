@@ -123,7 +123,6 @@ static inline int8_t brr_nibble(const struct BRR_Block* block, uint8_t index)
     }
 }
 
-
 // filters have a delay of 2 samples and need a 2 sample buffer
 struct BRR_Context {
     int16_t prev;
