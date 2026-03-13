@@ -24,7 +24,7 @@ echo ""
 for msb in {0..15}; do
     line=""
     for lsb in {0..15}; do
-        opcode=$(printf "%x%x" $msb $lsb)
+        opcode=$(printf "%x%x" "$msb" "$lsb")
         test_path="${BIN_DIR}/SingleStepTests${opcode}"
 
         if [ -x "$test_path" ]; then
