@@ -27,7 +27,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -g3
                                                -fdiagnostics-color=always)
 
 
-SET(TESTING OFF CACHE BOOL "compile tests" FORCE)
+SET(TESTING OFF CACHE BOOL "compile tests")
 if (TESTING)
 	enable_testing()
 	add_subdirectory(test)
