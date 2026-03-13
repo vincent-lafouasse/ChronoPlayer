@@ -44,6 +44,10 @@ for arg in "$@"; do
 done
 
 # ── File lists ────────────────────────────────────────────────────────────────
+# C and shell files are discovered automatically.
+# Python files are listed explicitly: there are few of them and some generators
+# are intentionally exempt from formatting.
+
 C_FILES=()
 while IFS= read -r f; do C_FILES+=("$f"); done \
     < <(find src test -name '*.c' -o -name '*.h' | grep -v '\.gen\.' | grep -v 'utest')
@@ -52,9 +56,15 @@ SH_FILES=()
 while IFS= read -r f; do SH_FILES+=("$f"); done \
     < <(find scripts -name '*.sh')
 
-PY_FILES=()
-while IFS= read -r f; do PY_FILES+=("$f"); done \
-    < <(find . -name '*.py' | grep -v specs)
+# Formatted by black:
+PY_FILES=(
+    scripts/generate_tests.py
+)
+
+# Exempt from black — intentionally loose single-use generators:
+# PY_SKIP=(
+#     scripts/generate_instructions.py
+# )
 
 ERRORS=0
 
