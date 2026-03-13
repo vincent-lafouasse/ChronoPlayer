@@ -6,7 +6,6 @@
 # analyse:  shellcheck (shell scripts) — static analysis, no auto-fix
 #
 # Python linting is skipped: generator scripts are intentionally loose.
-# clang-tidy needs compile_commands.json and runs as a separate CI step.
 #
 # Usage:
 #   bash ./scripts/lint.sh --check    report violations, exit 1 if any  (CI / pre-commit)
