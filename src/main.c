@@ -123,19 +123,6 @@ static inline int8_t brr_nibble(const struct BRR_Block* block, uint8_t index)
     }
 }
 
-static void brr_block_log(const struct BRR_Block* block)
-{
-    printf("header: %02x\n", block->header);
-    printf("    shift: %u\n", brr_shift(block));
-    printf("    filter: %u\n", brr_filter(block));
-    printf("    is_last_block: %u\n", brr_is_last_block(block));
-    printf("    should_loop: %u\n", brr_should_loop(block));
-    printf("\n");
-
-    for (int i = 0; i < 16; i++) {
-        printf("data[i] = %i\n", brr_nibble(block, i));
-    }
-}
 
 // filters have a delay of 2 samples and need a 2 sample buffer
 struct BRR_Context {
