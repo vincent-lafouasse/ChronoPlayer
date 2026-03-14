@@ -1,3 +1,21 @@
+// state.h — system-wide data layout
+//
+// This file is the ABI of the emulator. It defines every persistent struct in
+// the system and is included by all translation units. It intentionally
+// includes nothing beyond the C standard library so that it imposes no
+// transitive dependencies and remains a pure data contract.
+//
+// Consequences of this design:
+//   - All component state must be defined inline here, including internals
+//     (no pimpl, no opaque pointers, no forward-declared members).
+//   - Any change to this file recompiles everything. That is acceptable and
+//     by design: a layout change is a system-wide contract change.
+//   - SPC_State is allocated as a single contiguous object. CPU and DSP are
+//     strictly interleaved at the tick level, so both structs are hot in L1
+//     simultaneously; adjacency is intentional.
+//
+// This ABI is internal, unstable, and not intended for external consumption.
+
 #pragma once
 
 #include <stdbool.h>
