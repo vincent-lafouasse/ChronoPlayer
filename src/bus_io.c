@@ -69,9 +69,9 @@ static uint8_t bus_read_port(struct SPC_State state[static 1], uint16_t addr)
     }
 }
 
-void bus_write_port(struct SPC_State state[static 1],
-                    uint16_t addr,
-                    uint8_t val)
+static void bus_write_port(struct SPC_State state[static 1],
+                           uint16_t addr,
+                           uint8_t val)
 {
     switch (addr) {
         // TODO: cache these as bools in state probably
