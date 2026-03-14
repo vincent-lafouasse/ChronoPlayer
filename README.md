@@ -21,6 +21,19 @@ ADPCM,
 retro computing,
 CPU archeology
 
+## status
+
+| component | status | notes |
+|-----------|--------|-------|
+| SPC file loader | ✅ done | header + ID666 tag + RAM/DSP/regs initialisation |
+| SPC700 CPU core | ✅ done | all 254 opcodes, passes SingleStepTests |
+| BRR decoder | ✅ done | block decode, loop/end flags, filter coefficients |
+| S-DSP pipeline | 🔧 in progress | voice struct, register aliasing; Gaussian interp / echo pending |
+| ADSR / GAIN envelopes | 🔧 in progress | envelope modes sketched, rate table pending |
+| Timers (T0/T1/T2) | ⬜ not started | 8 kHz / 64 kHz dividers, TnOUT latch |
+| Audio output | ⬜ not started | miniaudio callback as emulator clock |
+| GUI | ⬜ not started | raylib × WebAssembly; register heatmaps, oscilloscope |
+
 ## dedication
 
 This project is dedicated to Near/byuu (1983 – 2021). Their work on the `bsnes` emulator and `higan` collection set a standard for accuracy and i greatly appreciate their efforts to preserve the SNES.
