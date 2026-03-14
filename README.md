@@ -8,6 +8,19 @@ The DSP implementation is in progress.
 
 I love Chrono Trigger
 
+topics:
+C11,
+emulation,
+systems programming,
+cycle-accuracy,
+hardware-accuracy,
+SPC700,
+65xx,
+SNES,
+ADPCM,
+retro computing,
+CPU archeology
+
 ## dedication
 
 This project is dedicated to Near/byuu (1983 – 2021). Their work on the `bsnes` emulator and `higan` collection set a standard for accuracy and i greatly appreciate their efforts to preserve the SNES.
