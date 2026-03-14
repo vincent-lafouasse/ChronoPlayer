@@ -14,7 +14,7 @@ set(INCLUDES
     ${CMAKE_SOURCE_DIR}/test/utest.h
 )
 
-add_library(spc700_lib STATIC
+add_library(spc700_lib SHARED
     ${TESTED_SRC_DIR}/cpu.c
     ${TESTED_SRC_DIR}/instructions.gen.c
     ${TESTED_SRC_DIR}/instruction_table.gen.c
