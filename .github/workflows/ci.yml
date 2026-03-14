@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  # ── No build needed — reads source files only ──────────────────────────────
+  # ── No build needed — runs on every push ───────────────────────────────────
 
   lint:
     name: Lint
@@ -32,11 +32,39 @@ jobs:
         # check_opcodes.sh exits 1 on any mnemonic / length / cycle mismatch.
         run: bash ./scripts/check_opcodes.sh
 
-  # ── Needs compilation ───────────────────────────────────────────────────────
+  # ── Needs compilation — only when source changes ────────────────────────────
+  # The 254 SingleStepTests executables take a long time to compile and the
+  # generated test code never changes independently of src/.  Skipping this job
+  # on pushes that only touch scripts, docs, or workflow files saves significant
+  # CI time.
 
-  build-and-test:
-    name: Build & Test
+  build:
+    name: Build
     runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'pull_request' ||
+      contains(toJson(github.event.commits[0].modified), 'src/') ||
+      contains(toJson(github.event.commits[0].modified), 'CMakeLists.txt')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: sudo apt-get update -q && sudo apt-get install -y cmake gcc
+
+      - name: Configure
+        run: cmake -B build
+
+      - name: Build — ChronoPlayer
+        run: cmake --build build --target ChronoPlayer --parallel $(nproc)
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'pull_request' ||
+      contains(toJson(github.event.commits[0].modified), 'src/') ||
+      contains(toJson(github.event.commits[0].modified), 'test/')  ||
+      contains(toJson(github.event.commits[0].modified), 'CMakeLists.txt')
     steps:
       - uses: actions/checkout@v4
 
@@ -52,8 +80,6 @@ jobs:
       - name: Build — tests
         run: cmake --build build --parallel $(nproc)
 
-#      # CTest gives structured pass/fail counts and stops early on failure.
-#      # --parallel runs all 254 tests concurrently (they are independent).
 #      - name: Run tests — CTest
 #        run: >
 #          ctest
@@ -61,10 +87,6 @@ jobs:
 #          --output-on-failure
 #          --parallel $(nproc)
 #
-#      # The custom script runs the same binaries but produces the 16×16 opcode
-#      # grid and writes per-opcode logs to build/test-logs/*.log.
-#      # always() ensures we see the grid even when CTest already reported a
-#      # failure, which is useful for spotting patterns across opcodes.
 #      - name: Run tests — visual grid
 #        if: always()
 #        run: bash ./scripts/run_all_tests.sh
@@ -75,5 +97,4 @@ jobs:
 #        with:
 #          name: test-logs
 #          path: build/test-logs/
-#          # Keep logs for a week; they can be large (254 files × N test cases).
 #          retention-days: 7
