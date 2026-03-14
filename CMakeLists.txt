@@ -16,6 +16,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 	src/dsp.c
 	src/load_spc.c
 	src/bus_io.c
+	src/brr.c
+
 	src/instructions.gen.c
 	src/instruction_table.gen.c
 )
