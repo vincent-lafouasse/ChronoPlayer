@@ -32,19 +32,11 @@ jobs:
         # check_opcodes.sh exits 1 on any mnemonic / length / cycle mismatch.
         run: bash ./scripts/check_opcodes.sh
 
-  # ── Needs compilation — only when source changes ────────────────────────────
-  # The 254 SingleStepTests executables take a long time to compile and the
-  # generated test code never changes independently of src/.  Skipping this job
-  # on pushes that only touch scripts, docs, or workflow files saves significant
-  # CI time.
+  # ── Needs compilation ───────────────────────────────────────────────────────
 
   build:
     name: Build
     runs-on: ubuntu-latest
-    if: |
-      github.event_name == 'pull_request' ||
-      contains(toJson(github.event.commits[0].modified), 'src/') ||
-      contains(toJson(github.event.commits[0].modified), 'CMakeLists.txt')
     steps:
       - uses: actions/checkout@v4
 
@@ -60,11 +52,6 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    if: |
-      github.event_name == 'pull_request' ||
-      contains(toJson(github.event.commits[0].modified), 'src/') ||
-      contains(toJson(github.event.commits[0].modified), 'test/')  ||
-      contains(toJson(github.event.commits[0].modified), 'CMakeLists.txt')
     steps:
       - uses: actions/checkout@v4
 
