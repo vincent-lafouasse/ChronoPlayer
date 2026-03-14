@@ -1,5 +1,15 @@
 # ChronoPlayer - a SNES .spc player
 
+A cycle-accurate SPC700 CPU emulator and S-DSP implementation written in C11,
+capable of loading and playing `.spc` files from SNES games. The SPC700 is the
+audio co-processor designed by Sony for the SNES, running its own isolated RAM
+and instruction set entirely separate from the main 65816 CPU.
+
+The CPU core passes all 254 implemented opcodes against
+[SingleStepTests](https://github.com/SingleStepTests/spc700), a behavioural
+test suite derived from hardware captures. The DSP implementation is in
+progress.
+
 I love Chrono Trigger
 
 ## dedication
