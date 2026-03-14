@@ -305,6 +305,8 @@ int main(void)
         dump_instrument(&instr, spc_state.aram, path);
         memset(path, 0, sizeof(path));
     }
+
+    return 0;
 }
 
 struct Voice {
