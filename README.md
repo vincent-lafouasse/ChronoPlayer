@@ -14,20 +14,20 @@ I love Chrono Trigger
 
 ## dedication
 
-this project is dedicated to Near/byuu (1983 – 2021). their work on the `bsnes` emulator and `higan` collection set a standard for accuracy and i greatly appreciate their efforts to preserve the SNES.
+This project is dedicated to Near/byuu (1983 – 2021). Their work on the `bsnes` emulator and `higan` collection set a standard for accuracy and i greatly appreciate their efforts to preserve the SNES.
 
-this is for them.
+This is for them.
 
 ## huge thanks
 
-**none of this would have been possible without them.** while my name is on the repository, the logic, the soul, and the data within this player belong to their decades of hard work and brilliance and i want to extend a huge thank you:
+**None of this would have been possible without them.** While my name is on the repository, the logic, the soul, and the data within this player belong to their decades of hard work and brilliance and i want to extend a huge thank you:
 
 - to Anomie the absolute goat for providing a lot of documentation on an otherwise undocumented platform
 - to blargg for the legendary amount of research and time spent reverse-engineering the SNES APU/DSP to give us an authoritative source on how the system actually behaves
-- to Yasunori Mitsuda for composing the soul of Chrono Trigger. this project exists because your music remains just as haunting and beautiful decades later. may your music live on through the ages like Crono, all the way to the End of Time
+- to Yasunori Mitsuda for composing the soul of Chrono Trigger. This project exists because your music remains just as haunting and beautiful decades later. May your music live on through the ages like Crono, all the way to the End of Time
 - to The Dream Team: Hironobu Sakaguchi, Yuji Horii, Akira Toriyama, Kazuhiko Aoki, and Masato Kato. Thank you for creating a masterpiece that transcends time, perhaps my favorite game
 
-may Chrono Trigger and the SNES live on forever
+May Chrono Trigger and the SNES live on forever
 
 ## references
 
