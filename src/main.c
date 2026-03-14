@@ -335,9 +335,6 @@ struct Voice {
     struct VoiceRegisters* registers;
 };
 
-// TODO: pull UNREACHABLE from instructions
-#define UNREACHABLE() exit(1);
-
 void voice_step(struct Voice voice[static 1],
                 const uint8_t aram[static 0x10000]);
 

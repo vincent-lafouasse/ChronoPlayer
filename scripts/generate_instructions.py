@@ -20,63 +20,12 @@ def register_helper(function_block):
     helpers.append(function_block)
 
 
-register_helper(
-    inspect.cleandoc(
-        """
-        #include <stdlib.h>  // for abort()
-
-        #if defined(__GNUC__) || defined(__clang__)
-            #define UNREACHABLE() do { __builtin_trap(); __builtin_unreachable(); } while(0)
-        #elif defined(_MSC_VER)
-            #include <intrin.h>  // for __debugbreak()
-            #define UNREACHABLE() do { __debugbreak(); __assume(0); } while(0)
-        #else
-            #define UNREACHABLE() abort()
-        #endif
-        """
-    )
-)
-
-register_helper(
-    inspect.cleandoc(
-        """
-        #include "instruction.h"
-
-        #if defined(__GNUC__) || defined(__clang__)
-            #define UNREACHABLE() do { __builtin_trap(); __builtin_unreachable(); } while(0)
-        #elif defined(_MSC_VER)
-            #include <intrin.h>  // for __debugbreak()
-            #define UNREACHABLE() do { __debugbreak(); __assume(0); } while(0)
-        #else
-            #define UNREACHABLE() abort()
-        #endif
-        """
-    )
-)
-
-
 class InstructionStatus(StrEnum):
     Type = "enum InstructionStatus"
     Done = "INSTRUCTION_STATUS_DONE"
     Pending = "INSTRUCTION_STATUS_PENDING"
     UnexpectedCycle = "INSTRUCTION_STATUS_UNEXPECTED_CYCLE"
 
-
-register_helper(
-    inspect.cleandoc(
-        """
-        #ifndef TRACE_TRAP
-            #if defined(__GNUC__) || defined(__clang__)
-                #define TRACE_TRAP() __builtin_trap()
-            #elif defined(_MSC_VER)
-                #define TRACE_TRAP() __debugbreak()
-            #else
-                #define TRACE_TRAP() abort()
-            #endif
-        #endif
-        """
-    )
-)
 
 register_helper(
     inspect.cleandoc(
@@ -6120,6 +6069,7 @@ def make_implementation():
 
             #include "bus_io.h"
             #include "cpu.h"
+            #include "utils.h"
             """
             )
         )
