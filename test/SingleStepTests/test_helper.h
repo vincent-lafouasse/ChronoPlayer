@@ -29,11 +29,7 @@ struct BusEventQueue {
 
 static inline struct BusEventQueue queue_new(void)
 {
-    return (struct BusEventQueue){
-        .events = {0},
-        .head = 0,
-        .tail = 0,
-    };
+    return (struct BusEventQueue){0};
 }
 
 static inline uint32_t queue_len(const struct BusEventQueue queue[static 1])
