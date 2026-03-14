@@ -5,6 +5,7 @@
 
 #include "bus_io.h"
 #include "instruction.h"
+#include "utils.h"
 
 int dump_cpu_state(char buf[static 41], size_t len, const struct CPU_State* cpu)
 {
@@ -31,9 +32,8 @@ void cpu_tick(struct SPC_State* state)
 
     const struct Instruction* instruction = opcode_lookup_table + cpu->opcode;
     if (instruction->handler == NULL) {
-        // later a trace trap rather than an exit probably
         fprintf(stderr, "Unimplemented opcode: 0x%02x\n", cpu->opcode);
-        exit(1);
+        TRACE_TRAP();
     }
 
     const enum InstructionStatus status =
@@ -44,6 +44,6 @@ void cpu_tick(struct SPC_State* state)
         cpu->instruction_cycle++;
     } else {
         fprintf(stderr, "error in instruction handler\n");
-        exit(1);
+        TRACE_TRAP();
     };
 }
