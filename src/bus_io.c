@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+#include "utils.h"
+
 BusTraceFn g_bus_trace_hook = NULL;
 void* g_bus_trace_userdata = NULL;
 
@@ -64,8 +66,7 @@ static uint8_t bus_read_port(struct SPC_State state[static 1], uint16_t addr)
             return 0;  // dummy
 
         default:
-            // unreachable
-            return 0;
+            UNREACHABLE();
     }
 }
 
@@ -125,8 +126,7 @@ static void bus_write_port(struct SPC_State state[static 1],
             return;
 
         default:
-            // unreachable
-            return;
+            UNREACHABLE();
     }
 }
 
