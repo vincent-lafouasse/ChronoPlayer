@@ -9,7 +9,7 @@
 #include "utils.h"
 
 // a single sub-instruction clock tick
-void cpu_tick(struct SPC_State* state)
+void cpu_tick(struct SPC_State state[static 1])
 {
     struct CPU_State* cpu = &state->cpu;
 

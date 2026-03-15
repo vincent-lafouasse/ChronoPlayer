@@ -4,7 +4,9 @@
 
 #include "cpu_internals.h"
 
-int cpu_dump(char buf[static 41], size_t len, const struct CPU_State* cpu)
+int cpu_dump(char buf[static 41],
+             size_t len,
+             const struct CPU_State cpu[static 1])
 {
     return snprintf(
         buf, len, "A:%02x X:%02x Y:%02x S:%02x PC:%04x PSW:%c%c%c%c%c%c%c%c",
