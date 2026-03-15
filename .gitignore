@@ -2,6 +2,7 @@
 a.out
 *.dSYM
 build
+build-test
 .cache
 .idea
 idea-build/
