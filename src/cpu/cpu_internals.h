@@ -1,10 +1,9 @@
 #pragma once
 
 #include <stdbool.h>
-#include <stddef.h>
 
-#include "state.h"
 #include "utils.h"
+#include "state.h"
 
 /*
   Bit7  N  Sign Flag          (0=Positive, 1=Negative)
@@ -16,7 +15,6 @@
   Bit1  Z  Zero Flag          (0=Non-zero, 1=Zero)
   Bit0  C  Carry Flag         (0=Borrow, or no-carry, 1=Carry, or no-borrow)
 */
-// implementation, here just for sketching
 
 #define PSW_SIGN (1 << 7)
 #define PSW_OVERFLOW (1 << 6)
@@ -69,10 +67,3 @@ static inline uint16_t direct_page(struct CPU_State cpu[static 1],
 {
     return u16_parse(offset, psw_direct_page(cpu));
 }
-
-// a single sub-instruction clock tick
-void cpu_tick(struct SPC_State* state);
-
-int dump_cpu_state(char buf[static 41],
-                   size_t len,
-                   const struct CPU_State* cpu);

@@ -6068,7 +6068,7 @@ def make_implementation():
             #include "{HEADER}"
 
             #include "bus/bus.h"
-            #include "cpu/cpu.h"
+            #include "cpu/cpu_internals.h"
             #include "utils.h"
             """
             )
