@@ -126,9 +126,9 @@ void load_spc_or_exit(const char* path, struct SPC_State* out)
         .instruction_cycle = 1,
         .total_cycles = 0,
     };
-    char cpu_dump[41] = {0};
-    (void)dump_cpu_state(cpu_dump, 41, &cpu);
-    printf("%s\n", cpu_dump);
+    char cpu_dump_buffer[41] = {0};
+    (void)cpu_dump(cpu_dump_buffer, 41, &cpu);
+    printf("%s\n", cpu_dump_buffer);
 
     uint8_t ram[0x10000];
     if (!try_read(fd, ram, 0x10000)) {
