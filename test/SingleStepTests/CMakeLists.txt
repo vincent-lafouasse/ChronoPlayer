@@ -21,7 +21,7 @@ add_library(spc700_lib SHARED
     ${TESTED_SRC_DIR}/bus_io.c
 )
 target_compile_options(spc700_lib PRIVATE ${COMPILE_OPTIONS})
-target_include_directories(spc700_lib PUBLIC ${TESTED_SRC_DIR})
+target_include_directories(spc700_lib PUBLIC ${TESTED_SRC_DIR} ${TESTED_SRC_DIR}/common)
 
 set(BASENAME SingleStepTests)
 
