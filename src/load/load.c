@@ -1,4 +1,4 @@
-#include "state.h"
+#include "load.h"
 
 #include <ctype.h>
 #include <stdbool.h>
@@ -10,8 +10,10 @@
 #include <sysexits.h>
 #include <unistd.h>
 
-#include "cpu.h"
-#include "dsp.h"
+#include "cpu/cpu.h"
+#include "dsp/dsp.h"
+
+#include "state.h"
 #include "utils.h"
 
 // failures to read (exact amount of) bytes are always fatal

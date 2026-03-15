@@ -15,10 +15,10 @@ set(INCLUDES
 )
 
 add_library(spc700_lib SHARED
-    ${TESTED_SRC_DIR}/cpu.c
-    ${TESTED_SRC_DIR}/instructions.gen.c
-    ${TESTED_SRC_DIR}/instruction_table.gen.c
-    ${TESTED_SRC_DIR}/bus_io.c
+    ${TESTED_SRC_DIR}/cpu/cpu.c
+    ${TESTED_SRC_DIR}/cpu/instruction/instructions.gen.c
+    ${TESTED_SRC_DIR}/cpu/instruction/instruction_table.gen.c
+    ${TESTED_SRC_DIR}/bus/bus.c
 )
 target_compile_options(spc700_lib PRIVATE ${COMPILE_OPTIONS})
 target_include_directories(spc700_lib PUBLIC ${TESTED_SRC_DIR} ${TESTED_SRC_DIR}/common)

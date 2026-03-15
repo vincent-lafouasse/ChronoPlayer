@@ -3,8 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "bus_io.h"
-#include "instruction.h"
+#include "./instruction/instruction.h"
+
+#include "bus/bus.h"
+
 #include "utils.h"
 
 int dump_cpu_state(char buf[static 41], size_t len, const struct CPU_State* cpu)

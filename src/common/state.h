@@ -72,5 +72,3 @@ struct SPC_State {
     const uint8_t ipl_rom[64];
     uint8_t aram[0x10000];
 };
-
-void load_spc_or_exit(const char* path, struct SPC_State* out);

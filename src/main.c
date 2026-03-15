@@ -1,7 +1,5 @@
 #include <stdbool.h>
 
-#include "state.h"
-
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,8 +8,11 @@
 #include <sys/fcntl.h>
 #include <unistd.h>
 
-#include "dsp.h"
-#include "brr.h"
+#include "dsp/dsp.h"
+#include "dsp/brr.h"
+
+#include "load/load.h"
+
 #include "utils.h"
 
 struct VoiceRegisters {

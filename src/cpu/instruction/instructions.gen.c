@@ -2,8 +2,8 @@
 
 #include "instructions.gen.h"
 
-#include "bus_io.h"
-#include "cpu.h"
+#include "bus/bus.h"
+#include "cpu/cpu.h"
 #include "utils.h"
 
 static inline void parse_membit(uint16_t operand, uint16_t* addr, uint8_t* bit)

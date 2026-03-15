@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 #include "state.h"
-#include "instruction.h"
+#include "cpu/instruction/instruction.h"
 
 /* 0x00     NOP */
 extern enum InstructionStatus nop(struct SPC_State state[static 1], uint32_t cycle);

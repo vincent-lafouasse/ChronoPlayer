@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "bus_io.h"
-#include "cpu.h"
-#include "instruction.h"
+#include "bus/bus.h"
+#include "cpu/cpu.h"
+#include "cpu/instruction/instruction.h"
 #include "state.h"
 
 #define DUMMY -1

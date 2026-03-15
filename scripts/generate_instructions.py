@@ -6027,7 +6027,7 @@ def print_opcode_matrix():
 C_IMPLEM = "instructions.gen.c"
 HEADER = "instructions.gen.h"
 TABLE = "instruction_table.gen.c"
-DIR = "./src/"
+DIR = "./src/cpu/instruction/"
 
 
 def make_header():
@@ -6041,7 +6041,7 @@ def make_header():
             #include <stdbool.h>
 
             #include "state.h"
-            #include "instruction.h"
+            #include "cpu/instruction/instruction.h"
             """
             )
         )
@@ -6067,8 +6067,8 @@ def make_implementation():
 
             #include "{HEADER}"
 
-            #include "bus_io.h"
-            #include "cpu.h"
+            #include "bus/bus.h"
+            #include "cpu/cpu.h"
             #include "utils.h"
             """
             )

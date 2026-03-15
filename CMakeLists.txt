@@ -12,14 +12,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 add_executable(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE
 	src/main.c
-	src/cpu.c
-	src/dsp.c
-	src/load_spc.c
-	src/bus_io.c
-	src/brr.c
 
-	src/instructions.gen.c
-	src/instruction_table.gen.c
+	src/cpu/cpu.c
+	src/cpu/instruction/instructions.gen.c
+	src/cpu/instruction/instruction_table.gen.c
+
+	src/dsp/dsp.c
+	src/dsp/brr.c
+
+	src/bus/bus.c
+
+	src/load/load.c
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src src/common)
