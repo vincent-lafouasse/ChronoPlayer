@@ -164,41 +164,17 @@ int main(void)
     return 0;
 }
 
-struct Voice {
-    // adpcm data
-    uint16_t brr_pointer;
-    uint8_t brr_header;
-    uint8_t brr_data[2];
-
-    // latched registers
-    uint8_t srcn;
-    uint8_t dir;
-    uint8_t pitch_low;
-    uint8_t pitch_high;
-    uint8_t gain;
-    uint8_t adsr1;
-    uint8_t adsr2;
-
-    // pending registers
-    bool endx;
-    uint8_t outx;
-    uint8_t envx;
-
-    int16_t sample_out;
-};
-
 void voice_step(struct Voice voice[static 1],
                 const uint8_t aram[static 0x10000]);
 
-void voice_step1(struct DSP_State dsp[static 1], uint8_t voice)
+void voice_step1(struct DSP_State dsp[static 1], uint8_t voice_i)
 {
     const struct VoiceRegisters* const register_view =
-        voice_registers(dsp, voice);
-    struct Voice* const voice = dsp->voices + voice;
+        voice_registers(dsp, voice_i);
+    struct Voice* const voice = dsp->voices + voice_i;
 
     // S1. Load VxSRCN register, if necessary.
-    voice->srcn = registers_view->srcn;
-    voice->step += 1;
+    voice->srcn = register_view->srcn;
 }
 
 // S2. Load the sample pointer (using previously loaded DIR and VxSRCN) if

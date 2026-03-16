@@ -42,17 +42,38 @@ struct CPU_State {
     uint64_t total_cycles;
 };
 
+struct Voice {
+    // adpcm data
+    uint16_t brr_pointer;
+    uint8_t brr_header;
+    uint8_t brr_data[2];
+
+    // latched registers
+    uint8_t srcn;
+    uint8_t dir;
+    uint8_t pitch_low;
+    uint8_t pitch_high;
+    uint8_t gain;
+    uint8_t adsr1;
+    uint8_t adsr2;
+
+    // pending registers
+    bool endx;
+    uint8_t outx;
+    uint8_t envx;
+
+    int16_t sample_out;
+};
+
 // Sony S-DSP
 struct DSP_State {
     uint8_t registers[128];
+    struct Voice voices[8];
+
     int16_t echo_buf[2];
     uint8_t addr_latch;
 
-    // internal latches
-    // effectively snapshots of certain registers taken at specific clock phases
-    // in the 32 duty cycle pipeline
-    // writes from the CPU don't affect the voices until that register is
-    // latched/loaded
+    // latched registers
     uint8_t ffc[8];  // FIR filter applied to echo signal
     uint8_t eon;
     uint8_t non;
