@@ -7,8 +7,17 @@
 #
 # Compatible with bash 3.2+ (no associative arrays)
 
-TABLE="./src/instruction_table.gen.c"
+TABLE="./src/cpu/instruction/instruction_table.gen.c"
 ANOMIE="./references/anomie/spc700.txt"
+
+if [ ! -f "$TABLE" ]; then
+    echo "error: $TABLE not found — run cmake to generate sources first" >&2
+    exit 1
+fi
+if [ ! -f "$ANOMIE" ]; then
+    echo "error: $ANOMIE not found" >&2
+    exit 1
+fi
 
 PASS=0
 FAIL=0
