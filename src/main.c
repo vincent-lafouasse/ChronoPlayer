@@ -183,6 +183,8 @@ struct Voice {
     bool endx;
     uint8_t outx;
     uint8_t envx;
+
+    int16_t sample_out;
 };
 
 void voice_step(struct Voice voice[static 1],

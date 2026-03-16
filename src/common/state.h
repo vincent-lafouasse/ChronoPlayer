@@ -45,7 +45,6 @@ struct CPU_State {
 // Sony S-DSP
 struct DSP_State {
     uint8_t registers[128];
-    int16_t voice_out[8];
     int16_t echo_buf[2];
     uint8_t addr_latch;
 
