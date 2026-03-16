@@ -138,19 +138,15 @@ void load_spc_or_exit(const char* path, struct SPC_State* out)
     }
     // still need to read the 64B shadowed by IPL ROM
 
-    struct DSP_State dsp = {
-        .registers = {0},
-        .voice_out = {0},
-        .echo_buf = {0},
-        .addr_latch = ram[0xf2],
-        .total_cycles = 0,
-    };
-    if (!try_read(fd, dsp.registers, 128)) {
+    uint8_t dsp_registers[128];
+    if (!try_read(fd, dsp_registers, 128)) {
         fprintf(stderr, "Failed to read 128B DSP registers\n");
         status = EX_IOERR;
         goto out;
     }
-    dsp_load_latches(&dsp);
+
+    struct DSP_State dsp;
+    dsp_init(&dsp, dsp_registers, ram);
 
     // 64B of garbage then 64B of extra RAM
     uint8_t extra[128];

@@ -1,10 +1,14 @@
 #include "dsp.h"
 
-void dsp_load_latches(struct DSP_State dsp[static const restrict 1])
+void dsp_init(struct DSP_State dsp[static restrict 1],
+              const uint8_t registers[static restrict 128],
+              const uint8_t aram[static restrict 0x10000])
 {
-    dsp->eon = dsp->registers[DSP_EON];
-    dsp->non = dsp->registers[DSP_NON];
-    dsp->dir = dsp->registers[DSP_DIR];
+    dsp->eon = registers[DSP_EON];
+    dsp->non = registers[DSP_NON];
+    dsp->dir = registers[DSP_DIR];
+
+    dsp->addr_latch = aram[0xf2];
 
     for (uint8_t i = 0; i < 8; i++) {
         const uint8_t addr = DSP_FFC(i);
