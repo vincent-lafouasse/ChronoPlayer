@@ -2,9 +2,13 @@
 
 #include "dsp_internals.h"
 
-// static void voice_init(struct DSP_State dsp[static restrict 1],
-//                        const uint8_t registers[static restrict 128],
-//                        uint8_t voice_i);
+static void voice_init(struct DSP_State dsp[static restrict 1], uint8_t voice_i)
+{
+    const struct VoiceRegisters* const regs = voice_registers(dsp, voice_i);
+    struct Voice* const voice = dsp->voices + voice_i;
+
+    voice->srcn = regs->srcn;
+}
 
 void dsp_init(struct DSP_State dsp[static restrict 1],
               const uint8_t registers[static restrict 128],
