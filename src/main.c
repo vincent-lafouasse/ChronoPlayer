@@ -29,7 +29,7 @@ struct VoiceRegisters {
     uint8_t unused[6];   // $xA-$xF
 };
 
-const struct VoiceRegisters* voice_registers(
+static inline const struct VoiceRegisters* voice_registers(
     const struct DSP_State dsp[static 1],
     uint8_t voice)
 {
