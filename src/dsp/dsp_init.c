@@ -4,12 +4,18 @@
 
 #include "dsp_internals.h"
 
+static void voice_latch_registers(const struct VoiceRegisters* const regs,
+                                  struct Voice* const voice)
+{
+    voice->srcn = regs->srcn;
+}
+
 static void voice_init(struct DSP_State dsp[static restrict 1], uint8_t voice_i)
 {
     const struct VoiceRegisters* const regs = voice_registers(dsp, voice_i);
     struct Voice* const voice = dsp->voices + voice_i;
 
-    voice->srcn = regs->srcn;
+    voice_latch_registers(regs, voice);
 }
 
 void dsp_init(struct DSP_State dsp[static restrict 1],
