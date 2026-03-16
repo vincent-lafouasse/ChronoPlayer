@@ -23,6 +23,9 @@ PASS=0
 FAIL=0
 SKIP=0
 
+# counter file — written by emit_check which runs in a subshell (left of pipe)
+TMPCOUNT=$(mktemp)
+
 # ANSI colors (disabled if not a terminal)
 if [ -t 1 ]; then
     RED='\033[0;31m'
@@ -36,8 +39,6 @@ fi
 # Build a flat lookup file from anomie's reference
 # Each line: "hex_opcode MNEMONIC bytes cycles_raw"
 TMPREF=$(mktemp)
-trap 'rm -f "$TMPREF"' EXIT
-
 while IFS= read -r line; do
     if [[ $line =~ ^[[:space:]]+([A-Z][A-Z0-9]*)[[:space:]].*[[:space:]]([0-9A-Fa-f][0-9A-Fa-f])[[:space:]]+([0-9]+)[[:space:]]+([0-9/\?]+)[[:space:]] ]]; then
         mnemonic="${BASH_REMATCH[1]}"
@@ -77,7 +78,7 @@ emit_check() {
 
     if ! lookup_ref "$op_bare"; then
         printf "${YLW}SKIP  %s  %-6s (not in anomie reference)${RST}\n" "$op" "$mn"
-        SKIP=$((SKIP + 1))
+        echo "SKIP" >>"$TMPCOUNT"
         return
     fi
 
@@ -93,10 +94,10 @@ emit_check() {
         fi
         if [ -n "$errors" ]; then
             printf "${RED}FAIL  %s  %-6s%s${RST}\n" "$op" "$mn" "$errors"
-            FAIL=$((FAIL + 1))
+            echo "FAIL" >>"$TMPCOUNT"
         else
             printf "${GRN}OK    %s  %-6s (SLEEP/STOP, cycles=? skipped)${RST}\n" "$op" "$mn"
-            PASS=$((PASS + 1))
+            echo "PASS" >>"$TMPCOUNT"
         fi
         return
     fi
@@ -130,16 +131,16 @@ emit_check() {
 
     if [ -n "$errors" ]; then
         printf "${RED}FAIL  %s  %-6s%s${RST}\n" "$op" "$mn" "$errors"
-        FAIL=$((FAIL + 1))
+        echo "FAIL" >>"$TMPCOUNT"
     else
         printf "${GRN}OK    %s  %-6s len=%s cyc=%s${RST}\n" "$op" "$mn" "$len" "$cyc"
-        PASS=$((PASS + 1))
+        echo "PASS" >>"$TMPCOUNT"
     fi
 }
 
 # Parse instruction_table.gen.c, collect results with sort key
 TMPOUT=$(mktemp)
-trap 'rm -f "$TMPREF" "$TMPOUT"' EXIT
+trap 'rm -f "$TMPREF" "$TMPOUT" "$TMPCOUNT"' EXIT
 
 current_opcode=""
 current_mnemonic=""
@@ -173,6 +174,10 @@ done <"$TABLE"
 
 # Output sorted by LSB (column-major), then MSB within each column
 sort "$TMPOUT" | cut -d' ' -f2-
+
+PASS=$(grep -c "^PASS$" "$TMPCOUNT" || true)
+FAIL=$(grep -c "^FAIL$" "$TMPCOUNT" || true)
+SKIP=$(grep -c "^SKIP$" "$TMPCOUNT" || true)
 
 echo ""
 echo "--- Summary ---"
