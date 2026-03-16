@@ -30,6 +30,9 @@
 #endif
 #endif
 
+// x is evaluated twice — arguments must be side-effect free
+#define CLAMP(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
+
 #define AS_U8(val) ((uint8_t)(val))
 #define AS_U16(val) ((uint16_t)(val))
 

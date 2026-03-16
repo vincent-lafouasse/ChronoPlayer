@@ -1,5 +1,7 @@
 #include "brr.h"
 
+#include "../common/utils.h"
+
 int16_t brr_decode_sample(const struct BRR_Block block[static 1],
                           uint8_t index,
                           struct BRR_Context ctx[static 1])
@@ -60,12 +62,9 @@ int16_t brr_decode_sample(const struct BRR_Block block[static 1],
     }
 
     // Clamp to 16 bits
-    if (sample > 32767) {
-        sample = 32767;
-    }
-    if (sample < -32768) {
-        sample = -32768;
-    }
+    const int32_t s16_min = -(1 << 15);
+    const int32_t s16_max = (1 << 15) - 1;
+    sample = CLAMP(sample, s16_min, s16_max);
 
     // Clip to 15 bits (drop low bit)
     const int16_t result = sample & 0xFFFE;
