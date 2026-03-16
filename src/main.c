@@ -165,9 +165,6 @@ int main(void)
 }
 
 struct Voice {
-    // state
-    uint8_t step;
-
     // adpcm data
     uint16_t brr_pointer;
     uint8_t brr_header;
