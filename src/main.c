@@ -170,7 +170,7 @@ struct Voice {
     uint8_t brr_header;
     uint8_t brr_data[2];
 
-    // cached registers
+    // latched registers
     uint8_t srcn;
     uint8_t dir;
     uint8_t pitch_low;
