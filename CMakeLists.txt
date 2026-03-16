@@ -22,6 +22,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	src/dsp/brr.c
 	src/dsp/instrument.c
 	src/dsp/voice_step.c
+	src/dsp/gaussian_table_libopenspc.c
 
 	src/bus/bus.c
 

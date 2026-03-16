@@ -77,3 +77,5 @@ int16_t* extract_instrument(const struct VoiceInstrument instrument[static 1],
 bool dump_instrument(const struct VoiceInstrument instr[static 1],
                      const uint8_t aram[static 0x10000],
                      const char* path);
+
+extern const int32_t gaussian_table[512];
