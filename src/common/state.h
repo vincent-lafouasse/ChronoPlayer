@@ -50,7 +50,6 @@ struct Voice {
 
     // latched registers
     uint8_t srcn;
-    uint8_t dir;
     uint8_t pitch_low;
     uint8_t pitch_high;
     uint8_t gain;
