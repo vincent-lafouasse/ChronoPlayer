@@ -90,5 +90,7 @@ struct SPC_State {
     uint8_t io_ports[4];
 
     const uint8_t ipl_rom[64];
-    uint8_t aram[0x10000];
+    // 128-byte alignment covers both x86-64 (64B lines) and Apple Silicon (128B
+    // lines)
+    _Alignas(128) uint8_t aram[0x10000];
 };
