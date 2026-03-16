@@ -3,7 +3,3 @@ BasedOnStyle: Chromium
 BreakBeforeBraces: WebKit
 ColumnLimit: 80
 IndentWidth: 4
-
-# Chromium defaults to SortIncludes: true
-# I deliberatly use Google style and that would ruin it
-SortIncludes: false

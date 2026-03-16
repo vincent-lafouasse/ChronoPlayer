@@ -2,8 +2,8 @@
 
 #include <stdbool.h>
 
-#include "utils.h"
 #include "state.h"
+#include "utils.h"
 
 /*
   Bit7  N  Sign Flag          (0=Positive, 1=Negative)
