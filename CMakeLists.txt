@@ -20,6 +20,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 	src/dsp/dsp_init.c
 	src/dsp/brr.c
+	src/dsp/instrument.c
 
 	src/bus/bus.c
 

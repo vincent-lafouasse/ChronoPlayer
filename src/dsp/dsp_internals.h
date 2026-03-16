@@ -61,3 +61,17 @@ static inline const struct VoiceRegisters* voice_registers(
     const uint8_t* alias = dsp->registers + offset;
     return (const struct VoiceRegisters*)alias;
 }
+
+struct VoiceInstrument {
+    uint16_t start;  // where the sample starts
+    uint16_t loop;   // where to go to block end
+};
+
+struct VoiceInstrument get_instrument(const struct SPC_State state[static 1],
+                                      size_t index);
+int16_t* extract_instrument(const struct VoiceInstrument instrument[static 1],
+                            const uint8_t aram[static 0x10000],
+                            size_t* len_out);
+bool dump_instrument(const struct VoiceInstrument instr[static 1],
+                     const uint8_t aram[static 0x10000],
+                     const char* path);
