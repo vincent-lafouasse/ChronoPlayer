@@ -17,7 +17,7 @@
 #include "utils.h"
 
 // failures to read (exact amount of) bytes are always fatal
-bool try_read(int fd, void* buffer, size_t sz)
+static bool try_read(int fd, void* buffer, size_t sz)
 {
     return read(fd, buffer, sz) == (ssize_t)sz;
 }
