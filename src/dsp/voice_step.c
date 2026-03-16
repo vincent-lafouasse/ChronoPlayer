@@ -28,21 +28,33 @@ void voice_step2(struct DSP_State dsp[static 1], uint8_t voice_i)
     voice->adsr1 = register_view->adsr2;
 }
 
-// S3. a. Load VxPITCHH register.
-//        Apply pitch modulation if applicable.
-//     b. Load the BRR header byte (every time), and the first of the two BRR
-//         bytes that will be decoded.
-//     c. If applicable, replace the current sample with the noise sample.
-//        Apply the volume envelope.
-//         - This is the value used for modulating the next voice's pitch, if
-//           applicable.
-//        Check FLG bit 7 (NOT previously loaded).
-//        Check BRR header 'e' and 'l' bits to determine if the voice ends.
-//        Handle KOFF and KON using previously loaded values. If KON, ENDX.x
-//        will
-//         be cleared in step S7.
-//        Load VxGAIN or VxADSR2 register depending on ADSR1.7.
-//        Update the volume envelope, using previously loaded values.
+void voice_step3(struct DSP_State dsp[static 1], uint8_t voice_i)
+{
+    const struct VoiceRegisters* const register_view =
+        voice_registers(dsp, voice_i);
+    struct Voice* const voice = dsp->voices + voice_i;
+
+    // S3. a. Load VxPITCHH register.
+    //        Apply pitch modulation if applicable.
+    //     b. Load the BRR header byte (every time), and the first of the two
+    //     BRR
+    //         bytes that will be decoded.
+    //     c. If applicable, replace the current sample with the noise sample.
+    //        Apply the volume envelope.
+    //         - This is the value used for modulating the next voice's pitch,
+    //         if
+    //           applicable.
+    //        Check FLG bit 7 (NOT previously loaded).
+    //        Check BRR header 'e' and 'l' bits to determine if the voice ends.
+    //        Handle KOFF and KON using previously loaded values. If KON, ENDX.x
+    //        will
+    //         be cleared in step S7.
+    //        Load VxGAIN or VxADSR2 register depending on ADSR1.7.
+    //        Update the volume envelope, using previously loaded values.
+    voice->pitch_high = register_view->pitch_high;
+    // TODO: check how pitch modulation happens
+}
+
 // S4. Load and apply VxVOLL register.
 //     If a new group of BRR samples is required, load the second BRR byte and
 //      decode the group of 4 BRR samples. This is definitely not done when not
