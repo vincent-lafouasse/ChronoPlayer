@@ -10,10 +10,24 @@ void voice_step1(struct DSP_State dsp[static 1], uint8_t voice_i)
     voice->srcn = register_view->srcn;
 }
 
-// S2. Load the sample pointer (using previously loaded DIR and VxSRCN) if
-//      necessary.
-//     Load VxPITCHL register.
-//     Load VxADSR1 register.
+void voice_step2(struct DSP_State dsp[static 1], uint8_t voice_i)
+{
+    const struct VoiceRegisters* const register_view =
+        voice_registers(dsp, voice_i);
+    struct Voice* const voice = dsp->voices + voice_i;
+
+    // S2. Load the sample pointer (using previously loaded DIR and VxSRCN) if
+    //      necessary.
+    //     Load VxPITCHL register.
+    //     Load VxADSR1 register.
+    const uint16_t sample_table = AS_U16(dsp->dir) << 8;
+    const uint16_t sample_location_offset = 4 * AS_U16(register_view->srcn);
+    voice->brr_pointer = sample_table + sample_location_offset;
+
+    voice->pitch_low = register_view->pitch_low;
+    voice->adsr1 = register_view->adsr2;
+}
+
 // S3. a. Load VxPITCHH register.
 //        Apply pitch modulation if applicable.
 //     b. Load the BRR header byte (every time), and the first of the two BRR
