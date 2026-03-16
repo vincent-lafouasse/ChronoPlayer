@@ -28,4 +28,8 @@ void dsp_init(struct DSP_State dsp[static restrict 1],
         const uint8_t addr = DSP_FFC(i);
         dsp->ffc[i] = dsp->registers[addr];
     }
+
+    for (uint8_t i = 0; i < 8; i++) {
+        voice_init(dsp, i);
+    }
 }
