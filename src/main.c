@@ -29,21 +29,15 @@ struct VoiceRegisters {
     uint8_t unused[6];   // $xA-$xF
 };
 
-struct VoiceRegisters* voice_registers(struct DSP_State dsp[static 1],
-                                       uint8_t voice)
+const struct VoiceRegisters* voice_registers(
+    const struct DSP_State dsp[static 1],
+    uint8_t voice)
 {
     assert(voice < 8);
 
     const size_t offset = AS_U16(voice) << 4;
     const uint8_t* alias = dsp->registers + offset;
-    return (struct VoiceRegisters*)alias;
-}
-
-const struct VoiceRegisters* voice_registers_const(
-    const struct DSP_State dsp[static 1],
-    uint8_t voice)
-{
-    return voice_registers((struct DSP_State*)dsp, voice);
+    return (const struct VoiceRegisters*)alias;
 }
 
 struct VoiceInstrument {
@@ -60,7 +54,7 @@ struct VoiceInstrument get_instrument(const struct SPC_State state[static 1],
 
     const uint8_t sample_table_msb = dsp->registers[0x5d];
     const uint16_t sample_table = AS_U16(sample_table_msb) << 8;
-    const struct VoiceRegisters* voice_regs = voice_registers_const(dsp, index);
+    const struct VoiceRegisters* voice_regs = voice_registers(dsp, index);
 
     const uint16_t sample_location_offset = 4 * AS_U16(voice_regs->srcn);
     const uint16_t sample_location = sample_table + sample_location_offset;
