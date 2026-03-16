@@ -12,7 +12,6 @@
 
 #include "cpu/cpu.h"
 #include "dsp/dsp.h"
-
 #include "state.h"
 #include "utils.h"
 

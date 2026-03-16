@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 #include "./instruction/instruction.h"
-
 #include "bus/bus.h"
 #include "utils.h"
 
