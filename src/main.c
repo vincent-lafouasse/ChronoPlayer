@@ -190,10 +190,14 @@ struct Voice {
 void voice_step(struct Voice voice[static 1],
                 const uint8_t aram[static 0x10000]);
 
-void voice_step1(struct Voice voice[static 1])
+void voice_step1(struct DSP_State dsp[static 1], uint8_t voice)
 {
+    const struct VoiceRegisters* const register_view =
+        voice_registers(dsp, voice);
+    struct Voice* const voice = dsp->voices + voice;
+
     // S1. Load VxSRCN register, if necessary.
-    voice->srcn = voice->registers->srcn;
+    voice->srcn = registers_view->srcn;
     voice->step += 1;
 }
 
