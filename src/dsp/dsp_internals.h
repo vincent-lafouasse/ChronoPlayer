@@ -1,5 +1,12 @@
 #pragma once
 
+#include <assert.h>
+#include <stddef.h>
+#include <stdint.h>
+
+#include "state.h"
+#include "utils.h"
+
 #define DSP_V_VOLL(voice) ((voice) << 4 | 0x0)
 #define DSP_V_VOLR(voice) ((voice) << 4 | 0x1)
 #define DSP_V_PITCHL(voice) ((voice) << 4 | 0x2)
@@ -29,3 +36,28 @@
 #define DSP_EDL (0x7d)
 
 #define DSP_FFC(i) ((i) << 4 | 0xf)
+
+struct VoiceRegisters {
+    uint8_t vol_left;    // $x0 VxVOLL
+    uint8_t vol_right;   // $x1 VxVOLR
+    uint8_t pitch_low;   // $x2 VxPITCHL
+    uint8_t pitch_high;  // $x3 VxPITCHH
+    uint8_t srcn;        // $x4 VxSRCN
+    uint8_t adsr1;       // $x5 VxADSR1
+    uint8_t adsr2;       // $x6 VxADSR2
+    uint8_t gain;        // $x7 VxGAIN
+    uint8_t envx;        // $x8 VxENVX
+    uint8_t outx;        // $x9 VxOUTX
+    uint8_t unused[6];   // $xA-$xF
+};
+
+static inline const struct VoiceRegisters* voice_registers(
+    const struct DSP_State dsp[static 1],
+    uint8_t voice)
+{
+    assert(voice < 8);
+
+    const size_t offset = AS_U16(voice) << 4;
+    const uint8_t* alias = dsp->registers + offset;
+    return (const struct VoiceRegisters*)alias;
+}
