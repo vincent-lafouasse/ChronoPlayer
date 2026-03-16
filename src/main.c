@@ -186,8 +186,6 @@ struct Voice {
     bool endx;
     uint8_t outx;
     uint8_t envx;
-
-    struct VoiceRegisters* registers;
 };
 
 void voice_step(struct Voice voice[static 1],
