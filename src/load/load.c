@@ -31,7 +31,7 @@ const uint8_t ipl_rom[64] = {
     0xDD, 0x5D, 0xD0, 0xDB, 0x1F, 0x00, 0x00, 0xC0, 0xFF,
 };
 
-void parse_id666(const uint8_t* header)
+static void parse_id666(const uint8_t* header)
 {
     char title[33] = {0};
     char game[33] = {0};
