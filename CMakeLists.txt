@@ -18,6 +18,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	src/cpu/instruction/instruction_table.gen.c
 	src/cpu/cpu_dump.c
 
+	src/dsp/dsp.c
 	src/dsp/dsp_init.c
 	src/dsp/brr.c
 	src/dsp/instrument.c
