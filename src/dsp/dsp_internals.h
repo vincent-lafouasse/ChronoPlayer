@@ -38,8 +38,8 @@
 #define DSP_FFC(i) ((i) << 4 | 0xf)
 
 void voice_step1(struct DSP_State dsp[static 1], uint8_t voice_i);
-void voice_step2(struct DSP_State dsp[static 1], uint8_t voice_i)
-void voice_step3(struct DSP_State dsp[static 1], uint8_t voice_i)
+void voice_step2(struct DSP_State dsp[static 1], uint8_t voice_i);
+void voice_step3(struct DSP_State dsp[static 1], uint8_t voice_i);
 
 struct VoiceRegisters {
     uint8_t vol_left;    // $x0 VxVOLL
