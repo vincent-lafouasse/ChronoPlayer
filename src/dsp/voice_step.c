@@ -27,7 +27,7 @@ void voice_step2(struct DSP_State dsp[static 1], uint8_t voice_i)
     voice->brr_pointer = sample_table + sample_location_offset;
 
     voice->pitch_low = register_view->pitch_low;
-    voice->adsr1 = register_view->adsr2;
+    voice->adsr1 = register_view->adsr1;
 }
 
 void voice_step3(struct DSP_State dsp[static 1], uint8_t voice_i)
