@@ -22,8 +22,12 @@ void dsp_tick(struct DSP_State dsp[static 1])
 {
     switch (dsp->cycle) {
         case 0:
+            XXX_voice_step5(dsp, 0);
+            voice_step2(dsp, 1);
             break;
         case 1:
+            XXX_voice_step6(dsp, 0);
+            voice_step3(dsp, 1);
             break;
         case 2:
             break;
