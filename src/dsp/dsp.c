@@ -32,8 +32,14 @@ void dsp_tick(struct DSP_State dsp[static 1])
             voice_step3(dsp, 1);
             break;
         case 2:
+            XXX_voice_step7(dsp, 0);
+            XXX_voice_step4(dsp, 1);
+            voice_step1(dsp, 3);
             break;
         case 3:
+            XXX_voice_step8(dsp, 0);
+            XXX_voice_step5(dsp, 1);
+            voice_step2(dsp, 2);
             break;
         case 4:
             break;
