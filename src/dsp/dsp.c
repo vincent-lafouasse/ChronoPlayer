@@ -12,6 +12,8 @@
         (void)voice_i;                                         \
     }
 
+DEFINE_DUMMY_STEP(3b)
+DEFINE_DUMMY_STEP(3c)
 DEFINE_DUMMY_STEP(4)
 DEFINE_DUMMY_STEP(5)
 DEFINE_DUMMY_STEP(6)
