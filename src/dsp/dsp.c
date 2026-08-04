@@ -167,6 +167,7 @@ void dsp_tick(struct DSP_State dsp[static 1])
             fprintf(stderr, "invalid dsp sub cycle: %i\n", dsp->cycle);
             UNREACHABLE();
     }
+
     dsp->cycle++;
     dsp->cycle %= 32;
 }
