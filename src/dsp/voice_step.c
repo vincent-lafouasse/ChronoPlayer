@@ -56,7 +56,7 @@ void voice_step3(struct DSP_State dsp[static 1], uint8_t voice_i)
     //__        Load VxGAIN or VxADSR2 register depending on ADSR1.7.
     //__        Update the volume envelope, using previously loaded values.
     voice->pitch_high = register_view->pitch_high;
-    //__ TODO: check how pitch modulation happens
+    // TODO: check how pitch modulation happens
 }
 
 //__ S4. Load and apply VxVOLL register.
