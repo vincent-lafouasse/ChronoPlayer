@@ -78,6 +78,7 @@ struct DSP_State {
     uint8_t non;
     uint8_t dir;  // the RAM page that contains the samples
 
+    uint8_t cycle;  // 32 duty cycle
     uint64_t total_cycles;
 };
 

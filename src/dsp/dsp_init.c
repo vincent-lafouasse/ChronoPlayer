@@ -34,6 +34,8 @@ void dsp_init(struct DSP_State dsp[static restrict 1],
               const uint8_t registers[static restrict 128],
               const uint8_t aram[static restrict 0x10000])
 {
+    dsp->cycle = 0;  // arbitrary
+
     memcpy(dsp->registers, registers, 128);
     dsp->addr_latch = aram[0xf2];
 
