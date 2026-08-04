@@ -17,4 +17,5 @@ DEFINE_DUMMY_STEP(7)
 DEFINE_DUMMY_STEP(8)
 DEFINE_DUMMY_STEP(9)
 
+// TODO: take care of timers and the such at some point
 void dsp_tick(struct DSP_State dsp[static 1]);
