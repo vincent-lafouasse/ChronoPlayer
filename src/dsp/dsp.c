@@ -1,5 +1,7 @@
 #include "dsp.h"
 
+#include <stdio.h>
+
 #include "dsp_internals.h"
 
 #define DEFINE_DUMMY_STEP(index)                               \
